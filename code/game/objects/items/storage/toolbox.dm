@@ -96,8 +96,6 @@
 /obj/item/storage/toolbox/uacm/genericengie/fill_preset_inventory()
 	new /obj/item/tool/screwdriver/uacm(src)
 	new /obj/item/tool/wrench/uacm(src)
-	new /obj/item/tool/weldingtool/experimental/uacm(src)
 	new /obj/item/tool/crowbar/uacm(src)
-	new /obj/item/stack/cable_coil/uacm(src,30)
 	new /obj/item/tool/wirecutters/uacm(src)
 	new /obj/item/device/multitool/uacm(src)

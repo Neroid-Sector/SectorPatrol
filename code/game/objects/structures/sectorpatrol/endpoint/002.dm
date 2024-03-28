@@ -19,6 +19,7 @@
 	if (puzzlebox_user_loc != user_loc_current)
 		to_chat(user, narrate_body("You moved away from the console!"))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if(puzzlebox_user != usr.real_name)
 		for (var/mob/living/carbon/human/h in range(2, src))
@@ -29,10 +30,12 @@
 	if (puzzle_complete == TRUE)
 		to_chat(src, narrate_body("The terminal is not responsive."))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_global_status < 3 && puzzlebox_global_status > 4)
 		to_chat(src, narrate_body("The terminal displays a random looking chain of numbers and letters and does not react to you pushing any of its keys."))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_global_status == 3 || puzzlebox_global_status == 4)
 		if (!puzzlebox_parser_mode) //Idiotproofing :P
@@ -62,17 +65,20 @@
 			terminal_speak("-XOXO Aly.")
 			puzzlebox_parser_mode = "HOME_INPUT"
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_mode == "HOME_INPUT")
 			user_loc_current = get_turf(user)
 			if (puzzlebox_user_loc != user_loc_current)
 				to_chat(user, narrate_body("You moved away from the console!"))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> _")
 			var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in HOME mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 			if (!puzzlebox_parser_input)
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> [puzzlebox_parser_input]")
 			if (puzzlebox_parser_input == "HOME" || puzzlebox_parser_input =="home")
@@ -86,6 +92,7 @@
 				terminal_speak("Again, don't worry. If you screw up too much, the system will fix it, it just needs time. Good luck!")
 				terminal_speak("-XOXO Aly.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "HELP" || puzzlebox_parser_input =="help")
 				terminal_speak("This is the home screen of the LNT.")
@@ -95,6 +102,7 @@
 				terminal_speak("At any time, you can list all available modes from your current menu with an explanation with the LIST command.")
 				terminal_speak("During a diagnostic fault, temporary access to commands may be granted. All functions should be explained in the HOME and LIST menus.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "LIST" || puzzlebox_parser_input =="list")
 				terminal_speak("Available modes:")
@@ -105,22 +113,26 @@
 				terminal_speak("MESSAGE - Emergency message buffer.")
 				terminal_speak("EXIT - Enters passive mode.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "EXIT" || puzzlebox_parser_input == "exit")
 				terminal_speak("User exit. Goodbye.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "MANIFEST" || puzzlebox_parser_input == "manifest")
 				terminal_speak("Accessing Liquid Data Cargo Manifest record, standby...", 20)
 				emoteas("pings loudly.")
 				puzzlebox_parser_mode = "MANIFEST"
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "MESSAGE" || puzzlebox_parser_input == "message")
 				terminal_speak("Accessing Emergency Message Buffer...", 20)
 				emoteas("pings loudly.")
 				puzzlebox_parser_mode = "MESSAGE"
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "pom.sync UACM-OVPST-D31-CARINT 190885-054293-ACTIS-07" && puzzle_complete == FALSE)
 				log_game("[key_name(usr)] used the pom.sync command in cargo intake. Puzzle solved.")
@@ -141,13 +153,16 @@
 				puzzlebox_global_status += 1
 				open_doors("cargointake")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "pom.sync UACM-OVPST-D31-CARINT 190885-054293-ACTIS-07" && puzzle_complete == TRUE)
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			else
 				terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 		if (puzzlebox_parser_mode == "MANIFEST")
 			if (puzzlebox_pythia_sign == "1")
@@ -170,11 +185,13 @@
 			if (puzzlebox_user_loc != user_loc_current)
 				to_chat(user, narrate_body("You moved away from the console!"))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> MANIFEST _")
 			var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in MANIFEST mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 			if (!puzzlebox_parser_input)
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> MANIFEST [puzzlebox_parser_input]")
 			if (puzzlebox_parser_input == "MANIFEST" || puzzlebox_parser_input =="manifest")
@@ -183,6 +200,7 @@
 				terminal_speak("Please enter order number AS-IS from the physical tag.")
 				terminal_speak("LIST to list available modes, HELP for help screen, EXIT to exit.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "HELP" || puzzlebox_parser_input =="help")
 				terminal_speak("This mode can be used to lookup cargo order forms from their printed manifests.")
@@ -192,6 +210,7 @@
 				terminal_speak("The system can find and correct errors by itself as well, but currently this takes way more time than is practical or useful.")
 				terminal_speak("Please follow instructions to the letter and there shouldn't be any issues. Good luck.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "LIST" || puzzlebox_parser_input =="list")
 				terminal_speak("Available modes:")
@@ -201,16 +220,19 @@
 				terminal_speak("HELP - Displays information about current mode.")
 				terminal_speak("EXIT - Enters passive mode.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "EXIT" || puzzlebox_parser_input == "exit")
 				terminal_speak("User exit. Goodbye.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "HOME" || puzzlebox_parser_input =="home")
 				terminal_speak("Returning to HOME mode...", 20)
 				emoteas("pings loudly.")
 				puzzlebox_parser_mode = "HOME"
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "150885-553110-GSP01")
 				terminal_speak("MANIFEST FOUND. RETRIEVING:", TERMINAL_LOOKUP_SLEEP)
@@ -230,6 +252,7 @@
 				terminal_speak("STATUS: APPROVED. ETA 210885.")
 				terminal_speak("EOF")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "150885-553110-GSP02")
 				terminal_speak("MANIFEST FOUND. RETRIEVING:", TERMINAL_LOOKUP_SLEEP)
@@ -243,6 +266,7 @@
 				terminal_speak("STATUS: APPROVED. ETA 210885.")
 				terminal_speak("EOF")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "150885-553110-GSP03")
 				terminal_speak("MANIFEST FOUND. RETRIEVING:", TERMINAL_LOOKUP_SLEEP)
@@ -256,6 +280,7 @@
 				terminal_speak("STATUS: APPROVED. ETA 210885.")
 				terminal_speak("EOF")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "180885-049321-ESP04")
 				terminal_speak("MANIFEST FOUND. RETRIEVING:", TERMINAL_LOOKUP_SLEEP)
@@ -275,6 +300,7 @@
 				terminal_speak("STATUS: APPROVED. ETA 210885.")
 				terminal_speak("EOF")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "190885-054293-ACTIS-07")
 				terminal_speak("MANIFEST FOUND. RETRIEVING:", TERMINAL_LOOKUP_SLEEP)
@@ -288,10 +314,12 @@
 				terminal_speak("STATUS: APPROVED. ETA 210885.")
 				terminal_speak("EOF")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			else
 				terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 		if (puzzlebox_parser_mode == "MESSAGE")
 			if (puzzlebox_pythia_sign == "1")
@@ -315,11 +343,13 @@
 			if (puzzlebox_user_loc != user_loc_current)
 				to_chat(user, narrate_body("You moved away from the console!"))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> MESSAGE _")
 			var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in MESSAGE mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 			if (!puzzlebox_parser_input)
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> MESSAGE [puzzlebox_parser_input]")
 			if (puzzlebox_parser_input == "MESSAGE" || puzzlebox_parser_input =="message")
@@ -327,6 +357,7 @@
 				terminal_speak("Messages in buffer: 02")
 				terminal_speak("LIST to list available modes, HELP for help screen, EXIT to exit.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "HELP" || puzzlebox_parser_input =="help")
 				terminal_speak("The FTL Emergency Message buffer is an instantly synced short message repository that is typically used by black boxes or distress signal devices.")
@@ -334,6 +365,7 @@
 				terminal_speak("Use command BUFFER to display message titles and buffer IDs.")
 				terminal_speak("Type in the ID that commands provide you, as it appears on the screen, to review a given message.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "LIST" || puzzlebox_parser_input =="list")
 				terminal_speak("Available modes:")
@@ -343,16 +375,19 @@
 				terminal_speak("HELP - Displays information about current mode.")
 				terminal_speak("EXIT - Enters passive mode.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "EXIT" || puzzlebox_parser_input == "exit")
 				terminal_speak("User exit. Goodbye.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "HOME" || puzzlebox_parser_input =="home")
 				terminal_speak("Returning to HOME mode...", 20)
 				emoteas("pings loudly.")
 				puzzlebox_parser_mode = "HOME"
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "BUFFER" || puzzlebox_parser_input == "buffer")
 				terminal_speak("Local message buffer:", TERMINAL_LOOKUP_SLEEP)
@@ -363,6 +398,7 @@
 				if (puzzle_saw_unique_msg == TRUE)
 					terminal_speak("EME-021-112-153 |AS#KR*23SF??221WDAD_)EG         |")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "GEN-000-000-001")
 				terminal_speak("Message found. Accessing...", TERMINAL_LOOKUP_SLEEP)
@@ -377,6 +413,7 @@
 				terminal_speak("-XOXO Aly")
 				terminal_speak("EOF.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "EME-021-112-153")
 				if (puzzle_saw_unique_msg == FALSE)
@@ -394,15 +431,18 @@
 					log_game("[key_name(usr)] read Melinoe's message at the cargo intake terminal.")
 					message_admins("[key_name_admin(usr)] read Melinoe's message at the cargo intake terminal.")
 					puzzlebox_user = null
+					emoteas("beeps and its monitor goes dark.")
 					return
 				if (puzzle_saw_unique_msg == TRUE)
 					terminal_speak("Message found. Accessing...", TERMINAL_LOOKUP_SLEEP)
 					terminal_speak("ERROR: Data corruption. Contact system administrator.")
 					puzzlebox_user = null
+					emoteas("beeps and its monitor goes dark.")
 					return
 			else
 				terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 
 /obj/structure/eventterminal/puzzle02/scanerterm
@@ -425,6 +465,7 @@
 	if (puzzlebox_user_loc != user_loc_current)
 		to_chat(user, narrate_body("You moved away from the console!"))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if(puzzlebox_user != usr.real_name)
 		for (var/mob/living/carbon/human/h in range(2, src))
@@ -455,17 +496,20 @@
 		terminal_speak("List ends. Awaiting Input.")
 		puzzlebox_parser_mode = "HOME_INPUT"
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_parser_mode == "HOME_INPUT")
 		user_loc_current = get_turf(user)
 		if (puzzlebox_user_loc != user_loc_current)
 			to_chat(user, narrate_body("You moved away from the console!"))
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		terminal_speak("> _")
 		var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in HOME mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 		if (!puzzlebox_parser_input)
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		terminal_speak("> [puzzlebox_parser_input]")
 		if (puzzlebox_parser_input == "HOME" || puzzlebox_parser_input =="home")
@@ -477,6 +521,7 @@
 			terminal_speak("RECORD - Dock 31 Access Record")
 			terminal_speak("List ends. Awaiting Input.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "HELP" || puzzlebox_parser_input =="help")
 			terminal_speak("This is the home screen of the LNT.")
@@ -486,6 +531,7 @@
 			terminal_speak("At any time, you can list all available modes from your current menu with an explanation with the LIST command.")
 			terminal_speak("During a diagnostic fault, temporary access to commands may be granted. All functions should be explained in the HOME and LIST menus.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "LIST" || puzzlebox_parser_input =="list")
 			terminal_speak("Available modes:")
@@ -496,26 +542,31 @@
 			terminal_speak("MESSAGE - Emergency message buffer.")
 			terminal_speak("EXIT - Enters passive mode.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "EXIT" || puzzlebox_parser_input == "exit")
 			terminal_speak("User exit. Goodbye.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "MESSAGE" || puzzlebox_parser_input == "message")
 			terminal_speak("Accessing Emergency Message Buffer...", 20)
 			emoteas("pings loudly.")
 			puzzlebox_parser_mode = "MESSAGE"
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "RECORD" || puzzlebox_parser_input == "record")
 			terminal_speak("Accessing Scanner Records...", TERMINAL_LOOKUP_SLEEP)
 			emoteas("pings loudly.")
 			puzzlebox_parser_mode = "RECORD"
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		else
 			terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 	if (puzzlebox_parser_mode == "MESSAGE")
 		if (puzzlebox_pythia_sign == "1")
@@ -539,11 +590,13 @@
 		if (puzzlebox_user_loc != user_loc_current)
 			to_chat(user, narrate_body("You moved away from the console!"))
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		terminal_speak("> MESSAGE _")
 		var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in MESSAGE mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 		if (!puzzlebox_parser_input)
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		terminal_speak("> MESSAGE [puzzlebox_parser_input]")
 		if (puzzlebox_parser_input == "MESSAGE" || puzzlebox_parser_input =="message")
@@ -551,6 +604,7 @@
 			terminal_speak("Messages in buffer: 02")
 			terminal_speak("LIST to list available modes, HELP for help screen, EXIT to exit.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "HELP" || puzzlebox_parser_input =="help")
 			terminal_speak("The FTL Emergency Message buffer is an instantly synced short message repository that is typically used by black boxes or distress signal devices.")
@@ -558,6 +612,7 @@
 			terminal_speak("Use command BUFFER to display message titles and buffer IDs.")
 			terminal_speak("Type in the ID that commands provide you, as it appears on the screen, to review a given message.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "LIST" || puzzlebox_parser_input =="list")
 			terminal_speak("Available modes:")
@@ -567,16 +622,19 @@
 			terminal_speak("HELP - Displays information about current mode.")
 			terminal_speak("EXIT - Enters passive mode.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "EXIT" || puzzlebox_parser_input == "exit")
 			terminal_speak("User exit. Goodbye.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "HOME" || puzzlebox_parser_input =="home")
 			terminal_speak("Returning to HOME mode...", 20)
 			emoteas("pings loudly.")
 			puzzlebox_parser_mode = "HOME"
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "BUFFER" || puzzlebox_parser_input == "buffer")
 			terminal_speak("Local message buffer:", TERMINAL_LOOKUP_SLEEP)
@@ -584,6 +642,7 @@
 			terminal_speak("GEN-000-000-001 |Warning: On these messages.     |")
 			terminal_speak("GBR-891-221-211 |Imminent Failure of All Systems.|")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "GEN-000-000-001")
 			terminal_speak("Message found. Accessing...", TERMINAL_LOOKUP_SLEEP)
@@ -598,6 +657,7 @@
 			terminal_speak("-XOXO Aly")
 			terminal_speak("EOF.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "GBR-891-221-211")
 			terminal_speak("Message found. Accessing...", TERMINAL_LOOKUP_SLEEP)
@@ -612,10 +672,12 @@
 			terminal_speak("-A-Watchtower.")
 			terminal_speak("EOF.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		else
 			terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 	if (puzzlebox_parser_mode == "RECORD")
 		if (puzzlebox_pythia_sign == "1")
@@ -634,17 +696,20 @@
 		terminal_speak("Use RECORD to access record buffer.")
 		puzzlebox_parser_mode = "RECORD_INPUT"
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_parser_mode == "RECORD_INPUT")
 		user_loc_current = get_turf(user)
 		if (puzzlebox_user_loc != user_loc_current)
 			to_chat(user, narrate_body("You moved away from the console!"))
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		terminal_speak("> RECORD _")
 		var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in RECORD mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 		if (!puzzlebox_parser_input)
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		terminal_speak("> RECORD [puzzlebox_parser_input]")
 		if (puzzlebox_parser_input == "RECORD" || puzzlebox_parser_input =="record")
@@ -652,6 +717,7 @@
 			terminal_speak("WARNING. Restricted military information. Sharing with non-UACM personnel will be prosecuted to the fullest extent of the law.")
 			terminal_speak("Use BUFFER to access record buffer.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "HELP" || puzzlebox_parser_input =="help")
 			terminal_speak("Per UA Shared Armed Forces Law Enforcement Standards, all UA armed forces personnel are required to be informed every time an AI assisted scan is performed on them. ")
@@ -660,6 +726,7 @@
 			terminal_speak("The BUFFER command should access all information available at your clearance level, which should helpfully be printed out in the HOME screen.")
 			terminal_speak("UAAC-TIS reviews all these entries before they are posted, so expect a few hours delay from actually going through the scanner before up to date results are uploaded.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "LIST" || puzzlebox_parser_input =="list")
 			terminal_speak("Available modes:")
@@ -669,16 +736,19 @@
 			terminal_speak("HELP - Displays information about current mode.")
 			terminal_speak("EXIT - Enters passive mode.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "EXIT" || puzzlebox_parser_input == "exit")
 			terminal_speak("User exit. Goodbye.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "HOME" || puzzlebox_parser_input =="home")
 			terminal_speak("Returning to HOME mode...", 20)
 			emoteas("pings loudly.")
 			puzzlebox_parser_mode = "HOME"
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_input == "BUFFER" || puzzlebox_parser_input == "buffer")
 			terminal_speak("Accessing Scanner Buffer:")
@@ -696,10 +766,12 @@
 			terminal_speak("140885 | Scheduled L-533 Arrival | Wiliams, Hanako | Supply pickup. 1 crate over manifest with a pom.sync code. Noted agitation and excitement in P's window. Curious. Reported to A-C.")
 			terminal_speak("EOF")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		else
 			terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 
 /obj/structure/eventterminal/puzzle02/ldmainframediag
@@ -723,6 +795,7 @@
 	if (puzzlebox_user_loc != user_loc_current)
 		to_chat(user, narrate_body("You moved away from the console!"))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if(puzzlebox_user != usr.real_name)
 		for (var/mob/living/carbon/human/h in range(2, src))
@@ -735,6 +808,7 @@
 		terminal_speak("No errors detected. No maintenance functions granted.")
 		terminal_speak("Please contact the system administrator: CDR. ALYSIA REED-WILO if you believe this is an error.")
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_global_status == 3 || puzzlebox_global_status == 4)
 		if (!puzzlebox_parser_mode) //Idiotproofing :P
@@ -767,17 +841,20 @@
 			terminal_speak("- XOXO, Aly.")
 			puzzlebox_parser_mode = "HOME_INPUT"
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_mode == "HOME_INPUT")
 			user_loc_current = get_turf(user)
 			if (puzzlebox_user_loc != user_loc_current)
 				to_chat(user, narrate_body("You moved away from the console!"))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> _")
 			var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in HOME mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 			if (!puzzlebox_parser_input)
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> [puzzlebox_parser_input]")
 			if (puzzlebox_parser_input == "HOME" || puzzlebox_parser_input =="home")
@@ -797,6 +874,7 @@
 				terminal_speak("Keep in mind that if you do it on the wrong terminal, it's going to be a while until you can use the command again, so don't just try and guess it. Or do, see if you're lucky. ")
 				terminal_speak("- XOXO, Aly.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "HELP" || puzzlebox_parser_input =="help")
 				terminal_speak("This is the home screen of the LNT.")
@@ -806,6 +884,7 @@
 				terminal_speak("At any time, you can list all available modes from your current menu with an explanation with the LIST command.")
 				terminal_speak("During a diagnostic fault, temporary access to commands may be granted. All functions should be explained in the HOME and LIST menus.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "LIST" || puzzlebox_parser_input =="list")
 				terminal_speak("Available modes:")
@@ -815,20 +894,24 @@
 				terminal_speak("MESSAGE - Emergency message buffer.")
 				terminal_speak("EXIT - Enters passive mode.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "EXIT" || puzzlebox_parser_input == "exit")
 				terminal_speak("User exit. Goodbye.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "MESSAGE" || puzzlebox_parser_input == "message")
 				terminal_speak("Accessing Emergency Message Buffer...", 20)
 				emoteas("pings loudly.")
 				puzzlebox_parser_mode = "MESSAGE"
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			else
 				terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 		if (puzzlebox_parser_mode == "MESSAGE")
 			if (puzzlebox_pythia_sign == "1")
@@ -852,11 +935,13 @@
 			if (puzzlebox_user_loc != user_loc_current)
 				to_chat(user, narrate_body("You moved away from the console!"))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> MESSAGE _")
 			var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in MESSAGE mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 			if (!puzzlebox_parser_input)
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> MESSAGE [puzzlebox_parser_input]")
 			if (puzzlebox_parser_input == "MESSAGE" || puzzlebox_parser_input =="message")
@@ -864,6 +949,7 @@
 				terminal_speak("Messages in buffer: 02")
 				terminal_speak("LIST to list available modes, HELP for help screen, EXIT to exit.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "HELP" || puzzlebox_parser_input =="help")
 				terminal_speak("The FTL Emergency Message buffer is an instantly synced short message repository that is typically used by black boxes or distress signal devices.")
@@ -871,6 +957,7 @@
 				terminal_speak("Use command BUFFER to display message titles and buffer IDs.")
 				terminal_speak("Type in the ID that commands provide you, as it appears on the screen, to review a given message.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "LIST" || puzzlebox_parser_input =="list")
 				terminal_speak("Available modes:")
@@ -880,16 +967,19 @@
 				terminal_speak("HELP - Displays information about current mode.")
 				terminal_speak("EXIT - Enters passive mode.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "EXIT" || puzzlebox_parser_input == "exit")
 				terminal_speak("User exit. Goodbye.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "HOME" || puzzlebox_parser_input =="home")
 				terminal_speak("Returning to HOME mode...", 20)
 				emoteas("pings loudly.")
 				puzzlebox_parser_mode = "HOME"
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "BUFFER" || puzzlebox_parser_input == "buffer")
 				terminal_speak("Local message buffer:", TERMINAL_LOOKUP_SLEEP)
@@ -899,6 +989,7 @@
 				if (puzzle_saw_unique_msg == FALSE)
 					terminal_speak("UPS-103-333-444 |We can help.                    |")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "GEN-000-000-001")
 				terminal_speak("Message found. Accessing...", TERMINAL_LOOKUP_SLEEP)
@@ -913,6 +1004,7 @@
 				terminal_speak("-XOXO Aly")
 				terminal_speak("EOF.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "MAR-021-112-935")
 				terminal_speak("Message found. Accessing...", TERMINAL_LOOKUP_SLEEP)
@@ -926,6 +1018,7 @@
 				terminal_speak("ADDENDUM: RESPONDING SHIPS: UAS PERSEPHONE, USS ALMAYER")
 				terminal_speak("EOF")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if (puzzlebox_parser_input == "UPS-103-333-444" && puzzle_saw_unique_msg == FALSE)
 				puzzle_saw_unique_msg = TRUE
@@ -939,14 +1032,17 @@
 				emoteas("beeps loudly as its screen flickers and fills with code. A smell of burnt ozone fills the room for a moment. The terminal resets after a moment.")
 				to_chat(usr, narrate_body("You stare at the last paragraph as it seems to trigger a deep reaction within you. For a moment, you could swear that you’ve seen this exact phrase before, but the feeling passes much like a waking dream."))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			if ((puzzlebox_parser_input == "UPS-103-333-444" && puzzle_saw_unique_msg == TRUE))
 				terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			else
 				terminal_speak("Input unrecognized. Use HELP for help or LIST for mode list.")
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 
 /obj/structure/eventterminal/puzzle02/ldmainframe_master
@@ -986,6 +1082,7 @@
 	if (puzzlebox_user_loc != user_loc_current)
 		to_chat(user, narrate_body("You moved away from the console!"))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if(puzzlebox_user != usr.real_name)
 		for (var/mob/living/carbon/human/h in range(2, src))
@@ -996,18 +1093,22 @@
 	if (puzzle_complete == TRUE)
 		to_chat(src, narrate_body("The screen does not seem to respond to pressing any key."))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_lockout == TRUE)
 		terminal_speak("Error. Calibration sequence resetting. Standby.")
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_global_status < 3 && puzzlebox_global_status > 4)
 		to_chat(src, narrate_body("The screen does not seem to respond to pressing any key."))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_panel_open == TRUE && puzzlebox_panel_phrasepased == FALSE)
 		to_chat(usr, narrate_body("The terminal displays an animation of a cable being plugged into its side and is unresponsive to your inputs."))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_global_status == 3 || puzzlebox_global_status == 4)
 		if (!puzzlebox_parser_mode) //Idiotproofing :P
@@ -1018,6 +1119,7 @@
 			terminal_speak("Maintenance mode detected. Command prompt unlocked. Awaiting input.")
 			puzzlebox_parser_mode = "HOME_INPUT"
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_mode == "HOME_INPUT" && puzzlebox_panel_phrasepased == TRUE)
 			terminal_speak("Repeating tester sequence:")
@@ -1026,17 +1128,20 @@
 			terminal_speak("SHE_SLEEPS.")
 			puzzlebox_panel_phrasepased = FALSE
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_mode == "HOME_INPUT" && puzzlebox_panel_phrasepased == FALSE)
 			user_loc_current = get_turf(user)
 			if (puzzlebox_user_loc != user_loc_current)
 				to_chat(user, narrate_body("You moved away from the console!"))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> _")
 			var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in HOME mode and awaits your input. This terminal will only accept specific commands, no general ones are available.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 			if (!puzzlebox_parser_input)
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> [puzzlebox_parser_input]")
 			if (puzzlebox_parser_input == "pom.sync global_override UACM-OVPST-D31-LDDIAG")
@@ -1047,11 +1152,13 @@
 					desc_lore = "While using Liquid Data enables faster than light communication, practical applications have mostly been successful in utilizing it for large bursts instead of continuous communication. As such Liquid Data machines are typically of large sizes and usually clustered into pairs and constantly checked for integrity. This cluster seems to go against both these principles - it seems to be a trio, not a pair of computers and maintains a continuous connection to whatever its source is. An open side panel typically can be used to connect a multitool or something similar, as long as the port itself is unsealed and kept open by a screwdriver or similar tool."
 					puzzlebox_panel_locked = FALSE
 					puzzlebox_user = null
+					emoteas("beeps and its monitor goes dark.")
 					return
 				if (puzzlebox_panel_locked == FALSE)
 					terminal_speak("Error: Corresponding maintenance instruction already deployed.")
 					terminal_speak("Exiting...")
 					puzzlebox_user = null
+					emoteas("beeps and its monitor goes dark.")
 					return
 			if (puzzlebox_parser_input ==  "pom.calibrate UACM-OVPST-D31-LDDIAG")
 				terminal_speak("Deploying recalibration buffer.", 20)
@@ -1070,6 +1177,7 @@
 					D.puzzle_complete = TRUE
 				puzzlebox_global_status += 1
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 
 /obj/structure/eventterminal/puzzle02/ldmainframe_master/correct/attackby(obj/item/W as obj, mob/user as mob)
@@ -1128,6 +1236,7 @@
 	if (puzzlebox_user_loc != user_loc_current)
 		to_chat(user, narrate_body("You moved away from the console!"))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if(puzzlebox_user != usr.real_name)
 		for (var/mob/living/carbon/human/h in range(2, src))
@@ -1138,18 +1247,22 @@
 	if (puzzle_complete == TRUE)
 		to_chat(src, narrate_body("The screen does not seem to respond to pressing any key."))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_lockout == TRUE)
 		terminal_speak("Error. Calibration sequence resetting. Standby.")
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_global_status < 3 && puzzlebox_global_status > 4)
 		to_chat(src, narrate_body("The screen does not seem to respond to pressing any key."))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_panel_open == TRUE && puzzlebox_panel_phrasepased == FALSE)
 		to_chat(usr, narrate_body("The terminal displays an animation of a cable being plugged into its side and is unresponsive to your inputs."))
 		puzzlebox_user = null
+		emoteas("beeps and its monitor goes dark.")
 		return
 	if (puzzlebox_global_status == 3 || puzzlebox_global_status == 4)
 		if (!puzzlebox_parser_mode) //Idiotproofing :P
@@ -1160,6 +1273,7 @@
 			terminal_speak("Maintenance mode detected. Command prompt unlocked. Awaiting input.")
 			puzzlebox_parser_mode = "HOME_INPUT"
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_mode == "HOME_INPUT" && puzzlebox_panel_phrasepased == TRUE)
 			terminal_speak("Repeating tester sequence:")
@@ -1168,17 +1282,20 @@
 			terminal_speak("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 			puzzlebox_panel_phrasepased = FALSE
 			puzzlebox_user = null
+			emoteas("beeps and its monitor goes dark.")
 			return
 		if (puzzlebox_parser_mode == "HOME_INPUT" && puzzlebox_panel_phrasepased == FALSE)
 			user_loc_current = get_turf(user)
 			if (puzzlebox_user_loc != user_loc_current)
 				to_chat(user, narrate_body("You moved away from the console!"))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> _")
 			var/puzzlebox_parser_input = tgui_input_text(usr, "The terminal is in HOME mode and awaits your input. HELP, LIST and EXIT are universal commands.", "Terminal input", max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = FALSE, timeout = 0)
 			if (!puzzlebox_parser_input)
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 			terminal_speak("> [puzzlebox_parser_input]")
 			if (puzzlebox_parser_input == "pom.sync global_override UACM-OVPST-D31-LDDIAG")
@@ -1189,11 +1306,13 @@
 					desc_lore = "While using Liquid Data enables faster than light communication, practical applications have mostly been successful in utilizing it for large bursts instead of continuous communication. As such Liquid Data machines are typically of large sizes and usually clustered into pairs and constantly checked for integrity. This cluster seems to go against both these principles - it seems to be a trio, not a pair of computers and maintains a continuous connection to whatever its source is. An open side panel typically can be used to connect a multitool or something similar, as long as the port itself is unsealed and kept open by a screwdriver or similar tool."
 					puzzlebox_panel_locked = FALSE
 					puzzlebox_user = null
+					emoteas("beeps and its monitor goes dark.")
 					return
 				if (puzzlebox_panel_locked == FALSE)
 					terminal_speak("Error: Corresponding maintenance instruction already deployed.")
 					terminal_speak("Exiting...")
 					puzzlebox_user = null
+					emoteas("beeps and its monitor goes dark.")
 					return
 			if (puzzlebox_parser_input ==  "pom.calibrate UACM-OVPST-D31-LDDIAG")
 				terminal_speak("Deploying recalibration buffer.", 20)
@@ -1203,6 +1322,7 @@
 				for (var/obj/structure/eventterminal/puzzle02/ldmainframe_master/T in world)
 					INVOKE_ASYNC(T, PROC_REF(lockout))
 				puzzlebox_user = null
+				emoteas("beeps and its monitor goes dark.")
 				return
 
 /obj/structure/eventterminal/puzzle02/ldmainframe_master/incorrect/attackby(obj/item/W as obj, mob/user as mob)

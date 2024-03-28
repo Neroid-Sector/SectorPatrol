@@ -27,8 +27,12 @@
 			user.visible_message(SPAN_NOTICE("[user] gathers metalic bars of the plating."), SPAN_INFO("You pick up the struts." ))
 			while (struts_install > struts_ready)
 				struts_install -= 1
-				icon_state = "[base_icon]_s[struts_install]"
-				update_icon()
+				if(struts_install > 0)
+					icon_state = "[base_icon]_s[struts_install]"
+					update_icon()
+				if (struts_install == 0)
+					icon_state = "[base_icon]"
+					update_icon()
 				var/obj/item/stack/rods/floorstrut/fs = new(get_turf(user))
 				var/replace = (user.get_inactive_hand()==src)
 				if(QDELETED(src) && replace)
@@ -76,6 +80,8 @@
 		return
 	if(istype(C, /obj/item/stack/modulartiles))
 		var/obj/item/stack/modulartiles/T = C
+		if (!T)
+			return
 		if(T.get_amount() < 1)
 			return
 		if(tiles_install >= 4)

@@ -9,7 +9,7 @@
 "v" = (/obj/structure/catwalk,/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin/elevator_inner{id = "port_door"},/turf/open/floor/almayer{icon_state = "outerhull"},/area/shuttle/ert)
 "w" = (/obj/effect/decal/cargo_stripes{icon_state = "e"},/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/shuttle/ert)
 "y" = (/turf/closed/wall/almayer/outer,/area/shuttle/ert)
-"C" = (/obj/structure/catwalk,/obj/structure/machinery/computer/shuttle/ert/big{dir = 8; icon_state = "retro"},/turf/open/floor/almayer{icon_state = "outerhull"},/area/shuttle/ert)
+"C" = (/obj/structure/catwalk,/obj/structure/machinery/computer/shuttle/ert/big{dir = 8; icon_state = "retro"; req_access = list(1000); name = "elevator control panel"},/turf/open/floor/almayer{icon_state = "outerhull"},/area/shuttle/ert)
 "E" = (/obj/structure/catwalk,/obj/structure/bed/chair/dropship/passenger{dir = 4},/turf/open/floor/almayer{icon_state = "outerhull"},/area/shuttle/ert)
 "J" = (/obj/effect/decal/cargo_stripes{icon_state = "nw"},/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/shuttle/ert)
 "K" = (/obj/effect/decal/cargo_stripes{icon_state = "n"},/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/shuttle/ert)

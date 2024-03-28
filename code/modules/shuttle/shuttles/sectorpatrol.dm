@@ -22,6 +22,11 @@
 	port_direction = EAST
 	width = 27
 	height = 9
+	movement_force = list("KNOCKDOWN" = 2, "THROW" = 0)
+	callTime = 10
+	ignitionTime = 55
+	rechargeTime = 0
+	prearrivalTime = 0
 	var/starboard_door
 	var/port_door
 
@@ -81,6 +86,11 @@
 	port_direction = EAST
 	width = 11
 	height = 11
+	movement_force = list("KNOCKDOWN" = 1, "THROW" = 0)
+	callTime = 10
+	ignitionTime = 55
+	rechargeTime = 0
+	prearrivalTime = 0
 	var/starboard_door
 	var/port_door
 
@@ -139,6 +149,11 @@
 	port_direction = EAST
 	width = 11
 	height = 11
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
+	callTime = 10
+	ignitionTime = 55
+	rechargeTime = 0
+	prearrivalTime = 0
 	var/starboard_door
 	var/port_door
 

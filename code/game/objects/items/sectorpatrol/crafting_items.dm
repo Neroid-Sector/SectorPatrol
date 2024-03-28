@@ -11,7 +11,7 @@
 //packages
 
 /obj/item/crafting/packages/
-	name = "package master item"
+	name = "package"
 	icon_state = "default"
 	desc = "Brown packaging in the shape of a box. If just looked at, seems like cardboard, but when touched, one would see that it seems way more rigid and seems to be in fact some sort of resin.  Seems like it would be easy to break open, but the process would clearly be one way. A label is visible on one of its corners."
 	desc_lore = "The Northern Republic Production Standard not only dictates screw hole sizes and tube lengths, but also regulates both packaging and labeling of anything adhering to the standard when it is produced. Essentially this means that every NRPS standard complaint wrapping is made of the same brownish artificial resin, meant to be a combination of cardboard and Styrofoam, and always comes with a label oriented towards the bottom-right hand corner of the package. Essentially this means that if you can read the letters, the package is likely upright."
@@ -22,6 +22,16 @@
 	item_serial = "NRPS COMPLIANT<hr>OFFICE STYLE CHAIR, BLACK, ONE<hr>UACM OUTER VEIL PST"
 	item_serial_distance = SERIAL_ITEM_SIZE_FAR
 
+/obj/item/crafting/packages/chair/attack_self(mob/user)
+	. = ..()
+	user.visible_message(SPAN_NOTICE("[user] starts to unwrap a package."), SPAN_INFO("You start to unwrap the pacckage."), SPAN_DANGER("You hear tearing sounds."))
+	if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
+		user.visible_message(SPAN_NOTICE("[user] tears through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_INFO("You tear through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_DANGER("The ripping stops."))
+		new /obj/item/crafting/frame_elements/chair(get_turf(usr))
+		new /obj/item/crafting/top/chair/seat(get_turf(usr))
+		new /obj/item/crafting/top/chair/wheels(get_turf(usr))
+		qdel(src)
+		return
 
 /obj/item/crafting/packages/drawer
 	icon_state = "package_l"
@@ -29,12 +39,33 @@
 	item_serial = "NRPS COMPLIANT<hr>DRAWER CHEST, BLACK, ONE<hr>UACM OUTER VEIL PST"
 	item_serial_distance = SERIAL_ITEM_SIZE_FAR
 
+/obj/item/crafting/packages/drawer/attack_self(mob/user)
+	. = ..()
+	user.visible_message(SPAN_NOTICE("[user] starts to unwrap a package."), SPAN_INFO("You start to unwrap the pacckage."), SPAN_DANGER("You hear tearing sounds."))
+	if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
+		user.visible_message(SPAN_NOTICE("[user] tears through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_INFO("You tear through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_DANGER("The ripping stops."))
+		new /obj/item/crafting/frame_elements/drawers(get_turf(usr))
+		new /obj/item/crafting/top/drawers(get_turf(usr))
+		qdel(src)
+		return
+
 
 /obj/item/crafting/packages/lamp
 	icon_state = "package_m"
 	w_class = SIZE_MEDIUM
 	item_serial = "NRPS COMPLIANT<hr>DESK LAMP, BLACK, ONE<hr>UACM OUTER VEIL PST"
 	item_serial_distance = SERIAL_ITEM_SIZE_MEDIUM
+
+/obj/item/crafting/packages/lamp/attack_self(mob/user)
+	. = ..()
+	user.visible_message(SPAN_NOTICE("[user] starts to unwrap a package."), SPAN_INFO("You start to unwrap the pacckage."), SPAN_DANGER("You hear tearing sounds."))
+	if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
+		user.visible_message(SPAN_NOTICE("[user] tears through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_INFO("You tear through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_DANGER("The ripping stops."))
+		new /obj/item/crafting/frame/lamp(get_turf(usr))
+		new /obj/item/crafting/top/lamp/base(get_turf(usr))
+		new /obj/item/crafting/top/lamp/bulb(get_turf(usr))
+		qdel(src)
+		return
 
 
 // Frames
@@ -71,7 +102,7 @@
 
 	if(istype(C, /obj/item/crafting/top/lamp/bulb))
 		if(icon_state == "lamp")
-			var/obj/item/crafting/top/lamp/bulb/bulb
+			var/obj/item/crafting/top/lamp/bulb/bulb = C
 			user.visible_message(SPAN_NOTICE("[user] starts to screw a light bulb into the desk lamp."), SPAN_INFO("You start to screw a light bulb into the desk lamp."))
 			if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
 				var/obj/item/device/modular/lamp/lamp = new(get_turf(src))
@@ -90,7 +121,7 @@
 			if(icon_state == "lamp")
 				user.visible_message(SPAN_NOTICE("[user] starts to detach a lamp top from its frame."), SPAN_INFO("You start to detach a lamp top from its frame."))
 				if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
-					var/obj/item/crafting/top/lamp/base/top
+					var/obj/item/crafting/top/lamp/base/top = new(get_turf(src))
 					top.variant_id = crafting_lamp_top_color
 					user.put_in_hands(top)
 					crafting_lamp_top_color = null
@@ -167,6 +198,7 @@
 					R.variant_id = variant_id
 					R.crafting_chair_wheel_id = W.variant_id
 					qdel(src)
+					qdel(W)
 					return
 	else
 		to_chat(usr, SPAN_NOTICE("There does not seem to be any reason to do that. If you are trying to assemble the frame, start with the wheels."))

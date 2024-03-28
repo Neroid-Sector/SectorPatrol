@@ -1,7 +1,7 @@
 "a" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin/elevator_inner{id = "port_door"},/turf/open/floor/almayer{icon_state = "outerhull"},/area/shuttle/ert)
 "i" = (/obj/docking_port/mobile/emergency_response/pst_elevator_d,/turf/closed/wall/almayer/outer,/area/shuttle/ert)
 "s" = (/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/shuttle/ert)
-"t" = (/obj/structure/machinery/computer/shuttle/ert/big{dir = 4; icon_state = "retro"},/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/shuttle/ert)
+"t" = (/obj/structure/machinery/computer/shuttle/ert/big{dir = 4; icon_state = "retro"; name = "elevator control panel"; req_access = list(1000)},/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/shuttle/ert)
 "v" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin/elevator_inner{id = "starboard_door"},/turf/open/floor/almayer{icon_state = "outerhull"},/area/shuttle/ert)
 "z" = (/obj/structure/machinery/light{dir = 4},/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/shuttle/ert)
 "J" = (/turf/closed/wall/almayer/outer,/area/shuttle/ert)

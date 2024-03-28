@@ -74,7 +74,8 @@
 "hb" = (
 /obj/structure/surface/table/reinforced/almayer_B,
 /obj/structure/machinery/computer/shuttle/ert/big{
-	dir = 8
+	dir = 8;
+	req_access = list(1000)
 	},
 /turf/open/shuttle/lifeboat,
 /area/shuttle/ert)

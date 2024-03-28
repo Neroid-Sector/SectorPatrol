@@ -93,3 +93,63 @@
 			if (M.client.prefs.chargen_birthright == "[CHARGEN_BIRTHRIGHT_OUTERRIM]")
 				to_chat(M, narrate_body("For a split second, you peer into the blackness of deep space. Something moves into the abyss, it feels wrong. It feels like both a familiar, friendly presence and something else lingers somewhere out there, beyond light. The sensation passes as quickly as it comes."))
 			M.saw_narrations.Add("[trigger_id]")
+
+/obj/effect/step_trigger/message/seeonce/D31Ent
+
+	trigger_id = "D31Ent"
+
+/obj/effect/step_trigger/message/seeonce/D31Ent/Trigger(mob/M)
+	if(!istype(M) || !M)
+		return
+	if(M.client)
+		if(!("[trigger_id]" in M.saw_narrations))
+			to_chat(M, narrate_body("Text."))
+			M.saw_narrations.Add("[trigger_id]")
+
+/obj/effect/step_trigger/message/seeonce/Pinnacle
+
+	trigger_id = "Pinnacle"
+
+/obj/effect/step_trigger/message/seeonce/Pinnacle/Trigger(mob/M)
+	if(!istype(M) || !M)
+		return
+	if(M.client)
+		if(!("[trigger_id]" in M.saw_narrations))
+			to_chat(M, narrate_body("Text."))
+			M.saw_narrations.Add("[trigger_id]")
+
+/obj/effect/step_trigger/message/seeonce/Dorms
+
+	trigger_id = "Dorms"
+
+/obj/effect/step_trigger/message/seeonce/Dorms/Trigger(mob/M)
+	if(!istype(M) || !M)
+		return
+	if(M.client)
+		if(!("[trigger_id]" in M.saw_narrations))
+			to_chat(M, narrate_body("Text."))
+			M.saw_narrations.Add("[trigger_id]")
+
+/obj/effect/step_trigger/message/seeonce/Crypt
+
+	trigger_id = "Crypt"
+
+/obj/effect/step_trigger/message/seeonce/Crypt/Trigger(mob/M)
+	if(!istype(M) || !M)
+		return
+	if(M.client)
+		if(!("[trigger_id]" in M.saw_narrations))
+			to_chat(M, narrate_body("Text."))
+			M.saw_narrations.Add("[trigger_id]")
+
+/obj/effect/step_trigger/message/seeonce/CryptInner
+
+	trigger_id = "CryptInner"
+
+/obj/effect/step_trigger/message/seeonce/CryptInner/Trigger(mob/M)
+	if(!istype(M) || !M)
+		return
+	if(M.client)
+		if(!("[trigger_id]" in M.saw_narrations))
+			to_chat(M, narrate_body("Text."))
+			M.saw_narrations.Add("[trigger_id]")

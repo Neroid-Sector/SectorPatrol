@@ -15,6 +15,8 @@
 	icon_state = "package_xl"
 	desc = "Brown packaging in the shape of a box. If just looked at, seems like cardboard, but when touched, one would see that it seems way more rigid and seems to be in fact some sort of resin.  Seems like it would be easy to break open, but the process would clearly be one way. A label is visible on one of its corners."
 	desc_lore = "The Northern Republic Production Standard not only dictates screw hole sizes and tube lengths, but also regulates both packaging and labeling of anything adhering to the standard when it is produced. Essentially this means that every NRPS standard complaint wrapping is made of the same brownish artificial resin, meant to be a combination of cardboard and Styrofoam, and always comes with a label oriented towards the bottom-right hand corner of the package. Essentially this means that if you can read the letters, the package is likely upright."
+	opacity = FALSE
+	density = TRUE
 
 /obj/structure/crafting/packages/table
 	icon_state = "package_xl"
@@ -22,12 +24,55 @@
 	item_serial_distance = SERIAL_STRUCTURE_SIZE_FAR
 	variant_id = "default"
 
+/obj/structure/crafting/packages/table/attack_hand(mob/user)
+	user.visible_message(SPAN_NOTICE("[user] starts to unwrap a package."), SPAN_INFO("You start to unwrap the pacckage."), SPAN_DANGER("You hear tearing sounds."))
+	if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
+		user.visible_message(SPAN_NOTICE("[user] tears through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_INFO("You tear through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_DANGER("The ripping stops."))
+		new /obj/item/crafting/frame_elements/table(get_turf(src))
+		new /obj/item/crafting/top/table(get_turf(src))
+		qdel(src)
+		return
+
 /obj/structure/crafting/packages/bed
 	icon_state = "package_long"
 	item_serial = "NRPS COMPLIANT<hr>PLAIN BED AND EXPANDING MATTRESS PACKAGE, COMES WITH ONE (1) STANDARD BED SHEET<hr>UACM OUTER VEIL PST"
 	item_serial_distance = SERIAL_STRUCTURE_SIZE_FAR
 	variant_id = "default"
 
+/obj/structure/crafting/packages/bed/attack_hand(mob/user)
+	user.visible_message(SPAN_NOTICE("[user] starts to unwrap a package."), SPAN_INFO("You start to unwrap the pacckage."), SPAN_DANGER("You hear tearing sounds."))
+	if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
+		user.visible_message(SPAN_NOTICE("[user] tears through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_INFO("You tear through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_DANGER("The ripping stops."))
+		new /obj/item/crafting/frame_elements/bed(get_turf(src))
+		new /obj/item/crafting/top/bed(get_turf(src))
+		qdel(src)
+		return
+
+
+/obj/structure/crafting/packages/dormstruts
+	icon_state = "package_long"
+	item_serial = "NRPS COMPLIANT<hr>MODULAR FLOOR STRUT x60<br>MODULAR FLOOR TILE x60<hr>UACM OUTER VEIL PST"
+	item_serial_distance = SERIAL_STRUCTURE_SIZE_FAR
+	variant_id = "default"
+
+/obj/structure/crafting/packages/dormstruts/attack_hand(mob/user)
+	user.visible_message(SPAN_NOTICE("[user] starts to unwrap a package."), SPAN_INFO("You start to unwrap the pacckage."), SPAN_DANGER("You hear tearing sounds."))
+	if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
+		user.visible_message(SPAN_NOTICE("[user] tears through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_INFO("You tear through the package, revealing its contents. Once ripped, the packing material quickly turns to a fine dust."), SPAN_DANGER("The ripping stops."))
+		var/obj/item/stack/rods/floorstrut/strut1 = new(get_turf(src))
+		var/obj/item/stack/rods/floorstrut/strut2 = new(get_turf(src))
+		var/obj/item/stack/modulartiles/tile1 = new(get_turf(src))
+		var/obj/item/stack/modulartiles/tile2 = new(get_turf(src))
+		strut1.amount = 30
+		strut1.update_icon()
+		strut2.amount = 30
+		strut2.update_icon()
+		tile1.amount = 30
+		tile1.update_icon()
+		tile2.amount = 30
+		tile2.update_icon()
+		qdel(src)
+		return
 //frames
 
 /obj/structure/crafting/frame/
@@ -119,7 +164,7 @@
 
 /obj/structure/crafting/frame/bed/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/crafting/top/bed))
-		var/obj/item/crafting/top/bed/top
+		var/obj/item/crafting/top/bed/top = C
 		user.visible_message(SPAN_NOTICE("[user] places a bag in the middle of the frame and pushes a button on the side."), SPAN_INFO("You place a bag in the middle of the frame and push a button on the side."))
 		if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
 			var/obj/structure/bed/modular/bed = new(get_turf(src))
@@ -133,7 +178,7 @@
 		if(user.a_intent == INTENT_GRAB)
 			user.visible_message(SPAN_NOTICE("[user] starts to disassemble the frame."), SPAN_INFO("You start to disassemble the frame."))
 			if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
-				var/obj/item/crafting/frame_elements/bed/B
+				var/obj/item/crafting/frame_elements/bed/B = C
 				B.variant_id = variant_id
 				qdel(src)
 				return
@@ -149,7 +194,7 @@
 
 /obj/structure/crafting/frame/drawers/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/crafting/top/drawers))
-		var/obj/item/crafting/top/drawers/D
+		var/obj/item/crafting/top/drawers/D = C
 		user.visible_message(SPAN_NOTICE("[user] slides metal drawers into the cabinet frame."), SPAN_INFO("You slide metal drawers into the cabinet frame."), SPAN_WARNING("You hear metal sliding against metal."))
 		if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
 			var/obj/structure/closet/modular/drawers/O = new(get_turf(src))
@@ -198,7 +243,7 @@
 	return
 
 /obj/structure/crafting/frame/chair/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/crafting/top/table/))
+	if(istype(C, /obj/item/crafting/top/chair/seat/))
 		var/obj/structure/crafting/frame/chair/W = C
 		user.visible_message(SPAN_NOTICE("[user] pushes a chair seat and backrest onto a chair frame."), SPAN_INFO("You push a chair seat and backrest onto a chair frame."), SPAN_WARNING("You hear a metallic thud."))
 		if(do_after(user, (CRAFTING_DELAY_NORMAL * user.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))

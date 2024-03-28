@@ -206,6 +206,7 @@
 	can_rotate = TRUE
 	opacity = FALSE
 	density = FALSE
+	anchored = FALSE
 
 
 

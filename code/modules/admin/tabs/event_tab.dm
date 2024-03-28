@@ -1072,3 +1072,33 @@
 		if(!pythia_say) return
 		T.pythiasay(pythia_say)
 		return
+
+/client/proc/cmd_start_sequence()
+	set name = "Start Sequence"
+	set category = "Admin.Events"
+
+	if (!admin_holder || !(admin_holder.rights & R_MOD))
+		to_chat(src, "Only administrators may use this command.")
+		return
+
+	var/puzzlebox_admin_option = tgui_input_list(usr, "Select a Sequence", "Start Sequence", list("None - Leave", "Dock 31 Landing", "Dock 31 Elevator Up", "Dorms - Going Down", "Resolution"), 0)
+	if (!puzzlebox_admin_option) return
+	switch(puzzlebox_admin_option)
+		if("None - Leave")
+			return
+		if("Dock 31 Landing")
+			to_chat(world, narrate_head("Blah"))
+			to_chat(world, narrate_body("Blah"))
+			return
+		if("Dock 31 Landing")
+			to_chat(world, narrate_head("Blah"))
+			to_chat(world, narrate_body("Blah"))
+			return
+		if("Dock 31 Landing")
+			to_chat(world, narrate_head("Blah"))
+			to_chat(world, narrate_body("Blah"))
+			return
+		if("Resolution")
+			to_chat(world, narrate_head("Blah"))
+			to_chat(world, narrate_body("Blah"))
+			return
