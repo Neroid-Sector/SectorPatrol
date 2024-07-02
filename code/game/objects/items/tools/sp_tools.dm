@@ -35,3 +35,19 @@
 	has_welding_screen = TRUE
 	item_serial_distance = SERIAL_ITEM_SIZE_CLOSE
 	inherent_traits = list(TRAIT_TOOL_BLOWTORCH)
+
+/obj/item/tool/drill/uacm
+	name = "UACM engraved drill"
+	desc = "You can be totally screwy with this."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "drill"
+	pickup_sound = 'sound/handling/multitool_pickup.ogg'
+	drop_sound = 'sound/handling/screwdriver_drop.ogg'
+	flags_atom = FPRINT|CONDUCT
+	flags_equip_slot = SLOT_WAIST
+	flags_item = NOBLUDGEON
+	w_class = SIZE_SMALL
+	throwforce = 5
+	throw_speed = SPEED_VERY_FAST
+	throw_range = 5
+	inherent_traits = list(TRAIT_TOOL_DRILL)

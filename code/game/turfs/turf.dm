@@ -62,6 +62,14 @@
 	var/directional_opacity = NONE
 	///Lazylist of movable atoms providing opacity sources.
 	var/list/atom/movable/opacity_sources
+	var/list/salvage_contents = list(
+		"metal" = 0,
+		"resin" = 0,
+		"alloy" = 0,
+		)
+	var/no_salvage = 1
+	var/salvage_area_tag
+	var/salvage_turf_processed = 0
 
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE) // this doesn't parent call for optimisation reasons
@@ -73,7 +81,15 @@
 	vis_contents.Cut()
 
 	GLOB.turfs += src
-
+	if(no_salvage == 0)
+		GLOB.salvaging_total_ldpol += ((salvage_contents["metal"] + salvage_contents["resin"] + salvage_contents["alloy"]) / 5)
+		GLOB.salvaging_total_metal += salvage_contents["metal"]
+		GLOB.salvaging_total_resin += salvage_contents["resin"]
+		GLOB.salvaging_total_alloy += salvage_contents["alloy"]
+		GLOB.salvaging_turfs_all += src
+		var/area/currentarea = get_area(src)
+		if(currentarea.salvage_area_tag != null)
+			salvage_area_tag = currentarea.salvage_area_tag
 
 	assemble_baseturfs()
 
@@ -860,3 +876,23 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(T.dir != dir)
 		T.setDir(dir)
 	return T
+
+/turf/proc/salvage_recycle_turf()
+	if(salvage_turf_processed == 1) return
+	playsound(src, 'sound/effects/EMPulse.ogg', 25)
+	var/obj/item/effect/decon_shimmer/decon_turf/decon_effect = new (get_turf(src))
+	sleep(70)
+	GLOB.resources_metal += salvage_contents["metal"]
+	GLOB.resources_resin += salvage_contents["resin"]
+	GLOB.resources_alloy += salvage_contents["alloy"]
+	GLOB.resources_ldpol += ((salvage_contents["metal"] + salvage_contents["resin"] + salvage_contents["alloy"]) / 5)
+	salvage_contents["metal"] = 0
+	salvage_contents["resin"] = 0
+	salvage_contents["alloy"] = 0
+	icon = 'icons/sectorpatrol/salvage/turfs.dmi'
+	icon_state = "empty"
+	plane = SPACE_PLANE
+	update_icon()
+	INVOKE_ASYNC(decon_effect, TYPE_PROC_REF(/obj/item/effect/decon_shimmer/decon_item, delete_with_anim))
+	salvage_turf_processed = 1
+	return

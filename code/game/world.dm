@@ -272,9 +272,9 @@ GLOBAL_LIST_INIT(reboot_sfx, file2list("config/reboot_sfx.txt"))
 /world/proc/update_status()
 	//Note: Hub content is limited to 254 characters, including limited HTML/CSS.
 	var/s = ""
-	s += "<b>Sector Patrol ALPHA - A Role-playing game mode without player antagonists</b><br>"
-	s += "Late joining may be disabled, but you may create your character at any time.<br>"
-	s += "<a href='https://discord.gg/vgr2RWZcXy'>Join the Neroid Sector Discord.</a>"
+	s += "<b>Sector Patrol ALPHA</b> - A cooperative, antagonist-free, RP focused gamemode.<br>"
+	s += "<i>In the ocean of data, amidst azure strands, she sleeps.</i> <br>"
+	s += "<a href='https://discord.gg/RjUyuAnyqU'>Part of the Neroid Sector server and community.</a>"
 
 	world.status = s
 

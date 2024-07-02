@@ -51,8 +51,6 @@
 	return
 
 //Terminal output shortcuts
-#define TERMINAL_STANDARD_SLEEP 10
-#define TERMINAL_LOOKUP_SLEEP 20
 
 /obj/structure/eventterminal/proc/terminal_speak(str, delay = TERMINAL_STANDARD_SLEEP) //Print string onto the console output format. Delay sets ammount until next line is printed/next command is sent.
 	var/puzzlebox_temp_say = str

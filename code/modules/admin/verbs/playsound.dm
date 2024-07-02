@@ -107,6 +107,7 @@
 	var/style = tgui_input_list(src, "Who do you want to play this to?", "Select Listeners", list("Globally", "Xenos", "Marines", "Ghosts", "All In View Range", "Single Mob"))
 	var/sound_type = tgui_input_list(src, "What kind of sound is this?", "Select Sound Type", sound_type_list)
 	sound_type = sound_type_list[sound_type]
+	var/display_title = tgui_input_list(src, "Display Title?", "Title Display", list("Yes", "No"))
 
 	switch(style)
 		if("Globally")
@@ -140,6 +141,8 @@
 			if(must_send_assets)
 				SSassets.transport.send_assets(client, asset_name)
 			client?.tgui_panel?.play_music(web_sound_url, music_extra_data)
+			if(display_title == "Yes")
+				show_blurb_song(GLOB.song_title, GLOB.song_info)
 			if(announce_title)
 				to_chat(client, SPAN_BOLDANNOUNCE("An admin played: [music_extra_data["title"]]"), confidential = TRUE)
 		else

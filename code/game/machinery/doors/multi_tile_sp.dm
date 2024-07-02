@@ -5,6 +5,8 @@
 	desc_lore = "The so called 'general access' airlock is probably the most commonly used one in the galaxy, which is also why airlocks with this access level typically are the ones in their factory default colors, like this one."
 	req_access = list(ACCESS_SP_OVPST_GENERAL_DEFAULT)
 	icon = 'icons/obj/structures/doors/2x1comdoor.dmi'
+	no_panel = 1
+	not_weldable = 1
 	opacity = TRUE
 	glass = FALSE
 

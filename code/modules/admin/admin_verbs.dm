@@ -162,15 +162,19 @@ GLOBAL_LIST_INIT(admin_verbs_major_event, list(
 	/client/proc/change_taskbar_icon,
 	/client/proc/change_weather,
 	/client/proc/admin_blurb,
-	/client/proc/admin_song_blurb,
+	/client/proc/prepare_admin_song_blurb,
 	/client/proc/cmd_admin_pythia_say,
+	/client/proc/cmd_admin_mission_control_say,
 	/client/proc/cmd_start_sequence,
 	/client/proc/cmd_answer_civnet,
+	/client/proc/cmd_set_time_date_loc,
 	/client/proc/cmd_save_turfs,
 	/client/proc/cmd_load_turfs,
-	/client/proc/cmd_set_time_date_loc,
 	/client/proc/cmd_save_general,
 	/client/proc/cmd_load_general,
+	/client/proc/cmd_save_cargo,
+	/client/proc/cmd_load_cargo,
+	/client/proc/cmd_show_resources,
 ))
 
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(

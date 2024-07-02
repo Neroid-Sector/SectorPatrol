@@ -40,10 +40,3 @@
 
 #define narrate_console(str) ("<div class='narrate_console'><p>" + str + "</p></div>")
 
-// Serial numbers
-#define narrate_serial_block(str) ("<div class='narrate_serial_block'><p>" + str + "</p></div>")
-#define narrate_serial(str) ("<div class='narrate_serial'><p>" + str + "</p></div>")
-
-// Cargo Manifests
-#define narrate_manifest_block(str) ("<div class='narrate_manifest_block'><p>" + str + "</p></div>")
-#define narrate_manifest(str) ("<div class='narrate_manifest'><p>" + str + "</p></div>")

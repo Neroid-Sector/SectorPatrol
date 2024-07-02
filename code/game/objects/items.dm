@@ -163,6 +163,9 @@
 	/// How much to offset the item randomly either way alongside Y visually
 	var/ground_offset_y = 0
 
+	var/is_used = 0
+
+
 /obj/item/Initialize(mapload, ...)
 	. = ..()
 
@@ -280,8 +283,6 @@ cases. Override_icon_state should be a list.*/
 	. += "This is a [blood_color ? blood_color != COLOR_OIL ? "bloody " : "oil-stained " : ""][icon2html(src, user)][src.name]. It is a [size] item."
 	if(desc)
 		. += desc
-	if(desc_lore)
-		. += SPAN_NOTICE("This has an <a href='byond://?src=\ref[src];desc_lore=1'>extended lore description</a>.")
 
 /obj/item/attack_hand(mob/user)
 	if (!user)
@@ -1100,3 +1101,14 @@ cases. Override_icon_state should be a list.*/
 ///Called by /mob/living/carbon/swap_hand() when hands are swapped
 /obj/item/proc/hands_swapped(mob/living/carbon/swapper_of_hands)
 	return
+
+/obj/item/proc/check_use(flag = 0) // Used to test if this item is already being used on something: flag determines type of test: 0 - Returns 1 if in_use is 0, otherwise returns 0. 1 - returns 1 and swithces in_use to 1 if it's 0, otherwise returns
+	if (flag == 0)
+		if(is_used == 0)
+			return 1
+		return 0
+	if (flag == 1)
+		if(is_used == 0)
+			is_used = 1
+			return 1
+		return 0

@@ -136,14 +136,6 @@ export const MESSAGE_TYPES = [
     description: 'Text from terminals and atmospheric narration.',
     selector: '.narrate_console, .narrate_body, .narrate_head',
   },
-  {
-    type: MESSAGE_TYPE_LABELS,
-    name: 'Labels and Serial Numbers',
-    description:
-      'Text from labels and serial numbers found on items in the world.',
-    selector:
-      '.narrate_serial_block, .narrate_serial, .narrate_manifest_block, .narrate_manifest',
-  },
   // Admin stuff
   {
     type: MESSAGE_TYPE_ADMINCHAT,

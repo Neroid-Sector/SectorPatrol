@@ -80,11 +80,47 @@
 
 /obj/structure/cargo/crate/examine(mob/user)
 	..()
-
 	if (cargo_manifest != null)
 		if(!isxeno(user) && (get_dist(user, src) < 4 || isobserver(user)))
-			to_chat(user, narrate_body("You can see the cargo manifest stapled on the crate. It reads:"))
-			to_chat(user, narrate_manifest_block(narrate_manifest("[cargo_manifest]")))
+			to_chat(usr, SPAN_NOTICE("You can see a cargo manifest. <a href='byond://?src=\ref[src];show_manifest=1'>Click here to read it.</a>."))
+
+/obj/structure/cargo/crate/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["show_manifest"])
+		var/manifest_windowname = name + "_manifest_[rand(1, 1000)]"
+		var/manifest_displayhtml = {"<!DOCTYPE html>
+		<html>
+		<head>
+		<style>
+		body {
+		background-color:black;
+		}
+		#narrate_manifest {
+		font-family: 'Lucida Grande', monospace;
+		color: #d4d6d6;
+		text-align: left;
+		}
+		#narrate_manifest_block {
+		background: #1b1c1e;
+		border: 1px solid #a4bad6;
+		margin: 0.5em 10% 0.5em 10%;
+		padding: 0.5em;
+		}
+		</style>
+		</head>
+		<body>
+		<div id="narrate_manifest">
+		<div id="narrate_manifest_block">
+		<p>
+		[cargo_manifest]
+		</p>
+		</div>
+		</div>
+		</body>
+		"}
+		usr << browse(manifest_displayhtml,"window=[manifest_windowname];display=1;size=500x500;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+		onclose(usr, "[manifest_windowname]")
+
 /obj/structure/cargo/crate/general/sealed
 	name = "sealed generic UACM standard cargo crate"
 	desc = "A crate with the UACM insignia printed on the side. This crate is marked with green stripes and is sealed with tamper-proofing yellow tape."
@@ -104,16 +140,6 @@
 	climbable = 1
 	anchored = FALSE
 	throwpass = 1
-
-/obj/structure/cargo/crate/
-
-/obj/structure/cargo/crate/examine(mob/user)
-	..()
-
-	if (item_serial != null)
-		if(!isxeno(user) && (get_dist(user, src) < item_serial_distance || isobserver(user)))
-			to_chat(user, narrate_body("The serial number is:"))
-			to_chat(user, narrate_serial_block(narrate_serial("[item_serial]")))
 
 /obj/item/cargo/book
 	name = "book"

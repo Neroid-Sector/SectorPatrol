@@ -1,6 +1,6 @@
 /client/proc/admin_blurb()
 	set name = "Global Blurb Message"
-	set category = "Admin.Events"
+	set category = "Admin.SectorPatrol"
 
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return FALSE
@@ -15,26 +15,21 @@
 	show_blurb(GLOB.player_list, duration, message, TRUE, "center", "center", "#bd2020", "ADMIN")
 	message_admins("[key_name(usr)] sent an admin blurb alert to all players. Alert reads: '[message]' and lasts [(duration / 10)] seconds.")
 
-/client/proc/admin_song_blurb()
-	set name = "Song Blurb Message"
-	set category = "Admin.Events"
+/client/proc/prepare_admin_song_blurb()
+	set name = "Setup Custom Song Blurb"
+	set category = "Admin.SectorPatrol"
 
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return FALSE
 
-	var/song_name = tgui_input_text(usr, message = "Song In-Game Name - Displayed BOLDED on top.", title = "Song Title", timeout = null)
-	if (song_name == null) return
-	var/song_artist = tgui_input_text(usr, message = "Song Artist - Second line, left.", title = "Song Artist", timeout = null)
-	if (song_artist == null) return
-	var/song_title = tgui_input_text(usr, message = "Song Title - Second line, after dash on right. LAST CHANCE TO CANCEL.", title = "Song Name", timeout = null)
-	if (song_title == null) return
-	var/song_album = tgui_input_text(usr, message = "Song Album. Optional, Third line.", title = "Song Album", timeout = null)
-	show_blurb_song(name = "[song_name]", artist = "[song_artist]", title = "[song_title]", album = "[song_album]")
-	message_admins("[key_name(usr)] sent an admin song blurb. Strings sent: '[song_title]', '[song_artist]', '[song_name]', '[song_album]'")
+	GLOB.song_title = tgui_input_text(usr, "Enter a Song Title", "Title selection", GLOB.song_title, MAX_MESSAGE_LEN, FALSE, TRUE, 0)
+	GLOB.song_info = tgui_input_text(usr, "Enter a Song Artist/Album", "Artist/Album selection", GLOB.song_info, MAX_MESSAGE_LEN, FALSE, TRUE, 0)
+	to_chat(src, SPAN_INFO("[GLOB.song_title] / [GLOB.song_info] set"))
+
 
 /client/proc/cmd_admin_pythia_say() // Checks for a Pythia reciever and talks as it and any of its voices.
 	set name = "Speak As Pythia"
-	set category = "Admin.Events"
+	set category = "Admin.SectorPatrol"
 
 	if (!admin_holder || !(admin_holder.rights & R_MOD))
 		to_chat(src, "Only administrators may use this command.")
@@ -49,9 +44,22 @@
 		T.pythiasay(pythia_say)
 		return
 
+/client/proc/cmd_admin_mission_control_say() // Checks for a Pythia reciever and talks as it and any of its voices.
+	set name = "Mission Control Comms"
+	set category = "Admin.SectorPatrol"
+
+	if (!admin_holder || !(admin_holder.rights & R_MOD))
+		to_chat(src, "Only administrators may use this command.")
+		return
+
+	var/mission_control_say = tgui_input_text(src, "What to say as Mission Control into the general Radio Channel", "MC Say Text", max_length = MAX_BOOK_MESSAGE_LEN, multiline = TRUE, encode = FALSE, timeout = 0)
+	if(!mission_control_say) return
+	to_chat(world, "<span class='big'><span class='radio'><span class='name'>Mission Control<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005BOV-PST \u0028TC-MC\u0029\u005D </b></span><span class='message'>, says \"[mission_control_say]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
+	return
+
 /client/proc/cmd_start_sequence()
 	set name = "Start Sequence"
-	set category = "Admin.Events"
+	set category = "Admin.SectorPatrol"
 
 	if (!admin_holder || !(admin_holder.rights & R_MOD))
 		to_chat(src, "Only administrators may use this command.")
@@ -77,8 +85,8 @@
 
 /client/proc/cmd_save_turfs()
 
-	set name = "Peristancy - Save Turfs and Objects"
-	set category = "Admin.SectorPatrol"
+	set name = "Save Turfs and Objects"
+	set category = "Admin.Peristancy"
 
 	if (!admin_holder || !(admin_holder.rights & R_MOD))
 		to_chat(src, "Only administrators may use this command.")
@@ -132,8 +140,8 @@
 
 /client/proc/cmd_load_turfs()
 
-	set name = "Peristancy - Load Turfs and Objects"
-	set category = "Admin.SectorPatrol"
+	set name = "Load Turfs and Objects"
+	set category = "Admin.Peristancy"
 
 	if (!admin_holder || !(admin_holder.rights & R_MOD))
 		to_chat(src, "Only administrators may use this command.")
@@ -189,31 +197,59 @@
 
 /client/proc/cmd_set_time_date_loc()
 
-	set name = "Set Statpanel IC information"
+	set name = "Set Statpanel and IC information"
 	set category = "Admin.SectorPatrol"
 
 	if (!admin_holder || !(admin_holder.rights & R_MOD))
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/olddate = GLOB.ingame_date
+	var/oldvalue = GLOB.ingame_date
 	GLOB.ingame_date = tgui_input_text(usr, message = "Enter Date to display:", title = "Date Entry", default = "[GLOB.ingame_date]", timeout = 0)
-	if(GLOB.ingame_date == null) GLOB.ingame_date = olddate
+	if(GLOB.ingame_date == null) GLOB.ingame_date = oldvalue
 
-	var/oldtime = GLOB.ingame_time
+	oldvalue = GLOB.ingame_time
 	var/newtime_hrs = tgui_input_number(usr, message = "In-game time, HOURS:", title = "Time Entry HOURS", timeout = 0)
 	var/newtime_min = tgui_input_number(usr, message = "In-game time, MINUTES:", title = "Time Entry MINUTES", timeout = 0)
 	GLOB.ingame_time = ((newtime_hrs * 36000) + (newtime_min * 600)) - world.time
-	if(GLOB.ingame_time == null) GLOB.ingame_time = oldtime
+	if(GLOB.ingame_time == null) GLOB.ingame_time = oldvalue
 
-	var/oldlocation = GLOB.ingame_location
+	oldvalue = GLOB.mission_control_hello
+	GLOB.mission_control_hello = tgui_input_text(usr, message = "Change Mission Control Hello:", title = "Mission Control Hello", default = "[GLOB.mission_control_hello]", timeout = 0)
+	if(GLOB.mission_control_hello == null) GLOB.mission_control_hello = oldvalue
+
+	oldvalue = GLOB.ingame_location
 	GLOB.ingame_location = tgui_input_text(usr, message = "Enter Location to display:", title = "Location Entry", default = "[GLOB.ingame_location]", timeout = 0)
-	if(GLOB.ingame_location == null) GLOB.ingame_location = oldlocation
+	if(GLOB.ingame_location == null) GLOB.ingame_location = oldvalue
+
+	oldvalue = GLOB.ingame_mission_type
+	GLOB.ingame_mission_type = tgui_input_text(usr, message = "Enter Mission Type:", title = "Mission Type Entry", default = "[GLOB.ingame_mission_type]", timeout = 0)
+	if(GLOB.ingame_mission_type == null) GLOB.ingame_mission_type = oldvalue
+
+	oldvalue = GLOB.start_narration_header
+	GLOB.start_narration_header = GLOB.ingame_location = tgui_input_text(usr, message = "Start Narration Header:", title = "Narration Entry", default = "[GLOB.start_narration_header]", max_length = MAX_BOOK_MESSAGE_LEN, multiline = TRUE, timeout = 0)
+	if(GLOB.start_narration_header == null) GLOB.start_narration_header = oldvalue
+
+	oldvalue = GLOB.start_narration_body
+	GLOB.start_narration_body = GLOB.ingame_location = tgui_input_text(usr, message = "Start Narration Body:", title = "Narration Entry", default = "[GLOB.start_narration_body]", max_length = MAX_BOOK_MESSAGE_LEN, multiline = TRUE, timeout = 0)
+	if(GLOB.start_narration_body == null) GLOB.start_narration_body = oldvalue
+
+	oldvalue = GLOB.start_narration_footer
+	GLOB.start_narration_footer = GLOB.ingame_location = tgui_input_text(usr, message = "Start Narration Footer:", title = "Narration Entry", default = "[GLOB.start_narration_footer]", max_length = MAX_BOOK_MESSAGE_LEN, multiline = TRUE, timeout = 0)
+	if(GLOB.start_narration_footer == null) GLOB.start_narration_footer = oldvalue
+
+	oldvalue = GLOB.end_narration_header
+	GLOB.end_narration_header = GLOB.ingame_location = tgui_input_text(usr, message = "End Narration Header:", title = "Narration Entry", default = "[GLOB.end_narration_header]", max_length = MAX_BOOK_MESSAGE_LEN, multiline = TRUE, timeout = 0)
+	if(GLOB.end_narration_header == null) GLOB.end_narration_header = oldvalue
+
+	oldvalue = GLOB.end_narration_body
+	GLOB.end_narration_body = GLOB.ingame_location = tgui_input_text(usr, message = "EBd Narration Body:", title = "Narration Entry", default = "[GLOB.end_narration_body]", max_length = MAX_BOOK_MESSAGE_LEN, multiline = TRUE, timeout = 0)
+	if(GLOB.end_narration_body == null) GLOB.end_narration_body = oldvalue
 
 /client/proc/cmd_save_general()
 
-	set name = "Peristancy - Save General Status"
-	set category = "Admin.SectorPatrol"
+	set name = "Save General Status"
+	set category = "Admin.Peristancy"
 
 	if (!admin_holder || !(admin_holder.rights & R_MOD))
 		to_chat(src, "Only administrators may use this command.")
@@ -221,14 +257,22 @@
 
 	var/savefile/G = new("data/persistance/globals.sav")
 	G["Date"] << GLOB.ingame_date
-	G["Time"] << GLOB.ingame_time
+	var/saved_time = (GLOB.ingame_time - SSticker.round_start_time)+ world.time
+	G["Time"] << saved_time
+	G["Mission_Control_Hello"] << GLOB.mission_control_hello
 	G["Location"] << GLOB.ingame_location
+	G["Mission_Type"] << GLOB.ingame_mission_type
+	G["start_narration_header"] << GLOB.start_narration_header
+	G["start_narration_footer"] << GLOB.start_narration_footer
+	G["start_narration_body"] << GLOB.start_narration_body
+	G["end_narration_header"] << GLOB.end_narration_header
+	G["end_narration_body"] << GLOB.end_narration_body
 	to_chat(src, SPAN_BOLDWARNING("General data saved."))
 
 /client/proc/cmd_load_general()
 
-	set name = "Peristancy - Load General Status"
-	set category = "Admin.SectorPatrol"
+	set name = "Load General Status"
+	set category = "Admin.Peristancy"
 
 	if (!admin_holder || !(admin_holder.rights & R_MOD))
 		to_chat(src, "Only administrators may use this command.")
@@ -237,5 +281,66 @@
 	var/savefile/G = new("data/persistance/globals.sav")
 	G["Date"] >> GLOB.ingame_date
 	G["Time"] >> GLOB.ingame_time
+	G["Mission_Control_Hello"] >> GLOB.mission_control_hello
 	G["Location"] >> GLOB.ingame_location
+	G["Mission_Type"] >> GLOB.ingame_mission_type
+	G["start_narration_header"] >> GLOB.start_narration_header
+	G["start_narration_footer"] >> GLOB.start_narration_footer
+	G["start_narration_body"] >> GLOB.start_narration_body
+	G["end_narration_header"] >> GLOB.end_narration_header
+	G["end_narration_body"] >> GLOB.end_narration_body
 	to_chat(src, SPAN_BOLDWARNING("General data loaded."))
+
+/client/proc/cmd_save_cargo()
+
+	set name = "Save Cargo Status"
+	set category = "Admin.Peristancy"
+
+	if (!admin_holder || !(admin_holder.rights & R_MOD))
+		to_chat(src, "Only administrators may use this command.")
+		return
+
+	var/savefile/G = new("data/persistance/cargo/ovpst.sav")
+	G["ldpol"] << (GLOB.testcrew_ldpol + GLOB.resources_ldpol)
+	G["metal"] << (GLOB.testcrew_metal + GLOB.resources_metal)
+	G["resin"] << (GLOB.testcrew_resin + GLOB.resources_resin)
+	G["alloy"] << (GLOB.testcrew_alloy + GLOB.resources_alloy)
+	to_chat(src, SPAN_BOLDWARNING("Data Stores Updated and Saved."))
+
+/client/proc/cmd_load_cargo()
+
+	set name = "Load Cargo Status"
+	set category = "Admin.Peristancy"
+
+	if (!admin_holder || !(admin_holder.rights & R_MOD))
+		to_chat(src, "Only administrators may use this command.")
+		return
+
+	var/savefile/G = new("data/persistance/cargo/ovpst.sav")
+	G["ldpol"] >> GLOB.testcrew_ldpol
+	G["metal"] >> GLOB.testcrew_metal
+	G["resin"] >> GLOB.testcrew_resin
+	G["alloy"] >> GLOB.testcrew_alloy
+	to_chat(src, SPAN_BOLDWARNING("Data Stores Loaded."))
+
+/client/proc/cmd_show_resources()
+	set name = "Map and Total Resource Info"
+	set category = "Admin.SectorPatrol"
+
+	if(!check_rights(R_ADMIN|R_DEBUG))
+		return FALSE
+
+	to_chat(src, narrate_head("Resource Stores information:"))
+	to_chat(src, narrate_body("Test Crew Stores:"))
+	to_chat(src, narrate_body("LD-Pol: [GLOB.testcrew_ldpol]"))
+	to_chat(src, narrate_body("Metal: [GLOB.testcrew_metal]"))
+	to_chat(src, narrate_body("Resin: [GLOB.testcrew_resin]"))
+	to_chat(src, narrate_body("Alloy: [GLOB.testcrew_alloy]"))
+	to_chat(src, "<hr>")
+	to_chat(src, narrate_body("Current level information:"))
+	to_chat(src, narrate_body("LdPol - [GLOB.resources_ldpol] / [GLOB.salvaging_total_ldpol]"))
+	to_chat(src, narrate_body("Metal - [GLOB.resources_metal] / [GLOB.salvaging_total_ldpol]"))
+	to_chat(src, narrate_body("Alloy - [GLOB.resources_resin] / [GLOB.salvaging_total_ldpol]"))
+	to_chat(src, narrate_body("Resin - [GLOB.resources_alloy] / [GLOB.salvaging_total_ldpol]"))
+	to_chat(src, narrate_body("Intel - [GLOB.salvaging_intel_items] / [GLOB.salvaging_total_intel_items]"))
+	to_chat(src, narrate_body("Hacks - [GLOB.salvaging_intel_hacks] / [GLOB.salvaging_total_intel_hacks]"))

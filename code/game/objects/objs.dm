@@ -95,7 +95,6 @@
 		if (alert(usr, "Would you like to enable pixel scaling?", "Confirm", "Yes", "No") == "Yes")
 			enable_pixel_scaling()
 
-
 // object is being physically reduced into parts
 /obj/proc/deconstruct(disassembled = TRUE)
 	density = FALSE

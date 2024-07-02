@@ -15,6 +15,7 @@
 	new /obj/item/tool/crowbar/uacm(src)
 	new /obj/item/tool/wirecutters/uacm(src)
 	new /obj/item/device/multitool/uacm(src)
+	new /obj/item/tool/drill/uacm(src)
 
 /obj/item/storage/backpack/satchel/discrete
 	name = "discrete satchel"

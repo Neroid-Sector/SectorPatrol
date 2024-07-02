@@ -6,6 +6,8 @@
 	desc = "This is a placeholder. It should not be here."
 	desc_lore = "This exists as a generic item to orient others in the code."
 	opacity = TRUE
+	no_panel = 1
+	not_weldable = 1
 
 /obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general //Basic Ensign Access. For "standard" doors.
 	name = "standard airlock"

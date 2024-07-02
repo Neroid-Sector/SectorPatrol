@@ -733,8 +733,6 @@
 		var/obj/item/I = locate(href_list["descitem"])
 		if(istype(I))
 			to_chat(usr, examine_block(narrate_body("[I.desc]")))
-			if(I.desc_lore)
-				to_chat(usr, SPAN_NOTICE("This has an <a href='byond://?src=\ref[I];desc_lore=1'>extended lore description</a>."))
 
 	if(href_list["flavor_change"])
 		if(usr.client != client)

@@ -148,3 +148,50 @@
 		list("Diet Vanilla Souto", 20, /obj/item/reagent_container/food/drinks/cans/souto/diet/vanilla, VENDOR_ITEM_REGULAR),
 		list("Diet Pineapple Souto", 20, /obj/item/reagent_container/food/drinks/cans/souto/diet/pineapple, VENDOR_ITEM_REGULAR),
 	)
+
+/obj/structure/machinery/cm_vending/sorted/sectorpatrol/salvage
+	name = "OV PST Salvaging Gear Dispenser"
+	desc = "A bulky machine that seems to be connected to a bigger storage below this deck."
+	desc_lore = "Dispensers like these are considered standard and are required whenever handling of classified, prototype or experimental gear is involved. Since the Test Crews use PST created gear, all infused with Pythia's LD traces at the very least, all gear must be accessed through a dispenser for security purposes. These devices also disinfect, inspect and repair/replace any gear that may require it."
+	icon = 'icons/obj/structures/machinery/vending_sp.dmi'
+	icon_state = "spacesuit"
+	hackable = FALSE
+	unacidable = TRUE
+	unslashable = TRUE
+	wrenchable = FALSE
+	vend_delay = 10
+	deny_delay = 10
+
+/obj/structure/machinery/cm_vending/sorted/sectorpatrol/salvage/populate_product_list(scale)
+	listed_products = list(
+		list("SPACESUITS - MANDATORY", -1, null, null),
+		list("LD-Polymer Spacesuit", 10, /obj/item/clothing/head/helmet/space/uacm, VENDOR_ITEM_REGULAR),
+		list("LD-Polymer Spacesuit Helmet", 10, /obj/item/clothing/suit/space/uacm, VENDOR_ITEM_REGULAR),
+		list("TANK AND NOZZLES", -1, null, null),
+		list("Backpack - One per 3 person squad", 1, /obj/item/salvage/recycler_backpack, VENDOR_ITEM_REGULAR),
+		list("Nozzles - One per squad memeber. One spare.", 4, /obj/item/salvage/recycler_nozzle, VENDOR_ITEM_REGULAR),
+		list("TOOLS", -1, null, null),
+		list("Left Hand Pouch - Screwdriver, wirecutters, multitool.", 10, /obj/item/storage/pouch/uacm/salvage/left, VENDOR_ITEM_REGULAR),
+		list("Left Hand Pouch - Drill, crowbar, wrench.", 10, /obj/item/storage/pouch/uacm/salvage/right, VENDOR_ITEM_REGULAR),
+		list("High powered flashlight.", 10, /obj/item/device/flashlight/salvage, VENDOR_ITEM_REGULAR),
+		list("Intel Document Pouch", 10, /obj/item/storage/pouch/document/uacm_salvage, VENDOR_ITEM_REGULAR),
+	)
+
+/obj/structure/machinery/cm_vending/sorted/sectorpatrol/spikes
+	name = "OV PST LD Encrypter"
+	desc = "A heavily modified 3d printer with multiple strange looking, blue-tinted devices attached to it."
+	desc_lore = "Encrypted, or polarized Liquid Data is utilized by intelligence service of all three of the major superpowers to maintain an always up to date FTL comms network across all assets. This also means that any civilian research into LD data capabilities is prohibited, and LD stores are highly guarded secrets. But LD Encryption, at least as claimed by the OV-PST Engineering Corps, can be used for far more than just simple data synchronization. With the help of a special device, like the one you are looking at, LD cells can be given specific instructions that can be later utilized in data collection or coordination. This device can be used to prepare LD-enabled spikes useful in salvaging for either data collection or final deconstruction of cleared rooms."
+	icon = 'icons/obj/structures/machinery/vending_sp.dmi'
+	icon_state = "intel"
+	hackable = FALSE
+	unacidable = TRUE
+	unslashable = TRUE
+	wrenchable = FALSE
+	vend_delay = 10
+	deny_delay = 10
+
+/obj/structure/machinery/cm_vending/sorted/sectorpatrol/spikes/populate_product_list(scale)
+	listed_products = list(
+		list("LD Data Spike - Data Extraction", 50, /obj/item/salvage/data_spike, VENDOR_ITEM_REGULAR),
+		list("LD Drone Spike - Final Room Deconstruction", 50, /obj/item/salvage/drone_spike, VENDOR_ITEM_REGULAR),
+	)

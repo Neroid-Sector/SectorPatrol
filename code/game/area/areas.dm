@@ -83,6 +83,8 @@
 	/// Doesn't need to be set for areas/Z levels that are marked as admin-only
 	var/block_game_interaction = FALSE
 
+	var/salvage_area_tag
+
 
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
@@ -455,3 +457,4 @@
 		areas_in_z["[z]"] = list()
 	areas_in_z["[z]"] += src
 
+/area/test_area

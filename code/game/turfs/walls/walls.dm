@@ -9,7 +9,7 @@
 	var/hull = 0
 	var/walltype = WALL_METAL
 	/// when walls smooth with one another, the type of junction each wall is.
-	var/junctiontype 
+	var/junctiontype
 	var/thermite = 0
 	var/melting = FALSE
 	var/claws_minimum = CLAW_TYPE_SHARP
@@ -24,7 +24,7 @@
 
 	var/damage = 0
 	/// Wall will break down to girders if damage reaches this point
-	var/damage_cap = HEALTH_WALL 
+	var/damage_cap = HEALTH_WALL
 
 	var/damage_overlay
 	var/global/damage_overlays[8]
@@ -38,13 +38,13 @@
 	var/d_state = 0 //Normal walls are now as difficult to remove as reinforced walls
 
 	/// the acid hole inside the wall
-	var/obj/effect/acid_hole/acided_hole 
+	var/obj/effect/acid_hole/acided_hole
 	var/acided_hole_dir = SOUTH
 
 	var/special_icon = 0
 	var/list/blend_turfs = list(/turf/closed/wall)
 	var/list/noblend_turfs = list(/turf/closed/wall/mineral, /turf/closed/wall/almayer/research/containment) //Turfs to avoid blending with
-	var/list/blend_objects = list(/obj/structure/machinery/door, /obj/structure/window_frame, /obj/structure/window/framed) // Objects which to blend with
+	var/list/blend_objects = list(/obj/structure/machinery/door, /obj/structure/window_frame, /obj/structure/window/framed, /obj/structure/salvage/airlock)  // Objects which to blend with
 	var/list/noblend_objects = list(/obj/structure/machinery/door/window) //Objects to avoid blending with (such as children of listed blend objects.
 
 /turf/closed/wall/Initialize(mapload, ...)

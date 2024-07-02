@@ -135,21 +135,56 @@
 	icon_state = "default"
 
 /obj/effect/decal/info_tag/examine(mob/user)
-	var/list/examine_strings = get_examine_text(user)
-	if(!examine_strings)
-		log_debug("Attempted to create an examine block with no strings! Atom : [src], user : [user]")
-		return
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, examine_strings)
-	to_chat(user, narrate_serial_block(examine_strings.Join("</div>")))
+	var/info_taghtml = {"<!DOCTYPE html>
+		<html>
+		<head>
+		<style>
+		body {
+		background-color:black;
+		color:#ddd;
+		}
+		#narrate_serial {
+		font-family: 'Lucida Grande', monospace;
+		color: #d4d6d6;
+		text-align: center;
+		padding: 0em 1em;
+		}
+		#narrate_serial_block {
+		background: #1b1c1e;
+		border: 1px solid #a4bad6;
+		margin: 0.5em 15%;
+		padding: 0.5em 0.75em;
+		}
+		#desc {
+		width:90%;
+		padding:5%;
+		text-align:justify;
+		font-size:120%;
+		font-family:Tahoma, sans-serif;
+		}
+		</style>
+		</head>
+		<body>
+		<div id="narrate_serial_block">
+		<div id="narrate_serial">
+		<p>
+		[desc]
+		</p>
+		</div>
+		</div>
+		<hr>
+		<div id="desc">
+		<p>
+		[desc_lore]
+		</p>
+		</div>
+		</body>
+		"}
+	usr << browse(info_taghtml,"window=[name];display=1;size=500x600;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	onclose(usr, "[name]")
 
-/obj/effect/decal/info_tag/get_examine_text(mob/user)
-	. = list()
-	if(desc)
-		. += narrate_serial(desc)
-	if(desc_lore)
-		. += narrate_body("<a href='byond://?src=\ref[src];desc_lore=1'>Click here</a> for more information about this sign.")
-//Outer Veil PST
-//Dock 31
+/obj/effect/decal/info_tag/Topic(href, list/href_list)
+	. = ..()
 
 /obj/effect/decal/info_tag/pst/d31
 	name = "D-31 orientation label"

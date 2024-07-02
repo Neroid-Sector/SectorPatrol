@@ -12,53 +12,6 @@ Format:
 	disabled (disables the map)
 endmap
 
-map lv624
+map Neroid
 	default
-endmap
-
-map bigredv2
-endmap
-
-map prison_station_fop
-	disabled
-endmap
-
-map fiorina_sciannex
-	minplayers 130
-endmap
-
-map corsat
-	minplayers 130
-	voteweight 0
-	disabled
-endmap
-
-map desert_dam
-	minplayers 130
-endmap
-
-map ice_colony_v2
-	minplayers 130
-	voteweight 0
-	disabled
-endmap
-
-map shivas_snowball
-endmap
-
-map kutjevo
-endmap
-
-map sorokyne_strata
-	minplayers 130
-endmap
-
-map lv522_chances_claim
-	minplayers 130
-endmap
-
-map new_varadero
-endmap
-
-map whiskey_outpost_v2
 endmap

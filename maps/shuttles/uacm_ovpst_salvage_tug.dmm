@@ -1,0 +1,49 @@
+"a" = (/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/shuttle/ert)
+"d" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"g" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'; dir = 1; locked = 1; id = "starboard_door"},/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"k" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/salvage,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/shuttle/ert)
+"m" = (/obj/structure/machinery/light/marker/admin{brightness = 12},/turf/open/floor/almayer{icon_state = "plate"},/area/shuttle/ert)
+"o" = (/turf/closed/wall/almayer/outer,/area/shuttle/ert)
+"p" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/salvage,/turf/open/floor/almayer{icon_state = "orangefull"},/area/shuttle/ert)
+"r" = (/obj/structure/salvage/recycler_base{pixel_y = 0},/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"t" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/salvage,/turf/open/floor/almayer{icon_state = "bluefull"},/area/shuttle/ert)
+"u" = (/obj/structure/machinery/light/marker/admin{brightness = 12},/turf/open/floor/almayer,/area/shuttle/ert)
+"v" = (/obj/structure/salvage/nozzle_charger{pixel_y = 36},/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"w" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/salvage,/turf/open/floor/almayer{icon_state = "redfull"},/area/shuttle/ert)
+"x" = (/obj/structure/surface/table/reinforced/black,/obj/structure/machinery/cm_vending/sorted/sectorpatrol/spikes{pixel_y = 8},/turf/open/floor/almayer,/area/shuttle/ert)
+"y" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'; locked = 1},/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"z" = (/obj/effect/landmark/observer_start,/turf/open/floor/almayer{icon_state = "plate"},/area/shuttle/ert)
+"F" = (/turf/open/floor/almayer{icon_state = "plate"},/area/shuttle/ert)
+"G" = (/obj/structure/bed/chair/comfy/black{dir = 1},/turf/open/floor/almayer{icon_state = "silverfull"},/area/shuttle/ert)
+"H" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin{icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"I" = (/turf/open/floor/almayer{icon_state = "orangefull"},/area/shuttle/ert)
+"L" = (/obj/structure/window/framed/almayer/hull,/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"M" = (/obj/docking_port/mobile/emergency_response/uacm_ovpst_salvage_tug,/turf/closed/wall/almayer/outer,/area/shuttle/ert)
+"O" = (/obj/structure/eventterminal/briefing_display{pixel_y = 32},/obj/structure/bed/chair/comfy/black{dir = 1},/turf/open/floor/almayer{icon_state = "silverfull"},/area/shuttle/ert)
+"P" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/mc_salvage{dir = 8; pixel_y = 4; pixel_x = -5},/turf/open/floor/almayer,/area/shuttle/ert)
+"Q" = (/turf/open/floor/almayer{icon_state = "bluefull"},/area/shuttle/ert)
+"R" = (/obj/structure/bed/chair/comfy/black{dir = 1},/obj/structure/machinery/light/marker/admin{brightness = 12},/turf/open/floor/almayer{icon_state = "silverfull"},/area/shuttle/ert)
+"T" = (/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"U" = (/obj/structure/machinery/light/marker/admin{brightness = 12},/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"V" = (/turf/open/floor/almayer{icon_state = "redfull"},/area/shuttle/ert)
+"W" = (/obj/effect/landmark/late_join,/turf/open/floor/almayer{icon_state = "plate"},/area/shuttle/ert)
+"X" = (/turf/open/floor/almayer,/area/shuttle/ert)
+"Y" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'; locked = 1; id = "port_door"},/turf/open/floor/almayer{icon_state = "blackfull"; dir = 4},/area/shuttle/ert)
+"Z" = (/obj/structure/salvage/intel_dropoff,/turf/open/floor/almayer,/area/shuttle/ert)
+
+(1,1,1) = {"
+ooLLHTLLoo
+LwVVFFIIpL
+LFmFWzFmFL
+LkaaFFQQtL
+oooodToooo
+LGOGXXXXZL
+LGGGXXXXxL
+LGRGXXuXPL
+LGGGXXXXXL
+ooooyToooo
+ovrvTTvrvo
+TTUTTTTUTT
+gTTTTTTTTg
+MoooYToooo
+"}

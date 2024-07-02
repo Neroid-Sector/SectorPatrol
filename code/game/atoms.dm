@@ -249,14 +249,15 @@ directive is properly returned.
 		return
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, examine_strings)
 	to_chat(user, examine_block(examine_strings.Join("\n")))
+	if(desc_lore != null)
+		to_chat(user, SPAN_NOTICE("More information is avaiable. <a href='byond://?src=\ref[src];desc_lore=1'>Click here to open a detailed window.</a>."))
 
 /atom/proc/get_examine_text(mob/user)
 	. = list()
 	. += "[icon2html(src, user)] That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	if(desc)
 		. += desc
-	if(desc_lore)
-		. += SPAN_NOTICE("This has an <a href='byond://?src=\ref[src];desc_lore=1'>extended lore description</a>.")
+
 
 // called by mobs when e.g. having the atom as their machine, pulledby, loc (AKA mob being inside the atom) or buckled var set.
 // see code/modules/mob/mob_movement.dm for more.
@@ -499,7 +500,53 @@ Parameters are passed from New.
 		return TRUE
 
 	if(href_list["desc_lore"])
-		show_browser(usr, "<BODY><TT>[replacetext(desc_lore, "\n", "<BR>")]</TT></BODY>", name, name, "size=500x500")
+		var/lorehtml = {"
+		<!DOCTYPE html>
+		<html>
+		<head>
+		<style>
+		body {
+		background-color:black;
+		color:#ddd;
+		}
+		#title {
+		width:90%;
+		padding:5%;
+		text-align:center;
+		font-size:130%;
+		font-family:Tahoma, sans-serif;
+		}
+		#desc {
+		width:90%;
+		padding:5%;
+		text-align:justify;
+		font-size:120%;
+		font-family:Tahoma, sans-serif;
+		}
+		</style>
+		</head>
+		<body>
+		<div id="title">
+		<p>
+		<b>
+		Viewing: [name]
+		</b>
+		</p>
+		</div>
+		<hr>
+		<div id="desc">
+		<p>
+		[desc]
+		</p>
+		</div>
+		<hr>
+		<div id="desc">
+		<p>
+		[desc_lore]
+		</p>
+		</div>
+		"}
+		usr << browse(lorehtml,"window=[name];display=1;size=527x700;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 		onclose(usr, "[name]")
 
 ///This proc is called on atoms when they are loaded into a shuttle
