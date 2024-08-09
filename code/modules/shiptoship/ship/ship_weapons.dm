@@ -58,7 +58,8 @@
 	var/repair_shutdown = 0
 	var/ship_name = "none"
 	var/weapon_fired = 0
-	var/list/loaded_projectile = list("missile" = "none",
+	var/list/loaded_projectile = list("name" = "none",
+		"missile" = "none",
 		"missile_open" = 0,
 		"warhead" = "none",
 		"warhead_open" = 0,
@@ -114,6 +115,7 @@
 			return
 
 /obj/structure/ship_elements/primary_cannon/proc/FireCannon()
+	loaded_projectile["name"] = "none"
 	loaded_projectile["missle_open"] = 0
 	loaded_projectile["warhead"] = "none"
 	loaded_projectile["warhead_open"] = 0
@@ -149,6 +151,7 @@
 					to_chat(user, SPAN_NOTICE("You load \the [AmmoToInsert] into \the [src]."))
 					loaded_projectile["missile"] = AmmoToInsert.missile_type
 					loaded_projectile["speed"] = AmmoToInsert.element_value
+					loaded_projectile["name"] = AmmoToInsert.name
 					qdel(AmmoToInsert)
 			else
 				if(AmmoToInsert.warhead_type != null)
@@ -169,8 +172,10 @@
 				var/obj/structure/ship_elements/missile_ammo/AmmoToGrab = new (src)
 				AmmoToGrab.missile_type = loaded_projectile["missile"]
 				AmmoToGrab.element_value = loaded_projectile["speed"]
+				AmmoToGrab.name = loaded_projectile["name"]
 				AmmoToGrab.update_icon()
 				loaded_projectile["missile"] = "none"
+				loaded_projectile["name"] = "none"
 				loaded_projectile["missile_open"] = 0
 				loaded_projectile["speed"] = 0
 				PC.grab_object(user, AmmoToGrab, "big_crate", 'sound/machines/hydraulics_2.ogg')
@@ -355,6 +360,7 @@
 			return
 
 /obj/structure/ship_elements/secondary_cannon/proc/FireCannon()
+	loaded_projectile["name"] = "none"
 	loaded_projectile["type"] = "none"
 	loaded_projectile["loaded"] = 0
 	animate_use()

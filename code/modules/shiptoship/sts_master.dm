@@ -52,6 +52,7 @@
 						),
 					),
 				"missile" = list(
+					"name" = "none",
 					"id_tag" = "none",
 					"type" = "none",
 					"target" = list("x" = 0, "y" = 0, "tag" = "none"),
@@ -121,6 +122,7 @@
 		sector_map[coord_x][coord_y]["ship"]["system"]["salvos_max"] = salvos_to_apply
 		return
 	if(entity_type == 1)
+		sector_map[coord_x][coord_y]["missile"]["name"] = name_to_apply
 		sector_map[coord_x][coord_y]["missile"]["speed"] = missile_speed_to_apply
 		sector_map[coord_x][coord_y]["missile"]["type"] = type_to_apply
 		sector_map[coord_x][coord_y]["missile"]["id_tag"] = "MSL-[GLOB.sector_map_id_tag]"
@@ -183,7 +185,8 @@
 					sector_map[current_x][current_y]["ship"]["system"]["salvos_left"] = 0
 				if(sector_map[current_x][current_y]["missile"]["id_tag"] == tag_to_remove)
 					sector_map[current_x][current_y]["missile"]["warhead"]["type"] = "none"
-					sector_map[current_x][current_y]["missile"]["warhead"]["patload"] = 0
+					sector_map[current_x][current_y]["missile"]["warhead"]["payload"] = 0
+					sector_map[current_x][current_y]["missile"]["name"] = "none"
 					sector_map[current_x][current_y]["missile"]["id_tag"] = "none"
 					sector_map[current_x][current_y]["missile"]["type"] = "none"
 					sector_map[current_x][current_y]["missile"]["speed"] = 0
@@ -232,6 +235,7 @@
 			sector_map[x_to_remove][y_to_remove][tag_to_remove]["target"]["x"] = 0
 			sector_map[x_to_remove][y_to_remove][tag_to_remove]["target"]["y"] = 0
 			sector_map[x_to_remove][y_to_remove][tag_to_remove]["target"]["tag"] = 0
+			sector_map[x_to_remove][y_to_remove]["missile"]["name"] = "none"
 			sector_map[x_to_remove][y_to_remove]["missile"]["type"] = "none"
 			sector_map[x_to_remove][y_to_remove]["missile"]["system"]["processed_movement"] = 0
 			sector_map[x_to_remove][y_to_remove]["missile"]["system"]["has_moved"] = 0
@@ -432,6 +436,7 @@
 			log_round_history(event = "regular_move", log_source = sector_map[final_x][final_y][selected_type]["name"], log_dest_x = final_x, log_dest_y = final_y)
 			return 1
 		if("missile")
+			sector_map[move_target_x][move_target_y][selected_type]["name"] = sector_map[move_starting_x][move_starting_y][selected_type]["name"]
 			sector_map[move_target_x][move_target_y][selected_type]["id_tag"] = sector_map[move_starting_x][move_starting_y][selected_type]["id_tag"]
 			sector_map[move_target_x][move_target_y][selected_type]["type"] = sector_map[move_starting_x][move_starting_y][selected_type]["type"]
 			sector_map[move_target_x][move_target_y][selected_type]["target"]["x"] = sector_map[move_starting_x][move_starting_y][selected_type]["target"]["x"]
@@ -483,7 +488,7 @@
 		sector_map[missile_origin_x][missile_origin_y]["missile"]["system"]["processed_movement"] = 1
 		sector_map[missile_origin_x][missile_origin_y]["missile"]["system"]["has_moved"] = 1
 	if(scanning_complete == 0)
-		if(quiet == 0)log_round_history(event = "missile_homing_bad_target", log_source = "[sector_map[missile_origin_x][missile_origin_y]["missile"]["type"]] - [sector_map[missile_origin_x][missile_origin_y]["missile"]["id_tag"]]")
+		if(quiet == 0)log_round_history(event = "missile_homing_bad_target", log_source = "[sector_map[missile_origin_x][missile_origin_y]["missile"]["name"]],[sector_map[missile_origin_x][missile_origin_y]["missile"]["type"]] - [sector_map[missile_origin_x][missile_origin_y]["missile"]["id_tag"]]")
 		rem_entity(type = "coord", id = "missile", coord_x = missile_origin_x, coord_y = missile_origin_y)
 	return 1
 
@@ -660,7 +665,7 @@
 					ProcessDamage(ammount = damage_to_splash, x = current_x_splash, y = current_y_splash)
 					if(counter == 1) output_counter += 1
 				if(sector_map[current_x_splash][current_y_splash]["missile"]["id_tag"] != "none")
-					log_round_history(event = "missile_hit_splash", log_source = "[sector_map[current_x_splash][current_y_splash]["missile"]["type"]] - [sector_map[current_x_splash][current_y_splash]["missile"]["id_tag"]]")
+					log_round_history(event = "missile_hit_splash", log_source = "[sector_map[current_x_splash][current_y_splash]["missile"]["name"]],[sector_map[current_x_splash][current_y_splash]["missile"]["type"]] - [sector_map[current_x_splash][current_y_splash]["missile"]["id_tag"]]")
 					rem_entity(type = "coord", id = "missile", coord_x = current_x_splash, coord_y = current_y_splash)
 					if(counter == 1) output_counter += 1
 			current_y_splash += 1
@@ -709,7 +714,7 @@
 	var/missile2_x = other_missile_x
 	var/missile2_y = other_missile_y
 	if(missile1_x == 0 || missile1_y == 0 || missile2_x == 0 || missile2_y == 0) return
-	log_round_history(event = "missile_collision", log_source = "[sector_map[missile1_x][missile1_y]["missile"]["type"]] - [sector_map[missile1_x][missile1_y]["missile"]["id_tag"]]", log_target = "[sector_map[missile2_x][missile2_y]["missile"]["type"]] - [sector_map[missile2_x][missile2_y]["missile"]["id_tag"]]", log_dest_x = missile2_x, log_dest_y = missile2_y)
+	log_round_history(event = "missile_collision", log_source = "[sector_map[missile1_x][missile1_y]["missile"]["name"]],[sector_map[missile1_x][missile1_y]["missile"]["type"]] - [sector_map[missile1_x][missile1_y]["missile"]["id_tag"]]", log_target = "[sector_map[missile2_x][missile2_y]["missile"]["name"]],[sector_map[missile2_x][missile2_y]["missile"]["type"]] - [sector_map[missile2_x][missile2_y]["missile"]["id_tag"]]", log_dest_x = missile2_x, log_dest_y = missile2_y)
 	rem_entity(type = "coord", id = "missile", coord_x = arriving_missile_x, coord_y = arriving_missile_y)
 	rem_entity(type = "coord", id = "missile", coord_x = missile2_x, coord_y = missile2_y)
 
@@ -722,12 +727,12 @@
 	switch(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["warhead"]["type"])
 		if("Homing")
 			if(sector_map[x_to_explode][y_to_explode]["ship"]["id_tag"] == "none")
-				log_round_history(event = "warhead_homing", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
+				log_round_history(event = "warhead_homing", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
 				missileReTarget(missile_x = exploding_missile_x, missile_y = exploding_missile_y, missile_range = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["speed"], x = x_to_explode, y = y_to_explode, id_tag = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["tag"], quiet = 0)
 				return 1
 			if(sector_map[x_to_explode][y_to_explode]["ship"]["id_tag"] != "none")
 				if(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["tag"] == "none")
-					log_round_history(event = "warhead_hit", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]")
+					log_round_history(event = "warhead_hit", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]")
 					if(ProcessDamage(ammount = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["warhead"]["payload"], x = x_to_explode, y = y_to_explode) == 1)
 						rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 						return 1
@@ -737,12 +742,12 @@
 							rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 							return 1
 					if(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["tag"] != sector_map[x_to_explode][y_to_explode]["ship"]["id_tag"])
-						log_round_history(event = "warhead_homing", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
+						log_round_history(event = "warhead_homing", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
 						missileReTarget(missile_x = exploding_missile_x, missile_y = exploding_missile_y, missile_range = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["speed"], x = x_to_explode, y = y_to_explode, id_tag = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["tag"], quiet = 0)
 						return 1
 		if("Explosive")
 			if(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["system"]["processed_movement"] == 1)
-				log_round_history(event = "explosive_splash", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_target = "sector_map[exploding_missile_x][exploding_missile_y]["missile"]["warhead"]["payload"]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
+				log_round_history(event = "explosive_splash", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_target = "sector_map[exploding_missile_x][exploding_missile_y]["missile"]["warhead"]["payload"]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
 				var/splash_passed_ammount = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["warhead"]["payload"]
 				rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 				ProcessSplashDamage(ammount = splash_passed_ammount, x = x_to_explode, y = y_to_explode)
@@ -750,22 +755,22 @@
 			return 1
 		if("Direct")
 			if(sector_map[x_to_explode][y_to_explode]["ship"]["id_tag"] != "none")
-				log_round_history(event = "warhead_hit", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]")
+				log_round_history(event = "warhead_hit", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]")
 				if(ProcessDamage(ammount = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["warhead"]["payload"], x = x_to_explode, y = y_to_explode) == 1)
 					rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 					return 1
 			if(sector_map[x_to_explode][y_to_explode]["ship"]["id_tag"] == "none")
-				log_round_history(event = "warhead_miss", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
+				log_round_history(event = "warhead_miss", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
 				rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 				return 1
 		if("Nuclear")
 			if(sector_map[x_to_explode][y_to_explode]["ship"]["id_tag"] != "none")
-				log_round_history(event = "nuclear_hit", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_target = sector_map[x_to_explode][y_to_explode]["ship"]["name"], log_dest_x = x_to_explode, log_dest_y = y_to_explode)
+				log_round_history(event = "nuclear_hit", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_target = sector_map[x_to_explode][y_to_explode]["ship"]["name"], log_dest_x = x_to_explode, log_dest_y = y_to_explode)
 				rem_entity(type = "coord", id = "ship", coord_x = x_to_explode, coord_y = y_to_explode)
 				rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 				return 1
 			if(sector_map[x_to_explode][y_to_explode]["ship"]["id_tag"] == "none")
-				log_round_history(event = "warhead_miss", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
+				log_round_history(event = "warhead_miss", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
 				rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 				return 1
 
@@ -1037,9 +1042,15 @@
 					return
 	if(mod_entity_type == "missile")
 		switch(mod_entity_prop)
+			if("name")
+				mod_original_value = sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop]
+				sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop] = tgui_input_text(usr, "Enter Projectile Name, a generic name of the missile model.", "NAME Entry", timeout = 0)
+				if (sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop] == null) sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop] = mod_original_value
+				MasterControl()
+				return
 			if("type")
 				mod_original_value = sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop]
-				sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop] = tgui_input_text(usr, "Enter Projectile Type, a generic name of the missile model", "TYPE Entry", timeout = 0)
+				sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop] = tgui_input_text(usr, "Enter Projectile Type, which determines how it moves along the map.", "TYPE Entry", timeout = 0)
 				if (sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop] == null) sector_map[mod_tag_x][mod_tag_y][mod_entity_type][mod_entity_prop] = mod_original_value
 				MasterControl()
 				return
@@ -1167,8 +1178,10 @@
 				if(sector_map[coordinate_x][coordinate_y]["missile"]["id_tag"] != "none")
 					to_chat(usr, SPAN_WARNING("A missile exists on this coordinate already."))
 					return
-				var/name_to_enter = tgui_input_number(usr, "Enter missile Speed", "SPEED Entry", timeout = 0)
+				var/name_to_enter = tgui_input_text(usr, "Enter missile Name", "NAME Entry", timeout = 0)
 				if(name_to_enter == null) name_to_enter = "Unknown"
+				var/speed_to_enter = tgui_input_number(usr, "Enter missile Speed", "SPEED Entry", timeout = 0)
+				if(speed_to_enter == null) speed_to_enter = 0
 				var/type_to_enter = tgui_input_text(usr, "Enter missile Type", "TYPE Entry", timeout = 0)
 				if(type_to_enter == null) type_to_enter = "Unknown"
 				var/warhead_to_enter = tgui_input_text(usr, "Enter warhead type", "WARHEAD Entry", timeout = 0)
@@ -1179,7 +1192,7 @@
 				if(vector_y_to_enter == null) vector_y_to_enter = 0
 				var/target_tag_to_enter = tgui_input_list(usr, "Select a target Tag", "Tag Ship", scan_entites(category = 0, output_format = 1), timeout = 0)
 				if(target_tag_to_enter == null) target_tag_to_enter = "none"
-				add_entity(entity_type = 1, x = coordinate_x, y = coordinate_y, name = name_to_enter, type = type_to_enter, vector_x = vector_x_to_enter, vector_y = vector_y_to_enter, warhead_type = warhead_to_enter, target_tag = target_tag_to_enter)
+				add_entity(entity_type = 1, x = coordinate_x, y = coordinate_y, name = name_to_enter, type = type_to_enter, vector_x = vector_x_to_enter, vector_y = vector_y_to_enter, warhead_type = warhead_to_enter, target_tag = target_tag_to_enter, missile_speed = speed_to_enter)
 				to_chat(usr, SPAN_INFO("Entity Added."))
 				MasterControl()
 				return
@@ -1206,7 +1219,7 @@
 				return
 			if("missile")
 				var/modify_id = tgui_input_list(usr, "Select a missile Entity to Edit", "Mod Entity", scan_entites(category = 1, output_format = 1), timeout = 0)
-				var/modify_value = tgui_input_list(usr, "Select a missile Entity Property to Edit", "Mod Entity", list("type","target","speed","warhead"), timeout = 0)
+				var/modify_value = tgui_input_list(usr, "Select a missile Entity Property to Edit", "Mod Entity", list("name","type","target","speed","warhead"), timeout = 0)
 				mod_entity(entity_type = "missile", entity_tag = modify_id, entity_property = modify_value)
 				return
 	if(href_list["end_turn"])

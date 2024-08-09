@@ -82,7 +82,7 @@
 			if(usage_data["salvos_left"] > 0)
 				if(linked_primary_cannon.loaded_projectile["loaded"] == 1)
 					terminal_display_line("Primary Cannon Projectile information:")
-					terminal_display_line("Missile type: [linked_primary_cannon.loaded_projectile["missile"]], Speed: [linked_primary_cannon.loaded_projectile["speed"]]")
+					terminal_display_line("Missile type: [linked_primary_cannon.loaded_projectile["name"]] - [linked_primary_cannon.loaded_projectile["missile"]], Speed: [linked_primary_cannon.loaded_projectile["speed"]]")
 					terminal_display_line("Warhead type: [linked_primary_cannon.loaded_projectile["warhead"]], Payload: [linked_primary_cannon.loaded_projectile["payload"]]")
 					if(linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["missile"]["id_tag"] == "none")
 						terminal_display_line("LD Targeting system inputs ready.")
@@ -104,7 +104,7 @@
 						terminal_display_line("Calculating firing sollution.", TERMINAL_LOOKUP_SLEEP)
 						terminal_display_line("READY TO FIRE.")
 						if(tgui_input_list(usr, "READY TO FIRE", "FIRE", list("FIRE","Cancel"), timeout = 0) == "FIRE")
-							linked_master_console.add_entity(entity_type = 1, x = linked_master_console.sector_map_data["x"], y = linked_master_console.sector_map_data["y"], type = linked_primary_cannon.loaded_projectile["missile"], vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = linked_primary_cannon.loaded_projectile["warhead"], warhead_payload = linked_primary_cannon.loaded_projectile["payload"], target_tag = linked_master_console.sector_map[fire_target_x][fire_target_y]["ship"]["id_tag"], missile_speed = linked_primary_cannon.loaded_projectile["speed"])
+							linked_master_console.add_entity(entity_type = 1, x = linked_master_console.sector_map_data["x"], y = linked_master_console.sector_map_data["y"], name = linked_primary_cannon.loaded_projectile["name"] ,type = linked_primary_cannon.loaded_projectile["missile"], vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = linked_primary_cannon.loaded_projectile["warhead"], warhead_payload = linked_primary_cannon.loaded_projectile["payload"], target_tag = linked_master_console.sector_map[fire_target_x][fire_target_y]["ship"]["id_tag"], missile_speed = linked_primary_cannon.loaded_projectile["speed"])
 							INVOKE_ASYNC(linked_primary_cannon, TYPE_PROC_REF(/obj/structure/ship_elements/primary_cannon, FireCannon))
 							terminal_display_line("MISSILE AWAY.")
 							usage_data["salvos_left"] -= 1
@@ -199,7 +199,7 @@
 		else if(linked_primary_cannon.loaded_projectile["loaded"] != 1)
 			primary_status = "MISSILE NOT PRIMED, RELOAD NEEDED"
 		else
-			primary_status = "READY TO FIRE. MISSILE: [uppertext(linked_primary_cannon.loaded_projectile["missile"])]WARHEAD: [uppertext(linked_primary_cannon.loaded_projectile["warhead"])]"
+			primary_status = "READY TO FIRE. MISSILE: [uppertext(linked_primary_cannon.loaded_projectile["name"])]-[uppertext(linked_primary_cannon.loaded_projectile["missile"])]WARHEAD: [uppertext(linked_primary_cannon.loaded_projectile["warhead"])]"
 		var/secondary_status
 		if(!linked_secondary_cannon)
 			secondary_status = "OFFLINE"
