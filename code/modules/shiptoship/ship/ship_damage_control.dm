@@ -11,14 +11,34 @@
 	unslashable = TRUE
 	opacity = FALSE
 	density = FALSE
+	var/obj/structure/terminal/damage_console/linked_damage_console
 	var/ship_name = "none"
 	var/generate_max_steps = 5
 	var/repair_keyword
+	var/repair_system
 	var/list/repair_array
 	var/repair_steps
 	var/repair_current_step
 	var/repair_damaged = 0
 	var/repair_in_use
+
+/obj/structure/ship_elements/damage_control_element/proc/GetDamaged(damage_type = null)
+
+	repair_generate_keyword()
+	repair_generate_steps()
+	repair_damaged = 1
+	if(damage_type) repair_system = damage_type
+	icon_state = "damage_2"
+	update_icon()
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(5, 1, src)
+	sparks.start()
+	playsound(src, pick('sound/effects/explosioncreak1.ogg','sound/effects/explosioncreak2.ogg'), 40)
+	emoteas("throws out sparks and a could of burnt ozone-smelling smoke.", 1)
+
+/obj/structure/ship_elements/damage_control_element/proc/LinkToConsole(damage_console as obj)
+	linked_damage_console = damage_console
+	linked_damage_console.damage_controls.Add(src)
 
 /obj/structure/ship_elements/damage_control_element/update_icon()
 	. = ..()
@@ -158,12 +178,25 @@
 			switch(state_to_return)
 				if("examine") return "The tool should be used in <b>HARM</b> intent."
 
+/obj/structure/ship_elements/damage_control_element/proc/ProcessFix()
+	if(repair_system != "critical")
+		if (linked_damage_console.usage_data["damage"][repair_system] > 0)
+			linked_damage_console.usage_data["damage"][repair_system] -= 1
+			linked_damage_console.usage_data["repairs_done"] += 1
+			repair_damaged = 0
+			linked_damage_console.talkas("Ship [repair_system] LD Coil [item_serial] repair complete. Repairs left this interval: [linked_damage_console.usage_data["repairs_max"] - linked_damage_console.usage_data["repairs_done"]].")
+			return
+	else
+		repair_damaged = 0
+		linked_damage_console.talkas("LD Coil [item_serial] reintialization complete.")
+
 /obj/structure/ship_elements/damage_control_element/proc/repair_return_step_text()
 	if(repair_current_step <= repair_steps)
 		var/repair_text = repair_generate_text(text = repair_array[1][repair_current_step], state = "examine") + " " + repair_generate_text(text = repair_array[2][repair_current_step], state = "examine")
 		to_chat(usr, SPAN_INFO(repair_text))
 	if(repair_current_step > repair_steps)
 		to_chat(usr, SPAN_INFO("The repairs are finished. The module can be retracted."))
+		ProcessFix()
 		icon_state = "damage_4"
 
 /obj/structure/ship_elements/damage_control_element/examine(mob/user)
@@ -207,22 +240,27 @@
 	to_chat(usr, SPAN_INFO("You have no idea how to combine these two together."))
 
 /obj/structure/ship_elements/damage_control_element/attack_hand(mob/user)
-	if(icon_state == "damage_1")
-		icon_state = "damage_2"
-		update_icon()
-		playsound(src, 'sound/machines/windowdoor.ogg', 25)
-		emoteas("slides out of its socket and opens a side panel.", 1)
-		sleep(9)
-		icon_state = "damage_3"
-		update_icon()
-		return
-	if(icon_state == "damage_4")
-		icon_state = "damage_5"
-		update_icon()
-		playsound(src, 'sound/machines/windowdoor.ogg', 25)
-		emoteas("slides back into its socket.", 1)
-		sleep(9)
-		icon_state = "damage_1"
-		update_icon()
-		return
-	to_chat(usr, SPAN_INFO("The device does not budge and does not seem to have any direct way of interaction."))
+	if(linked_damage_console.repair_shutdown == 0)
+		if(linked_damage_console.usage_data["repairs_done"] >= linked_damage_console.usage_data["repairs_max"])
+			to_chat(usr, SPAN_WARNING("No more repairs can be done this round."))
+			return
+	if(linked_damage_console.repair_shutdown == 1 || linked_damage_console.usage_data["repairs_done"] < linked_damage_console.usage_data["repairs_max"])
+		if(icon_state == "damage_1")
+			icon_state = "damage_2"
+			update_icon()
+			playsound(src, 'sound/machines/windowdoor.ogg', 25)
+			emoteas("slides out of its socket and opens a side panel.", 1)
+			sleep(9)
+			icon_state = "damage_3"
+			update_icon()
+			return
+		if(icon_state == "damage_4")
+			icon_state = "damage_5"
+			update_icon()
+			playsound(src, 'sound/machines/windowdoor.ogg', 25)
+			emoteas("slides back into its socket.", 1)
+			sleep(9)
+			icon_state = "damage_1"
+			update_icon()
+			return
+		to_chat(usr, SPAN_INFO("The device does not budge and does not seem to have any direct way of interaction."))

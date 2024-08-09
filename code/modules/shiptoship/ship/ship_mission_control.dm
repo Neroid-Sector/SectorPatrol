@@ -8,13 +8,31 @@
 		"x" = 0,
 		"y" = 0,
 		)
-	var/list/linked_consoles = list("signals" = null,)
+	var/repair_shutdown = 0
+	var/obj/structure/terminal/signals_console/linked_signals_console
+	var/obj/structure/terminal/weapons_console/linked_weapons_console
+	var/obj/structure/terminal/damage_console/linked_damage_console
 	var/list/tracking_list
 	var/tracking_max = 3
 	var/list/local_round_log = list()
 	var/list/local_round_log_moves = list()
 	var/list/ping_history = list()
 	var/list/comms_messages = list()
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/RepairShutdown(state = null)
+	switch(state)
+		if(null)
+			return
+		if(1)
+			INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, ProcessShutdown),1)
+			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, ProcessShutdown),1)
+			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),1)
+			repair_shutdown = 1
+		if(0)
+			INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, ProcessShutdown),0)
+			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, ProcessShutdown),0)
+			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),0)
+			repair_shutdown = 0
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/PingLog(entity_type = 0, pos_x = 0, pos_y = 0, name = "none", type = "none", target_x = 0, target_y = 0, speed = 0, hp = 0, faction = "none")
 	switch(entity_type)
@@ -250,18 +268,15 @@
 		target_console.usage_data["tracker_uses_current"] += 1
 		return 1
 
-
-
-
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/FindShipOnMap() // Should only be called after setting up the sector map and putting a ship with a corssesponding ["name"] segment set to match
 	var/current_x = 1
 	var/current_y = 1
 	to_chat(world, SPAN_INFO("Initializing ship [sector_map_data["name"]]!"))
-	if(linked_consoles["signals"] == null)
+	if(linked_signals_console == null)
 		for(var/obj/structure/terminal/signals_console/console in get_area(src))
-			linked_consoles["signals"] = console
-			console.LinkToShipMaster(master_console = src)
-			var/turf/turf_return = get_turf(console)
+			linked_signals_console = console
+			linked_signals_console.LinkToShipMaster(master_console = src)
+			var/turf/turf_return = get_turf(linked_signals_console)
 			to_chat(world, SPAN_INFO("Singals Console Linked at [turf_return.x],[turf_return.y]"))
 	while(current_x <= GLOB.sector_map_x)
 		while(current_y <= GLOB.sector_map_y)

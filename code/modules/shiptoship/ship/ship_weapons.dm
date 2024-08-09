@@ -55,6 +55,7 @@
 	bound_y = 64
 	unslashable = TRUE
 	unacidable = TRUE
+	var/repair_shutdown = 0
 	var/ship_name = "none"
 	var/weapon_fired = 0
 	var/list/loaded_projectile = list("missile" = "none",
@@ -123,6 +124,9 @@
 	animate_use()
 
 /obj/structure/ship_elements/primary_cannon/attackby(obj/item/I, mob/user)
+	if(repair_shutdown == 1)
+		to_chat(usr, SPAN_WARNING("The ship is in emergency repair mode. Most ship systems are not functional until all synchronization coils are fixed."))
+		return
 	if(!istype(I, /obj/item/powerloader_clamp) || !HAS_TRAIT(I, TRAIT_TOOL_MULTITOOL) || !HAS_TRAIT(I, TRAIT_TOOL_SCREWDRIVER))
 		to_chat(usr, SPAN_WARNING("You have no idea how to use these together."))
 		return
@@ -271,7 +275,7 @@
 	. = ..()
 
 /obj/structure/ship_elements/primer_lever/primary/attack_hand(mob/user)
-	if(!paired_device || paired_device.loaded_projectile["warhead"] == "none" || paired_device.loaded_projectile["missile"] == "none")
+	if(!paired_device || paired_device.loaded_projectile["warhead"] == "none" || paired_device.loaded_projectile["missile"] == "none" || paired_device.repair_shutdown == 1)
 		to_chat(usr, SPAN_WARNING("The lever does not budge."))
 		return
 	else
@@ -311,6 +315,7 @@
 	bound_y = 64
 	unslashable = TRUE
 	unacidable = TRUE
+	var/repair_shutdown = 0
 	var/ship_name = "none"
 	var/list/loaded_projectile = list(
 		"type" = "none",
@@ -355,6 +360,9 @@
 	animate_use()
 
 /obj/structure/ship_elements/secondary_cannon/attackby(obj/item/W, mob/user)
+	if(repair_shutdown == 1)
+		to_chat(usr, SPAN_WARNING("The ship is in emergency repair mode. Most ship systems are not functional until all synchronization coils are fixed."))
+		return
 	if(!istype(W, /obj/item/ship_elements/secondary_ammo))
 		to_chat(SPAN_WARNING("You have no idea how to use these two together."))
 		return
@@ -373,6 +381,9 @@
 			return
 
 /obj/structure/ship_elements/secondary_cannon/attack_hand(mob/user)
+	if(repair_shutdown == 1)
+		to_chat(usr, SPAN_WARNING("The ship is in emergency repair mode. Most ship systems are not functional until all synchronization coils are fixed."))
+		return
 	if(usr.a_intent == INTENT_GRAB)
 		if(loaded_projectile["loaded"] == 1)
 			to_chat(usr, SPAN_WARNING("The secondary cannon is loaded and primed. It needs to be discharged before you can unload it."))
@@ -416,7 +427,7 @@
 	. = ..()
 
 /obj/structure/ship_elements/primer_lever/secondary/attack_hand(mob/user)
-	if(!paired_device || paired_device.loaded_projectile["type"] == "none")
+	if(!paired_device || paired_device.loaded_projectile["type"] == "none" || paired_device.repair_shutdown == 1)
 		to_chat(usr, SPAN_WARNING("The lever does not budge."))
 		return
 	else

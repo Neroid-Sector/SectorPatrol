@@ -15,6 +15,7 @@
 	anchored = 1
 	opacity = 1
 	density = 1
+	var/repair_shutdown = 0
 	var/ship_name = "none" //This has to match the name of the ship its on, as saved on its Mission Control structure.
 	var/probe_loaded = 0
 
@@ -24,6 +25,9 @@
 	probe_loaded = 0
 
 /obj/structure/ship_elements/probe_launcher/attackby(obj/item/W, mob/user)
+	if(repair_shutdown == 1)
+		to_chat(usr, SPAN_WARNING("The ship is in emergency repair mode. Most ship systems are not functional until all synchronization coils are fixed."))
+		return
 	if(!(istype(W, /obj/item/ship_probe)))
 		to_chat(usr, SPAN_WARNING("You have no idea how to use these two together."))
 		return
@@ -57,6 +61,7 @@
 	anchored = 1
 	opacity = 1
 	density = 1
+	var/repair_shutdown = 0
 	var/ship_name = "none" //This has to match the name of the ship its on, as saved on its Mission Control structure.
 	var/tracker_loaded = 0
 
@@ -66,6 +71,9 @@
 	tracker_loaded = 0
 
 /obj/structure/ship_elements/tracker_launcher/attackby(obj/item/W, mob/user)
+	if(repair_shutdown == 1)
+		to_chat(usr, SPAN_WARNING("The ship is in emergency repair mode. Most ship systems are not functional until all synchronization coils are fixed."))
+		return
 	if(!(istype(W, /obj/item/ship_tracker)))
 		to_chat(usr, SPAN_WARNING("You have no idea how to use these two together."))
 		return

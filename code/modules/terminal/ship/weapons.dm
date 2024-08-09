@@ -8,6 +8,7 @@
 	icon_state = "open_ok"
 	terminal_reserved_lines = 1
 	terminal_id = "_weapons_control"
+	var/repair_shutdown = 0
 	var/list/usage_data = list(
 		"primary_fired" = 0,
 		"salvos_max" = 2,
@@ -17,9 +18,42 @@
 	var/obj/structure/ship_elements/primary_cannon/linked_primary_cannon
 	var/obj/structure/ship_elements/secondary_cannon/linked_secondary_cannon
 
+/obj/structure/terminal/weapons_console/proc/SetUsageData(state = 0)
+	switch(state)
+		if(null)
+			return
+		if(0)
+			usage_data["primary_fired"] = 0
+			usage_data["salvos_left"] = usage_data["salvos_max"]
+			return
+		if(1)
+			usage_data["primary_fired"] = 1
+			usage_data["salvos_left"] = 0
+			return
+
 /obj/structure/terminal/weapons_console/proc/UpdateMapData()
 	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["system"]["salvos_max"] = usage_data["salvos_max"]
 	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["system"]["salvos_left"] = usage_data["salvos_left"]
+
+/obj/structure/terminal/weapons_console/proc/ProcessShutdown(status = null)
+	switch(status)
+		if(null)
+			return
+		if(1)
+			repair_shutdown = 1
+			linked_primary_cannon.repair_shutdown = 1
+			linked_secondary_cannon.repair_shutdown = 1
+			world << browse(null, "window=[terminal_id]")
+			talkas("Warning. Critical damage recieved. Engaging emergency Hyperspace leapfrog.")
+			return
+		if(0)
+			repair_shutdown = 0
+			linked_primary_cannon.repair_shutdown = 0
+			linked_secondary_cannon.repair_shutdown = 0
+			SetUsageData(1)
+			UpdateMapData()
+			talkas("Critical damage resolved. Lifting lockout.")
+			return
 
 /obj/structure/terminal/weapons_console/proc/LinkToShipMaster(master_console as obj)
 
@@ -158,23 +192,28 @@
 	return "Parsing Loop End"
 
 /obj/structure/terminal/weapons_console/attack_hand(mob/user)
-	var/primary_status
-	if(!linked_primary_cannon)
-		primary_status = "OFFLINE"
-	else if(linked_primary_cannon.loaded_projectile["loaded"] != 1)
-		primary_status = "MISSILE NOT PRIMED, RELOAD NEEDED"
-	else
-		primary_status = "READY TO FIRE. MISSILE: [uppertext(linked_primary_cannon.loaded_projectile["missile"])]WARHEAD: [uppertext(linked_primary_cannon.loaded_projectile["warhead"])]"
-	var/secondary_status
-	if(!linked_secondary_cannon)
-		secondary_status = "OFFLINE"
-	else if(linked_secondary_cannon.loaded_projectile["loaded"] != 1)
-		secondary_status = "NO AMMO BOX PRIMED, RELOAD NEEDED"
-	else
-		secondary_status = "READY TO FIRE. AMMO: [uppertext(linked_secondary_cannon.loaded_projectile["type"])]"
-	terminal_display_line("Welcome, [usr.name].")
-	terminal_display()
-	terminal_display_line("Primary Cannon: [primary_status]")
-	terminal_display_line("Secondary Cannon: [secondary_status]")
-	terminal_input()
-	return "Primary input loop end"
+	if(repair_shutdown == 0)
+		var/primary_status
+		if(!linked_primary_cannon)
+			primary_status = "OFFLINE"
+		else if(linked_primary_cannon.loaded_projectile["loaded"] != 1)
+			primary_status = "MISSILE NOT PRIMED, RELOAD NEEDED"
+		else
+			primary_status = "READY TO FIRE. MISSILE: [uppertext(linked_primary_cannon.loaded_projectile["missile"])]WARHEAD: [uppertext(linked_primary_cannon.loaded_projectile["warhead"])]"
+		var/secondary_status
+		if(!linked_secondary_cannon)
+			secondary_status = "OFFLINE"
+		else if(linked_secondary_cannon.loaded_projectile["loaded"] != 1)
+			secondary_status = "NO AMMO BOX PRIMED, RELOAD NEEDED"
+		else
+			secondary_status = "READY TO FIRE. AMMO: [uppertext(linked_secondary_cannon.loaded_projectile["type"])]"
+		terminal_display_line("Welcome, [usr.name].")
+		terminal_display()
+		terminal_display_line("Primary Cannon: [primary_status]")
+		terminal_display_line("Secondary Cannon: [secondary_status]")
+		terminal_input()
+		return "Primary input loop end"
+	if(repair_shutdown == 1)
+		terminal_display_line("EMERGENCY REPAIR MODE. CRITICAL DAMAGE TO LD SYNCHRONIZATION COILS.")
+		terminal_display_line("Terminal disabled. Consult the Damage Control terminal.")
+		return

@@ -8,6 +8,7 @@
 	icon_state = "open_ok"
 	terminal_reserved_lines = 1
 	terminal_id = "_signals_control"
+	var/repair_shutdown = 0
 	var/obj/structure/shiptoship_master/ship_missioncontrol/linked_master_console
 	var/probe_range = 3
 	var/list/usage_data = list(
@@ -20,6 +21,41 @@
 		)
 	var/obj/structure/ship_elements/probe_launcher/linked_probe_launcher
 	var/obj/structure/ship_elements/tracker_launcher/linked_tracker_launcher
+
+/obj/structure/terminal/signals_console/proc/SetUsageData(state = 0)
+	switch(state)
+		if(null)
+			return
+		if(0)
+			usage_data["ping_uses_current"] = 0
+			usage_data["signal_pulses_current"] = 0
+			usage_data["tracker_uses_current"] = 0
+			return
+		if(1)
+			usage_data["ping_uses_current"] = usage_data["ping_uses"]
+			usage_data["signal_pulses_current"] = usage_data["signal_pulses"]
+			usage_data["tracker_uses_current"] = usage_data["tracker_uses"]
+			return
+
+/obj/structure/terminal/signals_console/proc/ProcessShutdown(status = null)
+	switch(status)
+		if(null)
+			return
+		if(1)
+			repair_shutdown = 1
+			linked_probe_launcher.repair_shutdown = 1
+			linked_tracker_launcher.repair_shutdown = 1
+			world << browse(null, "window=[terminal_id]")
+			talkas("Warning. Critical damage recieved. Engaging emergency Hyperspace leapfrog.")
+			return
+		if(0)
+			repair_shutdown = 0
+			linked_probe_launcher.repair_shutdown = 0
+			linked_tracker_launcher.repair_shutdown = 0
+			SetUsageData(1)
+			talkas("Critical damage resolved. Lifting lockout.")
+			return
+
 
 /obj/structure/terminal/signals_console/proc/LinkToShipMaster(master_console as obj)
 
@@ -151,8 +187,13 @@
 	return "Parsing Loop End"
 
 /obj/structure/terminal/signals_console/attack_hand(mob/user)
-	terminal_display_line("Welcome, [usr.name].")
-	terminal_display()
-	terminal_display_line("Active Trackers: [linked_master_console.GetTrackingList(type = 1)]")
-	terminal_input()
-	return "Primary input loop end"
+	if(repair_shutdown == 0)
+		terminal_display_line("Welcome, [usr.name].")
+		terminal_display()
+		terminal_display_line("Active Trackers: [linked_master_console.GetTrackingList(type = 1)]")
+		terminal_input()
+		return "Primary input loop end"
+	if(repair_shutdown == 1)
+		terminal_display_line("EMERGENCY REPAIR MODE. CRITICAL DAMAGE TO LD SYNCHRONIZATION COILS.")
+		terminal_display_line("Terminal disabled. Consult the Damage Control terminal.")
+		return
