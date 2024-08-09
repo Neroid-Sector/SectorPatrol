@@ -12,17 +12,6 @@
 	var/element_value = 0
 
 /obj/structure/ship_elements/missile_ammo/update_icon()
-	if(missile_type)
-		icon = 'icons/sectorpatrol/ship/weapon_ammo64.dmi'
-		icon_state = missile_type
-		bound_width = 64
-		bound_height = 32
-	if(warhead_type)
-		icon_state = warhead_type
-		icon = 'icons/sectorpatrol/ship/weapon_ammo.dmi'
-		icon_state = warhead_type
-		bound_width = 32
-		bound_height = 32
 	if(warhead_type && missile_type)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
@@ -61,8 +50,10 @@
 	var/list/loaded_projectile = list("name" = "none",
 		"missile" = "none",
 		"missile_open" = 0,
+		"missile_icon" = "none",
 		"warhead" = "none",
 		"warhead_open" = 0,
+		"warhead_icon" = 0,
 		"speed" = 0,
 		"payload" = 0,
 		"factor" = 0,
@@ -75,9 +66,9 @@
 		if(loaded_projectile["loaded"] == 0)
 			overlays += image("primary_unloaded")
 			if(loaded_projectile["missile"] != "none")
-				overlays += image("tray_missile_[loaded_projectile["missile"]]")
+				overlays += image("tray_missile_[loaded_projectile["missile_icon"]]")
 			if(loaded_projectile["warhead"] != "none")
-				overlays += image("tray_warhead_[loaded_projectile["warhead"]]")
+				overlays += image("tray_warhead_[loaded_projectile["warhead_icon"]]")
 			return
 		if(loaded_projectile["loaded"] == 1)
 			overlays += image("primary_loaded")
@@ -116,9 +107,12 @@
 
 /obj/structure/ship_elements/primary_cannon/proc/FireCannon()
 	loaded_projectile["name"] = "none"
-	loaded_projectile["missle_open"] = 0
+	loaded_projectile["missile"] = "none"
+	loaded_projectile["missile_open"] = 0
+	loaded_projectile["missile_icon"] = "none"
 	loaded_projectile["warhead"] = "none"
 	loaded_projectile["warhead_open"] = 0
+	loaded_projectile["warhead_icon"] = "none"
 	loaded_projectile["speed"] = 0
 	loaded_projectile["payload"] = 0
 	loaded_projectile["factor"] = 0
@@ -152,6 +146,7 @@
 					loaded_projectile["missile"] = AmmoToInsert.missile_type
 					loaded_projectile["speed"] = AmmoToInsert.element_value
 					loaded_projectile["name"] = AmmoToInsert.name
+					loaded_projectile["missile_icon"] = AmmoToInsert.icon_state
 					qdel(AmmoToInsert)
 			else
 				if(AmmoToInsert.warhead_type != null)
@@ -162,6 +157,7 @@
 						to_chat(user, SPAN_NOTICE("You load \the [AmmoToInsert] into \the [src]."))
 						loaded_projectile["warhead"] = AmmoToInsert.missile_type
 						loaded_projectile["payload"] = AmmoToInsert.element_value
+						loaded_projectile["warhead_icon"] = AmmoToInsert.icon_state
 						qdel(AmmoToInsert)
 			playsound(src, 'sound/machines/hydraulics_1.ogg', 40, 1)
 			PC.loaded = null
@@ -169,16 +165,21 @@
 			PC.update_icon()
 		else
 			if(loaded_projectile["missile"] != "none")
-				var/obj/structure/ship_elements/missile_ammo/AmmoToGrab = new (src)
-				AmmoToGrab.missile_type = loaded_projectile["missile"]
-				AmmoToGrab.element_value = loaded_projectile["speed"]
-				AmmoToGrab.name = loaded_projectile["name"]
-				AmmoToGrab.update_icon()
+				switch(loaded_projectile["missile"])
+					if("LD Homing")
+						var/obj/structure/ship_elements/missile_ammo/missile_homing/AmmoToGrab = new (src)
+						PC.grab_object(user, AmmoToGrab, "big_crate", 'sound/machines/hydraulics_2.ogg')
+					if("Direct")
+						var/obj/structure/ship_elements/missile_ammo/missile_dumbfire/AmmoToGrab = new (src)
+						PC.grab_object(user, AmmoToGrab, "big_crate", 'sound/machines/hydraulics_2.ogg')
+					if("Accelerating Torpedo")
+						var/obj/structure/ship_elements/missile_ammo/missile_torpedo/AmmoToGrab = new (src)
+						PC.grab_object(user, AmmoToGrab, "big_crate", 'sound/machines/hydraulics_2.ogg')
 				loaded_projectile["missile"] = "none"
 				loaded_projectile["name"] = "none"
 				loaded_projectile["missile_open"] = 0
+				loaded_projectile["missile_icon"] = "none"
 				loaded_projectile["speed"] = 0
-				PC.grab_object(user, AmmoToGrab, "big_crate", 'sound/machines/hydraulics_2.ogg')
 			else if(loaded_projectile["warhead"] != "none")
 				var/obj/structure/ship_elements/missile_ammo/AmmoToGrab = new (src)
 				AmmoToGrab.warhead_type = loaded_projectile["warhead"]
@@ -186,6 +187,7 @@
 				AmmoToGrab.update_icon()
 				loaded_projectile["warhead"] = "none"
 				loaded_projectile["warhead_open"] = 0
+				loaded_projectile["warhead_icon"] = "none"
 				loaded_projectile["payload"] = 0
 				PC.grab_object(user, AmmoToGrab, "big_crate", 'sound/machines/hydraulics_2.ogg')
 			update_icon()
