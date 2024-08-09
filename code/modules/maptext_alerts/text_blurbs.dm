@@ -161,5 +161,5 @@ but should see their own spawn message even if the player already dropped as USC
 //Song Title blurb
 /proc/show_blurb_song(title = "Song Name",additonal = "Song Artist - Song Album",) // Formatting is: First line is bolded, second line is regular.
 	var/message_to_display = "<b>[title]</b>\n[additonal]"
-	for(var/mob/living/mob in world)
+	for(var/mob/mob in world)
 		INVOKE_ASYNC(mob, PROC_REF(show_blurb), GLOB.player_list, 10 SECONDS, "[message_to_display]", "LEFT+0:16,BOTTOM+1:16", "left", "#FFFFFF", "song[title]", FALSE, 1)

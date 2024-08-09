@@ -8,6 +8,7 @@
 	icon_state = "master"
 	var/terminal_id = "default"
 	var/list/terminal_buffer = list()
+	var/list/terminal_trimmed_buffer = list()
 	var/terminal_busy = 0
 	var/terminal_line_length = 70
 	var/terminal_line_height = 21
@@ -16,13 +17,13 @@
 	var/list/terminal_header = list()
 
 /obj/structure/terminal/proc/reset_buffer() // resets terminal buffer and creates fresh list.
-	terminal_buffer = null
-	terminal_buffer = list()
-	terminal_buffer += terminal_header
+	terminal_trimmed_buffer = null
+	terminal_trimmed_buffer = list()
+	terminal_trimmed_buffer += terminal_header
 
 /obj/structure/terminal/Initialize(mapload, ...)
 	. = ..()
-	if(terminal_header) terminal_buffer += terminal_header
+	if(terminal_header) terminal_trimmed_buffer += terminal_header
 
 /obj/structure/terminal/proc/kill_window()
 	usr << browse(null, "window=[terminal_id]")
@@ -30,37 +31,46 @@
 
 /obj/structure/terminal/proc/terminal_display() // Display loop. HTML encodes (which incidentally should also prevent a lot of HTML shenanigans since it escapes characters) and displays current buffer. Please don't laugh at my placeholder HTML -_- , in normal circumstances should not need edits unless you want to change the style for an individual terminal.
 	trim_buffer()
-	var/terminal_output = ("<p>" + jointext((terminal_buffer), "</p><p>") + "/<p>")
+	var/terminal_output = ("<p>" + jointext((terminal_trimmed_buffer), "</p><p>") + "/<p>")
 	var/terminal_html ={"<!DOCTYPE html>
 	<html>
 	<head>
 	<style>
 	body {
 	background-color:black;
-	}
+	width: calc(800px - 2em);
+    }
+    .box {
+    border-style: solid;
+    height: 66px;
+    }
+    .box_console {
+    border-style: solid;
+    height: 734px;
+    }
 	#terminal_text {
 	font-family: 'Courier New',
 	cursive, sans-serif;
 	color: #1bdd4b;
 	text-align: left;
-	padding: 0em 1em;
+	padding: 0em, 1em;
 	}
 	</style>
 	</head>
 	<body>
-	<div id="terminal_text">
-	<p>
+	<div id = "terminal_text">
 	[terminal_output]
 	</p>
 	</div>
+    </div>
 	</body>
 	"}
 	usr << browse(terminal_html,"window=[terminal_id];display=1;size=[terminal_window_size];border=5px;can_close=0;can_resize=0;can_minimize=0;titlebar=0")
 	onclose(usr, "[terminal_id]")
 
 /obj/structure/terminal/proc/trim_buffer()
-	while (terminal_buffer.len > (terminal_line_height - terminal_reserved_lines))
-		terminal_buffer.Cut((1+terminal_reserved_lines),(2+terminal_reserved_lines))
+	while (terminal_trimmed_buffer.len > (terminal_line_height - terminal_reserved_lines))
+		terminal_trimmed_buffer.Cut((1+terminal_reserved_lines),(2+terminal_reserved_lines))
 
 
 /obj/structure/terminal/proc/terminal_display_line(text = null,delay = TERMINAL_STANDARD_SLEEP, cache = 0) // cache = 1 bypasses displaying, this is for briefing terminals that may want to parse multiple lines before displaying
@@ -70,13 +80,15 @@
 		var/cut_line
 		while(length(line_to_display) > terminal_line_length)
 			cut_line = copytext(line_to_display,1,terminal_line_length)
-			terminal_buffer += (html_encode(cut_line) + "&nbsp")
+			terminal_trimmed_buffer += (html_encode(cut_line) + "&nbsp")
+			terminal_buffer +=  (html_encode(cut_line) + "&nbsp")
 			if(cache == 0)
 				terminal_display()
 				if(delay != 0) sleep(delay)
 			line_to_display = copytext(line_to_display,terminal_line_length,0)
 	if(length(line_to_display) <= terminal_line_length)
-		terminal_buffer += (html_encode(line_to_display) + "&nbsp")
+		terminal_trimmed_buffer += (html_encode(line_to_display) + "&nbsp")
+		terminal_buffer +=  (html_encode(line_to_display) + "&nbsp")
 		if(cache == 0)
 			terminal_display()
 			if(delay != 0) sleep(delay)
@@ -106,7 +118,8 @@
 	if(!terminal_input)
 		kill_window()
 		return "normal exit"
-	terminal_buffer.Cut(terminal_buffer.len)
+	terminal_trimmed_buffer.Cut(terminal_trimmed_buffer.len)
+	terminal_trimmed_buffer += (html_encode(">  [uppertext(terminal_input)]_"))
 	terminal_buffer += (html_encode(">  [uppertext(terminal_input)]_"))
 	terminal_display()
 	sleep(TERMINAL_STANDARD_SLEEP)

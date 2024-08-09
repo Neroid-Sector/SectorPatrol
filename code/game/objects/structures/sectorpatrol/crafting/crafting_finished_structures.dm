@@ -169,6 +169,39 @@
 			return
 	return
 
+//Master definition for modular drawer sets for designation for primary dorm storage
+/obj/structure/closet/modular/
+
+	name = "modular drawers master definition"
+	desc = "Should not be used in game. Please report this as a bug."
+	desc_lore = "This exists so some general functions can be properly passed. But made you look :P"
+	icon = 'icons/sp_default.dmi'
+	icon_state = "default"
+	PersistantObject = FALSE
+
+/obj/structure/closet/modular/verb/set_primary_storage() //Sets locker as main for dorm owner
+	set category = "Object"
+	set name = "Mark as Primary Storage"
+	set src in view(1)
+	if(usr.is_mob_incapacitated())
+		return
+
+	if(ishuman(usr))
+		var/area/ovpst/dorm/area = get_area(src)
+		if (usr.name == area.dorm_owner_name)
+			if (area.dorm_primary_storage == null)
+				update_dorm_storage()
+				dorms_PrimaryStorage = 1
+				to_chat(usr, SPAN_INFO("Success. All custom items will be stored in this locker for the owner of the room."))
+				return
+			else
+				to_chat(usr, SPAN_WARNING("Failure: Primary storage already set. You may reset storage from the right click menu of the dorm button."))
+				return
+		else
+			to_chat(usr, SPAN_WARNING("Failure: You are not the owner of this dorm."))
+
+
+
 //Drawers
 
 /obj/structure/closet/modular/drawers

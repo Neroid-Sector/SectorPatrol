@@ -26,6 +26,7 @@
 			return
 		if (A.customizable == 1)
 			active = TRUE
+			A.dorms_ItemOwner = usr.name
 			customize_desc(A)
 			active = FALSE
 			return
@@ -44,5 +45,7 @@
 /obj/structure/customizer/clothing/proc/animate_icon()
 	if(icon_state != "customizer_work")
 		icon_state = "customizer_work"
+		update_icon()
 		sleep(80)
 		icon_state = initial(icon_state)
+		update_icon()
