@@ -16,6 +16,7 @@
 	var/tracking_max = 3
 	var/list/local_round_log = list()
 	var/list/local_round_log_moves = list()
+	var/list/local_round_log_full = list()
 	var/list/ping_history = list()
 	var/list/comms_messages = list()
 
@@ -33,6 +34,32 @@
 			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, ProcessShutdown),0)
 			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),0)
 			repair_shutdown = 0
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/SyncPosToMap()
+	var/current_x = 1
+	var/current_y = 1
+	var/sync_complete = 0
+	while(current_x <= GLOB.sector_map_x)
+		while(current_y <= GLOB.sector_map_y)
+			if(sector_map[current_x][current_y]["ship"]["id_tag"] == sector_map_data["id_tag"])
+				sector_map_data["x"] = current_x
+				sector_map_data["y"] = current_y
+				sync_complete = 1
+			if(sync_complete == 1) break
+			current_y += 1
+		if(sync_complete == 1) break
+		current_y = 1
+		current_x += 1
+
+/obj/structure/shiptoship_master/ship_missioncontrol/NextTurn()
+	local_round_log_full.Add("<hr><b>ROUND [GLOB.combat_round]</b><hr>")
+	local_round_log_full.Add(local_round_log)
+	local_round_log = null
+	local_round_log = list()
+	INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
+	INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
+	INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, SetUsageData),0,null)
+	return 1
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/PingLog(entity_type = 0, pos_x = 0, pos_y = 0, name = "none", type = "none", target_x = 0, target_y = 0, speed = 0, hp = 0, faction = "none")
 	switch(entity_type)
@@ -292,6 +319,19 @@
 		current_y = 1
 		current_x += 1
 	if(sector_map_data["x"] != 0 && sector_map_data["y" != 0]) return 1
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/IncomingMapDamage(type = null, ammount = null)
+	var/type_to_deal
+	switch(type)
+		if(1)
+			type_to_deal = "engine"
+		if(2)
+			type_to_deal = "systems"
+		if(3)
+			type_to_deal = "weapons"
+		if(4)
+			type_to_deal = "hull"
+	linked_damage_console.ProcessShipDamage(system = type_to_deal, value = ammount)
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/GetTrackingList(type = 0)
 	var/list/tracking_list_to_return = list()

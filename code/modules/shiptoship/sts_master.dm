@@ -696,6 +696,10 @@
 			if(4)
 				sector_map[x_to_damage][y_to_damage]["ship"]["damage"]["hull"] += ship_damage_payload
 				log_round_history(event = "hit_hull", log_source = sector_map[x_to_damage][y_to_damage]["ship"]["name"], log_dest_x = ship_damage_payload)
+		if(sector_map[x_to_damage][y_to_damage]["ship"]["status"] == "Player")
+			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_to_damage in world)
+				if(sector_map[x_to_damage][y_to_damage]["ship"]["id_tag"] == ship_to_damage.sector_map_data["id_tag"])
+					ship_to_damage.IncomingMapDamage(type = damage_roulette, ammount = ship_damage_payload)
 		if(sector_map[x_to_damage][y_to_damage]["ship"]["status"] != "Player") DestructionCheck(x = x_to_damage, y = y_to_damage)
 		return 1
 
@@ -823,6 +827,35 @@
 				current_x += 1
 			current_x = 1
 			current_y += 1
+
+/obj/structure/shiptoship_master/proc/ResetMovementInfo()
+	var/current_x = 1
+	var/current_y = 1
+	while(current_x <= GLOB.sector_map_x)
+		while(current_y <= GLOB.sector_map_y)
+			if(sector_map[current_x][current_y]["ship"]["id_tag"] != "none")
+				sector_map[current_x][current_y]["ship"]["system"]["has_moved"] = 0
+				sector_map[current_x][current_y]["ship"]["system"]["movement_left"] = 0
+				sector_map[current_x][current_y]["ship"]["system"]["processed_movement"] = 0
+			if(sector_map[current_x][current_y]["missile"]["id_tag"] != "none")
+				sector_map[current_x][current_y]["missile"]["system"]["processed_movement"] = 0
+				sector_map[current_x][current_y]["missile"]["system"]["has_moved"] = 0
+			current_y += 1
+		current_y = 1
+		current_x += 1
+
+
+/obj/structure/shiptoship_master/proc/NextTurn()
+	to_chat(world, SPAN_WARNING("ADVANCING TURN"))
+	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc in world)
+		if(ship_mc.sector_map_data["initialized"] == 1)
+			ship_mc.NextTurn()
+	ProcessMovement()
+	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc in world)
+		if(ship_mc.sector_map_data["initialized"] == 1)
+			ship_mc.SyncPosToMap()
+	ResetMovementInfo()
+	to_chat(world, SPAN_WARNING("TURN PROCESSING COMPLETE"))
 
 /obj/structure/shiptoship_master/proc/scan_entites(category = 0, output_format = 0) // category = 0 for ships, 1 for missiles, 2 for specials. format = 0 text for screen display/ref lists. 1 creates buttons with references.
 	var/list/current_entites = list()

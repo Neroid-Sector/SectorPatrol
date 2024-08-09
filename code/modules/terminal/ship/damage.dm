@@ -24,8 +24,6 @@
 		)
 
 /obj/structure/terminal/damage_console/proc/SetUsageData(state = 0, damage = null)
-	var/damage_flag = damage
-	if(damage_flag == null) damage_flag = state
 	switch(state)
 		if(null)
 			return
@@ -33,13 +31,15 @@
 			usage_data["repairs_done"] = 0
 		if(1)
 			usage_data["repairs_done"] = usage_data["repairs_max"]
-	if(damage_flag == 0)
+	if(damage == null)
+		return
+	if(damage == 0)
 		usage_data["damage"]["engine"] = 0
 		usage_data["damage"]["systems"] = 0
 		usage_data["damage"]["weapons"] = 0
 		usage_data["damage"]["hull"] = 0
 		return
-	if(damage_flag == 1)
+	if(damage == 1)
 		usage_data["damage"]["engine"] = usage_data["damage"]["HP"]
 		usage_data["damage"]["systems"] = usage_data["damage"]["HP"]
 		usage_data["damage"]["weapons"] = usage_data["damage"]["HP"]
