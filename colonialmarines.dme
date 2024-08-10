@@ -2424,6 +2424,7 @@
 #include "code\modules\terminal\briefing\briefing.dm"
 #include "code\modules\terminal\buffer_reader\buffer_reader.dm"
 #include "code\modules\terminal\mission_control\salvage.dm"
+#include "code\modules\terminal\ship\cargo.dm"
 #include "code\modules\terminal\ship\damage.dm"
 #include "code\modules\terminal\ship\signals.dm"
 #include "code\modules\terminal\ship\weapons.dm"
