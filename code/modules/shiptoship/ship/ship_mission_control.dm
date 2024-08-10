@@ -224,6 +224,15 @@
 			local_round_log.Add("<b>WARNING:</b> Nuclear detonation detected in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
 			if(local_round_log_moves.Find("[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]") == 0) local_round_log_moves.Add("[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]")
 			return
+		if("mip_deploy")
+			round_history_current.Add("MIP Warhead reports deploying its payload in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			return
+		if("mip_payload_fail")
+			round_history_current.Add("MIP Warhead reports failure to deploy its payload due to misconfiguration in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
+			return
+		if("mip_warhead_hit")
+			round_history_current.Add("A MIP <b>projectile impact detected</b>.")
+			return
 
 /obj/structure/shiptoship_master/ship_missioncontrol/Initialize(mapload, ...)
 	. = ..()

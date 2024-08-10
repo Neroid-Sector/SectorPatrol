@@ -377,6 +377,15 @@
 		if("nuclear_hit")
 			round_history_current.Add("Projectile <b>[log_source_to_add]</b> reaches its target at coordinates <b>([x_to_move],[y_to_move])</b>. The <b>[log_target_to_add] and its crew perishes in a nuclear blast!</b>")
 			return
+		if("mip_deploy")
+			round_history_current.Add("MIP Warhead <b>[log_source_to_add]</b> deploys at coordinates <b>([x_to_move],[y_to_move])</b>")
+			return
+		if("mip_payload_fail")
+			round_history_current.Add("MIP Warhead <b>[log_source_to_add]</b> fails to deply at coordiates <b>([x_to_move],[y_to_move]) due to a low payload.")
+			return
+		if("mip_warhead_hit")
+			round_history_current.Add("A MIP projectile hits <b>[log_source_to_add]</b> with a paylad of <b>[x_to_move]</b>!")
+			return
 		if("ship_move")
 			round_history_current.Add("<b>SHIP MOVEMENT:</b><hr>")
 			return
@@ -773,6 +782,22 @@
 				log_round_history(event = "warhead_miss", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = x_to_explode, log_dest_y = y_to_explode)
 				rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 				return 1
+		if("MIP")
+			var/mip_payload = floor(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["warhead"]["payload"] / 3)
+			if(mip_payload <= 0)
+				log_round_history(event = "mip_payload_fail", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = exploding_missile_x, log_dest_y = exploding_missile_y)
+				rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
+				return 1
+			log_round_history(event = "mip_deploy", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]", log_dest_x = exploding_missile_x, log_dest_y = exploding_missile_y)
+			var/current_mip_missile = 1
+			while(current_mip_missile <= 3)
+				missileReTarget(missile_x = exploding_missile_x, missile_y = exploding_missile_y, missile_range = 3, x = x_to_explode, y = y_to_explode, id_tag = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["tag"], quiet = 1)
+				if(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"] == "none") break
+				ProcessDamage(ammount = mip_payload, x = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["x"], y = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["y"])
+				log_round_history(event = "mip_warhead_hit", log_source = sector_map[x_to_explode][y_to_explode]["ship"]["name"], log_dest_x = mip_payload)
+				current_mip_missile += 1
+			if(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"] != "none") rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
+			return 1
 
 /obj/structure/shiptoship_master/proc/ProcessMovement(type = null)
 	var/type_to_process = type
@@ -816,12 +841,15 @@
 											missileColide(arriving_missile_x = current_x, arriving_missile_y = current_y, other_missile_x = destination_x, other_missile_y = destination_y)
 									if(0)
 										if(move_on_map(type_to_move = type_to_process, origin_x = current_x, origin_y = current_y, target_x = destination_x, target_y = destination_y) == 1)
-											if(sector_map[destination_x][destination_y][type_to_process]["type"] == "PST-ATCM")
+											if(sector_map[destination_x][destination_y][type_to_process]["type"] == "LD Homing")
 												if(sector_map[destination_x][destination_y][type_to_process]["target"]["tag"] != "none")
 													missileReTarget(missile_x = current_x, missile_y = current_y, missile_range = (GLOB.sector_map_x + GLOB.sector_map_y), x = (GLOB.sector_map_x / 2), y = (GLOB.sector_map_y / 2), id_tag = sector_map[current_x][current_y][type_to_process]["target"]["tag"])
 												if(sector_map[destination_x][destination_y][type_to_process]["target"]["tag"] == "none")
 													log_round_history (event = "missile_homing_bad_target", log_source = "[sector_map[destination_x][destination_y][type_to_process]["type"]] - [sector_map[destination_x][destination_y][type_to_process]["id_tag"]]")
 													rem_entity(type = "coord", id = type_to_process, coord_x = current_x, coord_y = current_y)
+											if(sector_map[destination_x][destination_y][type_to_process]["type"] == "Accelerating Torpedo")
+												sector_map[destination_x][destination_y][type_to_process]["speed"] += 5
+												sector_map[destination_x][destination_y][type_to_process]["warhead"]["payload"] += 1
 											if(missileVector(start_x = destination_x, start_y = destination_y, target_x = sector_map[destination_x][destination_y][type_to_process]["target"]["x"], target_y = sector_map[destination_x][destination_y][type_to_process]["target"]["y"], speed = sector_map[destination_x][destination_y][type_to_process]["speed"], only_test = 1) == "in_range")
 												log_round_history(event = "missile_near_target", log_source = "[sector_map[destination_x][destination_y][type_to_process]["type"]] [sector_map[destination_x][destination_y][type_to_process]["id_tag"]]")
 						if("in_range")

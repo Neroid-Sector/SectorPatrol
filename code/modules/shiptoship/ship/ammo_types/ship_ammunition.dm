@@ -37,7 +37,7 @@
 	desc_lore = "The classic direct damage warhead follows a design principle that's older than space travel itself. Upon release from its delivery system, this warhead makes one final leapfrog jump towards its target, primes, and detonates a shaped charge that focuses all its energy forward. Should this projectile fully penetrate a ship's hull, the resulting explosion is typically enough to cripple the ship."
 	icon = 'icons/sectorpatrol/ship/weapon_ammo.dmi'
 	icon_state = "warhead_direct"
-	warhead_type = "Direct"
+	warhead_type = "Homing"
 	bound_width = 32
 	bound_height = 32
 	element_value = 3
