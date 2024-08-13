@@ -540,4 +540,6 @@
 			</body>
 			"}
 	usr << browse(display_html,"window=ship_[screen_type]_[sector_map_data["name"]];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	if(usr.sp_uis.Find("ship_[screen_type]_[sector_map_data["name"]]") == 0)
+		usr.sp_uis += "ship_[screen_type]_[sector_map_data["name"]]"
 	onclose(usr, "ship_[screen_type]_[sector_map_data["name"]]")

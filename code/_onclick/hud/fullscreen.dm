@@ -2,6 +2,7 @@
 
 /mob
 	var/list/fullscreens = list()
+	var/list/sp_uis = list()
 
 /mob/proc/overlay_fullscreen(category, type, severity)
 	var/atom/movable/screen/fullscreen/screen = fullscreens[category]

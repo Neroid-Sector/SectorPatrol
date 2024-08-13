@@ -957,6 +957,8 @@
 	</body>
 	"}
 	usr << browse(terminal_html,"window=[sector_map[ship_to_move_x][ship_to_move_y]["ship"]["id_tag"]]-control;display=1;size=300x300;border=5px;can_close=0;can_resize=0;can_minimize=0;titlebar=0")
+	if(usr.sp_uis.Find("[sector_map[ship_to_move_x][ship_to_move_y]["ship"]["id_tag"]]-control") == 0)
+		usr.sp_uis += "[sector_map[ship_to_move_x][ship_to_move_y]["ship"]["id_tag"]]-control"
 	onclose(usr, "[sector_map[ship_to_move_x][ship_to_move_y]["ship"]["id_tag"]]-control")
 
 /obj/structure/shiptoship_master/proc/mod_entity(entity_type = "none", entity_tag = "none", entity_property = "none")
@@ -1154,6 +1156,8 @@
 	</body>
 	"}
 	usr << browse(terminal_html,"window=sts_master;display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	if(usr.sp_uis.Find("sts_master") == 0)
+		usr.sp_uis += ("sts_master")
 	onclose(usr, "sts_master")
 
 /obj/structure/shiptoship_master/Topic(href, list/href_list)

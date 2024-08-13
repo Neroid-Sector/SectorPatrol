@@ -66,6 +66,8 @@
 	</body>
 	"}
 	usr << browse(terminal_html,"window=[terminal_id];display=1;size=[terminal_window_size];border=5px;can_close=0;can_resize=0;can_minimize=0;titlebar=0")
+	if(usr.sp_uis.Find(terminal_id) == 0)
+		usr.sp_uis += terminal_id
 	onclose(usr, "[terminal_id]")
 
 /obj/structure/terminal/proc/trim_buffer()

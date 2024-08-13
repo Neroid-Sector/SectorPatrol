@@ -5,6 +5,20 @@
 		admin_holder.MissionControl(window = "Main")
 	return
 
+/client/verb/fixspuis()
+	set name = "Force Close Sector Patrol Interfaces"
+	set category = "OOC.Fix"
+	if (usr.sp_uis.len != 0)
+		while(usr.sp_uis.len != 0)
+			var/ui_to_close = jointext(usr.sp_uis,null,1,2)
+			usr << browse(null, ui_to_close)
+			usr.sp_uis.Cut(1,2)
+		to_chat(usr, SPAN_INFO("Sector Patrol Interfaces closed."))
+		return
+	else
+		to_chat(usr, SPAN_INFO("No Interfaces to close in personal history. Either the UI was not configured properly, or this is not an UI error. Either way, please contact staff."))
+		return
+
 /datum/admins/proc/MissionControl(window = null)
 	if(!check_rights(0)) return
 	if(window == null) return
