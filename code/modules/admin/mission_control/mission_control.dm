@@ -20,6 +20,9 @@
 		return
 
 /datum/admins/proc/MissionControl(window = null)
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
 	if(!check_rights(0)) return
 	if(window == null) return
 	if(window == "Main")
@@ -103,6 +106,82 @@
 				</div>
 				</div>
 				"}
+		if("ShipToShip")
+			if(!sts_master)
+				to_chat(usr, SPAN_WARNING("Error: No STS Master found in world. Most likely a mapping error."))
+				return
+			if(GLOB.sector_map_initialized == 0)
+				to_chat(usr, SPAN_WARNING("Sector Map not Initialized. Initializing now."))
+				GLOB.sector_map_x = tgui_input_number(usr, "Verify X Height", "X Height", GLOB.sector_map_x, min_value = 1, timeout = 0)
+				if(GLOB.sector_map_x == null) GLOB.sector_map_x = 100
+				GLOB.sector_map_y = tgui_input_number(usr, "Verify Y Height", "Y Height", GLOB.sector_map_y, min_value = 1, timeout = 0)
+				if(GLOB.sector_map_y == null) GLOB.sector_map_y = 100
+				sts_master.sector_map = new/list(GLOB.sector_map_x, GLOB.sector_map_y)
+				if(sts_master.populate_map() == 1) GLOB.sector_map_initialized = 1
+			dat += {"<div_class="box">
+				<div class="text">
+				<p><b>SHIP TO SHIP PANEL</b></p>
+				<p>INITIATED: [GLOB.combat_initiated] | ROUND: [GLOB.combat_round]</p>
+				<p>ENTITY CONTROL</p>
+				<p>ROUND FLOW CONTROL</p>
+				</div>
+				</div>
+				"}
+		if("ShipToShip_Entities")
+			var/displayed_entities = (jointext((sts_master.scan_entites(category = 0, output_format = 0)), "</p><p>")+"</p><p>"+jointext((sts_master.scan_entites(category = 1, output_format = 0)), "</p><p>"))
+			dat += {"<div_class="box">
+				<div class="text">
+				<p><b>ENTITY_CONTROL</b></p>
+				<p>[displayed_entities]</p>
+				<p><b>Add</b> | <b>Modify</b> | <b>Remove</b></p>
+				<p><b>Load Preset</b></p>
+				<p><b>Link and Initialize Player Ships</b></p>
+				</div>
+				</div>
+				"}
+		if("ShipToShip_RoundControl")
+			var/round_phase_text
+			dat += {"{"<div_class="box">
+				<div class="text">
+				<p><b>SHIP TO SHIP ROUND FLOW PANEL</b></p>
+				</div>
+				</div>
+				"}
+			switch(GLOB.round_phase)
+				if(1)
+					round_phase_text = "DM - Comms"
+				if(2)
+					round_phase_text = "DM - Movement and Firing"
+				if(3)
+					round_phase_text = "Players"
+				if(4)
+					round_phase_text = "Advancing Turn..."
+			if(GLOB.round_phase == 4)
+				dat+= {"<div_class="box">
+				<div class="text">
+				<p>ROUND ADVANCING...</p>
+				</div>
+				</div>
+				"}
+			else
+				dat += {"<div_class="box">
+					<div class="text">
+					<p>Phase: <b>[round_phase_text]</b></p>
+					<p><b>Advance Phase/Turn</p>
+					</div>
+					</div>
+					<div_class="box">
+					<div class="text">
+					<p>View Round Log</p>
+					<p>View Full Log</p>
+					<p>Send Comms</p>
+					<p>Change Ship Vectors</p>
+					<p>Send Sonar Ping</p>
+					<p>Fire as Ship</p>
+					</div>
+					</div>
+					"}
+
 	//footer etc
 	dat += {"
 		</div>

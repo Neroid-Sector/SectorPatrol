@@ -73,4 +73,6 @@ GLOBAL_VAR_INIT(sector_map_sector_size, 10)
 GLOBAL_VAR_INIT(sector_map_initialized, 0)
 GLOBAL_VAR_INIT(sector_map_id_tag, 1)
 
+GLOBAL_VAR_INIT(combat_initiated, 0)
 GLOBAL_VAR_INIT(combat_round, 1)
+GLOBAL_VAR_INIT(round_phase, 1)
