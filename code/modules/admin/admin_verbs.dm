@@ -167,17 +167,15 @@ GLOBAL_LIST_INIT(admin_verbs_major_event, list(
 	/client/proc/cmd_admin_mission_control_say,
 	/client/proc/cmd_start_sequence,
 	/client/proc/cmd_answer_civnet,
-	/client/proc/cmd_set_time_date_loc,
 	/client/proc/cmd_set_cargo,
 	/client/proc/cmd_save_cargo,
 	/client/proc/cmd_save_turfs,
-	/client/proc/cmd_save_general,
 	/client/proc/cmd_save_dorms,
 	/client/proc/cmd_load_cargo,
 	/client/proc/cmd_load_turfs,
-	/client/proc/cmd_load_general,
 	/client/proc/cmd_load_dorms,
 	/client/proc/cmd_show_resources,
+	/client/proc/mission_control_panel,
 ))
 
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(

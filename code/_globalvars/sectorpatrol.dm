@@ -1,3 +1,4 @@
+GLOBAL_VAR_INIT(savefile_initiated, 0)
 GLOBAL_VAR_INIT(savefile_number, 0) //Savefile number reference. Should be set automatically by the persistance system. Tells it which save file is latest while loding/saving
 //Song blurb vars
 GLOBAL_VAR_INIT(song_title, "")

@@ -1466,6 +1466,7 @@
 #include "code\modules\admin\tag.dm"
 #include "code\modules\admin\medal_panel\medals_panel.dm"
 #include "code\modules\admin\medal_panel\medals_panel_tgui.dm"
+#include "code\modules\admin\mission_control\mission_control.dm"
 #include "code\modules\admin\player_panel\player_action.dm"
 #include "code\modules\admin\player_panel\player_panel.dm"
 #include "code\modules\admin\player_panel\actions\antag.dm"

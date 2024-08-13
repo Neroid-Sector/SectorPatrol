@@ -2333,7 +2333,23 @@
 		for(var/client/staff in GLOB.admins)
 			if((R_ADMIN|R_MOD) & staff.admin_holder.rights)
 				to_chat(staff, SPAN_STAFF_IC("<b>ADMINS/MODS: [SPAN_RED("[src.owner] marked [key_name(speaker)]'s ARES message for response.")]</b>"))
-
+	//Sector Patrol stuff starts here. I think :P
+	if(href_list["open_mission_control"])
+		if(!check_rights(R_ADMIN))
+			return
+		MissionControl(window = href_list["open_mission_control"])
+	if(href_list["load_general_save"])
+		if(!check_rights(R_ADMIN))
+			return
+		load_general_save()
+	if(href_list["save_general_save"])
+		if(!check_rights(R_ADMIN))
+			return
+		save_general_save(save = null)
+	if(href_list["edit_general_info"])
+		if(!check_rights(R_ADMIN))
+			return
+		edit_general_info(type_to_edit = href_list["edit_general_info"])
 	return
 
 /datum/admins/proc/accept_ert(mob/approver, mob/ref_person)
