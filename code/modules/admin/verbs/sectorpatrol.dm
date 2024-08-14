@@ -44,19 +44,6 @@
 		T.pythiasay(pythia_say)
 		return
 
-/client/proc/cmd_admin_mission_control_say() // Checks for a Pythia reciever and talks as it and any of its voices.
-	set name = "Mission Control Comms"
-	set category = "Admin.SectorPatrol"
-
-	if (!admin_holder || !(admin_holder.rights & R_MOD))
-		to_chat(src, "Only administrators may use this command.")
-		return
-
-	var/mission_control_say = tgui_input_text(src, "What to say as Mission Control into the general Radio Channel", "MC Say Text", max_length = MAX_BOOK_MESSAGE_LEN, multiline = TRUE, encode = FALSE, timeout = 0)
-	if(!mission_control_say) return
-	to_chat(world, "<span class='big'><span class='radio'><span class='name'>Mission Control<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005BOV-PST \u0028TC-MC\u0029\u005D </b></span><span class='message'>, says \"[mission_control_say]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
-	return
-
 /client/proc/cmd_start_sequence()
 	set name = "Start Sequence"
 	set category = "Admin.SectorPatrol"

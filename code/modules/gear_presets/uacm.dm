@@ -136,7 +136,7 @@
 	assignment = JOB_UACM_CASSANDRA
 	rank = JOB_UACM_CASSANDRA
 	paygrade = "NO5"
-	role_comm_title = "PST-CSP"
+	role_comm_title = "PST-CSO"
 	skills = /datum/skills/general
 	languages = ALL_HUMAN_LANGUAGES
 	flags = EQUIPMENT_PRESET_EXTRA

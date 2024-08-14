@@ -164,7 +164,6 @@ GLOBAL_LIST_INIT(admin_verbs_major_event, list(
 	/client/proc/admin_blurb,
 	/client/proc/prepare_admin_song_blurb,
 	/client/proc/cmd_admin_pythia_say,
-	/client/proc/cmd_admin_mission_control_say,
 	/client/proc/cmd_start_sequence,
 	/client/proc/cmd_answer_civnet,
 	/client/proc/cmd_set_cargo,
@@ -175,7 +174,9 @@ GLOBAL_LIST_INIT(admin_verbs_major_event, list(
 	/client/proc/cmd_load_turfs,
 	/client/proc/cmd_load_dorms,
 	/client/proc/cmd_show_resources,
-	/client/proc/mission_control_panel,
+	/datum/admins/proc/mission_control_panel,
+	/datum/admins/proc/set_narration_preset,
+	/datum/admins/proc/speak_to_comms,
 ))
 
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(

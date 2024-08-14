@@ -1,13 +1,15 @@
-/client/proc/mission_control_panel()
+/datum/admins/proc/mission_control_panel()
 	set name = "Mission Control Panel"
 	set category = "DM.Control"
-	if(admin_holder)
-		admin_holder.MissionControl(window = "Main")
+
+	if(!check_rights(R_ADMIN)) return
+	MissionControl(window = "Main")
 	return
 
 /client/verb/fixspuis()
 	set name = "Force Close Sector Patrol Interfaces"
 	set category = "OOC.Fix"
+
 	if (usr.sp_uis.len != 0)
 		while(usr.sp_uis.len != 0)
 			var/ui_to_close = jointext(usr.sp_uis,null,1,2)
@@ -23,7 +25,7 @@
 	var/obj/structure/shiptoship_master/sts_master
 	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
 		sts_master = sts_master_to_link
-	if(!check_rights(0)) return
+	if(!check_rights(R_ADMIN)) return
 	if(window == null) return
 	if(window == "Main")
 		if(GLOB.savefile_initiated == 0)
@@ -106,6 +108,7 @@
 				</div>
 				</div>
 				"}
+		if("Comms")
 		if("ShipToShip")
 			if(!sts_master)
 				to_chat(usr, SPAN_WARNING("Error: No STS Master found in world. Most likely a mapping error."))
@@ -406,7 +409,45 @@
 			sts_master.log_round_history(event = "comms_ping_system", log_source = comms_source_custom, log_target = comms_text)
 			return
 
+/datum/admins/proc/set_narration_preset()
+	set name = "Comms Set Preset"
+	set category = "DM.Narration"
 
+	var/list/comms_presets = list("Mission Control","Cassandra","Alysia","Boulette","Custom")
+	switch(tgui_input_list(usr,"Select a Comms Preset","PRESET",comms_presets,timeout = 0))
+		if(null)
+			return
+		if("Mission Control")
+			usr.narration_settings["Name"] = "Mission Control"
+			usr.narration_settings["Location"] = "OV-PST"
+			usr.narration_settings["Position"] = "TC-MC"
+		if("Cassandra")
+			usr.narration_settings["Name"] = "CDR. Cassandra Reed-Wilo"
+			usr.narration_settings["Location"] = "OV-PST"
+			usr.narration_settings["Position"] = "PST-CSO"
+		if("Alysia")
+			usr.narration_settings["Name"] = "CDR. Alysia Reed-Wilo"
+			usr.narration_settings["Location"] = "OV-PST"
+			usr.narration_settings["Position"] = "PST-CE"
+		if("Boulette")
+			usr.narration_settings["Name"] = "RDML. Thomas Boulette"
+			usr.narration_settings["Location"] = "OV-PST"
+			usr.narration_settings["Position"] = "PST-CO"
+		if("Custom")
+			usr.narration_settings["Name"] = tgui_input_text(usr, "Enter the name, complete with a rank prefix.", "NAME entry", usr.narration_settings["Name"], timeout = 0)
+			usr.narration_settings["Location"] = tgui_input_text(usr, "Enter assignment or location, when in doubt, OV-PST works.", "LOCATION entry", usr.narration_settings["Location"], timeout = 0)
+			usr.narration_settings["Position"] = tgui_input_text(usr, "Enter held position like CE, CO, RFN or whatnot. Prefaced with some specialty acronym also can work.", "POSITION entry", usr.narration_settings["Position"], timeout = 0)
+	return
+
+/datum/admins/proc/speak_to_comms()
+	set name = "Comms Speak"
+	set category = "DM.Narration"
+
+	if(usr.narration_settings["Name"] == null || usr.narration_settings["Location"] == null || usr.narration_settings["Position"] == null) set_narration_preset()
+	var/text_to_comm = tgui_input_text(usr, "Enter what to say as [usr.narration_settings["Name"]],[usr.narration_settings["Location"]],[usr.narration_settings["Position"]] or cancel to exit.")
+	while(text_to_comm != null)
+		to_chat(world, "<span class='big'><span class='radio'><span class='name'>[usr.narration_settings["Name"]]<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005B[usr.narration_settings["Location"]] \u0028[usr.narration_settings["Position"]]\u0029\u005D </b></span><span class='message'>, says \"[text_to_comm]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
+		text_to_comm = tgui_input_text(usr, "Enter what to say as [usr.narration_settings["Name"]],[usr.narration_settings["Location"]],[usr.narration_settings["Position"]] or cancel to exit.")
 
 /datum/admins/proc/save_general_save(save = null)
 	if(!check_rights(R_ADMIN)) return
