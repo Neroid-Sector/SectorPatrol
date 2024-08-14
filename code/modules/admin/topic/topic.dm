@@ -2366,6 +2366,10 @@
 		if(!check_rights(R_ADMIN))
 			return
 		sonar_ping()
+	if(href_list["fire_as_ship"])
+		if(!check_rights(R_ADMIN))
+			return
+		fire_as_ship()
 	return
 
 /datum/admins/proc/accept_ert(mob/approver, mob/ref_person)

@@ -109,6 +109,12 @@
 							terminal_display_line("MISSILE AWAY.")
 							usage_data["salvos_left"] -= 1
 							UpdateMapData()
+							linked_master_console.log_round_history(event = "missile_launch", log_source = linked_master_console.sector_map_data["name"], log_dest_x = linked_master_console.sector_map_data["x"], log_dest_y = linked_master_console.sector_map_data["y"])
+							for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
+								if(ship_sts_to_log.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+									ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_own_launch")
+								if(ship_sts_to_log.sector_map_data["name"] != linked_master_console.sector_map_data["name"])
+									ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_launch")
 					else
 						terminal_display_line("Error: Projectile type entity already located in current position. Cannot fire primary cannon due to LD resonance.")
 				else
@@ -142,6 +148,12 @@
 								usage_data["salvos_left"] -= 1
 								UpdateMapData()
 								terminal_display_line("FIRING.", TERMINAL_STANDARD_SLEEP)
+								linked_master_console.log_round_history(event = "secondary_fire", log_source = linked_master_console.sector_map_data["name"], log_dest_x = x_to_secondary_fire, log_dest_y = y_to_secondary_fire)
+								for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
+									if(ship_sts_to_log.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+										ship_sts_to_log.WriteToShipLog(shiplog_event = "secondary_own_fire")
+									if(ship_sts_to_log.sector_map_data["name"] != linked_master_console.sector_map_data["name"])
+										ship_sts_to_log.WriteToShipLog(shiplog_event = "secondary_fire")
 								switch(linked_secondary_cannon.loaded_projectile["type"])
 									if("Direct")
 										if(linked_master_console.sector_map[x_to_secondary_fire][y_to_secondary_fire]["ship"]["id_tag"] != "none")

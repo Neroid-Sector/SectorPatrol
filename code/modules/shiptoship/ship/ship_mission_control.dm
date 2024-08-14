@@ -226,19 +226,31 @@
 			if(local_round_log_moves.Find("[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]") == 0) local_round_log_moves.Add("[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]")
 			return
 		if("mip_deploy")
-			round_history_current.Add("MIP Warhead reports deploying its payload in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			local_round_log.Add("MIP Warhead reports deploying its payload in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
 			return
 		if("mip_payload_fail")
-			round_history_current.Add("MIP Warhead reports failure to deploy its payload due to misconfiguration in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
+			local_round_log.Add("MIP Warhead reports failure to deploy its payload due to misconfiguration in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
 			return
 		if("mip_warhead_hit")
-			round_history_current.Add("A MIP <b>projectile impact detected</b>.")
+			local_round_log.Add("A MIP <b>projectile impact detected</b>.")
 			return
 		if("npc_sonar_hit")
-			round_history_current.Add("A conventional <b>sonar</b> pulse <b>is targetting this vessel</b>. Origin sector: <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			local_round_log.Add("A conventional <b>sonar</b> pulse <b>is targetting this vessel</b>. Origin sector: <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
 			return
 		if("npc_sonar_miss")
-			round_history_current.Add("Conventional <b>sonar activity detected</b> in system.")
+			local_round_log.Add("Conventional <b>sonar activity detected</b> in system.")
+			return
+		if("missile_launch")
+			local_round_log.Add("<b>Missile launch<b> detected in sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			return
+		if("missile_own_launch")
+			local_round_log.Add("Missile launched from own vessel.")
+			return
+		if("secondary_fire")
+			local_round_log.Add("<b>Secondary fire detected</b> in sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			return
+		if("secondary_own_fire")
+			local_round_log.Add("Secondary fire from own vessel.")
 			return
 
 /obj/structure/shiptoship_master/ship_missioncontrol/Initialize(mapload, ...)

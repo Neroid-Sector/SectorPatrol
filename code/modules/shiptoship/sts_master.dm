@@ -120,6 +120,7 @@
 		sector_map[coord_x][coord_y]["ship"]["damage"]["HP"] = damage_to_apply
 		sector_map[coord_x][coord_y]["ship"]["shield"] = shield_to_apply
 		sector_map[coord_x][coord_y]["ship"]["system"]["salvos_max"] = salvos_to_apply
+		sector_map[coord_x][coord_y]["ship"]["system"]["salvos_left"] = salvos_to_apply
 		return
 	if(entity_type == 1)
 		sector_map[coord_x][coord_y]["missile"]["name"] = name_to_apply
@@ -405,6 +406,15 @@
 			return
 		if("npc_sonar")
 			round_history_current.Add("Conventional sonar pulse launched from <b>[log_source_to_add]</b> to <b>[log_target_to_add]</b> with the result <b>[x_to_move]</b>.")
+			return
+		if("missile_launch")
+			round_history_current.Add("Missile launched by <b>[log_source_to_add]</b> at coordinates <b>([x_to_move],[y_to_move])</b>")
+			return
+		if("secondary_fire")
+			round_history_current.Add("The <b>[log_source_to_add]</b> fires its Secondary cannon at coordinates <b>([x_to_move],[y_to_move])</b>")
+			return
+		if("passes_turn")
+			round_history_current.Add("The <b>[log_source_to_add]</b> at coordinates <b>([x_to_move],[y_to_move]) passes the rest of its combat turn<b> and does not fire the rest of its salvoes.")
 			return
 
 /obj/structure/shiptoship_master/proc/move_on_map(type_to_move = null, origin_x = 0, origin_y = 0, target_x = 0, target_y = 0) // Actually move the ship on grid. Will account for boudaries and "bump" ships away form them, at cost of losing all velocity. Different formulas are used for ships and projectiles, so make sure to pass the right type. For type "ship", pass ship vector as destination_x/y

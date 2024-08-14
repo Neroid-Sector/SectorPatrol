@@ -175,12 +175,12 @@
 					</div>
 					<div_class="box">
 					<div class="text">
-					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];view_ship_log=round'>View Round Log</a></p>
-					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];view_ship_log=full'>View Full Log</a></p>
-					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];send_ship_comms=1'>Send Comms</a></p>
-					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];control_npc_ship=1'>Change Ship Vectors</a></p>
-					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];sonar_ping=1'>Send Sonar Ping</a></p>
-					<p>Fire as Ship</p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];view_ship_log=round'>View Round Log</A></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];view_ship_log=full'>View Full Log</A></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];send_ship_comms=1'>Send Comms</A></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];control_npc_ship=1'>Change Ship Vectors</A></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];sonar_ping=1'>Send Sonar Ping</A></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];fire_as_ship=1'>Fire as Ship</A></p>
 					</div>
 					</div>
 					"}
@@ -238,6 +238,180 @@
 		if("full")
 			MissionControl(window = "ShipToShip_FullRoundLog")
 			return
+
+/datum/admins/proc/fire_as_ship()
+	if(!check_rights(R_ADMIN)) return
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
+		break
+	var/list/fire_sources
+	var/list/fire_targets
+	var/fire_scan_x = 1
+	var/fire_scan_y = 1
+	while (fire_scan_x <= GLOB.sector_map_x)
+		while(fire_scan_y <= GLOB.sector_map_y)
+			if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["id_tag"] != "none")
+				if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["status"] == "Player")
+					fire_targets += sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["name"]
+				if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["status"] != "Player")
+					if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["system"]["salvos_left"] > 0)
+						fire_sources += sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["name"]
+			fire_scan_y += 1
+		fire_scan_y = 1
+		fire_scan_x += 1
+	if(fire_sources.len == 0)
+		to_chat(usr, SPAN_WARNING("No ships with salvos left available."))
+		return
+	var/ship_to_fire = tgui_input_list(usr, "Select a NPC ship to fire with", "Fire SOURCE", fire_sources, timeout = 0)
+	if(ship_to_fire == null) return
+	var/firing_ship_x
+	var/firing_ship_y
+	fire_scan_x = 1
+	fire_scan_y = 1
+	while (fire_scan_x <= GLOB.sector_map_x)
+		while(fire_scan_y <= GLOB.sector_map_y)
+			if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["name"] == ship_to_fire)
+				firing_ship_x = fire_scan_x
+				firing_ship_y = fire_scan_y
+				break
+			fire_scan_y += 1
+		if(firing_ship_x != null) break
+		fire_scan_y = 1
+		fire_scan_x += 1
+	var/list/positions_to_fire
+	if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] == sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_max"])
+		if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["missile"]["id_tag"] == "none")
+			positions_to_fire += "Primary"
+	var/secondary_scan_bottom_x = sts_master.BoundaryAdjust(firing_ship_x - 5,1)
+	var/secodnary_scan_bottom_y = sts_master.BoundaryAdjust(firing_ship_y - 5,1)
+	var/secondary_scan_top_x = sts_master.BoundaryAdjust(firing_ship_x + 5,2)
+	var/secondary_scan_top_y = sts_master.BoundaryAdjust(firing_ship_y + 5,3)
+	var/secondary_scan_current_x = secondary_scan_bottom_x
+	var/secondary_scan_current_y = secodnary_scan_bottom_y
+	var/list/secondary_targets
+	while(secondary_scan_current_x <= secondary_scan_top_x)
+		while(secondary_scan_current_y <= secondary_scan_top_y)
+			if(abs(firing_ship_y - secondary_scan_current_y) + abs(firing_ship_x - secondary_scan_current_x) <= 5)
+				if(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"] != "none")
+					secondary_targets += sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"]
+				if(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["missile"]["id_tag"] != "none")
+					secondary_targets += sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["missile"]["id_tag"]
+			secondary_scan_current_y += 1
+		secondary_scan_current_y = secodnary_scan_bottom_y
+		secondary_scan_current_x += 1
+	if(secondary_targets.len != 0)
+		positions_to_fire += "Secondary"
+	if(positions_to_fire.len == 0)
+		to_chat(usr,SPAN_WARNING("Firing is not possilbe. Marking ship as fired this turn."))
+		sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] = 0
+		MissionControl(window = "ShipToShip_RoundControl")
+		return
+	else
+		positions_to_fire += "Mark Ship As Fired"
+	switch(tgui_input_list(usr, "Select a Weapon to fire", "WEAPON choice", positions_to_fire, timeout = 0))
+		if(null)
+			return
+		if("Primary")
+			var/target_to_fire = tgui_input_list(usr, "Select Target", "TARGET choice", list(fire_targets,"Coordinates"), timeout = 0)
+			if(target_to_fire == null) return
+			var/fire_target_x
+			var/fire_target_y
+			var/fire_target_tag
+			if(target_to_fire != "Coordinates")
+				fire_scan_x = 1
+				fire_scan_y = 1
+				while (fire_scan_x <= GLOB.sector_map_x)
+					while(fire_scan_y <= GLOB.sector_map_y)
+						if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["name"] == target_to_fire)
+							fire_target_x = fire_scan_x
+							fire_target_y = fire_scan_y
+							fire_target_tag = sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["id_tag"]
+							break
+						fire_scan_y += 1
+					if(fire_target_x != null) break
+					fire_scan_y = 1
+					fire_scan_x += 1
+			if(target_to_fire == "Coordinates")
+				fire_target_x = tgui_input_number(usr, "Enter X Coordinate to target", "Custom X Coord", 1, GLOB.sector_map_x, 1, timeout = 0)
+				fire_target_y = tgui_input_number(usr, "Enter Y Coordinate to target", "Custom X Coord", 1, GLOB.sector_map_y, 1, timeout = 0)
+			if(fire_target_x == null || fire_target_y == null) return
+			var/firing_missile_name = tgui_input_text(usr, "Enter Name of Missile", "Missile NAME", "Missile",timeout = 0)
+			var/firing_missile_payload = tgui_input_number(usr, "Enter payload of missile", "Missile PAYLOAD", 1, min_value = 1, timeout = 0)
+			var/firing_missile_speed = tgui_input_number(usr, "Enter speed of missile", "Missile SPEED", 1, min_value = 1, timeout = 0)
+			if(firing_missile_name == null) firing_missile_name = "Missile"
+			if(firing_missile_payload == null) firing_missile_payload = 1
+			if(firing_missile_speed == null) firing_missile_speed = 5
+			switch(tgui_input_list(usr, "Select Missle to fire","Missile TYPE", list("Direct-Direct","Direct-Homing","Direct-Seeking","Direct-Explosive","Direct-Nuclear"),timeout = 0))
+				if(null)
+					return
+				if("Direct-Direct")
+					sts_master.add_entity (entity_type = 1, x = firing_ship_x, y = firing_ship_y, name = firing_missile_name, type = "Standard", vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = "Direct", warhead_payload = firing_missile_payload, target_tag = "none", missile_speed = firing_missile_speed)
+				if("Direct-Homing")
+					sts_master.add_entity (entity_type = 1, x = firing_ship_x, y = firing_ship_y, name = firing_missile_name, type = "Standard Homing", vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = "Homing", warhead_payload = firing_missile_payload, target_tag = "none", missile_speed = firing_missile_speed)
+				if("Direct-Seeking")
+					sts_master.add_entity (entity_type = 1, x = firing_ship_x, y = firing_ship_y, name = firing_missile_name, type = "Homing Seeking", vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = "Homing", warhead_payload = firing_missile_payload, target_tag = fire_target_tag, missile_speed = firing_missile_speed)
+				if("Direct-Explosive")
+					sts_master.add_entity (entity_type = 1, x = firing_ship_x, y = firing_ship_y, name = firing_missile_name, type = "Standard Explosive", vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = "Explosive", warhead_payload = firing_missile_payload, target_tag = "none", missile_speed = firing_missile_speed)
+				if("Direct-Nuclear")
+					if(tgui_input_list(usr, "Are you SURE you want to send a nuke at [target_to_fire]? Values will be overwritten with lowest, edit them directly.","NUKE Confirm", list("Yes","No"), timeout = 0) == "Yes")
+						sts_master.add_entity (entity_type = 1, x = firing_ship_x, y = firing_ship_y, name = firing_missile_name, type = "Nuclear", vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = "Nuclear", warhead_payload = 1, target_tag = "none", missile_speed = 1)
+			sts_master.log_round_history(event = "missile_launch", log_source = ship_to_fire, log_dest_x = firing_ship_x, log_dest_y = firing_ship_y)
+			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
+				if(ship_sts_to_log.sector_map_data["name"] == ship_to_fire)
+					ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_own_launch")
+				if(ship_sts_to_log.sector_map_data["name"] != ship_to_fire)
+					ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_launch")
+			sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] -= 1
+		if("Secondary")
+			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] == sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_max"])
+				if(tgui_input_list(usr, "Confirm Secondary Fire without firing Primary?", "Secondary Fire CONFIRM", list("Yes","No"), timeout = 0) == "No") return
+			var/id_to_secondary_target = tgui_input_list(usr, "Select a target for Secondary fire", "Secondary TARGET", list(secondary_targets,"Vector"),timeout = 0)
+			if(id_to_secondary_target == null) return
+			var/secondary_target_x
+			var/secondary_target_y
+			if(id_to_secondary_target != "Vector")
+				fire_scan_x = 1
+				fire_scan_y = 1
+				while(fire_scan_x <= GLOB.sector_map_x)
+					while(fire_scan_y <= GLOB.sector_map_y)
+						if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["id_tag"] == id_to_secondary_target)
+							secondary_target_x = fire_scan_x
+							secondary_target_y = fire_scan_y
+							break
+						if(sts_master.sector_map[fire_scan_x][fire_scan_y]["missile"]["id_tag"] == id_to_secondary_target)
+							secondary_target_x = fire_scan_x
+							secondary_target_y = fire_scan_y
+							break
+						fire_scan_y += 1
+					if(secondary_target_x != null) break
+					fire_scan_y = 1
+				fire_scan_x += 1
+			if(id_to_secondary_target == "Vector")
+				secondary_target_x = tgui_input_number(usr, "Enter vector X of secondary fire", "Secondary VECTOR_X", 0, 5, -5, timeout = 0)
+				secondary_target_y = tgui_input_number(usr, "Enter vector Y of secondary fire", "Secondary VECTOR_Y", 0, 5, -5, timeout = 0)
+			if(secondary_target_x == null || secondary_target_y == null) return
+			var/secondary_payload = tgui_input_number(usr, "Select Secondary Damage", "Secondary PAYLOAD", 1, min_value = 1, timeout = 0)
+			if(secondary_payload == null) return
+			switch(tgui_input_list(usr, "Select Secondary Projectille", "Secondary WARHEAD", list("Direct","Explosive"), timeout = 0))
+				if(null)
+					return
+				if("Direct")
+					sts_master.log_round_history(event = "secondary_fire", log_source = ship_to_fire, log_dest_x = secondary_target_x, log_dest_y = secondary_target_y)
+					for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
+						ship_sts_to_log.WriteToShipLog(shiplog_event = "secondary_fire", shiplog_dest_x = firing_ship_x, shiplog_dest_y = firing_ship_y)
+					sts_master.ProcessDamage(secondary_payload, secondary_target_x, secondary_target_y)
+				if("Explosive")
+					sts_master.log_round_history(event = "secondary_fire", log_source = ship_to_fire, log_dest_x = firing_ship_x, log_dest_y = firing_ship_y)
+					for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
+						ship_sts_to_log.WriteToShipLog(shiplog_event = "secondary_fire", shiplog_dest_x = firing_ship_x, shiplog_dest_y = firing_ship_y)
+					sts_master.ProcessSplashDamage(ammount = secondary_payload, x = secondary_target_x, y = secondary_target_y)
+			sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] -= 1
+		if("Mark Ship As Fired")
+			sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] = 0
+			sts_master.log_round_history(event = "passes_turn", log_source = ship_to_fire, log_dest_x = firing_ship_x, log_dest_y = firing_ship_y)
+	MissionControl(window = "ShipToShip_RoundControl")
+	return
 
 /datum/admins/proc/sonar_ping()
 	if(!check_rights(R_ADMIN)) return
