@@ -234,6 +234,12 @@
 		if("mip_warhead_hit")
 			round_history_current.Add("A MIP <b>projectile impact detected</b>.")
 			return
+		if("npc_sonar_hit")
+			round_history_current.Add("A conventional <b>sonar</b> pulse <b>is targetting this vessel</b>. Origin sector: <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			return
+		if("npc_sonar_miss")
+			round_history_current.Add("Conventional <b>sonar activity detected</b> in system.")
+			return
 
 /obj/structure/shiptoship_master/ship_missioncontrol/Initialize(mapload, ...)
 	. = ..()

@@ -172,11 +172,11 @@
 					</div>
 					<div_class="box">
 					<div class="text">
-					<p>View Round Log</p>
-					<p>View Full Log</p>
-					<p>Send Comms</p>
-					<p>Change Ship Vectors</p>
-					<p>Send Sonar Ping</p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];view_ship_log=round'>View Round Log</a></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];view_ship_log=full'>View Full Log</a></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];send_ship_comms=1'>Send Comms</a></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];control_npc_ship=1'>Change Ship Vectors</a></p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];sonar_ping=1'>Send Sonar Ping</a></p>
 					<p>Fire as Ship</p>
 					</div>
 					</div>
@@ -235,6 +235,89 @@
 		if("full")
 			MissionControl(window = "ShipToShip_FullRoundLog")
 			return
+
+/datum/admins/proc/sonar_ping()
+	if(!check_rights(R_ADMIN)) return
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
+		break
+	var/list/sonar_player_ships = list()
+	var/list/sonar_npc_ships = list()
+	var/sonar_scan_x = 1
+	var/sonar_scan_y = 1
+	while (sonar_scan_x <= GLOB.sector_map_x)
+		while(sonar_scan_y <= GLOB.sector_map_y)
+			if(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["id_tag"] != "none")
+				if(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["status"] == "Player")
+					sonar_player_ships += sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["name"]
+				if(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["status"] != "Player")
+					sonar_npc_ships += sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["name"]
+			sonar_scan_y += 1
+		sonar_scan_y = 1
+		sonar_scan_x += 1
+	var/sonar_origin = tgui_input_list(usr, "Select a sonar ORIGIN point.", "SONAR ORIGIN", sonar_npc_ships, timeout = 0)
+	var/sonar_target = tgui_input_list(usr, "Select a sonar TARGET point.", "SONAR TARGET", sonar_player_ships, timeout = 0)
+	var/sonar_origin_x
+	var/sonar_origin_y
+	sonar_scan_x = 1
+	sonar_scan_y = 1
+	while (sonar_scan_x <= GLOB.sector_map_x)
+		while(sonar_scan_y <= GLOB.sector_map_y)
+			if(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["name"] == sonar_origin)
+				sonar_origin_x = sonar_scan_x
+				sonar_origin_y = sonar_scan_y
+			if(sonar_origin_x != null) break
+			sonar_scan_y += 1
+		if(sonar_origin_x != null) break
+		sonar_scan_y = 1
+		sonar_scan_x += 1
+	var/sonar_roll_result = rand(1,100)
+	to_chat(usr, SPAN_NOTICE("Scanner ping from [sonar_origin] to [sonar_target] roll result: [sonar_roll_result]"))
+	sts_master.log_round_history(event = "npc_sonar", log_source = sonar_origin, log_target = sonar_target, log_dest_x = sonar_roll_result)
+	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_sonar in world)
+		if (ship_mc_sonar.sector_map_data["name"] == sonar_target)
+			ship_mc_sonar.WriteToShipLog(shiplog_event = "npc_sonar_hit", shiplog_dest_x = sonar_origin_x, shiplog_dest_y = sonar_origin_y)
+		else
+			ship_mc_sonar.WriteToShipLog(shiplog_event = "npc_sonar_miss")
+	return
+
+/datum/admins/proc/control_npc_ship()
+	if(!check_rights(R_ADMIN)) return
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
+		break
+	var/list/control_npc_ships = list()
+	var/control_scan_x = 1
+	var/control_scan_y = 1
+	while (control_scan_x <= GLOB.sector_map_x)
+		while(control_scan_y <= GLOB.sector_map_y)
+			if(sts_master.sector_map[control_scan_x][control_scan_y]["ship"]["id_tag"] != "none")
+				if(sts_master.sector_map[control_scan_x][control_scan_y]["ship"]["status"] != "Player")
+					control_npc_ships += sts_master.sector_map[control_scan_x][control_scan_y]["ship"]["name"]
+			control_scan_y += 1
+		control_scan_y = 1
+		control_scan_x += 1
+	var/ship_name_to_control = tgui_input_list(usr, "Select a ship to control", "Ship selection", control_npc_ships, timeout = 0)
+	if(ship_name_to_control == null) return
+	var/control_target_x
+	var/control_target_y
+	control_scan_x = 1
+	control_scan_y = 1
+	while (control_scan_x <= GLOB.sector_map_x)
+		while(control_scan_y <= GLOB.sector_map_y)
+			if(sts_master.sector_map[control_scan_x][control_scan_y]["ship"]["name"] == ship_name_to_control)
+				control_target_x = control_scan_x
+				control_target_y = control_scan_y
+			if(control_target_x != null) break
+			control_scan_y += 1
+		if(control_target_x != null) break
+		control_scan_y = 1
+		control_scan_x += 1
+	sts_master.open_movement_console(x = control_target_x, y = control_target_y)
+	return
+
 
 /datum/admins/proc/send_ship_comms()
 	if(!check_rights(R_ADMIN)) return
@@ -311,15 +394,15 @@
 		if(comms_source != "Custom")
 			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
 				ship_mc_to_comm.comms_messages += "([ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)]),\"[comms_source]\" - [comms_text]"
-				ship_mc_to_comm.talkas("Incomming communicatins from in-sector!", 1)
-				ship_mc_to_comm.linked_signals_console.talkas("Incomming communicatins from in-sector!",1)
+				ship_mc_to_comm.talkas("Incomming sector wide communications!", 1)
+				ship_mc_to_comm.linked_signals_console.talkas("Incomming sector wide communications!",1)
 			sts_master.log_round_history(event = "comms_ping_system", log_source = comms_source, log_target = comms_text)
 			return
 		if(comms_source == "Custom")
 			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
 				ship_mc_to_comm.comms_messages += "[comms_source_custom] - [comms_text]"
-				ship_mc_to_comm.talkas("Incomming communicatins from in-sector!", 1)
-				ship_mc_to_comm.linked_signals_console.talkas("Incomming communicatins from in-sector!",1)
+				ship_mc_to_comm.talkas("Incomming sector wide communications!", 1)
+				ship_mc_to_comm.linked_signals_console.talkas("Incomming sector wide communications!",1)
 			sts_master.log_round_history(event = "comms_ping_system", log_source = comms_source_custom, log_target = comms_text)
 			return
 

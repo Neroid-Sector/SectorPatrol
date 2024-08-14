@@ -2350,6 +2350,22 @@
 		if(!check_rights(R_ADMIN))
 			return
 		edit_general_info(type_to_edit = href_list["edit_general_info"])
+	if(href_list["send_ship_comms"])
+		if(!check_rights(R_ADMIN))
+			return
+		send_ship_comms()
+	if(href_list["view_ship_log"])
+		if(!check_rights(R_ADMIN))
+			return
+		view_ship_log(log_type = href_list["view_ship_log"])
+	if(href_list["control_npc_ship"])
+		if(!check_rights(R_ADMIN))
+			return
+		control_npc_ship()
+	if(href_list["sonar_ping"])
+		if(!check_rights(R_ADMIN))
+			return
+		sonar_ping()
 	return
 
 /datum/admins/proc/accept_ert(mob/approver, mob/ref_person)
