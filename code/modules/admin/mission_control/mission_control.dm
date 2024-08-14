@@ -159,7 +159,7 @@
 			if(GLOB.round_phase == 4)
 				dat+= {"<div_class="box">
 				<div class="text">
-				<p>ROUND ADVANCING...</p>
+				<p>TURN ADVANCING...</p>
 				</div>
 				</div>
 				"}
@@ -181,15 +181,149 @@
 					</div>
 					</div>
 					"}
-
+		if("ShipToShip_LastRoundLog")
+			var/log_to_display = jointext(sts_master.round_history_current, "</p><p>")
+			dat += {"<div_class="box">
+				<div class="text">
+				<p>Current Log Round</p>
+				<p>ROUND: [GLOB.combat_round]</p>
+				</div>
+				</div>
+				<div_class="box">
+				<div class="text">
+				<p>[log_to_display]</p>
+				</div>
+				</div>
+				"}
+		if("ShipToShip_FullRoundLog")
+			var/log_to_display = jointext(sts_master.round_history, "</p><p>")
+			dat += {"<div_class="box">
+				<div class="text">
+				<p>Full StS Log</p>
+				</div>
+				</div>
+				<div_class="box">
+				<div class="text">
+				<p>[log_to_display]</p>
+				</div>
+				</div>
+				"}
 	//footer etc
 	dat += {"
 		</div>
 		</body>
 		"}
 
-	usr << browse(dat,"window=mission_control_[usr];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
-	onclose(usr, "mission_control_[usr]")
+	usr << browse(dat,"window=mission_control_[usr]_[window];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	if(usr.sp_uis.Find("mission_control_[usr]_[window]") == 0)
+		usr.sp_uis += "mission_control_[usr]_[window]"
+	onclose(usr, "mission_control_[usr]_[window]")
+
+/datum/admins/proc/view_ship_log(log_type = null)
+	if(!check_rights(R_ADMIN)) return
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
+		break
+	if(!sts_master)
+		to_chat(usr, SPAN_WARNING("Error: No sts_master item. Most likely a mapping error. Can be mostly circumvented by spawning in the master item."))
+		return
+	switch(log_type)
+		if("round")
+			MissionControl(window = "ShipToShip_LastRoundLog")
+			return
+		if("full")
+			MissionControl(window = "ShipToShip_FullRoundLog")
+			return
+
+/datum/admins/proc/send_ship_comms()
+	if(!check_rights(R_ADMIN)) return
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
+		break
+	var/list/comms_player_ships = list()
+	var/list/comms_npc_ships = list()
+	var/comms_scan_x = 1
+	var/comms_scan_y = 1
+	while (comms_scan_x <= GLOB.sector_map_x)
+		while(comms_scan_y <= GLOB.sector_map_y)
+			if(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["id_tag"] != "none")
+				if(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["status"] == "Player")
+					comms_player_ships += sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["name"]
+				if(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["status"] != "Player")
+					comms_npc_ships += sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["name"]
+			comms_scan_y += 1
+		comms_scan_y = 1
+		comms_scan_x += 1
+	var/comms_source = tgui_input_list(usr, "Select Message Sender","Sender Select",list(comms_npc_ships,"Custom"),timeout = 0)
+	var/comms_source_x
+	var/comms_source_y
+	var/comms_source_custom
+	var/comms_dest_x
+	var/comms_dest_y
+	if(comms_source == null) return
+	if(comms_source == "Custom")
+		comms_source_custom = tgui_input_text(usr, "Enter Name of comms source, will be displayed on all player comms consoles", "Custom Comms Source", timeout = 0)
+		if(comms_source_custom == null) comms_source_custom = "Unknown"
+	var/comms_dest = tgui_input_list(usr, "Select Message Destination", "Destination Select", list(comms_player_ships,comms_npc_ships,"System-Wide"))
+	if(comms_dest == null) return
+	if(comms_source != "Custom")
+		comms_scan_x = 1
+		comms_scan_y = 1
+		while (comms_scan_x <= GLOB.sector_map_x)
+			while(comms_scan_y <= GLOB.sector_map_y)
+				if(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["name"] == comms_source)
+					comms_source_x = comms_scan_x
+					comms_source_y = comms_scan_y
+				if(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["name"] == comms_dest)
+					comms_dest_x = comms_scan_x
+					comms_dest_y = comms_scan_y
+				if(comms_source_x != null && comms_dest != null) break
+				comms_scan_y += 1
+			if(comms_source_x != null && comms_dest != null) break
+			comms_scan_y = 1
+			comms_scan_x += 1
+	var/comms_text = tgui_input_text(usr, "Enter Comms Message", "Comms MSG", max_length = MAX_BOOK_MESSAGE_LEN, timeout = 0)
+	if(comms_text == null) return
+	if(comms_dest != "System-Wide")
+		if(comms_source != "Custom")
+			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
+				if(ship_mc_to_comm.sector_map_data["name"] == comms_dest)
+					ship_mc_to_comm.comms_messages += "([ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)]),\"[comms_source]\" - [comms_text]"
+					ship_mc_to_comm.talkas("Incomming communicatins from in-sector!", 1)
+					ship_mc_to_comm.linked_signals_console.talkas("Incomming communicatins from in-sector!",1)
+				if(ship_mc_to_comm.sector_map_data["name"] != comms_dest)
+					ship_mc_to_comm.comms_messages += "Communications Pulse detected from sector [ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)])!"
+			sts_master.log_round_history(event = "comms_ping", log_source = comms_source, log_target = comms_text, log_dest_x = comms_dest_x, log_dest_y = comms_dest_y)
+			return
+		if(comms_source == "Custom")
+			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
+				if(ship_mc_to_comm.sector_map_data["name"] == comms_dest)
+					ship_mc_to_comm.comms_messages += "[comms_source_custom] - [comms_text]"
+					ship_mc_to_comm.talkas("Incomming communicatins from [comms_source_custom]!", 1)
+					ship_mc_to_comm.linked_signals_console.talkas("Incomming communicatins from [comms_source_custom]!",1)
+				if(ship_mc_to_comm.sector_map_data["name"] != comms_dest)
+					ship_mc_to_comm.comms_messages += "Out of Sector Comms pulse detected!"
+			sts_master.log_round_history(event = "comms_ping", log_source = comms_source_custom, log_target = comms_text, log_dest_x = comms_dest_x, log_dest_y = comms_dest_y)
+			return
+	if(comms_dest == "System-Wide")
+		if(comms_source != "Custom")
+			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
+				ship_mc_to_comm.comms_messages += "([ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)]),\"[comms_source]\" - [comms_text]"
+				ship_mc_to_comm.talkas("Incomming communicatins from in-sector!", 1)
+				ship_mc_to_comm.linked_signals_console.talkas("Incomming communicatins from in-sector!",1)
+			sts_master.log_round_history(event = "comms_ping_system", log_source = comms_source, log_target = comms_text)
+			return
+		if(comms_source == "Custom")
+			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
+				ship_mc_to_comm.comms_messages += "[comms_source_custom] - [comms_text]"
+				ship_mc_to_comm.talkas("Incomming communicatins from in-sector!", 1)
+				ship_mc_to_comm.linked_signals_console.talkas("Incomming communicatins from in-sector!",1)
+			sts_master.log_round_history(event = "comms_ping_system", log_source = comms_source_custom, log_target = comms_text)
+			return
+
+
 
 /datum/admins/proc/save_general_save(save = null)
 	if(!check_rights(R_ADMIN)) return

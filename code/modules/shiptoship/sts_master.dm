@@ -393,7 +393,14 @@
 			round_history_current.Add("<b>PROJECTILE MOVEMENT AND DETONATION:</b><hr>")
 			return
 		if("comms_ping")
-			round_history_current.Add("Comms ping sent from <b>[log_source_to_add]</b> to coordinates ([x_to_move],[y_to_move]): [log_target_to_add]")
+			round_history_current.Add("Comms ping sent from <b>[log_source_to_add]</b> to coordinates <b>([x_to_move],[y_to_move])</b>: [log_target_to_add]")
+			if(sector_map[x_to_move][y_to_move]["ship"]["id_tag"] != "none")
+				var/comms_recepient = "[sector_map[x_to_move][y_to_move]["ship"]["id_tag"]]-[sector_map[x_to_move][y_to_move]["ship"]["id_tag"]]"
+				round_history_current.Add("The message was recieved by <b>[comms_recepient]</b>")
+			message_admins("Comms message sent from [log_source_to_add]: [log_target_to_add].")
+			return
+		if("comms_ping_system")
+			round_history_current.Add("System-Wide Comms Ping sent from <b>[log_source_to_add]</b>: [log_target_to_add]")
 			message_admins("Comms message sent from [log_source_to_add]: [log_target_to_add].")
 			return
 

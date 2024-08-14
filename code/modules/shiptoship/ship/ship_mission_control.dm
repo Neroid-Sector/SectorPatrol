@@ -170,7 +170,8 @@
 			for (var/obj/structure/shiptoship_master/ship_missioncontrol/player_ship_console in world)
 				if(player_ship_console.sector_map_data["id_tag"] == sector_map[x_to_comms_ping][y_to_comms_ping]["ship"]["id_tag"])
 					player_ship_console.CommsLog(message_type = 0, message_source = sector_map_data["name"], message_to_add = message_to_comms_ping)
-					player_ship_console.talkas("New Direct Message recieved!")
+					player_ship_console.talkas("New Direct Message recieved!",1)
+					player_ship_console.linked_signals_console.talkas("New Direct Message recieved!",1)
 	return 1
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/WriteToShipLog(shiplog_event = null, shiplog_dest_x = null, shiplog_dest_y = null)
