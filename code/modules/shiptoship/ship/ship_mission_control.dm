@@ -414,187 +414,22 @@
 	status_list_to_return.Add("<b> Damage Readout:</b>","Engines: [sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["damage"]["engine"]]","Systems: [sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["damage"]["systems"]]","Weapons: [sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["damage"]["weapons"]]","Hull: [sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["damage"]["hull"]]")
 	return status_list_to_return
 
-/obj/structure/shiptoship_master/ship_missioncontrol/proc/OpenMissionControl(screen_type = "general")
-	var/display_html
-	var/sensor_to_display
-	var/detailed_sonar_to_display
-	var/detailed_ping_history
-	var/tracking_to_display = jointext(GetTrackingList(), "</p><p>")
-	var/pings_to_display
-	var/messages_to_display
-	var/status_to_display = jointext(GetStatusReadout(), "</p><p>")
-	if(ping_history.len == 0) pings_to_display = "No ping history."
-	if(ping_history.len <= 5 && ping_history.len != 0) pings_to_display = jointext(ping_history, "</p><p>")
-	if(ping_history.len > 5) pings_to_display = jointext(ping_history.Copy((ping_history.len - 5)), "<br>")
-	if(local_round_log_moves.len != 0) sensor_to_display = jointext(local_round_log_moves, " | ")
-	if(!sensor_to_display) sensor_to_display = "No updates."
-	if(local_round_log.len != 0) detailed_sonar_to_display = jointext(local_round_log, "</p></p>- ")
-	if(ping_history.len != 0) detailed_ping_history = jointext(ping_history, "</p></p>")
-	if(comms_messages.len == 0) messages_to_display = "No messages to dispplay."
-	if(comms_messages.len <= 5 && comms_messages.len != 0) messages_to_display = jointext(comms_messages, "<br>")
-	if(comms_messages.len > 5) messages_to_display = jointext(comms_messages.Copy((comms_messages.len - 5)), "<br>")
-	switch(screen_type)
-		if("general")
-			display_html = {"<!DOCTYPE html>
-			<html>
-			<head>
-			<style>
-			body {
-			background-color:black;
-			}
-			#main_window {
-			font-family: 'Lucida Grande', monospace;
-			font-size: 18px;
-			color: #ffffff;
-			text-align: center;
-			padding: 0em 1em;
-			}
-            .box {
-            border-style: solid;
-            }
-			.column {
-			float: left;
-			font-family: 'Lucida Grande', monospace;
-			font-size: 18px;
-			color: #ffffff;
-            text-align: center;
-			}
-
-			.left {
-			width: 30%;
-			}
-
-			.right {
-			width: 70%;
-			}
-            .row:after {
-            content: "";
-            display: table;
-            clear: both;
-            }
-			</style>
-			</head>
-			<body>
-			<div id="main_window">
-            <div class="box">
-			<p style="font-size: 120%;">
-			<b>UACM 2ND LOGISTICS<br>[sector_map_data["name"]]</b>
-			</p>
-            </div>
-            <div class="box">
-			<p>
-			<b>COMMAND OVERVIEW:<br><br>Detailed logs are accessible through Mission Control terminal.<hr></b>
-			</p>
-			<p><b>Ship position:</b> Sector [SectorConversion(x = sector_map_data["x"], y = sector_map_data["y"])]</p>
-            </div>
-            <div class="box">
-			<p><b>Communications Log:</b></p>
-			<p>[messages_to_display]</p>
-            </div>
-			<div class="box">
-				<div class="row">
-					<div class="column left">
-						<div class="box">
-						<p><b>Sonar Report:</b></p>
-						<p>[sensor_to_display]</p>
-						</div>
-					</div>
-					<div class="column right">
-						<div class="box">
-						<p><b>Active Probe Pings:</b></p>
-						<p>[pings_to_display]</p>
-						</div>
-				</div>
-			</div>
-			</div>
-            <div class="box">
-			<p><b>Tracking Updates:</b></p>
-			<p>[tracking_to_display]</p>
-            </div>
-            <div class="box">
-			<p><b>SHIP STATUS:</b></p>
-			<p>[status_to_display]</b></p>
-            </div>
-			</div>
-			</body>
-			"}
-		if("sonar")
-			display_html = {"<!DOCTYPE html>
-			<html>
-			<head>
-			<style>
-			body {
-			background-color:black;
-			}
-			#main_window {
-			font-family: 'Lucida Grande', monospace;
-			font-size: 18px;
-			color: #ffffff;
-			text-align: center;
-			padding: 0em 1em;
-			}
-            .box {
-            border-style: solid;
-            }
-			</style>
-			</head>
-			<body>
-			<div id="main_window">
-			<div class="box">
-			<p style="font-size: 120%;">
-			<b>UACM 2ND LOGISTICS<br>[sector_map_data["name"]]<hr></b>
-			</p>
-			</div>
-			<div class="box">
-			<p>
-			<b>DETAILED SONAR LOG:</b>
-			</p>
-			<p>
-			- [detailed_sonar_to_display]
-			</p>
-			</div>
-			</div>
-			</body>
-			"}
-		if("ping")
-			display_html = {"<!DOCTYPE html>
-			<html>
-			<head>
-			<style>
-			body {
-			background-color:black;
-			}
-			#main_window {
-			font-family: 'Lucida Grande', monospace;
-			font-size: 18px;
-			color: #ffffff;
-			text-align: center;
-			padding: 0em 1em;
-            .box {
-            border-style: solid;
-            }
-			}
-			</style>
-			</head>
-			<body>
-			<div id="main_window">
-			<div class="box">
-			<p style="font-size: 120%;">
-			<b>UACM 2ND LOGISTICS<br>[sector_map_data["name"]]<hr></b>
-			</p>
-			</div>
-			<div class="box">
-			<p>
-			<b>DETAILED PING LOG:</b>
-			</p>
-			<p>
-			[detailed_ping_history]
-			</p>
-			</div>
-			</div>
-			</body>
-			"}
-	usr << browse(display_html,"window=ship_[screen_type]_[sector_map_data["name"]];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
-	if(usr.sp_uis.Find("ship_[screen_type]_[sector_map_data["name"]]") == 0)
-		usr.sp_uis += "ship_[screen_type]_[sector_map_data["name"]]"
-	onclose(usr, "ship_[screen_type]_[sector_map_data["name"]]")
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/GetWeaponsReadout()
+	var/list/weapons_status_to_return
+	if(linked_weapons_console.linked_primary_cannon.loaded_projectile["loaded"] == 0)
+		weapons_status_to_return += "Primary Weapon: <b>NOT PRIMED</b>"
+	else
+		weapons_status_to_return += "Primary Weapon: <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["missile"]]</b> - <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["warhead"]]</b>"
+	if(linked_weapons_console.linked_secondary_cannon.loaded_projectile["loaded"] == 0)
+		weapons_status_to_return += "Secondary Weapon: <b>NOT PRIMED</b>"
+	else
+		weapons_status_to_return += "Secodary Weapon: <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["type"]]</b>"
+	var/probe_status
+	if(linked_signals_console.linked_probe_launcher.probe_loaded == 0) probe_status = "EMPTY"
+	if(linked_signals_console.linked_probe_launcher.probe_loaded == 1) probe_status = "LOADED"
+	var/tracker_status
+	if(linked_signals_console.linked_tracker_launcher.tracker_loaded == 0) tracker_status = "EMPTY"
+	if(linked_signals_console.linked_tracker_launcher.tracker_loaded == 1) tracker_status = "LOADED"
+	weapons_status_to_return += "PROBE: <b>[probe_status]</b>"
+	weapons_status_to_return += "TRACKER: <b>[tracker_status]</b>"
+	return weapons_status_to_return

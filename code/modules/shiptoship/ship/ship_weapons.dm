@@ -410,7 +410,7 @@
 				return
 
 /obj/structure/ship_elements/primer_lever/secondary
-	name = "primary cannon priming lever"
+	name = "secondary cannon priming lever"
 	desc = "A firm looking lever"
 	desc_lore = "The OV-PST made weapons need to \"prime\" is a different process than priming conventional weaponry and involves conversion of data and activation of special LD trackers that let the PST see the projectile, but the end effect is the same - once primed, the weapon must be fired to clear it."
 	icon = 'icons/sectorpatrol/ship/switches.dmi'

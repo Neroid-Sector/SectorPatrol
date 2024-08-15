@@ -45,7 +45,7 @@
 	return
 
 /obj/item/ship_tracker
-	name = "PHA-1 type tracker device"
+	name = "type PHA-1 tracker device"
 	desc = "A drone sized device encased in polymer glass with slightly glowing, greenish electronic parts visible inside."
 	desc_lore = "PHA-1 Trackers are EYE-7 probes that have undergone further modification and integration into the PST's systems and offer a permanent window for the Mission Control system to any entity they manage to attach themselves to. This means that while they do not feed any other information, these devices will always feed their location back to the system, allowing for live tracking."
 	icon = 'icons/sectorpatrol/ship/probe.dmi'

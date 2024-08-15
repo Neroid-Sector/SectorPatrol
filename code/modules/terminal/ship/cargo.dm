@@ -11,8 +11,8 @@
 	var/ship_name
 	var/repair_shutdown = 0
 	var/obj/structure/shiptoship_master/ship_missioncontrol/linked_master_console
-	var/list/linked_cargo_bays = list("primary_munitions" = /obj/structure/ship_elements/cargo_bay,
-		"secondary_munitions" = /obj/structure/ship_elements/cargo_bay,
+	var/list/linked_cargo_bays = list("primary_munitions" = /obj/structure/ship_elements/cargo_bay/primary_munitions,
+		"secondary_munitions" = /obj/structure/ship_elements/cargo_bay/secondary_munitions,
 		)
 
 /obj/structure/terminal/cargo_console/proc/LinkToShipMaster(master_console as obj)
@@ -133,6 +133,22 @@
 						terminal_display_line("[bay_to_dispense.cargo_data["secondary_broadside"]] left in store.")
 					else
 						terminal_display_line("Error: Stock empty.")
+				if("X-P01")
+					if(bay_to_dispense.cargo_data["probe"] > 0)
+						to_chat(usr,SPAN_ADMIN("Dispensing."))
+						bay_to_dispense.cargo_data["probe"] -= 1
+						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/item/ship_probe)
+						terminal_display_line("[bay_to_dispense.cargo_data["probe"]] left in store.")
+					else
+						terminal_display_line("Error: Stock empty.")
+				if("X-T01")
+					if(bay_to_dispense.cargo_data["tracker"] > 0)
+						to_chat(usr,SPAN_ADMIN("Dispensing."))
+						bay_to_dispense.cargo_data["tracker"] -= 1
+						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/item/ship_tracker)
+						terminal_display_line("[bay_to_dispense.cargo_data["tracker"]] left in store.")
+					else
+						terminal_display_line("Error: Stock empty.")
 
 
 
@@ -165,6 +181,9 @@
 			terminal_display_line("Direct | ID: D02 | [bay_to_scan.cargo_data["secondary_direct"]] in storage.")
 			terminal_display_line("Flak | ID: E03 | [bay_to_scan.cargo_data["secondary_flak"]] in storage.")
 			terminal_display_line("Broadside | ID: B05 | [bay_to_scan.cargo_data["secondary_broadside"]] in storage.")
+			terminal_display_line("SPECIAL | TAG: X")
+			terminal_display_line("EYE-7 probe | ID: P01 | [bay_to_scan.cargo_data["probe"]]")
+			terminal_display_line("PHA-1 tracker | ID: T01 | [bay_to_scan.cargo_data["tracker"]]")
 	if(starting_buffer_length == terminal_buffer.len)
 		var/tracked_position = 1
 		while(tracked_position <= length(string_to_parse))

@@ -80,6 +80,106 @@
 			icon_state = icon_base + "_off"
 			update_icon()
 
+/obj/structure/ship_elements/command_monitor/proc/open_command_window(type)
+	var/dat
+	//css and header
+	dat += {"
+		<head>
+		<style>
+		body {
+		background-color:black;
+		}
+		#main_window {
+		font-family: 'Lucida Grande', monospace;
+		font-size: 18px;
+		color: #ffffff;
+		text-align: center;
+		padding: 0em 1em;
+		}
+		.box {
+		border-style: solid;
+		}
+		.text{
+		padding: 5px;
+		}
+		</head>
+		</style>
+		<body>
+		<div id="main_window">
+		<div class="box">
+		<div class="text">
+		<p style="font-size: 120%;">
+		<b>SECTOR PATROL DM PANEL</b>
+		</p>
+		</div>
+		</div>
+		"}
+	//content
+	dat += {"
+		<div class="box">
+		<div class="text">
+		"}
+	switch(type)
+		if(null)
+			return
+		if("current_round")
+			var/current_round
+			if(linked_command_chair.linked_master_console.local_round_log.len == 0) current_round = "No recent Sonar activity."
+			if(linked_command_chair.linked_master_console.local_round_log.len != 0) current_round = jointext(linked_command_chair.linked_master_console.local_round_log, "</p><p>")
+			dat +={"<p><b>Sonar Activity:</b></p>
+				<p>[current_round]</p>
+				"}
+		if("round_history")
+			var/round_history
+			if(linked_command_chair.linked_master_console.local_round_log_full.len == 0) round_history = "No Sonar history in buffer."
+			if(linked_command_chair.linked_master_console.local_round_log_full.len != 0) round_history = jointext(linked_command_chair.linked_master_console.local_round_log_full, "</p><p>")
+			dat +={"<p><b>Sonar Activity History Buffer:</b></p>
+				<p>[round_history]</p>
+				"}
+		if("pings_and_tracking")
+			var/activity_summary
+			var/pings_and_tracking
+			if(linked_command_chair.linked_master_console.ping_history.len == 0) pings_and_tracking += "No ping history."
+			if(linked_command_chair.linked_master_console.ping_history.len != 0) pings_and_tracking += jointext(linked_command_chair.linked_master_console.ping_history, "</p><p>")
+			pings_and_tracking += jointext(linked_command_chair.linked_master_console.GetTrackingList(), "</p><p>")
+			if(linked_command_chair.linked_master_console.local_round_log_moves.len == 0) activity_summary = "No recent activity."
+			if(linked_command_chair.linked_master_console.local_round_log_moves.len != 0) activity_summary = jointext(linked_command_chair.linked_master_console.local_round_log_moves, " | ")
+			dat +={"<p><b>Pings and Tracking:</b></p>
+				<p>Activity update:</p>
+				<p><b>[activity_summary]</b></p>
+				<p>Pings and Trackers readout:</p>
+				<p>[pings_and_tracking]</p>
+				"}
+		if("ship_messages")
+			var/ship_messages
+			if(linked_command_chair.linked_master_console.comms_messages.len == 0) ship_messages = "No messages to display."
+			if(linked_command_chair.linked_master_console.comms_messages.len != 0) ship_messages = jointext(linked_command_chair.linked_master_console.comms_messages, "</p><p>")
+			dat +={"<p><b>Recieved Messages:</b></p>
+				<p>[ship_messages]</p>
+				"}
+		if("weapon_status")
+			var/weapon_status = jointext(linked_command_chair.linked_master_console.GetWeaponsReadout(), "</p><p>")
+			dat +={"<p><b>Launcher Status:</b></p>
+				<p>[weapon_status]</p>
+				"}
+		if("ship_status")
+			var/ship_status = jointext(linked_command_chair.linked_master_console.GetStatusReadout(), "</p><p>")
+			dat +={"<p><b>Launcher Status:</b></p>
+				<p>[ship_status]</p>
+				"}
+	dat += {"</div>
+		</div>
+		"}
+	//footer etc
+	dat += {"
+		</div>
+		</body>
+		"}
+	usr << browse(dat,"window=commander_console_[usr]_[type];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	if(usr.sp_uis.Find("commander_console_[usr]_[type]") == 0)
+		usr.sp_uis += "commander_console_[usr]_[type]"
+	onclose(usr, "commander_console_[usr]_[type]")
+
 /obj/structure/ship_elements/command_monitor/top
 	name = "right command monitor"
 	icon_state = "top_off"

@@ -111,4 +111,19 @@
 		"secondary_direct" = 0,
 		"secondary_flak" = 0,
 		"secondary_broadside" = 0,
+		"probe" = 0,
+		"tracker" = 0,
 		)
+
+/obj/structure/ship_elements/cargo_bay/secondary_munitions/attackby(obj/item/W, mob/user)
+	. = ..()
+	if(istype(W, /obj/item/ship_probe))
+		cargo_data["probe"] += 1
+		to_chat(user, SPAN_INFO("The cargo bay accepts the [W] and starts the storage procedure."))
+		RecieveObject(W)
+		return
+	if(istype(W, /obj/item/ship_tracker))
+		cargo_data["tracker"] += 1
+		to_chat(user, SPAN_INFO("The cargo bay accepts the [W] and starts the storage procedure."))
+		RecieveObject(W)
+		return
