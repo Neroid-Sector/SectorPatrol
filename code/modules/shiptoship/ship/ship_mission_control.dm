@@ -13,6 +13,7 @@
 	var/obj/structure/terminal/weapons_console/linked_weapons_console
 	var/obj/structure/terminal/damage_console/linked_damage_console
 	var/obj/structure/terminal/cargo_console/linked_cargo_console
+	var/obj/structure/ship_elements/command_chair/linked_command_chair
 	var/list/tracking_list
 	var/tracking_max = 3
 	var/list/local_round_log = list()
@@ -30,12 +31,14 @@
 			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, ProcessShutdown),1)
 			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),1)
 			INVOKE_ASYNC(linked_cargo_console,TYPE_PROC_REF(/obj/structure/terminal/cargo_console/, ProcessShutdown),1)
+			INVOKE_ASYNC(linked_command_chair,TYPE_PROC_REF(/obj/structure/ship_elements/command_chair/, ProcessShutdown),1)
 			repair_shutdown = 1
 		if(0)
 			INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, ProcessShutdown),0)
 			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, ProcessShutdown),0)
 			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),0)
 			INVOKE_ASYNC(linked_cargo_console,TYPE_PROC_REF(/obj/structure/terminal/cargo_console/, ProcessShutdown),0)
+			INVOKE_ASYNC(linked_command_chair,TYPE_PROC_REF(/obj/structure/ship_elements/command_chair/, ProcessShutdown),0)
 			repair_shutdown = 0
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/SyncPosToMap()
@@ -358,6 +361,13 @@
 				linked_cargo_console.LinkToShipMaster(master_console = src)
 				var/turf/turf_return = get_turf(linked_cargo_console)
 				to_chat(world, SPAN_INFO("Singals Console Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_command_chair == null)
+		for(var/obj/structure/ship_elements/command_chair/console in world)
+			if(console.ship_name == sector_map_data["name"])
+				linked_command_chair.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_command_chair)
+				to_chat(world, SPAN_INFO("Command Chair Linked at [turf_return.x],[turf_return.y]"))
 				break
 	while(current_x <= GLOB.sector_map_x)
 		while(current_y <= GLOB.sector_map_y)
