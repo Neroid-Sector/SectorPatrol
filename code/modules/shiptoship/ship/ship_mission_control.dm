@@ -60,6 +60,7 @@
 /obj/structure/shiptoship_master/ship_missioncontrol/NextTurn()
 	local_round_log_full.Add("<hr><b>ROUND [GLOB.combat_round]</b><hr>")
 	local_round_log_full.Add(local_round_log)
+	linked_command_chair.open_command_window("round_history")
 	local_round_log = null
 	local_round_log = list()
 	SyncPosToMap()
@@ -78,6 +79,7 @@
 			ping_history.Add("<b>([pos_x],[pos_y])</b> | <b>Unknown Ship:</b> Bearing: [type] | Velocity: [speed]")
 		if(4)
 			ping_history.Add("<b>([pos_x],[pos_y])</b> | <b>Unknown Projectile</b> Bearing: [type] | Velocity: [speed]")
+	linked_command_chair.open_command_window("pings_and_tracking")
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/ScannerPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0, range = 0)
 	var/obj/structure/terminal/signals_console/target_console = incoming_console
@@ -152,11 +154,15 @@
 	if(message_source == null || message_to_add == null) return
 	switch(message_type)
 		if(0)
-			comms_messages.Add("<b>Direct message recieved.</b> Sender ID: [message_source]. Message reads: <[message_to_add]>.")
+			comms_messages.Add("Direct message recieved. <b>Sender: [message_source]. Message: <[message_to_add]>.</b>")
 		if(1)
-			comms_messages.Add("<b>Communications activity detected</b> in sector ([message_source]).")
+			comms_messages.Add("Communications <b>activity detected in sector ([message_source]).</b>")
 		if(2)
-			comms_messages.Add("<b>Incoming Priority Message from [message_source]:</b> \"[message_to_add]\"")
+			comms_messages.Add("Incoming System-Wide <b>Message from [message_source]:</b> \"[message_to_add]\"")
+		if(3)
+			comms_messages.Add("Out of sector <b>comms pulse detected</b>!")
+	linked_command_chair.open_command_window("comms_messages")
+
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/CommsPing(incoming_console as obj, x_to_comms_ping = 0, y_to_comms_ping = 0, message_to_comms_ping = null)
 	var/obj/structure/terminal/signals_console/target_console = incoming_console
@@ -188,77 +194,55 @@
 	switch(event_to_add_ship)
 		if("collision_move")
 			local_round_log.Add("Ship engine pattern changes suggest a <b>near-collision in Sector [SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
-			return
 		if("collision_boundary")
 			local_round_log.Add("<b>Emergency maneuvers and rapid engine deceleration<b> detected on Twilight Boundary of Sector [SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)].")
-			return
 		if("regular_move")
 			local_round_log.Add("Engine noise related to <b>ship movement detected in Sector [SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>.")
 			if(local_round_log_moves.Find("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>") == 0) local_round_log_moves.Add("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
-			return
 		if("missile_collision")
 			local_round_log.Add("Detonation detected after mulitple Projectile movement traces in Sector [SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]")
-			return
 		if("missile_move","warhead_miss","warhead_homing")
 			local_round_log.Add("Projectile leapfrog trace in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>.")
 			if(local_round_log_moves.Find("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>") == 0) local_round_log_moves.Add("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
-			return
 		if("warhead_hit", "explosive_splash")
 			local_round_log.Add("Warhead explosion detected in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
 			if(local_round_log_moves.Find("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>") == 0) local_round_log_moves.Add("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
-			return
 		if("hit_shield")
 			local_round_log.Add("Deflector <b>shield impact</b> detected.")
-			return
 		if("shield_break")
 			local_round_log.Add("Defletor <b>shield collapse</b> detected.")
-			return
 		if("destroy_complete")
 			local_round_log.Add("Multiple explosions and ship fragmentation detected. High likelihood of a complete loss event.")
-			return
 		if("destroy_engine")
 			local_round_log.Add("Twilight Paradox Engine Collapse detected. Escape pod launches detected.")
-			return
 		if("destroy_systems")
 			local_round_log.Add("Rapid, repeated explosions followed by escape pod activation detected. On-board system failre likely.")
-			return
 		if("destroy_weapons")
 			local_round_log.Add("Wepon bay detonation detected. High casuality event expected.")
-			return
 		if("destroy_hull")
 			local_round_log.Add("Cascading hull breach detected. Partial ship fragmentation and high casualty event expected.")
-			return
 		if("nuclear_hit")
 			local_round_log.Add("<b>WARNING:</b> Nuclear detonation detected in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
 			if(local_round_log_moves.Find("[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]") == 0) local_round_log_moves.Add("[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]")
-			return
 		if("mip_deploy")
 			local_round_log.Add("MIP Warhead reports deploying its payload in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
-			return
 		if("mip_payload_fail")
 			local_round_log.Add("MIP Warhead reports failure to deploy its payload due to misconfiguration in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
-			return
 		if("mip_warhead_hit")
 			local_round_log.Add("A MIP <b>projectile impact detected</b>.")
-			return
 		if("npc_sonar_hit")
 			local_round_log.Add("A conventional <b>sonar</b> pulse <b>is targetting this vessel</b>. Origin sector: <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
-			return
 		if("npc_sonar_miss")
 			local_round_log.Add("Conventional <b>sonar activity detected</b> in system.")
-			return
 		if("missile_launch")
 			local_round_log.Add("<b>Missile launch<b> detected in sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
-			return
 		if("missile_own_launch")
 			local_round_log.Add("Missile launched from own vessel.")
-			return
 		if("secondary_fire")
 			local_round_log.Add("<b>Secondary fire detected</b> in sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
-			return
 		if("secondary_own_fire")
 			local_round_log.Add("Secondary fire from own vessel.")
-			return
+	linked_command_chair.open_command_window("current_round")
 
 /obj/structure/shiptoship_master/ship_missioncontrol/Initialize(mapload, ...)
 	. = ..()

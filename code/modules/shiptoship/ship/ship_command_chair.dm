@@ -53,34 +53,8 @@
 				linked_bot_screen = bot_to_link
 				to_chat(world, SPAN_INFO("Bottom Monitor for ship [linked_master_console.sector_map_data["id"]] loaded."))
 
-/obj/structure/ship_elements/command_monitor
-	name = "command monitor"
-	icon = 'icons/sectorpatrol/ship/throne.dmi'
-	icon_state = "default"
-	desc = "A high-quality looking monitor, nested in a sturdy looking frame that seems to be permanently attached to its base."
-	desc_lore = "Monitors that are part of the central PST Mission Control system utilize LD enabled polymers to display more than just green text which already puts them above and beyond most display devices found on board space vessels. To top that off, working in tandem with their chair and their uplink to the PST's central system, these chairs seem to inherently know what data their user wants displayed almost as they think about it."
-	var/ship_name = "none"
-	var/obj/structure/ship_elements/command_chair/linked_command_chair
-	var/repair_shutdown = 0
-	var/icon_base
-
-
-/obj/structure/ship_elements/command_monitor/proc/ChairLink(chair_to_link as obj)
-	linked_command_chair = chair_to_link
-
-/obj/structure/ship_elements/command_monitor/proc/use_fx(type)
-	switch(type)
-		if(null)
-			return
-		if("on")
-			sleep(rand(1,15))
-			icon_state = icon_base + "_on"
-			update_icon()
-		if("off")
-			icon_state = icon_base + "_off"
-			update_icon()
-
-/obj/structure/ship_elements/command_monitor/proc/open_command_window(type)
+/obj/structure/ship_elements/command_chair/proc/open_command_window(type)
+	if(buckled_mob != usr) return
 	var/dat
 	//css and header
 	dat += {"
@@ -124,26 +98,26 @@
 			return
 		if("current_round")
 			var/current_round
-			if(linked_command_chair.linked_master_console.local_round_log.len == 0) current_round = "No recent Sonar activity."
-			if(linked_command_chair.linked_master_console.local_round_log.len != 0) current_round = jointext(linked_command_chair.linked_master_console.local_round_log, "</p><p>")
+			if(linked_master_console.local_round_log.len == 0) current_round = "No recent Sonar activity."
+			if(linked_master_console.local_round_log.len != 0) current_round = jointext(linked_master_console.local_round_log, "</p><p>")
 			dat +={"<p><b>Sonar Activity:</b></p>
 				<p>[current_round]</p>
 				"}
 		if("round_history")
 			var/round_history
-			if(linked_command_chair.linked_master_console.local_round_log_full.len == 0) round_history = "No Sonar history in buffer."
-			if(linked_command_chair.linked_master_console.local_round_log_full.len != 0) round_history = jointext(linked_command_chair.linked_master_console.local_round_log_full, "</p><p>")
+			if(linked_master_console.local_round_log_full.len == 0) round_history = "No Sonar history in buffer."
+			if(linked_master_console.local_round_log_full.len != 0) round_history = jointext(linked_master_console.local_round_log_full, "</p><p>")
 			dat +={"<p><b>Sonar Activity History Buffer:</b></p>
 				<p>[round_history]</p>
 				"}
 		if("pings_and_tracking")
 			var/activity_summary
 			var/pings_and_tracking
-			if(linked_command_chair.linked_master_console.ping_history.len == 0) pings_and_tracking += "No ping history."
-			if(linked_command_chair.linked_master_console.ping_history.len != 0) pings_and_tracking += jointext(linked_command_chair.linked_master_console.ping_history, "</p><p>")
-			pings_and_tracking += jointext(linked_command_chair.linked_master_console.GetTrackingList(), "</p><p>")
-			if(linked_command_chair.linked_master_console.local_round_log_moves.len == 0) activity_summary = "No recent activity."
-			if(linked_command_chair.linked_master_console.local_round_log_moves.len != 0) activity_summary = jointext(linked_command_chair.linked_master_console.local_round_log_moves, " | ")
+			if(linked_master_console.ping_history.len == 0) pings_and_tracking += "No ping history."
+			if(linked_master_console.ping_history.len != 0) pings_and_tracking += jointext(linked_master_console.ping_history, "</p><p>")
+			pings_and_tracking += jointext(linked_master_console.GetTrackingList(), "</p><p>")
+			if(linked_master_console.local_round_log_moves.len == 0) activity_summary = "No recent activity."
+			if(linked_master_console.local_round_log_moves.len != 0) activity_summary = jointext(linked_master_console.local_round_log_moves, " | ")
 			dat +={"<p><b>Pings and Tracking:</b></p>
 				<p>Activity update:</p>
 				<p><b>[activity_summary]</b></p>
@@ -152,19 +126,19 @@
 				"}
 		if("ship_messages")
 			var/ship_messages
-			if(linked_command_chair.linked_master_console.comms_messages.len == 0) ship_messages = "No messages to display."
-			if(linked_command_chair.linked_master_console.comms_messages.len != 0) ship_messages = jointext(linked_command_chair.linked_master_console.comms_messages, "</p><p>")
+			if(linked_master_console.comms_messages.len == 0) ship_messages = "No messages to display."
+			if(linked_master_console.comms_messages.len != 0) ship_messages = jointext(linked_master_console.comms_messages, "</p><p>")
 			dat +={"<p><b>Recieved Messages:</b></p>
 				<p>[ship_messages]</p>
 				"}
 		if("weapon_status")
-			var/weapon_status = jointext(linked_command_chair.linked_master_console.GetWeaponsReadout(), "</p><p>")
+			var/weapon_status = jointext(linked_master_console.GetWeaponsReadout(), "</p><p>")
 			dat +={"<p><b>Launcher Status:</b></p>
 				<p>[weapon_status]</p>
 				"}
 		if("ship_status")
-			var/ship_status = jointext(linked_command_chair.linked_master_console.GetStatusReadout(), "</p><p>")
-			dat +={"<p><b>Launcher Status:</b></p>
+			var/ship_status = jointext(linked_master_console.GetStatusReadout(), "</p><p>")
+			dat +={"<p><b>Systems Integrity:</b></p>
 				<p>[ship_status]</p>
 				"}
 	dat += {"</div>
@@ -175,10 +149,63 @@
 		</div>
 		</body>
 		"}
-	usr << browse(dat,"window=commander_console_[usr]_[type];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
-	if(usr.sp_uis.Find("commander_console_[usr]_[type]") == 0)
-		usr.sp_uis += "commander_console_[usr]_[type]"
-	onclose(usr, "commander_console_[usr]_[type]")
+	buckled_mob << browse(dat,"window=commander_console_[usr]_[type];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	if(buckled_mob.sp_uis.Find("commander_console_[usr]_[type]") == 0)
+		buckled_mob.sp_uis += "commander_console_[usr]_[type]"
+	onclose(buckled_mob, "commander_console_[usr]_[type]")
+
+/obj/structure/ship_elements/command_chair/proc/turn_off_check()
+	sleep(100)
+	if(buckled_mob == null)
+		INVOKE_ASYNC(linked_top_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "off")
+		INVOKE_ASYNC(linked_front_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "off")
+		INVOKE_ASYNC(linked_bot_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "off")
+
+/obj/structure/ship_elements/command_chair/afterbuckle(mob/M)
+	. = ..()
+	if(buckled_mob == usr)
+		to_chat(usr, SPAN_INFO("The displays slowly come to life and will appear on your screen whenever somethng new is posted. To stop this, leave the command chair."))
+		INVOKE_ASYNC(linked_top_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
+		INVOKE_ASYNC(linked_front_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
+		INVOKE_ASYNC(linked_bot_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
+		if(tgui_input_list(usr, "Do you want to open all interfaces?","OPEN ALL",list("Yes","No"), timeout = 0) == "Yes")
+			open_command_window(type = "current_round")
+			open_command_window(type = "round_history")
+			open_command_window(type = "pings_and_tracking")
+			open_command_window(type = "ship_messages")
+			open_command_window(type = "weapon_status")
+			open_command_window(type = "ship_status")
+	if(buckled_mob == null)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/ship_elements/command_chair/, turn_off_check))
+
+
+
+/obj/structure/ship_elements/command_monitor
+	name = "command monitor"
+	icon = 'icons/sectorpatrol/ship/throne.dmi'
+	icon_state = "default"
+	desc = "A high-quality looking monitor, nested in a sturdy looking frame that seems to be permanently attached to its base."
+	desc_lore = "Monitors that are part of the central PST Mission Control system utilize LD enabled polymers to display more than just green text which already puts them above and beyond most display devices found on board space vessels. To top that off, working in tandem with their chair and their uplink to the PST's central system, these chairs seem to inherently know what data their user wants displayed almost as they think about it."
+	var/ship_name = "none"
+	var/obj/structure/ship_elements/command_chair/linked_command_chair
+	var/repair_shutdown = 0
+	var/icon_base
+
+
+/obj/structure/ship_elements/command_monitor/proc/ChairLink(chair_to_link as obj)
+	linked_command_chair = chair_to_link
+
+/obj/structure/ship_elements/command_monitor/proc/use_fx(type)
+	switch(type)
+		if(null)
+			return
+		if("on")
+			sleep(rand(1,15))
+			icon_state = icon_base + "_on"
+			update_icon()
+		if("off")
+			icon_state = icon_base + "_off"
+			update_icon()
 
 /obj/structure/ship_elements/command_monitor/top
 	name = "right command monitor"

@@ -768,36 +768,36 @@
 		if(comms_source != "Custom")
 			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
 				if(ship_mc_to_comm.sector_map_data["name"] == comms_dest)
-					ship_mc_to_comm.comms_messages += "([ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)]),\"[comms_source]\" - [comms_text]"
+					ship_mc_to_comm.CommsLog(message_type = 0, message_source = "[comms_source], Sector ([ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)])", message_to_add = comms_text)
 					ship_mc_to_comm.talkas("Incomming communicatins from in-sector!", 1)
 					ship_mc_to_comm.linked_signals_console.talkas("Incomming communicatins from in-sector!",1)
 				if(ship_mc_to_comm.sector_map_data["name"] != comms_dest)
-					ship_mc_to_comm.comms_messages += "Communications Pulse detected from sector [ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)])!"
+					ship_mc_to_comm.CommsLog(message_type = 1, message_source = ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y), message_to_add = comms_text)
 			sts_master.log_round_history(event = "comms_ping", log_source = comms_source, log_target = comms_text, log_dest_x = comms_dest_x, log_dest_y = comms_dest_y)
 			return
 		if(comms_source == "Custom")
 			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
 				if(ship_mc_to_comm.sector_map_data["name"] == comms_dest)
-					ship_mc_to_comm.comms_messages += "[comms_source_custom] - [comms_text]"
+					ship_mc_to_comm.CommsLog(message_type = 0, message_source = comms_source_custom, message_to_add = comms_text)
 					ship_mc_to_comm.talkas("Incomming communicatins from [comms_source_custom]!", 1)
 					ship_mc_to_comm.linked_signals_console.talkas("Incomming communicatins from [comms_source_custom]!",1)
 				if(ship_mc_to_comm.sector_map_data["name"] != comms_dest)
-					ship_mc_to_comm.comms_messages += "Out of Sector Comms pulse detected!"
+					ship_mc_to_comm.CommsLog(message_type = 3)
 			sts_master.log_round_history(event = "comms_ping", log_source = comms_source_custom, log_target = comms_text, log_dest_x = comms_dest_x, log_dest_y = comms_dest_y)
 			return
 	if(comms_dest == "System-Wide")
 		if(comms_source != "Custom")
 			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
-				ship_mc_to_comm.comms_messages += "([ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)]),\"[comms_source]\" - [comms_text]"
-				ship_mc_to_comm.talkas("Incomming sector wide communications!", 1)
-				ship_mc_to_comm.linked_signals_console.talkas("Incomming sector wide communications!",1)
+				ship_mc_to_comm.CommsLog(message_type = 2, message_source = "[comms_source], Sector ([ship_mc_to_comm.SectorConversion(x = comms_source_x, y = comms_source_y)])", message_to_add = comms_text)
+				ship_mc_to_comm.talkas("Incomming system wide communications!", 1)
+				ship_mc_to_comm.linked_signals_console.talkas("Incomming system wide communications!",1)
 			sts_master.log_round_history(event = "comms_ping_system", log_source = comms_source, log_target = comms_text)
 			return
 		if(comms_source == "Custom")
 			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm)
-				ship_mc_to_comm.comms_messages += "[comms_source_custom] - [comms_text]"
-				ship_mc_to_comm.talkas("Incomming sector wide communications!", 1)
-				ship_mc_to_comm.linked_signals_console.talkas("Incomming sector wide communications!",1)
+				ship_mc_to_comm.CommsLog(message_type = 2, message_source = comms_source_custom, message_to_add = comms_text)
+				ship_mc_to_comm.talkas("Incomming system wide communications!", 1)
+				ship_mc_to_comm.linked_signals_console.talkas("Incomming system wide communications!",1)
 			sts_master.log_round_history(event = "comms_ping_system", log_source = comms_source_custom, log_target = comms_text)
 			return
 

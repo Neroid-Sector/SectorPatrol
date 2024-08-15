@@ -105,6 +105,7 @@
 		return
 	else
 		talkas("Warning. Damage to ship [system] absorbed by LD synchronization coils. Coils damaged: [value]. Awaiting full scan.")
+		linked_master_console.linked_command_chair.open_command_window("ship_status")
 		return
 
 /obj/structure/terminal/damage_console/proc/CheckCriticalFix()
