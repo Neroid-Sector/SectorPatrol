@@ -8,6 +8,7 @@
 	icon_state = "open_ok"
 	terminal_reserved_lines = 2
 	terminal_id = "_weapons_control"
+	var/ship_name
 	var/repair_shutdown = 0
 	var/obj/structure/shiptoship_master/ship_missioncontrol/linked_master_console
 	var/list/damage_controls = list()
@@ -22,6 +23,14 @@
 			"hull" = 0,
 			),
 		)
+
+/obj/structure/terminal/damage_console/proc/UpdateMapData()
+	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["HP"] = usage_data["damage"]["HP"]
+	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["engine"] = usage_data["damage"]["engine"]
+	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["systems"] = usage_data["damage"]["systems"]
+	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["weapons"] = usage_data["damage"]["weapons"]
+	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["hull"] = usage_data["damage"]["hull"]
+	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["system"]["repairs_left"] = usage_data["repairs_max"] - usage_data["repairs_done"]
 
 /obj/structure/terminal/damage_console/proc/SetUsageData(state = 0, damage = null)
 	switch(state)
@@ -38,21 +47,15 @@
 		usage_data["damage"]["systems"] = 0
 		usage_data["damage"]["weapons"] = 0
 		usage_data["damage"]["hull"] = 0
+		UpdateMapData()
 		return
 	if(damage == 1)
 		usage_data["damage"]["engine"] = usage_data["damage"]["HP"]
 		usage_data["damage"]["systems"] = usage_data["damage"]["HP"]
 		usage_data["damage"]["weapons"] = usage_data["damage"]["HP"]
 		usage_data["damage"]["hull"] = usage_data["damage"]["HP"]
+		UpdateMapData()
 		return
-
-/obj/structure/terminal/damage_console/proc/UpdateMapData()
-	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["HP"] = usage_data["damage"]["HP"]
-	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["engine"] = usage_data["damage"]["engine"]
-	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["systems"] = usage_data["damage"]["systems"]
-	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["weapons"] = usage_data["damage"]["weapons"]
-	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["hull"] = usage_data["damage"]["hull"]
-	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["system"]["repairs_left"] = usage_data["repairs_max"] - usage_data["repairs_done"]
 
 /obj/structure/terminal/damage_console/proc/ProcessShutdown(status = null)
 	switch(status)
@@ -63,13 +66,11 @@
 				INVOKE_ASYNC(coil_to_damage, TYPE_PROC_REF(/obj/structure/ship_elements/damage_control_element, GetDamaged), "critical")
 			repair_shutdown = 1
 			SetUsageData(state = 1, damage = 1)
-			UpdateMapData()
 			world << browse(null,"window=[terminal_id]")
 			return
 		if(0)
 			repair_shutdown = 0
 			SetUsageData(state = 1, damage = 0)
-			UpdateMapData()
 			talkas("Critical damage resolved. Lifting lockout.")
 			return
 

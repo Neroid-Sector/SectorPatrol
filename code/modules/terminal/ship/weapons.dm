@@ -8,6 +8,7 @@
 	icon_state = "open_ok"
 	terminal_reserved_lines = 1
 	terminal_id = "_weapons_control"
+	var/ship_name
 	var/repair_shutdown = 0
 	var/list/usage_data = list(
 		"primary_fired" = 0,
@@ -18,6 +19,10 @@
 	var/obj/structure/ship_elements/primary_cannon/linked_primary_cannon
 	var/obj/structure/ship_elements/secondary_cannon/linked_secondary_cannon
 
+/obj/structure/terminal/weapons_console/proc/UpdateMapData()
+	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["system"]["salvos_max"] = usage_data["salvos_max"]
+	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["system"]["salvos_left"] = usage_data["salvos_left"]
+
 /obj/structure/terminal/weapons_console/proc/SetUsageData(state = 0)
 	switch(state)
 		if(null)
@@ -25,15 +30,13 @@
 		if(0)
 			usage_data["primary_fired"] = 0
 			usage_data["salvos_left"] = usage_data["salvos_max"]
+			UpdateMapData()
 			return
 		if(1)
 			usage_data["primary_fired"] = 1
 			usage_data["salvos_left"] = 0
+			UpdateMapData()
 			return
-
-/obj/structure/terminal/weapons_console/proc/UpdateMapData()
-	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["system"]["salvos_max"] = usage_data["salvos_max"]
-	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["system"]["salvos_left"] = usage_data["salvos_left"]
 
 /obj/structure/terminal/weapons_console/proc/ProcessShutdown(status = null)
 	switch(status)
@@ -51,7 +54,6 @@
 			linked_primary_cannon.repair_shutdown = 0
 			linked_secondary_cannon.repair_shutdown = 0
 			SetUsageData(1)
-			UpdateMapData()
 			talkas("Critical damage resolved. Lifting lockout.")
 			return
 

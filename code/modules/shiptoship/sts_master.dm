@@ -8,6 +8,7 @@
 	var/global/list/sector_map = list()
 	var/global/list/round_history = list()
 	var/global/list/round_history_current = list()
+	var/global/list/round_history_previous = list()
 	var/list/variable_storage = list(
 		"stored_x" = 0,
 		"stored_y" = 0,
@@ -251,9 +252,9 @@
 				sector_map[current_x][current_y]["ship"]["system"]["has_moved"] = 0
 				sector_map[current_x][current_y]["ship"]["system"]["movement_left"] = 0
 				sector_map[current_x][current_y]["ship"]["system"]["processed_movement"] = 0
-				sector_map[current_x][current_y]["ship"]["system"]["repairs_left"] = 0
+				sector_map[current_x][current_y]["ship"]["system"]["repairs_left"] = 2
 				sector_map[current_x][current_y]["ship"]["system"]["salvos_max"] = 0
-				sector_map[current_x][current_y]["ship"]["system"]["salvos_left"] = 0
+				sector_map[current_x][current_y]["ship"]["system"]["salvos_left"] = sector_map[current_x][current_y]["ship"]["system"]["salvos_max"]
 				sector_map[current_x][current_y]["missile"]["system"]["processed_movement"] = 0
 				sector_map[current_x][current_y]["missile"]["system"]["has_moved"] = 0
 				sector_map[current_x][current_y]["missile"]["system"]["derived_vector_x"] = 0
@@ -574,44 +575,13 @@
 	move_on_map(type_to_move = "ship", origin_x = moving_source_x, origin_y = moving_source_y, target_x = sector_map[moving_source_x][moving_source_y]["ship"]["vector"]["x"], target_y = sector_map[moving_source_x][moving_source_y]["ship"]["vector"]["y"])
 	return 1
 
-/obj/structure/shiptoship_master/proc/DisplayAndCycleSpaceRoundLog()
-	var/log_display = jointext(round_history_current, "</p><p>")
-	var/terminal_html ={"<!DOCTYPE html>
-	<html>
-	<head>
-	<style>
-	body {
-	background-color:black;
-	}
-	#main_window {
-	font-family: 'Lucida Grande', monospace;
-	font-size: 18px;
-	color: #ffffff;
-	text-align: center;
-	padding: 0em 1em;
-	}
-	</style>
-	</head>
-	<body>
-	<div id="main_window">
-	<p style="font-size: 120%;">
-	<b>SECTOR PATROL ALPHA</b>
-	</p>
-	<hr>
-	<p>
-	End or Round [GLOB.combat_round]:<br>
-	</p>
-	<hr>
-	<p>[log_display]</p>
-	<hr>
-	</div>
-	</body>
-	"}
-	world << browse(terminal_html,"window=log_display;display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
-	round_history.Add("[GLOB.combat_round]",round_history_current)
+/obj/structure/shiptoship_master/proc/CycleSpaceRoundLog()
+	round_history_previous = null
+	round_history_previous = list()
+	round_history_previous.Add(round_history_current)
+	round_history.Add("<b>ROUND [GLOB.combat_round]</b>",round_history_current)
+	round_history_current = null
 	round_history_current = list()
-	GLOB.combat_round += 1
-	rem_entity(type = "special")
 
 /obj/structure/shiptoship_master/proc/missileVector(start_x = 0, start_y = 0, target_x = 0, target_y = 0, speed = 0, only_test = 0)
 	var/missile_x = start_x
@@ -899,16 +869,30 @@
 
 
 /obj/structure/shiptoship_master/proc/NextTurn()
-	to_chat(world, SPAN_WARNING("ADVANCING TURN"))
+	var/len_to_test = round_history_current.len
+	if(ProcessMovement(type = "ship") == 1)
+		while(len_to_test != round_history_current.len)
+			len_to_test = round_history_current.len
+			ProcessMovement(type = "ship")
+		len_to_test = 0
+		while(len_to_test != round_history_current.len)
+			len_to_test = round_history_current.len
+			ProcessMovement(type = "ship")
+		len_to_test = round_history_current.len
+		if(ProcessMovement(type = "missile") == 1)
+			while(len_to_test != round_history_current.len)
+				len_to_test = round_history_current.len
+				ProcessMovement(type = "missile")
+		len_to_test = 0
+		while(len_to_test != round_history_current.len)
+			len_to_test = round_history_current.len
+			ProcessMovement(type = "missile")
+	CycleSpaceRoundLog()
+	rem_entity(type = "special")
 	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc in world)
 		if(ship_mc.sector_map_data["initialized"] == 1)
 			ship_mc.NextTurn()
-	ProcessMovement()
-	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc in world)
-		if(ship_mc.sector_map_data["initialized"] == 1)
-			ship_mc.SyncPosToMap()
-	ResetMovementInfo()
-	to_chat(world, SPAN_WARNING("TURN PROCESSING COMPLETE"))
+
 
 /obj/structure/shiptoship_master/proc/scan_entites(category = 0, output_format = 0) // category = 0 for ships, 1 for missiles, 2 for specials. format = 0 text for screen display/ref lists. 1 creates buttons with references.
 	var/list/current_entites = list()
@@ -1295,7 +1279,7 @@
 		while(len_to_test != round_history_current.len)
 			len_to_test = round_history_current.len
 			ProcessMovement(type = "missile")
-		DisplayAndCycleSpaceRoundLog()
+		CycleSpaceRoundLog()
 		to_chat(world,SPAN_INFO("Round advanced."))
 		return
 	switch(href_list["ship_control"])

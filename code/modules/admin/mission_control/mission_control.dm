@@ -144,6 +144,7 @@
 				"}
 		if("ShipToShip_RoundControl")
 			var/round_phase_text
+			var/round_next_text
 			dat += {"{"<div_class="box">
 				<div class="text">
 				<p><b>SHIP TO SHIP ROUND FLOW PANEL</b></p>
@@ -152,11 +153,14 @@
 				"}
 			switch(GLOB.round_phase)
 				if(1)
-					round_phase_text = "DM - Comms"
-				if(2)
 					round_phase_text = "DM - Movement and Firing"
+					round_next_text = "Advance Phase"
+				if(2)
+					round_phase_text = "Players - DM Setting Comms"
+					round_next_text = "Advance Phase"
 				if(3)
 					round_phase_text = "Players"
+					round_next_text = "<b>NEXT TURN</b>"
 				if(4)
 					round_phase_text = "Advancing Turn..."
 			if(GLOB.round_phase == 4)
@@ -170,7 +174,7 @@
 				dat += {"<div_class="box">
 					<div class="text">
 					<p>Phase: <b>[round_phase_text]</b></p>
-					<p><b>Advance Phase/Turn</p>
+					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];next_phase=1'>[round_next_text]</A></p>
 					</div>
 					</div>
 					<div_class="box">
@@ -211,6 +215,19 @@
 				</div>
 				</div>
 				"}
+		if("ShipToShip_PrevRoundLog")
+			var/log_to_display = jointext(sts_master.round_history_previous, "</p><p>")
+			dat += {"<div_class="box">
+				<div class="text">
+				<p>End of Round log for Round [GLOB.combat_round]</p>
+				</div>
+				</div>
+				<div_class="box">
+				<div class="text">
+				<p>[log_to_display]</p>
+				</div>
+				</div>
+				"}
 	//footer etc
 	dat += {"
 		</div>
@@ -238,6 +255,45 @@
 		if("full")
 			MissionControl(window = "ShipToShip_FullRoundLog")
 			return
+
+/datum/admins/proc/next_phase()
+	if(!check_rights(R_ADMIN)) return
+	if(GLOB.round_phase == 4)
+		to_chat(usr, SPAN_WARNING("Error: Round is advancing."))
+		return
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
+		break
+	if(tgui_input_list(usr, "Advance to next phase? (Current Phase: [GLOB.round_phase])", "PHASE confirmation", list("Yes","No"), timeout = 0) == "Yes")
+		switch(GLOB.round_phase)
+			if(1)
+				to_chat(world, narrate_head("<b>Player Turn</b>"))
+				to_chat(world, narrate_body("<b>Damage and Movement have been processed.</b> The DM is setting up comm responses and other relevant in-round events.<b>You may repair damage, use your pings and fire your weapons.</b>"))
+				to_chat(world, narrate_body("Await sending <b>Comms Messages</b> until this phase is complete."))
+				GLOB.round_phase = 2
+			if(2)
+				to_chat(world, narrate_body("All comms responses and outstanding issues have been clear. <b>The DM is ready to advance the round</b>, but for now there is no time limit on the remaining player turn."))
+				to_chat(world, narrate_body("<b>It is now safe to send new comms from the Signals console.</b>"))
+				GLOB.round_phase = 3
+			if(3)
+				to_chat(world, narrate_head("<b>Player Turn Ending</b>"))
+				to_chat(world, narrate_body("The DM has chosen to advance the round. Ships will be moved and firing will be processed in 5 seconds."))
+				sleep(50)
+				GLOB.round_phase = 4
+				sts_master.NextTurn()
+				MissionControl(window = "ShipToShip_PrevRoundLog")
+				GLOB.combat_round += 1
+				GLOB.round_phase = 1
+				show_blurb(world, duration = 10 SECONDS, message = "TURN [GLOB.combat_round] STARTING...", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
+				to_chat(world, narrate_head("<b>DM Turn</b>"))
+				to_chat(world, narrate_body("The DM is now setting up ship movement, secondary fire and any other round-critical factors. <b>You may react to initial damage, coming from long range projectiles in an IC fashion</b>, but refrain from doing any mechanical fixes or other actions just yet."))
+				to_chat(world, narrate_body("The DM may not have time to respond to queries during this time in order to resolve this state as quick as possible."))
+			if(4)
+				return
+	MissionControl(window = "ShipToShip_RoundControl")
+
+
 
 /datum/admins/proc/fire_as_ship()
 	if(!check_rights(R_ADMIN)) return
@@ -279,10 +335,7 @@
 		if(firing_ship_x != null) break
 		fire_scan_y = 1
 		fire_scan_x += 1
-	var/list/positions_to_fire
-	if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] == sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_max"])
-		if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["missile"]["id_tag"] == "none")
-			positions_to_fire += "Primary"
+	var/list/positions_to_fire = list("Primary","Secondary","Mark Ship As Fired")
 	var/secondary_scan_bottom_x = sts_master.BoundaryAdjust(firing_ship_x - 5,1)
 	var/secodnary_scan_bottom_y = sts_master.BoundaryAdjust(firing_ship_y - 5,1)
 	var/secondary_scan_top_x = sts_master.BoundaryAdjust(firing_ship_x + 5,2)
@@ -300,19 +353,16 @@
 			secondary_scan_current_y += 1
 		secondary_scan_current_y = secodnary_scan_bottom_y
 		secondary_scan_current_x += 1
-	if(secondary_targets.len != 0)
-		positions_to_fire += "Secondary"
-	if(positions_to_fire.len == 0)
-		to_chat(usr,SPAN_WARNING("Firing is not possilbe. Marking ship as fired this turn."))
-		sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] = 0
-		MissionControl(window = "ShipToShip_RoundControl")
-		return
-	else
-		positions_to_fire += "Mark Ship As Fired"
 	switch(tgui_input_list(usr, "Select a Weapon to fire", "WEAPON choice", positions_to_fire, timeout = 0))
 		if(null)
 			return
 		if("Primary")
+			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] != sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_max"])
+				to_chat(usr,SPAN_WARNING("Cannot fire Primary - Ship already fired."))
+				return
+			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["missile"]["id_tag"] != "none")
+				to_chat(usr,SPAN_WARNING("Cannot fire Primary - Missle present at location."))
+				return
 			var/target_to_fire = tgui_input_list(usr, "Select Target", "TARGET choice", list(fire_targets,"Coordinates"), timeout = 0)
 			if(target_to_fire == null) return
 			var/fire_target_x

@@ -12,6 +12,7 @@
 	var/obj/structure/terminal/signals_console/linked_signals_console
 	var/obj/structure/terminal/weapons_console/linked_weapons_console
 	var/obj/structure/terminal/damage_console/linked_damage_console
+	var/obj/structure/terminal/cargo_console/linked_cargo_console
 	var/list/tracking_list
 	var/tracking_max = 3
 	var/list/local_round_log = list()
@@ -28,11 +29,13 @@
 			INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, ProcessShutdown),1)
 			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, ProcessShutdown),1)
 			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),1)
+			INVOKE_ASYNC(linked_cargo_console,TYPE_PROC_REF(/obj/structure/terminal/cargo_console/, ProcessShutdown),1)
 			repair_shutdown = 1
 		if(0)
 			INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, ProcessShutdown),0)
 			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, ProcessShutdown),0)
 			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),0)
+			INVOKE_ASYNC(linked_cargo_console,TYPE_PROC_REF(/obj/structure/terminal/cargo_console/, ProcessShutdown),0)
 			repair_shutdown = 0
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/SyncPosToMap()
@@ -56,6 +59,7 @@
 	local_round_log_full.Add(local_round_log)
 	local_round_log = null
 	local_round_log = list()
+	SyncPosToMap()
 	INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
 	INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
 	INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, SetUsageData),0,null)
@@ -328,11 +332,33 @@
 	var/current_y = 1
 	to_chat(world, SPAN_INFO("Initializing ship [sector_map_data["name"]]!"))
 	if(linked_signals_console == null)
-		for(var/obj/structure/terminal/signals_console/console in get_area(src))
-			linked_signals_console = console
-			linked_signals_console.LinkToShipMaster(master_console = src)
-			var/turf/turf_return = get_turf(linked_signals_console)
-			to_chat(world, SPAN_INFO("Singals Console Linked at [turf_return.x],[turf_return.y]"))
+		for(var/obj/structure/terminal/signals_console/console in world)
+			if(console.ship_name == sector_map_data["name"])
+				linked_signals_console.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_signals_console)
+				to_chat(world, SPAN_INFO("Singals Console Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_damage_console == null)
+		for(var/obj/structure/terminal/damage_console/console in world)
+			if(console.ship_name == sector_map_data["name"])
+				linked_damage_console.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_damage_console)
+				to_chat(world, SPAN_INFO("Damage Console Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_weapons_console == null)
+		for(var/obj/structure/terminal/weapons_console/console in world)
+			if(console.ship_name == sector_map_data["name"])
+				linked_weapons_console.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_weapons_console)
+				to_chat(world, SPAN_INFO("Weapons Console Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_cargo_console == null)
+		for(var/obj/structure/terminal/cargo_console/console in world)
+			if(console.ship_name == sector_map_data["name"])
+				linked_cargo_console.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_cargo_console)
+				to_chat(world, SPAN_INFO("Singals Console Linked at [turf_return.x],[turf_return.y]"))
+				break
 	while(current_x <= GLOB.sector_map_x)
 		while(current_y <= GLOB.sector_map_y)
 			if(sector_map[current_x][current_y]["ship"]["name"] == sector_map_data["name"])

@@ -8,6 +8,7 @@
 	icon_state = "open_ok"
 	terminal_reserved_lines = 1
 	terminal_id = "_signals_control"
+	var/ship_name
 	var/repair_shutdown = 0
 	var/obj/structure/shiptoship_master/ship_missioncontrol/linked_master_console
 	var/probe_range = 3
@@ -69,7 +70,7 @@
 		for(var/obj/structure/ship_elements/tracker_launcher/launcher_to_link in world)
 			if(launcher_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_tracker_launcher = launcher_to_link
-				to_chat(world, SPAN_INFO("Probe Launcher for ship [linked_master_console.sector_map_data["id"]] loaded."))
+				to_chat(world, SPAN_INFO("Tracker Launcher for ship [linked_master_console.sector_map_data["id"]] loaded."))
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
 	terminal_header += {"<div class="box"><p><center><b>"}+ html_encode("[linked_master_console.sector_map_data["name"]] - SIGNALS CONTROL") + {"</b><br>"} + html_encode("UACM 2ND LOGISTICS") + {"</center></p></div><div class="box_console">"}

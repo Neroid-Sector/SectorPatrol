@@ -2370,6 +2370,10 @@
 		if(!check_rights(R_ADMIN))
 			return
 		fire_as_ship()
+	if(href_list["next_phase"])
+		if(!check_rights(R_ADMIN))
+			return
+		next_phase()
 	return
 
 /datum/admins/proc/accept_ert(mob/approver, mob/ref_person)

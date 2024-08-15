@@ -8,6 +8,7 @@
 	icon_state = "open_ok"
 	terminal_reserved_lines = 2
 	terminal_id = "_cargo_control"
+	var/ship_name
 	var/repair_shutdown = 0
 	var/obj/structure/shiptoship_master/ship_missioncontrol/linked_master_console
 	var/list/linked_cargo_bays = list("primary_munitions" = /obj/structure/ship_elements/cargo_bay,
