@@ -1,11 +1,3 @@
-/datum/admins/proc/mission_control_panel()
-	set name = "Mission Control Panel"
-	set category = "DM.Control"
-
-	if(!check_rights(R_ADMIN)) return
-	MissionControl(window = "Main")
-	return
-
 /client/verb/fixspuis()
 	set name = "Force Close Sector Patrol Interfaces"
 	set category = "OOC.Fix"
@@ -105,6 +97,8 @@
 			dat += {"<div_class="box">
 				<div class="text">
 				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];open_mission_control=General'>Load/Save, Review and Set IC Infromation</a></p>
+				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];sts_control_panel=1'>Ship to Ship Control Panel</A></p>
+				<p>All panels and subpanels should also be reachable through the DM tab in the status window!</p>
 				</div>
 				</div>
 				"}
@@ -124,9 +118,9 @@
 			dat += {"<div_class="box">
 				<div class="text">
 				<p><b>SHIP TO SHIP PANEL</b></p>
-				<p>INITIATED: [GLOB.combat_initiated] | ROUND: [GLOB.combat_round]</p>
-				<p>ENTITY CONTROL</p>
-				<p>ROUND FLOW CONTROL</p>
+				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];toggle_sts=initialized'>INITIATED</A>: [GLOB.combat_initiated] | <A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];toggle_sts=turn'>ROUND</A>: <b>[GLOB.combat_round]</b></p>
+				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];sts_entity_panel=1'>ENTITY CONTROL</A></p>
+				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];sts_round_flow_panel=1'>ROUND FLOW CONTROL</A></p>
 				</div>
 				</div>
 				"}
@@ -137,6 +131,7 @@
 				<p><b>ENTITY_CONTROL</b></p>
 				<p>[displayed_entities]</p>
 				<p><b>Add</b> | <b>Modify</b> | <b>Remove</b></p>
+				<p>Map max X:<b>[GLOB.sector_map_x]</b> | Map max Y: <b>[GLOB.sector_map_y]</b>
 				<p><b>Load Preset</b></p>
 				<p><b>Link and Initialize Player Ships</b></p>
 				</div>
@@ -173,6 +168,7 @@
 			else
 				dat += {"<div_class="box">
 					<div class="text">
+					<p>Round: <b><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];toggle_sts=turn'>[GLOB.combat_round]</A></b></p>
 					<p>Phase: <b>[round_phase_text]</b></p>
 					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];next_phase=1'>[round_next_text]</A></p>
 					</div>
@@ -238,6 +234,48 @@
 	if(usr.sp_uis.Find("mission_control_[usr]_[window]") == 0)
 		usr.sp_uis += "mission_control_[usr]_[window]"
 	onclose(usr, "mission_control_[usr]_[window]")
+
+/datum/admins/proc/display_crawl(type)
+	switch(type)
+		if(null)
+			return
+		if("combat_initiate")
+			show_blurb(world, duration = 10 SECONDS, message = "SPACE COMBAT INITALIZED", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
+			sleep(100)
+			show_blurb(world, duration = 10 SECONDS, message = "TURN [GLOB.combat_round] STARTING...", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
+			sleep(100)
+			to_chat(world, narrate_head("Ship to ship combat initiated!"))
+			to_chat(world, narrate_body("<b>Hostile ships detected in your sector.</b> Please standby as the DM sets up the initial round."))
+		if("combat_end")
+			show_blurb(world, duration = 10 SECONDS, message = "SPACE COMBAT CONCLUDED", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
+
+
+
+
+/datum/admins/proc/toggle_sts(type = null)
+	if(!check_rights(R_ADMIN)) return
+	switch(type)
+		if(null)
+			return
+		if("initialized")
+			if(GLOB.combat_initiated == 0)
+				if(tgui_input_list(usr, "Initailize Space Combat?","INITALIZE",list("Yes","No"), timeout = 0) == "Yes")
+					if(GLOB.combat_round != 1)
+						if(tgui_input_list(usr, "Combat round is not 1. Reset Combat round to 1?", "ROUND NOT 1", list("Yes", "No"), timeout = 0) == "Yes")
+							GLOB.combat_round = 1
+					GLOB.combat_initiated = 1
+					INVOKE_ASYNC(src, PROC_REF(display_crawl),"combat_initiate")
+			if(GLOB.combat_initiated == 1)
+				if(tgui_input_list(usr, "End Space Combat?","INITALIZE",list("Yes","No"), timeout = 0) == "Yes")
+					GLOB.combat_initiated = 0
+					INVOKE_ASYNC(src, PROC_REF(display_crawl),"combat_end")
+		if("turn")
+			var/original_number = GLOB.combat_round
+			GLOB.combat_round = tgui_input_number(usr, "Set Combat Round", "ROUND", GLOB.combat_round, min_value = 1, timeout = 0)
+			if(GLOB.combat_round == null || GLOB.combat_round < 1) GLOB.combat_round = original_number
+	MissionControl(window = "ShipToShip")
+	return
+
 
 /datum/admins/proc/view_ship_log(log_type = null)
 	if(!check_rights(R_ADMIN)) return
@@ -673,50 +711,6 @@
 		to_chat(world, "<span class='big'><span class='radio'><span class='name'>[usr.narration_settings["Name"]]<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005B[usr.narration_settings["Location"]] \u0028[usr.narration_settings["Position"]]\u0029\u005D </b></span><span class='message'>, says \"[text_to_comm]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
 		text_to_comm = tgui_input_text(usr, "Enter what to say as [usr.narration_settings["Name"]],[usr.narration_settings["Location"]],[usr.narration_settings["Position"]] or cancel to exit.")
 
-/datum/admins/proc/save_general_save(save = null)
-	if(!check_rights(R_ADMIN)) return
-	var/savefile/G
-	if(!save)
-		G = new("data/persistance/globals.sav")
-	else
-		G = save
-	G["Date"] << GLOB.ingame_date
-	G["Time"] << GLOB.ingame_time
-	G["Mission_Control_Hello"] << GLOB.mission_control_hello
-	G["Location"] << GLOB.ingame_location
-	G["ingame_current_system"] << GLOB.ingame_current_system
-	G["Mission_Type"] << GLOB.ingame_mission_type
-	G["start_narration_header"] << GLOB.start_narration_header
-	G["start_narration_footer"] << GLOB.start_narration_footer
-	G["start_narration_body"] << GLOB.start_narration_body
-	G["end_narration_header"] << GLOB.end_narration_header
-	G["end_narration_body"] << GLOB.end_narration_body
-	to_chat(src, SPAN_BOLDWARNING("General data saved."))
-	if(GLOB.savefile_initiated == 0) GLOB.savefile_initiated = 1
-	MissionControl(window = "General")
-
-/datum/admins/proc/load_general_save()
-	if(!check_rights(R_ADMIN)) return
-	var/savefile/G = new("data/persistance/globals.sav")
-	if(!G)
-		to_chat(usr, SPAN_INFO("General Savefile not found. Creating new file."))
-		save_general_save(save = G)
-	else
-		G["Date"] >> GLOB.ingame_date
-		G["Time"] >> GLOB.ingame_time
-		G["Mission_Control_Hello"] >> GLOB.mission_control_hello
-		G["Location"] >> GLOB.ingame_location
-		G["ingame_current_system"] >> GLOB.ingame_current_system
-		G["Mission_Type"] >> GLOB.ingame_mission_type
-		G["start_narration_header"] >> GLOB.start_narration_header
-		G["start_narration_footer"] >> GLOB.start_narration_footer
-		G["start_narration_body"] >> GLOB.start_narration_body
-		G["end_narration_header"] >> GLOB.end_narration_header
-		G["end_narration_body"] >> GLOB.end_narration_body
-		to_chat(src, SPAN_BOLDWARNING("General data loaded."))
-		if(GLOB.savefile_initiated == 0) GLOB.savefile_initiated = 1
-		MissionControl(window = "General")
-
 /datum/admins/proc/edit_general_info(type_to_edit = null)
 	if(!check_rights(R_ADMIN)) return
 	if(type_to_edit == null) return
@@ -769,4 +763,81 @@
 			GLOB.end_narration_body = tgui_input_text(usr, message = "EBd Narration Body:", title = "Narration Entry", default = "[GLOB.end_narration_body]", max_length = MAX_BOOK_MESSAGE_LEN, multiline = TRUE, timeout = 0)
 			if(GLOB.end_narration_body == null) GLOB.end_narration_body = oldvalue
 	MissionControl(window = "General")
+	return
+
+
+/datum/admins/proc/save_general_save(save = null)
+	if(!check_rights(R_ADMIN)) return
+	var/savefile/G
+	if(!save)
+		G = new("data/persistance/globals.sav")
+	else
+		G = save
+	G["Date"] << GLOB.ingame_date
+	G["Time"] << GLOB.ingame_time
+	G["Mission_Control_Hello"] << GLOB.mission_control_hello
+	G["Location"] << GLOB.ingame_location
+	G["ingame_current_system"] << GLOB.ingame_current_system
+	G["Mission_Type"] << GLOB.ingame_mission_type
+	G["start_narration_header"] << GLOB.start_narration_header
+	G["start_narration_footer"] << GLOB.start_narration_footer
+	G["start_narration_body"] << GLOB.start_narration_body
+	G["end_narration_header"] << GLOB.end_narration_header
+	G["end_narration_body"] << GLOB.end_narration_body
+	to_chat(src, SPAN_BOLDWARNING("General data saved."))
+	if(GLOB.savefile_initiated == 0) GLOB.savefile_initiated = 1
+	MissionControl(window = "General")
+
+/datum/admins/proc/load_general_save()
+	if(!check_rights(R_ADMIN)) return
+	var/savefile/G = new("data/persistance/globals.sav")
+	if(!G)
+		to_chat(usr, SPAN_INFO("General Savefile not found. Creating new file."))
+		save_general_save(save = G)
+	else
+		G["Date"] >> GLOB.ingame_date
+		G["Time"] >> GLOB.ingame_time
+		G["Mission_Control_Hello"] >> GLOB.mission_control_hello
+		G["Location"] >> GLOB.ingame_location
+		G["ingame_current_system"] >> GLOB.ingame_current_system
+		G["Mission_Type"] >> GLOB.ingame_mission_type
+		G["start_narration_header"] >> GLOB.start_narration_header
+		G["start_narration_footer"] >> GLOB.start_narration_footer
+		G["start_narration_body"] >> GLOB.start_narration_body
+		G["end_narration_header"] >> GLOB.end_narration_header
+		G["end_narration_body"] >> GLOB.end_narration_body
+		to_chat(src, SPAN_BOLDWARNING("General data loaded."))
+		if(GLOB.savefile_initiated == 0) GLOB.savefile_initiated = 1
+		MissionControl(window = "General")
+
+/datum/admins/proc/mission_control_panel()
+	set name = "Mission Control Panel"
+	set category = "DM.Control"
+
+	if(!check_rights(R_ADMIN)) return
+	MissionControl(window = "Main")
+	return
+
+/datum/admins/proc/sts_control_panel()
+	set name = "Sector - Setup Panel"
+	set category = "DM.Sector"
+
+	if(!check_rights(R_ADMIN)) return
+	MissionControl(window = "ShipToShip")
+	return
+
+/datum/admins/proc/sts_round_flow_panel()
+	set name = "Combat - Round Flow Panel"
+	set category = "DM.Sector"
+
+	if(!check_rights(R_ADMIN)) return
+	MissionControl(window = "ShipToShip_RoundControl")
+	return
+
+/datum/admins/proc/sts_entity_panel()
+	set name = "Combat - Entity Control Panel"
+	set category = "DM.Sector"
+
+	if(!check_rights(R_ADMIN)) return
+	MissionControl(window = "ShipToShip_Entities")
 	return

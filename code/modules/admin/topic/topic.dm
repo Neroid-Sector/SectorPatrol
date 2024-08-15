@@ -2374,6 +2374,22 @@
 		if(!check_rights(R_ADMIN))
 			return
 		next_phase()
+	if(href_list["sts_control_panel"])
+		if(!check_rights(R_ADMIN))
+			return
+		sts_control_panel()
+	if(href_list["toggle_sts"])
+		if(!check_rights(R_ADMIN))
+			return
+		toggle_sts(href_list["toggle_sts"])
+	if(href_list["sts_round_flow_panel"])
+		if(!check_rights(R_ADMIN))
+			return
+		sts_round_flow_panel()
+	if(href_list["sts_entity_panel"])
+		if(!check_rights(R_ADMIN))
+			return
+		sts_entity_panel()
 	return
 
 /datum/admins/proc/accept_ert(mob/approver, mob/ref_person)

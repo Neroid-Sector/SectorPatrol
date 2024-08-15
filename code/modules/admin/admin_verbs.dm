@@ -175,6 +175,9 @@ GLOBAL_LIST_INIT(admin_verbs_major_event, list(
 	/client/proc/cmd_load_dorms,
 	/client/proc/cmd_show_resources,
 	/datum/admins/proc/mission_control_panel,
+	/datum/admins/proc/sts_control_panel,
+	/datum/admins/proc/sts_round_flow_panel,
+	/datum/admins/proc/sts_entity_panel,
 	/datum/admins/proc/set_narration_preset,
 	/datum/admins/proc/speak_to_comms,
 ))
