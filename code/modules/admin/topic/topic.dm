@@ -2390,6 +2390,18 @@
 		if(!check_rights(R_ADMIN))
 			return
 		sts_entity_panel()
+	if(href_list["entity_editor"])
+		if(!check_rights(R_ADMIN))
+			return
+		entity_editor(href_list["entity_editor"])
+	if(href_list["link_player_ships"])
+		if(!check_rights(R_ADMIN))
+			return
+		link_player_ships()
+	if(href_list["load_template"])
+		if(!check_rights(R_ADMIN))
+			return
+		load_template()
 	return
 
 /datum/admins/proc/accept_ert(mob/approver, mob/ref_person)

@@ -130,10 +130,10 @@
 				<div class="text">
 				<p><b>ENTITY_CONTROL</b></p>
 				<p>[displayed_entities]</p>
-				<p><b>Add</b> | <b>Modify</b> | <b>Remove</b></p>
-				<p>Map max X:<b>[GLOB.sector_map_x]</b> | Map max Y: <b>[GLOB.sector_map_y]</b>
-				<p><b>Load Preset</b></p>
-				<p><b>Link and Initialize Player Ships</b></p>
+				<p><b><p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];entity_editor=add'>Add</A></b> | <b><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];entity_editor=modify'>Modify</A></b> | <b><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];entity_editor=remove'>Remove</A></b></p>
+				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];entity_editor=mapx'>Map max X:</A><b>[GLOB.sector_map_x]</b> | <A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];entity_editor=mapy'>Map max Y:</A> <b>[GLOB.sector_map_y]</b>
+				<p><b><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];load_template=1'>Load Preset</A></b></p>
+				<p><b><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];link_player_ships=1'>Link and Initialize Player Ships</A></b></p>
 				</div>
 				</div>
 				"}
@@ -235,6 +235,139 @@
 		usr.sp_uis += "mission_control_[usr]_[window]"
 	onclose(usr, "mission_control_[usr]_[window]")
 
+/datum/admins/proc/load_template()
+	if(!check_rights(R_ADMIN)) return
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
+		break
+	switch(tgui_input_list(usr, "Select Template, this will REPLACE the current map:","TEMPLATE select",list("Blank","Function Test"),timeout = 0))
+		if(null)
+			return
+		if("Blank")
+			sts_master.clear_map()
+		if("Function Test")
+			sts_master.clear_map()
+			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "Testing Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
+	sts_entity_panel()
+	return
+
+/datum/admins/proc/link_player_ships()
+	if(!check_rights(R_ADMIN)) return
+	var/init_counter = 0
+	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_to_link in world)
+		if(ship_to_link.sector_map_data["name"] != "none")
+			ship_to_link.FindShipOnMap()
+			init_counter += 1
+	to_chat(usr, SPAN_INFO("Initalization complete. Ships found: [init_counter]."))
+	sts_entity_panel()
+	return
+
+/datum/admins/proc/entity_editor(type)
+	if(!check_rights(R_ADMIN)) return
+	var/obj/structure/shiptoship_master/sts_master
+	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
+		sts_master = sts_master_to_link
+		break
+	switch(type)
+		if(null)
+			return
+		if("add")
+			switch(tgui_input_list(usr, "What type of entity to add?", "Add Entity", list("ship","missile"), timeout = 0))
+				if("ship")
+					var/coordinate_x = tgui_input_number(usr, "Pick the X coordinate, max: [GLOB.sector_map_x]", "Add Entity - X Coordinate", min_value = 1, timeout = 0)
+					if(coordinate_x == null) return
+					if(coordinate_x > GLOB.sector_map_x) coordinate_x = GLOB.sector_map_x
+					var/coordinate_y = tgui_input_number(usr, "Pick the Y coordinate, max: [GLOB.sector_map_y]", "Add Entity - Y Coordinate", min_value = 1, timeout = 0)
+					if(coordinate_y == null) return
+					if(coordinate_y > GLOB.sector_map_y) coordinate_y = GLOB.sector_map_y
+					if(sts_master.sector_map[coordinate_x][coordinate_y]["ship"]["id_tag"] != "none")
+						to_chat(usr, SPAN_WARNING("An Entity exists on this coordinate already."))
+						return
+					var/name_to_enter = tgui_input_text(usr, "Enter ship name or otherwise identifiable nickname", "NAME Entry", timeout = 0)
+					if(name_to_enter == null) name_to_enter = "Unknown"
+					var/type_to_enter = tgui_input_text(usr, "Enter ship type or identifiable cahracteristics if unknown ", "TYPE Entry", timeout = 0)
+					if(type_to_enter == null) type_to_enter = "Unknown"
+					var/faction_to_enter = tgui_input_text(usr, "Enter ship faction", "FACTION Entry", timeout = 0)
+					if(faction_to_enter == null) faction_to_enter = "UNKW"
+					var/status_to_enter = tgui_input_text(usr, "Enter ship status", "STATUS Entry", timeout = 0)
+					if(status_to_enter == null) status_to_enter = "Unknown"
+					var/damage_to_enter = tgui_input_number(usr, "Pick HP value","HP Entry", default = 0,  min_value = 0, timeout = 0)
+					if(damage_to_enter == null) damage_to_enter = 0
+					var/shield_to_enter = tgui_input_number(usr, "Pick value of shield", "SHLD Entry", default = 0,  min_value = 0, timeout = 0)
+					if(shield_to_enter == null) shield_to_enter = 0
+					var/vector_x_to_enter = tgui_input_number(usr, "Pick X value of the vector", "Vector - X", default = 0,max_value = 1000 ,min_value = -1000, timeout = 0)
+					if(vector_x_to_enter == null) vector_x_to_enter = 0
+					var/vector_y_to_enter = tgui_input_number(usr, "Pick Y value of the vector", "Vector - X", default = 0,max_value = 1000 ,min_value = -1000, timeout = 0)
+					if(vector_y_to_enter == null) vector_y_to_enter = 0
+					var/speed_to_enter = tgui_input_number(usr, "Pick speed", "Speed", default = 0 ,min_value = 0, timeout = 0)
+					if(speed_to_enter == null)speed_to_enter = 0
+					var/salvos_to_enter = tgui_input_number(usr, "Pick max ammount of salvos per round", "Max_salvos", default = 0 ,min_value = 0, timeout = 0)
+					if(salvos_to_enter == null)salvos_to_enter = 0
+					sts_master.add_entity(entity_type = 0, x = coordinate_x, y = coordinate_y, name = name_to_enter, type = type_to_enter, vector_x = vector_x_to_enter, vector_y = vector_y_to_enter, ship_status = status_to_enter, ship_faction = faction_to_enter, ship_damage = damage_to_enter, ship_shield = shield_to_enter, ship_speed = speed_to_enter, salvos = salvos_to_enter)
+				if("missile")
+					var/coordinate_x = tgui_input_number(usr, "Pick the X coordinate, max: [GLOB.sector_map_x]", "Add Entity - X Coordinate", min_value = 0, timeout = 0)
+					if(coordinate_x == null) return
+					if(coordinate_x > GLOB.sector_map_x) coordinate_x = GLOB.sector_map_x
+					var/coordinate_y = tgui_input_number(usr, "Pick the Y coordinate, max: [GLOB.sector_map_y]", "Add Entity - Y Coordinate", min_value = 0, timeout = 0)
+					if(coordinate_y == null) return
+					if(coordinate_y > GLOB.sector_map_y) coordinate_y = GLOB.sector_map_y
+					if(sts_master.sector_map[coordinate_x][coordinate_y]["missile"]["id_tag"] != "none")
+						to_chat(usr, SPAN_WARNING("A missile exists on this coordinate already."))
+						return
+					var/name_to_enter = tgui_input_text(usr, "Enter missile Name", "NAME Entry", timeout = 0)
+					if(name_to_enter == null) name_to_enter = "Unknown"
+					var/speed_to_enter = tgui_input_number(usr, "Enter missile Speed", "SPEED Entry", timeout = 0)
+					if(speed_to_enter == null) speed_to_enter = 0
+					var/type_to_enter = tgui_input_text(usr, "Enter missile Type", "TYPE Entry", timeout = 0)
+					if(type_to_enter == null) type_to_enter = "Unknown"
+					var/warhead_to_enter = tgui_input_text(usr, "Enter warhead type", "WARHEAD Entry", timeout = 0)
+					if(warhead_to_enter == null) warhead_to_enter = "Unknown"
+					var/vector_x_to_enter = tgui_input_number(usr, "Pick X coord of target", "Target - X", default = 0,max_value = 1000 ,min_value = -1000, timeout = 0)
+					if(vector_x_to_enter == null) vector_x_to_enter = 0
+					var/vector_y_to_enter = tgui_input_number(usr, "Pick Y coord of target", "Target - Y", default = 0,max_value = 1000 ,min_value = -1000, timeout = 0)
+					if(vector_y_to_enter == null) vector_y_to_enter = 0
+					var/target_tag_to_enter = tgui_input_list(usr, "Select a target Tag", "Tag Ship", sts_master.scan_entites(category = 0, output_format = 1), timeout = 0)
+					if(target_tag_to_enter == null) target_tag_to_enter = "none"
+					sts_master.add_entity(entity_type = 1, x = coordinate_x, y = coordinate_y, name = name_to_enter, type = type_to_enter, vector_x = vector_x_to_enter, vector_y = vector_y_to_enter, warhead_type = warhead_to_enter, target_tag = target_tag_to_enter, missile_speed = speed_to_enter)
+			to_chat(usr, SPAN_INFO("Entity Added."))
+		if("remove")
+			switch(tgui_input_list(usr, "What type of entity to remove?", "Rem Entity", list("ship","missile"), timeout = 0))
+				if("ship")
+					var/id_to_remove = tgui_input_list(usr, "Which ship Entity to remove?", "Rem Ship", sts_master.scan_entites(category = 0, output_format = 1), timeout = 0)
+					if(id_to_remove == null) return
+					sts_master.rem_entity(type = "id", id = id_to_remove)
+				if("missile")
+					var/id_to_remove = tgui_input_list(usr, "Which ship Entity to remove?", "Rem Ship", sts_master.scan_entites(category = 1, output_format = 1), timeout = 0)
+					if(id_to_remove == null) return
+					sts_master.rem_entity(type = "id", id = id_to_remove)
+			to_chat(usr, SPAN_INFO("Entity Removed."))
+		if("modify")
+			switch(tgui_input_list(usr, "What type of entity to modify?", "Mod Entity", list("ship","missile"), timeout = 0))
+				if("ship")
+					var/modify_id = tgui_input_list(usr, "Select a Ship Entity to Edit", "Mod Entity", sts_master.scan_entites(category = 0, output_format = 1), timeout = 0)
+					var/modify_value = tgui_input_list(usr, "Select a Ship Entity Property to Edit", "Mod Entity", list("name","faction","id_tag","type","status","damage","shield","vector"), timeout = 0)
+					sts_master.mod_entity(entity_type = "ship", entity_tag = modify_id, entity_property = modify_value)
+				if("missile")
+					var/modify_id = tgui_input_list(usr, "Select a missile Entity to Edit", "Mod Entity", sts_master.scan_entites(category = 1, output_format = 1), timeout = 0)
+					var/modify_value = tgui_input_list(usr, "Select a missile Entity Property to Edit", "Mod Entity", list("name","type","target","speed","warhead"), timeout = 0)
+					sts_master.mod_entity(entity_type = "missile", entity_tag = modify_id, entity_property = modify_value)
+			to_chat(usr, SPAN_INFO("Value modified."))
+		if("mapx")
+			var/old_value = GLOB.sector_map_x
+			GLOB.sector_map_x = tgui_input_number(usr, "Select map X size", "Max X", GLOB.sector_map_x, min_value = 1, timeout = 0)
+			if(GLOB.sector_map_x == null || GLOB.sector_map_x < 1) GLOB.sector_map_x = old_value
+			to_chat(usr, SPAN_INFO("[GLOB.sector_map_x] set."))
+		if("mapy")
+			var/old_value = GLOB.sector_map_y
+			GLOB.sector_map_y = tgui_input_number(usr, "Select map X size", "Max X", GLOB.sector_map_y, min_value = 1, timeout = 0)
+			if(GLOB.sector_map_y == null || GLOB.sector_map_y < 1) GLOB.sector_map_y = old_value
+			to_chat(usr, SPAN_INFO("[GLOB.sector_map_y] set."))
+	sts_entity_panel()
+	return
+
+
 /datum/admins/proc/display_crawl(type)
 	switch(type)
 		if(null)
@@ -248,9 +381,6 @@
 			to_chat(world, narrate_body("<b>Hostile ships detected in your sector.</b> Please standby as the DM sets up the initial round."))
 		if("combat_end")
 			show_blurb(world, duration = 10 SECONDS, message = "SPACE COMBAT CONCLUDED", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
-
-
-
 
 /datum/admins/proc/toggle_sts(type = null)
 	if(!check_rights(R_ADMIN)) return
