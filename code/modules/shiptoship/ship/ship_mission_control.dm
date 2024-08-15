@@ -417,3 +417,11 @@
 	weapons_status_to_return += "PROBE: <b>[probe_status]</b>"
 	weapons_status_to_return += "TRACKER: <b>[tracker_status]</b>"
 	return weapons_status_to_return
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/GetMobsInShipAreas()
+	var/list/mobs_to_return
+	for(var/mob/mob_to_add in GLOB.mob_list)
+		var/area/sts_ship/area_to_test = get_area(mob_to_add)
+		if(area_to_test.ship_name == sector_map_data["name"])
+			mobs_to_return += mob_to_add
+	return mobs_to_return

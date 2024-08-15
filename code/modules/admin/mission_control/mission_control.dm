@@ -804,6 +804,7 @@
 /datum/admins/proc/set_narration_preset()
 	set name = "Comms Set Preset"
 	set category = "DM.Narration"
+	if(!check_rights(R_ADMIN)) return
 
 	var/list/comms_presets = list("Mission Control","Cassandra","Alysia","Boulette","Custom")
 	switch(tgui_input_list(usr,"Select a Comms Preset","PRESET",comms_presets,timeout = 0))
@@ -834,12 +835,38 @@
 /datum/admins/proc/speak_to_comms()
 	set name = "Comms Speak"
 	set category = "DM.Narration"
+	if(!check_rights(R_ADMIN)) return
 
 	if(usr.narration_settings["Name"] == null || usr.narration_settings["Location"] == null || usr.narration_settings["Position"] == null) set_narration_preset()
+	var/list/comms_destination = list("Everyone")
+	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm_list in world)
+		if(ship_mc_to_comm_list.sector_map_data["initialized"] == 1)
+			comms_destination += ship_mc_to_comm_list.sector_map_data["name"]
+	var/comms_destination_choice
+	if(comms_destination.len <= 1)
+		comms_destination_choice = "Everyone"
+	else
+		comms_destination_choice = tgui_input_list(usr,"Select Destination for Comms","DESTINATION pick",comms_destination,timeout = 0)
+	if(comms_destination_choice == null) return
 	var/text_to_comm = tgui_input_text(usr, "Enter what to say as [usr.narration_settings["Name"]],[usr.narration_settings["Location"]],[usr.narration_settings["Position"]] or cancel to exit.")
-	while(text_to_comm != null)
-		to_chat(world, "<span class='big'><span class='radio'><span class='name'>[usr.narration_settings["Name"]]<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005B[usr.narration_settings["Location"]] \u0028[usr.narration_settings["Position"]]\u0029\u005D </b></span><span class='message'>, says \"[text_to_comm]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
-		text_to_comm = tgui_input_text(usr, "Enter what to say as [usr.narration_settings["Name"]],[usr.narration_settings["Location"]],[usr.narration_settings["Position"]] or cancel to exit.")
+	if(comms_destination_choice == "Everyone")
+		while(text_to_comm != null)
+			to_chat(world, "<span class='big'><span class='radio'><span class='name'>[usr.narration_settings["Name"]]<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005B[usr.narration_settings["Location"]] \u0028[usr.narration_settings["Position"]]\u0029\u005D </b></span><span class='message'>, says \"[text_to_comm]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
+			text_to_comm = tgui_input_text(usr, "Enter what to say as [usr.narration_settings["Name"]],[usr.narration_settings["Location"]],[usr.narration_settings["Position"]] or cancel to exit.")
+		return
+	else
+		var/obj/structure/shiptoship_master/ship_missioncontrol/comm_target_ship_mc
+		for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_send_comms in world)
+			if(ship_mc_to_send_comms.sector_map_data["name"] == comms_destination_choice)
+				comm_target_ship_mc = ship_mc_to_send_comms
+				break
+		var/list/mobs_to_send_comms = comm_target_ship_mc.GetMobsInShipAreas()
+		if(mobs_to_send_comms.Find(usr) == 0)
+			mobs_to_send_comms.Add(usr)
+		while(text_to_comm != null)
+			to_chat(mobs_to_send_comms, "<span class='big'><span class='radio'><span class='name'>[usr.narration_settings["Name"]]<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005B[usr.narration_settings["Location"]] \u0028[usr.narration_settings["Position"]]\u0029\u005D </b></span><span class='message'>, says \"[text_to_comm]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
+			text_to_comm = tgui_input_text(usr, "Enter what to say as [usr.narration_settings["Name"]],[usr.narration_settings["Location"]],[usr.narration_settings["Position"]] to [comms_destination_choice] or cancel to exit.")
+		return
 
 /datum/admins/proc/edit_general_info(type_to_edit = null)
 	if(!check_rights(R_ADMIN)) return

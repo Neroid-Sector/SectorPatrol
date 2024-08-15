@@ -212,12 +212,54 @@
 	icon_state = "top_off"
 	icon_base = "top"
 
+/obj/structure/ship_elements/command_monitor/top/attack_hand(mob/user)
+	if(usr != linked_command_chair.buckled_mob) return
+	switch(usr.a_intent)
+		if(INTENT_HELP,INTENT_DISARM)
+			linked_command_chair.open_command_window("current_round")
+		if(INTENT_GRAB,INTENT_HARM)
+			linked_command_chair.open_command_window("round_history")
+
+/obj/structure/ship_elements/command_monitor/top/examine(mob/user)
+	. = ..()
+	if(usr == buckled_mob)
+		to_chat(usr, SPAN_INFO("Use the console with <b>HELP</b> or <b>DISARM</b> intent to open the <b>sonar activity</b> screen."))
+		to_chat(usr, SPAN_INFO("Use the console with <b>GRAB</b> or <b>HARM</b> intent to open the <b>sonar activity history buffer</b> screen."))
+
 /obj/structure/ship_elements/command_monitor/front
 	name = "front command monitor"
 	icon_state = "front_off"
 	icon_base = "front"
 
+/obj/structure/ship_elements/command_monitor/front/attack_hand(mob/user)
+	if(usr != linked_command_chair.buckled_mob) return
+	switch(usr.a_intent)
+		if(INTENT_HELP,INTENT_DISARM)
+			linked_command_chair.open_command_window("pings_and_tracking")
+		if(INTENT_GRAB,INTENT_HARM)
+			linked_command_chair.open_command_window("ship_messages")
+
+/obj/structure/ship_elements/command_monitor/front/examine(mob/user)
+	. = ..()
+	if(usr == buckled_mob)
+		to_chat(usr, SPAN_INFO("Use the console with <b>HELP</b> or <b>DISARM</b> intent to open the <b>pings and tracking</b> screen."))
+		to_chat(usr, SPAN_INFO("Use the console with <b>GRAB</b> or <b>HARM</b> intent to open the <b>incoming messages</b> screen."))
+
 /obj/structure/ship_elements/command_monitor/bottom
 	name = "left command monitor"
 	icon_state = "bot_off"
 	icon_base = "bot"
+
+/obj/structure/ship_elements/command_monitor/bottom/attack_hand(mob/user)
+	if(usr != linked_command_chair.buckled_mob) return
+	switch(usr.a_intent)
+		if(INTENT_HELP,INTENT_DISARM)
+			linked_command_chair.open_command_window("ship_status")
+		if(INTENT_GRAB,INTENT_HARM)
+			linked_command_chair.open_command_window("weapon_status")
+
+/obj/structure/ship_elements/command_monitor/bottom/examine(mob/user)
+	. = ..()
+	if(usr == buckled_mob)
+		to_chat(usr, SPAN_INFO("Use the console with <b>HELP</b> or <b>DISARM</b> intent to open the <b>ship integrity status</b> screen."))
+		to_chat(usr, SPAN_INFO("Use the console with <b>GRAB</b> or <b>HARM</b> intent to open the <b>weapon status</b> screen."))

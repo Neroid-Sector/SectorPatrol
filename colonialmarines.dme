@@ -2359,6 +2359,7 @@
 #include "code\modules\security_levels\security_levels.dm"
 #include "code\modules\shiptoship\sts_master.dm"
 #include "code\modules\shiptoship\ship\probe_control.dm"
+#include "code\modules\shiptoship\ship\ship_areas.dm"
 #include "code\modules\shiptoship\ship\ship_cargo_bay.dm"
 #include "code\modules\shiptoship\ship\ship_command_chair.dm"
 #include "code\modules\shiptoship\ship\ship_damage_control.dm"

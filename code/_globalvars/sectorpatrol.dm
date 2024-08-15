@@ -76,3 +76,5 @@ GLOBAL_VAR_INIT(sector_map_id_tag, 1)
 GLOBAL_VAR_INIT(combat_initiated, 0)
 GLOBAL_VAR_INIT(combat_round, 1)
 GLOBAL_VAR_INIT(round_phase, 1)
+
+GLOBAL_LIST_EMPTY(sts_ship_areas)
