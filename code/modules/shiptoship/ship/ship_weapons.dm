@@ -267,6 +267,7 @@
 	opacity = FALSE
 	unacidable = TRUE
 	unslashable = TRUE
+	var/ship_name
 	var/obj/structure/ship_elements/primary_cannon/paired_device
 
 /obj/structure/ship_elements/primer_lever/primary/proc/animate_use()
@@ -277,8 +278,10 @@
 	update_icon()
 
 /obj/structure/ship_elements/primer_lever/primary/Initialize(mapload, ...)
-	for (var/obj/structure/ship_elements/primary_cannon/cannon_to_pair in get_area(src))
-		if(cannon_to_pair != null) paired_device = cannon_to_pair
+	for (var/obj/structure/ship_elements/primary_cannon/cannon_to_pair in GLOB.ship_areas)
+		if(cannon_to_pair.ship_name == ship_name)
+			paired_device = cannon_to_pair
+			break
 	. = ..()
 
 /obj/structure/ship_elements/primer_lever/primary/attack_hand(mob/user)
@@ -420,6 +423,7 @@
 	opacity = FALSE
 	unacidable = TRUE
 	unslashable = TRUE
+	var/ship_name
 	var/obj/structure/ship_elements/secondary_cannon/paired_device
 
 /obj/structure/ship_elements/primer_lever/secondary/proc/animate_use()
@@ -430,8 +434,10 @@
 	update_icon()
 
 /obj/structure/ship_elements/primer_lever/secondary/Initialize(mapload, ...)
-	for (var/obj/structure/ship_elements/secondary_cannon/cannon_to_pair in get_area(src))
-		if(cannon_to_pair != null) paired_device = cannon_to_pair
+	for (var/obj/structure/ship_elements/secondary_cannon/cannon_to_pair in GLOB.ship_areas)
+		if(cannon_to_pair.ship_name == ship_name)
+			paired_device = cannon_to_pair
+			break
 	. = ..()
 
 /obj/structure/ship_elements/primer_lever/secondary/attack_hand(mob/user)

@@ -4,7 +4,7 @@
 	desc_lore = "One of the cornerstones of the OV-PST based Mission Control system, these systems supposedly contain replacement packets for the ships various critical systems which somehow manage to \"centralize\" all damage done to the ship in these central points, allowing for easy damage control and repairs. Any documentation available is notoriously vague about how this process is possible and very casually skirts over the multiple laws of physics this seems to fly in the face of."
 	icon = 'icons/sectorpatrol/ship/damage_control.dmi'
 	icon_state = "damage_0"
-	item_serial = "ORIGIN-NDE-DMS"
+	item_serial = "DCE"
 	anchored = TRUE
 	plane = FLOOR_PLANE
 	unacidable = TRUE
@@ -39,6 +39,20 @@
 /obj/structure/ship_elements/damage_control_element/proc/LinkToConsole(damage_console as obj)
 	linked_damage_console = damage_console
 	linked_damage_console.damage_controls.Add(src)
+	var/area/sts_ship/area_to_test = get_area(src)
+	var/first_part_to_add = area_to_test.area_id
+	if(first_part_to_add == null) first_part_to_add = "UNK"
+	var/number_to_add = linked_damage_console.damage_controls.len
+	var/number_to_type
+	if(number_to_add == null)
+		number_to_type = "000"
+	if(number_to_add < 10)
+		number_to_type = "00" + num2text(number_to_type)
+	if(number_to_add < 100 && number_to_add > 10)
+		number_to_type = "0" + num2text(number_to_type)
+	if(number_to_add > 100)
+		number_to_type = num2text(number_to_type)
+	item_serial = "[first_part_to_add]-[number_to_type]-[initial(item_serial)]"
 
 /obj/structure/ship_elements/damage_control_element/update_icon()
 	. = ..()

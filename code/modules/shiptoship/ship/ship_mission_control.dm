@@ -1,6 +1,9 @@
 /obj/structure/shiptoship_master/ship_missioncontrol
-	name = "Why yes, another master item"
-	desc = "This definition contains critical code. Look for map specific instances down the line :p"
+	name = "mission control unit"
+	desc = "A tube made from resins and LD polymers, giving it a sleek, somewhat shimmering appearance."
+	desc_lore = "Mission Control units are central intelligence and processing systems that occupy the same space that \"traditional\"ships fill with an on-board AI. Unlike conventional AIs, Mission Control units instead are fully realized, intelligent sophonts, each instanced from a central version stored at the PST. Due to properties inherent to how Liquid Data works, this allows individual MC units to divert resources, be it energy or information, to the crews under its care as needed while utilizing the instantaneous transportation capabilities of Liquid Data."
+	icon = 'icons/sectorpatrol/ship/mission_control.dmi'
+	icon_state = "mc_on"
 	var/list/sector_map_data = list(
 		"name" = "none",
 		"id_tag" = "none,",
@@ -21,6 +24,23 @@
 	var/list/local_round_log_full = list()
 	var/list/ping_history = list()
 	var/list/comms_messages = list()
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/AnimateUse(type)
+	switch(type)
+		if(null)
+			return
+		if("on")
+			icon_state = "mc_off_on"
+			update_icon()
+			sleep(20)
+			icon_state = "mc_on"
+			update_icon()
+		if("off")
+			icon_state = "mc_on_off"
+			update_icon()
+			sleep(15)
+			icon_state = "mc_off"
+			update_icon()
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/RepairShutdown(state = null)
 	switch(state)

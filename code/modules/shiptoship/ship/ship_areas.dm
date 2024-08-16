@@ -1,6 +1,7 @@
 /area/sts_ship/
 	name = "sts ship area master"
 	var/ship_name = "none"
+	var/area_id = "ID"
 
 /area/sts_ship/Initialize(mapload, ...)
 	. = ..()

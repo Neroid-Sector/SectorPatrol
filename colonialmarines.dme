@@ -2366,6 +2366,7 @@
 #include "code\modules\shiptoship\ship\ship_mission_control.dm"
 #include "code\modules\shiptoship\ship\ship_weapons.dm"
 #include "code\modules\shiptoship\ship\ammo_types\ship_ammunition.dm"
+#include "code\modules\shiptoship\shipdefs\tester.dm"
 #include "code\modules\shuttle\computer.dm"
 #include "code\modules\shuttle\docking.dm"
 #include "code\modules\shuttle\dropship.dm"

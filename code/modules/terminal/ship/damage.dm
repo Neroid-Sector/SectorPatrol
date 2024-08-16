@@ -77,7 +77,7 @@
 /obj/structure/terminal/damage_console/proc/LinkToShipMaster(master_console as obj)
 
 	linked_master_console = master_console
-	for (var/obj/structure/ship_elements/damage_control_element/control_element_to_link in world)
+	for (var/obj/structure/ship_elements/damage_control_element/control_element_to_link in GLOB.ship_areas)
 		if(control_element_to_link.ship_name == linked_master_console.sector_map_data["name"])
 			control_element_to_link.LinkToConsole(src)
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
