@@ -17,7 +17,7 @@
 /obj/structure/ship_elements/probe_launcher/tester
 	ship_name = "UAS Tester"
 
-/obj/structure/ship_elements/tracker_launcher
+/obj/structure/ship_elements/tracker_launcher/tester
 	ship_name = "UAS Tester"
 
 //WEAPONS
@@ -61,7 +61,7 @@
 		"warhead_mip" = 30,
 		)
 
-/obj/structure/ship_elements/cargo_bay/secondary_munitions
+/obj/structure/ship_elements/cargo_bay/secondary_munitions/tester
 	ship_name = "UAS Tester"
 	cargo_data = list(
 		"secondary_direct" = 30,

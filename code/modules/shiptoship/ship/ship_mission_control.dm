@@ -338,41 +338,6 @@
 	var/current_x = 1
 	var/current_y = 1
 	to_chat(world, SPAN_INFO("Initializing ship [sector_map_data["name"]]!"))
-	if(linked_signals_console == null)
-		for(var/obj/structure/terminal/signals_console/console in world)
-			if(console.ship_name == sector_map_data["name"])
-				linked_signals_console.LinkToShipMaster(master_console = src)
-				var/turf/turf_return = get_turf(linked_signals_console)
-				to_chat(world, SPAN_INFO("Singals Console Linked at [turf_return.x],[turf_return.y]"))
-				break
-	if(linked_damage_console == null)
-		for(var/obj/structure/terminal/damage_console/console in world)
-			if(console.ship_name == sector_map_data["name"])
-				linked_damage_console.LinkToShipMaster(master_console = src)
-				var/turf/turf_return = get_turf(linked_damage_console)
-				to_chat(world, SPAN_INFO("Damage Console Linked at [turf_return.x],[turf_return.y]"))
-				break
-	if(linked_weapons_console == null)
-		for(var/obj/structure/terminal/weapons_console/console in world)
-			if(console.ship_name == sector_map_data["name"])
-				linked_weapons_console.LinkToShipMaster(master_console = src)
-				var/turf/turf_return = get_turf(linked_weapons_console)
-				to_chat(world, SPAN_INFO("Weapons Console Linked at [turf_return.x],[turf_return.y]"))
-				break
-	if(linked_cargo_console == null)
-		for(var/obj/structure/terminal/cargo_console/console in world)
-			if(console.ship_name == sector_map_data["name"])
-				linked_cargo_console.LinkToShipMaster(master_console = src)
-				var/turf/turf_return = get_turf(linked_cargo_console)
-				to_chat(world, SPAN_INFO("Singals Console Linked at [turf_return.x],[turf_return.y]"))
-				break
-	if(linked_command_chair == null)
-		for(var/obj/structure/ship_elements/command_chair/console in world)
-			if(console.ship_name == sector_map_data["name"])
-				linked_command_chair.LinkToShipMaster(master_console = src)
-				var/turf/turf_return = get_turf(linked_command_chair)
-				to_chat(world, SPAN_INFO("Command Chair Linked at [turf_return.x],[turf_return.y]"))
-				break
 	while(current_x <= GLOB.sector_map_x)
 		while(current_y <= GLOB.sector_map_y)
 			if(sector_map[current_x][current_y]["ship"]["name"] == sector_map_data["name"])
@@ -380,13 +345,58 @@
 				sector_map_data["id_tag"] = sector_map[current_x][current_y]["ship"]["id_tag"]
 				sector_map_data["x"] = current_x
 				sector_map_data["y"] = current_y
-				to_chat(world, SPAN_INFO("Ship [sector_map_data["name"]] Initalized on the Sector Map."))
 			if(sector_map_data["x"] != 0 && sector_map_data["y"] != 0) break
 			current_y += 1
 		if(sector_map_data["x"] != 0 && sector_map_data["y"] != 0) break
 		current_y = 1
 		current_x += 1
-	if(sector_map_data["x"] != 0 && sector_map_data["y" != 0]) return 1
+	if(sector_map_data["x"] == 0 || sector_map_data["y"] == 0)
+		to_chat(usr, SPAN_WARNING("Error. [sector_map_data["name"]] not found on Sector Map or invalid coords. Aborting."))
+		return
+	var/list/area_contents
+	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
+		area_contents += areas_to_scan.GetAllContents()
+	if(linked_signals_console == null)
+		for(var/obj/structure/terminal/signals_console/console in area_contents)
+			if(console.ship_name == sector_map_data["name"])
+				linked_signals_console = console
+				console.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_signals_console)
+				to_chat(world, SPAN_INFO("Singals Console Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_damage_console == null)
+		for(var/obj/structure/terminal/damage_console/console in area_contents)
+			if(console.ship_name == sector_map_data["name"])
+				linked_damage_console = console
+				console.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_damage_console)
+				to_chat(world, SPAN_INFO("Damage Console Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_weapons_console == null)
+		for(var/obj/structure/terminal/weapons_console/console in area_contents)
+			if(console.ship_name == sector_map_data["name"])
+				linked_weapons_console = console
+				console.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_weapons_console)
+				to_chat(world, SPAN_INFO("Weapons Console Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_cargo_console == null)
+		for(var/obj/structure/terminal/cargo_console/console in area_contents)
+			if(console.ship_name == sector_map_data["name"])
+				linked_cargo_console = console
+				console.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_cargo_console)
+				to_chat(world, SPAN_INFO("Cargo Console Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_command_chair == null)
+		for(var/obj/structure/ship_elements/command_chair/chair in area_contents)
+			if(chair.ship_name == sector_map_data["name"])
+				linked_command_chair = chair
+				chair.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_command_chair)
+				to_chat(world, SPAN_INFO("Command Chair Linked at [turf_return.x],[turf_return.y]"))
+				break
+	to_chat(world, SPAN_INFO("Ship [sector_map_data["name"]] Initalized on the Sector Map."))
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/IncomingMapDamage(type = null, ammount = null)
 	var/type_to_deal

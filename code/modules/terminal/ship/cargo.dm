@@ -18,14 +18,21 @@
 /obj/structure/terminal/cargo_console/proc/LinkToShipMaster(master_console as obj)
 
 	linked_master_console = master_console
-	if(!linked_cargo_bays)
-		for(var/obj/structure/ship_elements/cargo_bay/bay_to_link in world)
-			if(linked_master_console.sector_map_data["name"] == bay_to_link.ship_name)
-				switch(bay_to_link.bay_id)
-					if("primary_munitions")
-						linked_cargo_bays["primary_munitions"] = bay_to_link
-					if("secondary_munitions")
-						linked_cargo_bays["secondary_munitions"] = bay_to_link
+	var/list/area_contents
+	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
+		area_contents += areas_to_scan.GetAllContents()
+	for(var/obj/structure/ship_elements/cargo_bay/primary_bay_to_link in area_contents)
+		if(linked_master_console.sector_map_data["name"] == primary_bay_to_link.ship_name)
+			if(primary_bay_to_link.bay_id == "primary_munitions")
+				linked_cargo_bays["primary_munitions"] = primary_bay_to_link
+				to_chat(world, SPAN_INFO("Primary Munitions bay for [linked_master_console.sector_map_data["name"]] initiated."))
+				break
+	for(var/obj/structure/ship_elements/cargo_bay/secondary_bay_to_link in area_contents)
+		if(linked_master_console.sector_map_data["name"] == secondary_bay_to_link.ship_name)
+			if(secondary_bay_to_link.bay_id == "secondary_munitions")
+				linked_cargo_bays["secondary_munitions"] = secondary_bay_to_link
+				to_chat(world, SPAN_INFO("Secondary Munitions bay for [linked_master_console.sector_map_data["name"]] initiated."))
+				break
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
 	terminal_header += {"<div class="box"><p><center><b>"}+ html_encode("[linked_master_console.sector_map_data["name"]] - CARGO BAY CONTROL") + {"</b><br>"} + html_encode("UACM 2ND LOGISTICS") + {"</center></p></div><div class="box_console">"}

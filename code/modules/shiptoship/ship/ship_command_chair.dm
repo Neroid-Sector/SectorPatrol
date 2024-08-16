@@ -3,7 +3,7 @@
 	desc = "A comfortable, sturdy looking chair."
 	desc_lore = "Made from scratch on the PST, this chair is meant to match the natural shapes of its user for maximum comfort and generally is made with the idea that whoever uses it, uses it for hours at a time. Additionally, LD enabled sensors in both the chairs backrest and frame make sure that the person using it and the terminals that are linked to it are authorized to be there. How does the device exactly accomplish this is not clear, but it will not work with Marine IDs that do not contain the PST issues RFID chips."
 	icon = 'icons/sectorpatrol/ship/throne.dmi'
-	icon_state = "command_chair"
+	icon_state = "command_seat"
 	can_buckle = TRUE
 	var/obj/structure/shiptoship_master/ship_missioncontrol/linked_master_console
 	var/obj/structure/ship_elements/command_monitor/top/linked_top_screen
@@ -35,23 +35,29 @@
 			return
 
 /obj/structure/ship_elements/command_chair/proc/LinkToShipMaster(master_console as obj)
-
+	GetAllContents()
 	linked_master_console = master_console
+	var/list/area_contents
+	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
+		area_contents += areas_to_scan.GetAllContents()
 	if(!linked_top_screen)
-		for(var/obj/structure/ship_elements/command_monitor/top/top_to_link in world)
+		for(var/obj/structure/ship_elements/command_monitor/top/top_to_link in area_contents)
 			if(top_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_top_screen = top_to_link
-				to_chat(world, SPAN_INFO("Top Moniotor for ship [linked_master_console.sector_map_data["id"]] loaded."))
+				to_chat(world, SPAN_INFO("Top Moniotor for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				break
 	if(!linked_front_screen)
-		for(var/obj/structure/ship_elements/command_monitor/front/front_to_link in world)
+		for(var/obj/structure/ship_elements/command_monitor/front/front_to_link in area_contents)
 			if(front_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_front_screen = front_to_link
-				to_chat(world, SPAN_INFO("Front Monitor for ship [linked_master_console.sector_map_data["id"]] loaded."))
+				to_chat(world, SPAN_INFO("Front Monitor for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				break
 	if(!linked_bot_screen)
-		for(var/obj/structure/ship_elements/command_monitor/bottom/bot_to_link in world)
+		for(var/obj/structure/ship_elements/command_monitor/bottom/bot_to_link in area_contents)
 			if(bot_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_bot_screen = bot_to_link
-				to_chat(world, SPAN_INFO("Bottom Monitor for ship [linked_master_console.sector_map_data["id"]] loaded."))
+				to_chat(world, SPAN_INFO("Bottom Monitor for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				break
 
 /obj/structure/ship_elements/command_chair/proc/open_command_window(type)
 	if(buckled_mob != usr) return

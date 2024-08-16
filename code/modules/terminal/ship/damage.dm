@@ -77,9 +77,16 @@
 /obj/structure/terminal/damage_console/proc/LinkToShipMaster(master_console as obj)
 
 	linked_master_console = master_console
-	for (var/obj/structure/ship_elements/damage_control_element/control_element_to_link in GLOB.ship_areas)
+	var/list/area_contents
+	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
+		area_contents += areas_to_scan.GetAllContents()
+	var/element_counter = 0
+	for (var/obj/structure/ship_elements/damage_control_element/control_element_to_link in area_contents)
 		if(control_element_to_link.ship_name == linked_master_console.sector_map_data["name"])
-			control_element_to_link.LinkToConsole(src)
+			if(damage_controls.Find(control_element_to_link) == 0)
+				control_element_to_link.LinkToConsole(src)
+				element_counter += 1
+	to_chat(world, SPAN_INFO("Damage element initialization for [linked_master_console.sector_map_data["name"]] complete. [element_counter] elements found."))
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
 	UpdateMapData()

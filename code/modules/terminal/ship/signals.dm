@@ -61,16 +61,21 @@
 /obj/structure/terminal/signals_console/proc/LinkToShipMaster(master_console as obj)
 
 	linked_master_console = master_console
+	var/list/area_contents
+	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
+		area_contents += areas_to_scan.GetAllContents()
 	if(!linked_probe_launcher)
-		for(var/obj/structure/ship_elements/probe_launcher/launcher_to_link in world)
+		for(var/obj/structure/ship_elements/probe_launcher/launcher_to_link in area_contents)
 			if(launcher_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_probe_launcher = launcher_to_link
-				to_chat(world, SPAN_INFO("Probe Launcher for ship [linked_master_console.sector_map_data["id"]] loaded."))
+				to_chat(world, SPAN_INFO("Probe Launcher for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				break
 	if(!linked_tracker_launcher)
-		for(var/obj/structure/ship_elements/tracker_launcher/launcher_to_link in world)
+		for(var/obj/structure/ship_elements/tracker_launcher/launcher_to_link in area_contents)
 			if(launcher_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_tracker_launcher = launcher_to_link
-				to_chat(world, SPAN_INFO("Tracker Launcher for ship [linked_master_console.sector_map_data["id"]] loaded."))
+				to_chat(world, SPAN_INFO("Tracker Launcher for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				break
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
 	terminal_header += {"<div class="box"><p><center><b>"}+ html_encode("[linked_master_console.sector_map_data["name"]] - SIGNALS CONTROL") + {"</b><br>"} + html_encode("UACM 2ND LOGISTICS") + {"</center></p></div><div class="box_console">"}

@@ -39,9 +39,8 @@
 	density = TRUE
 	anchored = TRUE
 	layer = LADDER_LAYER
-	bound_width = 128
-	bound_height = 64
-	bound_y = 64
+	bound_width = 96
+	bound_height = 96
 	unslashable = TRUE
 	unacidable = TRUE
 	var/repair_shutdown = 0
@@ -320,9 +319,8 @@
 	density = TRUE
 	anchored = TRUE
 	layer = LADDER_LAYER
-	bound_width = 128
-	bound_height = 64
-	bound_y = 64
+	bound_width = 96
+	bound_height = 96
 	unslashable = TRUE
 	unacidable = TRUE
 	var/repair_shutdown = 0

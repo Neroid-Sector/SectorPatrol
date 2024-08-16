@@ -1017,6 +1017,12 @@
 	},
 /turf/open/floor/plating/almayer,
 /area/adminlevel/ert_station)
+"yq" = (
+/obj/structure/shiptoship_master,
+/turf/open/floor/almayer{
+	icon_state = "mono"
+	},
+/area/centcom/control)
 "yx" = (
 /obj/effect/decal/warning_stripes{
 	icon_state = "W"
@@ -12373,7 +12379,7 @@ ej
 fn
 aa
 fn
-fR
+yq
 fR
 fR
 gh

@@ -60,16 +60,21 @@
 /obj/structure/terminal/weapons_console/proc/LinkToShipMaster(master_console as obj)
 
 	linked_master_console = master_console
+	var/list/area_contents
+	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
+		area_contents += areas_to_scan.GetAllContents()
 	if(!linked_primary_cannon)
-		for(var/obj/structure/ship_elements/primary_cannon/cannon_to_link in world)
+		for(var/obj/structure/ship_elements/primary_cannon/cannon_to_link in area_contents)
 			if(cannon_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_primary_cannon = cannon_to_link
-				to_chat(world, SPAN_INFO("Primary Cannon for ship [linked_master_console.sector_map_data["id"]] loaded."))
+				to_chat(world, SPAN_INFO("Primary Cannon for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				break
 	if(!linked_secondary_cannon)
-		for(var/obj/structure/ship_elements/secondary_cannon/cannon_to_link in world)
+		for(var/obj/structure/ship_elements/secondary_cannon/cannon_to_link in area_contents)
 			if(cannon_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_secondary_cannon = cannon_to_link
-				to_chat(world, SPAN_INFO("Secondary Cannon for ship [linked_master_console.sector_map_data["id"]] loaded."))
+				to_chat(world, SPAN_INFO("Secondary Cannon for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				break
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
 	UpdateMapData()

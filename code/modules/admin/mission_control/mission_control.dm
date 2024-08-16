@@ -5,7 +5,7 @@
 	if (usr.sp_uis.len != 0)
 		while(usr.sp_uis.len != 0)
 			var/ui_to_close = jointext(usr.sp_uis,null,1,2)
-			usr << browse(null, ui_to_close)
+			usr << browse(null, "window=[ui_to_close]")
 			usr.sp_uis.Cut(1,2)
 		to_chat(usr, SPAN_INFO("Sector Patrol Interfaces closed."))
 		return
@@ -140,7 +140,7 @@
 		if("ShipToShip_RoundControl")
 			var/round_phase_text
 			var/round_next_text
-			dat += {"{"<div_class="box">
+			dat += {"<div_class="box">
 				<div class="text">
 				<p><b>SHIP TO SHIP ROUND FLOW PANEL</b></p>
 				</div>
@@ -972,7 +972,7 @@
 	set category = "DM.Control"
 
 	if(!check_rights(R_ADMIN)) return
-	MissionControl(window = "Main")
+	usr.client.admin_holder.MissionControl(window = "Main")
 	return
 
 /datum/admins/proc/sts_control_panel()
@@ -980,7 +980,7 @@
 	set category = "DM.Sector"
 
 	if(!check_rights(R_ADMIN)) return
-	MissionControl(window = "ShipToShip")
+	usr.client.admin_holder.MissionControl(window = "ShipToShip")
 	return
 
 /datum/admins/proc/sts_round_flow_panel()
@@ -988,7 +988,7 @@
 	set category = "DM.Sector"
 
 	if(!check_rights(R_ADMIN)) return
-	MissionControl(window = "ShipToShip_RoundControl")
+	usr.client.admin_holder.MissionControl(window = "ShipToShip_RoundControl")
 	return
 
 /datum/admins/proc/sts_entity_panel()
@@ -996,5 +996,5 @@
 	set category = "DM.Sector"
 
 	if(!check_rights(R_ADMIN)) return
-	MissionControl(window = "ShipToShip_Entities")
+	usr.client.admin_holder.MissionControl(window = "ShipToShip_Entities")
 	return

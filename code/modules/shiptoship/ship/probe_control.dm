@@ -15,6 +15,7 @@
 	anchored = 1
 	opacity = 1
 	density = 1
+	bound_height = 96
 	var/repair_shutdown = 0
 	var/ship_name = "none" //This has to match the name of the ship its on, as saved on its Mission Control structure.
 	var/probe_loaded = 0
@@ -61,6 +62,7 @@
 	anchored = 1
 	opacity = 1
 	density = 1
+	bound_height = 96
 	var/repair_shutdown = 0
 	var/ship_name = "none" //This has to match the name of the ship its on, as saved on its Mission Control structure.
 	var/tracker_loaded = 0
