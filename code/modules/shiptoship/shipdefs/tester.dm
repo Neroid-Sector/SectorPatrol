@@ -87,7 +87,7 @@
 
 //AREAS
 
-/area/sts_ship/tester
+/area/sts_ship/tester/
 	name = "UAS Tester"
 	ship_name = "UAS Tester"
 	area_id = "TST"
@@ -95,15 +95,19 @@
 /area/sts_ship/tester/command
 	name = "UAS Tester - Bridge"
 	area_id = "TST"
+	icon_state = "command"
 
 /area/sts_ship/tester/weapons
 	name = "UAS Tester - Weapons Bay"
 	area_id = "TST"
+	icon_state = "weapons"
 
 /area/sts_ship/tester/cargo
 	name = "UAS Tester - Cargo Bay"
 	area_id = "TST"
+	icon_state = "cargo"
 
 /area/sts_ship/tester/engineering
 	name = "UAS Tester - Engineering Bay"
 	area_id = "TST"
+	icon_state = "engie"
