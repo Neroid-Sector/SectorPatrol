@@ -4,22 +4,30 @@
 "gn" = (/obj/structure/ship_elements/tracker_launcher/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
 "gV" = (/obj/structure/ship_elements/command_monitor/bottom/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
 "im" = (/obj/effect/landmark/observer_start,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
+"iC" = (/obj/structure/machinery/light/marker/admin,/turf/open/floor/almayer,/area/sts_ship/tester)
 "iX" = (/obj/structure/machinery/power/apc/almayer/hardened{dir = 1},/obj/structure/machinery/telecomms/relay/preset/tower,/obj/structure/machinery/telecomms/relay/preset/tower/all,/obj/structure/machinery/telecomms/relay/preset/tower/mapcomms,/turf/open/floor/almayer,/area/almayer/powered)
+"ki" = (/obj/structure/machinery/light/marker/admin,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
+"kl" = (/obj/structure/ship_elements/missile_ammo/warhead_direct,/turf/open/floor/almayer,/area/sts_ship/tester)
 "kB" = (/turf/open/floor/almayer,/area/sts_ship/tester)
+"kD" = (/obj/item/storage/toolbox/uacm/genericengie,/turf/open/floor/almayer,/area/sts_ship/tester)
 "kZ" = (/obj/structure/ship_elements/damage_control_element/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
 "ni" = (/obj/structure/ship_elements/cargo_bay/secondary_munitions/tester,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
 "no" = (/obj/structure/ship_elements/damage_control_element/tester,/obj/structure/ship_elements/secondary_cannon/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
+"oU" = (/obj/structure/machinery/light/marker/admin,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
 "pb" = (/obj/structure/ship_elements/command_monitor/front/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
 "ps" = (/obj/structure/ship_elements/damage_control_element/tester,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/tester/engineering)
 "qQ" = (/obj/structure/ship_elements/command_chair/tester{dir = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
 "ro" = (/obj/structure/ship_elements/damage_control_element/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
 "sj" = (/obj/effect/landmark/late_join,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
+"tJ" = (/obj/structure/machinery/light/marker/admin,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/tester/engineering)
 "uo" = (/turf/closed/wall/almayer/outer{mouse_opacity = 0; invisibility = 90},/area/sts_ship/tester)
 "yh" = (/obj/structure/shiptoship_master/ship_missioncontrol/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
 "zJ" = (/obj/structure/ship_elements/probe_launcher/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
 "As" = (/turf/closed/wall/almayer/outer,/area/almayer/powered{unlimited_power = 1})
+"CH" = (/obj/structure/ship_elements/primer_lever/secondary/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
 "Gm" = (/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
 "GM" = (/obj/structure/ship_elements/cargo_bay/primary_munitions/tester,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
+"Jy" = (/obj/structure/machinery/light/marker/admin,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
 "JU" = (/obj/structure/terminal/weapons_console/tester{dir = 4},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
 "JY" = (/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
 "Ko" = (/obj/structure/ship_elements/command_monitor/top/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
@@ -27,8 +35,10 @@
 "LJ" = (/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/tester/engineering)
 "MG" = (/obj/structure/ship_elements/primary_cannon/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
 "MP" = (/obj/structure/terminal/cargo_console/tester{dir = 8},/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
+"MU" = (/obj/structure/ship_elements/primer_lever/primary/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
 "OE" = (/obj/structure/ship_elements/damage_control_element/tester,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
 "PK" = (/obj/structure/terminal/damage_console/tester{dir = 8},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/tester/engineering)
+"QB" = (/obj/structure/ship_elements/missile_ammo/missile_homing,/turf/open/floor/almayer,/area/sts_ship/tester)
 "Tc" = (/obj/structure/terminal/signals_console/tester{dir = 4},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
 "Uz" = (/turf/closed/wall/almayer/outer{mouse_opacity = 0; invisibility = 90},/area/space)
 "Vu" = (/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
@@ -76,16 +86,16 @@ UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuouououououououououououououououououououoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmGmGmJYroJYroJYLJpsLJLJkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmGmGmJYTcJYJYJYLJLJLJpskBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
+UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmoUGmGmCHGmGmkiTcJYJYJYtJLJLJpsiCuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmzJGmJYJYJYJYJYpsLJLJPKkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBnoGmGmkZGmGmGmJYJYKoJYJYLJLJLJpskBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmsjimkZyhpbqQJYroLJpsLJLJkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBkZGmGmkZGmGmcfJYJYgVJYJYOEVuVuOEkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmGmGmJYJYJYJYJYVuVuVunikBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
+UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmoUGmGmsjimkZyhpbqQJYrotJpsLJLJkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
+UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBkZGmGmkZGmGmcfkiJYgVJYJYOEVuVuOEiCuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
+UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmMUGmGmJYJYJYJYJYVuVuVunikBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmGmGmJYJUJYJYJYOEeQVuMPkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmGmGmJYroJYroJYVuVuVuGMkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBMGGmGmGmGmgnGmJYJYJYJYJYOEVuVuOEkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
+UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmoUGmGmGmGmGmkiroJYroJYJyVuVuGMkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
+UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBMGGmGmGmGmgnGmJYJYJYJYJYOEVuVuOEiCuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
+UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBQBkBkBklkDkBkBkBkBkBkBkBkBkBkBkBkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuouououououououououououououououououououoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
 UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz

@@ -19,6 +19,16 @@
 		bound_y = initial(bound_y)
 	. = ..()
 
+/obj/structure/ship_elements/missile_ammo/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/powerloader_clamp))
+		var/obj/item/powerloader_clamp/PC = I
+		if(!PC.linked_powerloader)
+			qdel(PC)
+			return TRUE
+		PC.grab_object(user, src, "big_crate", 'sound/machines/hydraulics_2.ogg')
+		update_icon()
+		return TRUE
+
 /obj/item/ship_elements/secondary_ammo
 	name = "secondary ammo master item"
 	desc = "Haha nope. Should not be in game either :P"
@@ -41,6 +51,7 @@
 	layer = LADDER_LAYER
 	bound_width = 96
 	bound_height = 96
+	bound_y = 32
 	unslashable = TRUE
 	unacidable = TRUE
 	var/repair_shutdown = 0
@@ -59,15 +70,25 @@
 		"loaded" = 0,
 		)
 
+/obj/structure/ship_elements/primary_cannon/proc/LeverLink()
+	var/list/area_contents
+	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
+		area_contents += areas_to_scan.GetAllContents()
+	for(var/obj/structure/ship_elements/primer_lever/primary/primary_lever in area_contents)
+		if(primary_lever.ship_name == ship_name)
+			primary_lever.paired_device = src
+			to_chat(world, SPAN_INFO("Lever initalized!"))
+			break
+
 /obj/structure/ship_elements/primary_cannon/update_icon(loading = 0)
 	overlays.Cut()
 	if(loading == 0)
 		if(loaded_projectile["loaded"] == 0)
 			overlays += image("primary_unloaded")
 			if(loaded_projectile["missile"] != "none")
-				overlays += image("tray_missile_[loaded_projectile["missile_icon"]]")
+				overlays += image("tray_[loaded_projectile["missile_icon"]]")
 			if(loaded_projectile["warhead"] != "none")
-				overlays += image("tray_warhead_[loaded_projectile["warhead_icon"]]")
+				overlays += image("tray_[loaded_projectile["warhead_icon"]]")
 			return
 		if(loaded_projectile["loaded"] == 1)
 			overlays += image("primary_loaded")
@@ -122,7 +143,7 @@
 	if(repair_shutdown == 1)
 		to_chat(usr, SPAN_WARNING("The ship is in emergency repair mode. Most ship systems are not functional until all synchronization coils are fixed."))
 		return
-	if(!istype(I, /obj/item/powerloader_clamp) || !HAS_TRAIT(I, TRAIT_TOOL_MULTITOOL) || !HAS_TRAIT(I, TRAIT_TOOL_SCREWDRIVER))
+	if(!(istype(I, /obj/item/powerloader_clamp) || HAS_TRAIT(I, TRAIT_TOOL_MULTITOOL) || HAS_TRAIT(I, TRAIT_TOOL_SCREWDRIVER)))
 		to_chat(usr, SPAN_WARNING("You have no idea how to use these together."))
 		return
 	if(istype(I, /obj/item/powerloader_clamp))
@@ -154,7 +175,7 @@
 						return
 					if(loaded_projectile["warhead"] == "none")
 						to_chat(user, SPAN_NOTICE("You load \the [AmmoToInsert] into \the [src]."))
-						loaded_projectile["warhead"] = AmmoToInsert.missile_type
+						loaded_projectile["warhead"] = AmmoToInsert.warhead_type
 						loaded_projectile["payload"] = AmmoToInsert.element_value
 						loaded_projectile["warhead_icon"] = AmmoToInsert.icon_state
 						qdel(AmmoToInsert)
@@ -230,7 +251,7 @@
 					to_chat(usr, SPAN_WARNING("You need to open the hatch with a screwdriver first."))
 					return
 				if(loaded_projectile["warhead_open"] == 1)
-					var/value_to_adjust = tgui_input_number(usr, "Select new PAYLOAD value. Each PAYLOAD point is worth 5 SPEED points. Current balance: [loaded_projectile["factor"]].", "PAYLOAD value", loaded_projectile["payload"], timeout = 0, integer_only = 1)
+					var/value_to_adjust = tgui_input_number(usr, "Select new PAYLOAD value. Each PAYLOAD point is worth 5 SPEED points. Current value: [loaded_projectile["payload"]] Current balance: [loaded_projectile["factor"]].", "PAYLOAD value", loaded_projectile["payload"], min_value = 1, timeout = 0, integer_only = 1)
 					loaded_projectile["factor"] -= (value_to_adjust - loaded_projectile["payload"])
 					loaded_projectile["payload"] = value_to_adjust
 					playsound(usr, 'sound/machines/twobeep.ogg')
@@ -245,12 +266,13 @@
 					to_chat(usr, SPAN_WARNING("You need to open the hatch with a screwdriver first."))
 					return
 				if(loaded_projectile["missile_open"] == 1)
-					var/value_to_adjust = tgui_input_number(usr, "Select new SPEED value. Each PAYLOAD point is worth 5 SPEED points. Current balance: [loaded_projectile["factor"]].", "SPEED value", loaded_projectile["speed"], timeout = 0, integer_only = 1)
-					if(((value_to_adjust - loaded_projectile["payload"]) / 5) >= 0)
-						loaded_projectile["factor"] -= ceil((value_to_adjust - loaded_projectile["payload"]) / 5)
-					else
-						loaded_projectile["factor"] -= floor((value_to_adjust - loaded_projectile["payload"]) / 5)
-					loaded_projectile["speed"] = value_to_adjust
+					var/value_to_adjust = tgui_input_number(usr, "Select new SPEED value. Each PAYLOAD point is worth 5 SPEED points. Value will be rounded down to a factor of 5 automatically. Current value = [loaded_projectile["speed"]] Current balance: [loaded_projectile["factor"]].", "SPEED value", loaded_projectile["speed"], min_value = 1, timeout = 0, integer_only = 1)
+					if(value_to_adjust == null) return
+					if(value_to_adjust < 5) value_to_adjust = 5
+					var/factor_new = floor(value_to_adjust / 5)
+					var/factor_original = floor(loaded_projectile["speed"] / 5)
+					loaded_projectile["factor"] -= (factor_new - factor_original)
+					loaded_projectile["speed"] = factor_new * 5
 					playsound(usr, 'sound/machines/twobeep.ogg')
 					to_chat(usr, SPAN_INFO("[value_to_adjust] set. Factor balance: [loaded_projectile["factor"]]"))
 					return
@@ -275,13 +297,6 @@
 	sleep(12)
 	icon_state = "lever"
 	update_icon()
-
-/obj/structure/ship_elements/primer_lever/primary/Initialize(mapload, ...)
-	for (var/obj/structure/ship_elements/primary_cannon/cannon_to_pair in GLOB.ship_areas)
-		if(cannon_to_pair.ship_name == ship_name)
-			paired_device = cannon_to_pair
-			break
-	. = ..()
 
 /obj/structure/ship_elements/primer_lever/primary/attack_hand(mob/user)
 	if(!paired_device || paired_device.loaded_projectile["warhead"] == "none" || paired_device.loaded_projectile["missile"] == "none" || paired_device.repair_shutdown == 1)
@@ -321,6 +336,7 @@
 	layer = LADDER_LAYER
 	bound_width = 96
 	bound_height = 96
+	bound_y = 32
 	unslashable = TRUE
 	unacidable = TRUE
 	var/repair_shutdown = 0
@@ -329,6 +345,16 @@
 		"type" = "none",
 		"loaded" = 0
 		)
+
+/obj/structure/ship_elements/secondary_cannon/proc/LeverLink()
+	var/list/area_contents
+	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
+		area_contents += areas_to_scan.GetAllContents()
+	for(var/obj/structure/ship_elements/primer_lever/secondary/secondary_lever in area_contents)
+		if(secondary_lever.ship_name == ship_name)
+			secondary_lever.paired_device = src
+			to_chat(world, SPAN_INFO("Lever initalized!"))
+			break
 
 /obj/structure/ship_elements/secondary_cannon/update_icon()
 	overlays.Cut()
@@ -430,13 +456,6 @@
 	sleep(12)
 	icon_state = "lever"
 	update_icon()
-
-/obj/structure/ship_elements/primer_lever/secondary/Initialize(mapload, ...)
-	for (var/obj/structure/ship_elements/secondary_cannon/cannon_to_pair in GLOB.ship_areas)
-		if(cannon_to_pair.ship_name == ship_name)
-			paired_device = cannon_to_pair
-			break
-	. = ..()
 
 /obj/structure/ship_elements/primer_lever/secondary/attack_hand(mob/user)
 	if(!paired_device || paired_device.loaded_projectile["type"] == "none" || paired_device.repair_shutdown == 1)

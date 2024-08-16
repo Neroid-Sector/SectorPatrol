@@ -6,7 +6,7 @@
 	icon = 'icons/obj/structures/machinery/clio_term.dmi'
 	plane = GAME_PLANE
 	icon_state = "open_ok"
-	terminal_reserved_lines = 1
+	terminal_reserved_lines = 0
 	terminal_id = "_signals_control"
 	var/ship_name
 	var/repair_shutdown = 0
@@ -78,7 +78,8 @@
 				break
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
-	terminal_header += {"<div class="box"><p><center><b>"}+ html_encode("[linked_master_console.sector_map_data["name"]] - SIGNALS CONTROL") + {"</b><br>"} + html_encode("UACM 2ND LOGISTICS") + {"</center></p></div><div class="box_console">"}
+	header_name = "[linked_master_console.sector_map_data["name"]] - SIGNALS CONTROL"
+	WriteHeader()
 	reset_buffer()
 
 /obj/structure/terminal/signals_console/proc/terminal_advanced_parse(type = null, string = null)

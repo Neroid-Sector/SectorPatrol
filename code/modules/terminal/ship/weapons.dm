@@ -6,7 +6,7 @@
 	icon = 'icons/obj/structures/machinery/clio_term.dmi'
 	plane = GAME_PLANE
 	icon_state = "open_ok"
-	terminal_reserved_lines = 1
+	terminal_reserved_lines = 0
 	terminal_id = "_weapons_control"
 	var/ship_name
 	var/repair_shutdown = 0
@@ -68,17 +68,20 @@
 			if(cannon_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_primary_cannon = cannon_to_link
 				to_chat(world, SPAN_INFO("Primary Cannon for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				linked_primary_cannon.LeverLink()
 				break
 	if(!linked_secondary_cannon)
 		for(var/obj/structure/ship_elements/secondary_cannon/cannon_to_link in area_contents)
 			if(cannon_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_secondary_cannon = cannon_to_link
 				to_chat(world, SPAN_INFO("Secondary Cannon for ship [linked_master_console.sector_map_data["name"]] loaded."))
+				linked_secondary_cannon.LeverLink()
 				break
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
 	UpdateMapData()
-	terminal_header += {"<div class="box"><p><center><b>"}+ html_encode("[linked_master_console.sector_map_data["name"]] - WEAPONS CONTROL") + {"</b><br>"} + html_encode("UACM 2ND LOGISTICS") + {"</center></p></div><div class="box_console">"}
+	header_name = "[linked_master_console.sector_map_data["name"]] - WEAPONS CONTROL"
+	WriteHeader()
 	reset_buffer()
 
 /obj/structure/terminal/weapons_console/proc/terminal_advanced_parse(type = null)
@@ -88,40 +91,68 @@
 		if("PRIMARY")
 			if(usage_data["salvos_left"] > 0)
 				if(linked_primary_cannon.loaded_projectile["loaded"] == 1)
-					terminal_display_line("Primary Cannon Projectile information:")
-					terminal_display_line("Missile type: [linked_primary_cannon.loaded_projectile["name"]] - [linked_primary_cannon.loaded_projectile["missile"]], Speed: [linked_primary_cannon.loaded_projectile["speed"]]")
-					terminal_display_line("Warhead type: [linked_primary_cannon.loaded_projectile["warhead"]], Payload: [linked_primary_cannon.loaded_projectile["payload"]]")
+					terminal_display_line("Primary Cannon Firing Sequence:")
+					terminal_display_line("[linked_primary_cannon.loaded_projectile["name"]] - [linked_primary_cannon.loaded_projectile["missile"]]")
+					terminal_display_line("Speed: [linked_primary_cannon.loaded_projectile["speed"]]")
+					terminal_display_line("Warhead: [linked_primary_cannon.loaded_projectile["warhead"]]")
+					terminal_display_line("Payload: [linked_primary_cannon.loaded_projectile["payload"]]")
 					if(linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["missile"]["id_tag"] == "none")
-						terminal_display_line("LD Targeting system inputs ready.")
-						var/fire_own_x = tgui_input_number(usr, "Enter OWN X Coordinate", "CURRENT X", max_value = GLOB.sector_map_x * 10, min_value = 1, timeout = 0)
-						var/fire_own_y = tgui_input_number(usr, "Enter OWN Y Coordinate", "CURRENT Y", max_value = GLOB.sector_map_y * 10, min_value = 1, timeout = 0)
-						if(fire_own_x == null) fire_own_x = 1
-						if(fire_own_y == null) fire_own_y = 1
-						terminal_display_line("Starting Coordinates: ([fire_own_x],[fire_own_y])")
-						var/fire_target_x = tgui_input_number(usr, "Enter TARGET X Coordinate", "TARGET X", max_value = GLOB.sector_map_x * 10, min_value = 1, timeout = 0)
-						var/fire_target_y = tgui_input_number(usr, "Enter TARGET Y Coordinate", "TARGET Y", max_value = GLOB.sector_map_y * 10, min_value = 1, timeout = 0)
-						if(fire_target_x == null) fire_target_x = 1
-						if(fire_target_y == null) fire_target_y = 1
-						terminal_display_line("Target Coordinates: ([fire_target_x],[fire_target_y])")
-						var/fire_target_vector_x = tgui_input_number(usr, "Enter TARGET X Vector", "TARGET VECTOR X", timeout = 0)
-						var/fire_target_vector_y = tgui_input_number(usr, "Enter TARGET Y Vector", "TARGET VECTOR Y", timeout = 0)
-						if(fire_target_vector_x == null) fire_target_vector_x = 0
-						if(fire_target_vector_y == null) fire_target_vector_y = 0
-						terminal_display_line("Target Vector: ([fire_target_vector_x],[fire_target_vector_y])")
-						terminal_display_line("Calculating firing sollution.", TERMINAL_LOOKUP_SLEEP)
-						terminal_display_line("READY TO FIRE.")
-						if(tgui_input_list(usr, "READY TO FIRE", "FIRE", list("FIRE","Cancel"), timeout = 0) == "FIRE")
-							linked_master_console.add_entity(entity_type = 1, x = linked_master_console.sector_map_data["x"], y = linked_master_console.sector_map_data["y"], name = linked_primary_cannon.loaded_projectile["name"] ,type = linked_primary_cannon.loaded_projectile["missile"], vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = linked_primary_cannon.loaded_projectile["warhead"], warhead_payload = linked_primary_cannon.loaded_projectile["payload"], target_tag = linked_master_console.sector_map[fire_target_x][fire_target_y]["ship"]["id_tag"], missile_speed = linked_primary_cannon.loaded_projectile["speed"])
-							INVOKE_ASYNC(linked_primary_cannon, TYPE_PROC_REF(/obj/structure/ship_elements/primary_cannon, FireCannon))
-							terminal_display_line("MISSILE AWAY.")
-							usage_data["salvos_left"] -= 1
-							UpdateMapData()
-							linked_master_console.log_round_history(event = "missile_launch", log_source = linked_master_console.sector_map_data["name"], log_dest_x = linked_master_console.sector_map_data["x"], log_dest_y = linked_master_console.sector_map_data["y"])
-							for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
-								if(ship_sts_to_log.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
-									ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_own_launch")
-								if(ship_sts_to_log.sector_map_data["name"] != linked_master_console.sector_map_data["name"])
-									ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_launch")
+						if(linked_primary_cannon.loaded_projectile["missile"] == "LD Homing")
+							terminal_display_line("LD Targeting system inputs ready.")
+							var/fire_own_x = tgui_input_number(usr, "Enter OWN X Coordinate", "CURRENT X", max_value = GLOB.sector_map_x * 10, min_value = 1, timeout = 0)
+							var/fire_own_y = tgui_input_number(usr, "Enter OWN Y Coordinate", "CURRENT Y", max_value = GLOB.sector_map_y * 10, min_value = 1, timeout = 0)
+							if(fire_own_x == null) fire_own_x = 1
+							if(fire_own_y == null) fire_own_y = 1
+							terminal_display_line("Starting Coordinates: ([fire_own_x],[fire_own_y])")
+							var/fire_target_x = tgui_input_number(usr, "Enter TARGET X Coordinate", "TARGET X", max_value = GLOB.sector_map_x * 10, min_value = 1, timeout = 0)
+							var/fire_target_y = tgui_input_number(usr, "Enter TARGET Y Coordinate", "TARGET Y", max_value = GLOB.sector_map_y * 10, min_value = 1, timeout = 0)
+							if(fire_target_x == null) fire_target_x = 1
+							if(fire_target_y == null) fire_target_y = 1
+							terminal_display_line("Target Coordinates: ([fire_target_x],[fire_target_y])")
+							var/fire_target_vector_x = tgui_input_number(usr, "Enter TARGET X Vector", "TARGET VECTOR X", timeout = 0)
+							var/fire_target_vector_y = tgui_input_number(usr, "Enter TARGET Y Vector", "TARGET VECTOR Y", timeout = 0)
+							if(fire_target_vector_x == null) fire_target_vector_x = 0
+							if(fire_target_vector_y == null) fire_target_vector_y = 0
+							terminal_display_line("Target Vector: ([fire_target_vector_x],[fire_target_vector_y])")
+							terminal_display_line("Calculating firing sollution.", TERMINAL_LOOKUP_SLEEP)
+							terminal_display_line("READY TO FIRE.")
+							if(tgui_alert(usr, "READY TO FIRE", "FIRE", list("FIRE","Cancel"), timeout = 0) == "FIRE")
+								if(linked_master_console.sector_map[fire_target_x][fire_target_y]["ship"]["vector"]["x"] == fire_target_vector_x && linked_master_console.sector_map[fire_target_x][fire_target_y]["ship"]["vector"]["y"] == fire_target_vector_y && fire_own_x == linked_master_console.sector_map_data["x"] && fire_own_y == linked_master_console.sector_map_data["y"])
+									linked_master_console.add_entity(entity_type = 1, x = linked_master_console.sector_map_data["x"], y = linked_master_console.sector_map_data["y"], name = linked_primary_cannon.loaded_projectile["name"] ,type = linked_primary_cannon.loaded_projectile["missile"], vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = linked_primary_cannon.loaded_projectile["warhead"], warhead_payload = linked_primary_cannon.loaded_projectile["payload"], target_tag = linked_master_console.sector_map[fire_target_x][fire_target_y]["ship"]["id_tag"], missile_speed = linked_primary_cannon.loaded_projectile["speed"])
+								else
+									linked_master_console.add_entity(entity_type = 1, x = linked_master_console.sector_map_data["x"], y = linked_master_console.sector_map_data["y"], name = linked_primary_cannon.loaded_projectile["name"] ,type = linked_primary_cannon.loaded_projectile["missile"], vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = linked_primary_cannon.loaded_projectile["warhead"], warhead_payload = linked_primary_cannon.loaded_projectile["payload"], target_tag = "none", missile_speed = linked_primary_cannon.loaded_projectile["speed"])
+								INVOKE_ASYNC(linked_primary_cannon, TYPE_PROC_REF(/obj/structure/ship_elements/primary_cannon, FireCannon))
+								terminal_display_line("MISSILE AWAY.")
+								usage_data["salvos_left"] -= 1
+								usage_data["primary_fired"] = 1
+								UpdateMapData()
+								terminal_parse("STATUS")
+								linked_master_console.log_round_history(event = "missile_launch", log_source = linked_master_console.sector_map_data["name"], log_dest_x = linked_master_console.sector_map_data["x"], log_dest_y = linked_master_console.sector_map_data["y"])
+								for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
+									if(ship_sts_to_log.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+										ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_own_launch")
+									if(ship_sts_to_log.sector_map_data["name"] != linked_master_console.sector_map_data["name"])
+										ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_launch")
+						else
+							terminal_display_line("Coordinate Targeting mode.")
+							var/fire_target_x = tgui_input_number(usr, "Enter TARGET X Coordinate", "TARGET X", max_value = GLOB.sector_map_x * 10, min_value = 1, timeout = 0)
+							var/fire_target_y = tgui_input_number(usr, "Enter TARGET Y Coordinate", "TARGET Y", max_value = GLOB.sector_map_y * 10, min_value = 1, timeout = 0)
+							terminal_display_line("Entering coordinates...", TERMINAL_LOOKUP_SLEEP)
+							terminal_display_line("READY TO FIRE.")
+							if(tgui_alert(usr, "READY TO FIRE", "FIRE", list("FIRE","Cancel"), timeout = 0) == "FIRE")
+								linked_master_console.add_entity(entity_type = 1, x = linked_master_console.sector_map_data["x"], y = linked_master_console.sector_map_data["y"], name = linked_primary_cannon.loaded_projectile["name"] ,type = linked_primary_cannon.loaded_projectile["missile"], vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = linked_primary_cannon.loaded_projectile["warhead"], warhead_payload = linked_primary_cannon.loaded_projectile["payload"], target_tag = "none", missile_speed = linked_primary_cannon.loaded_projectile["speed"])
+								INVOKE_ASYNC(linked_primary_cannon, TYPE_PROC_REF(/obj/structure/ship_elements/primary_cannon, FireCannon))
+								terminal_display_line("MISSILE AWAY.")
+								usage_data["salvos_left"] -= 1
+								usage_data["primary_fired"] = 1
+								UpdateMapData()
+								terminal_parse("STATUS")
+								linked_master_console.log_round_history(event = "missile_launch", log_source = linked_master_console.sector_map_data["name"], log_dest_x = linked_master_console.sector_map_data["x"], log_dest_y = linked_master_console.sector_map_data["y"])
+								for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
+									if(ship_sts_to_log.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+										ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_own_launch")
+									if(ship_sts_to_log.sector_map_data["name"] != linked_master_console.sector_map_data["name"])
+										ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_launch")
 					else
 						terminal_display_line("Error: Projectile type entity already located in current position. Cannot fire primary cannon due to LD resonance.")
 				else
@@ -147,7 +178,7 @@
 						var/y_to_secondary_fire = linked_master_console.sector_map_data["y"] + secondary_fire_target_y
 						terminal_display_line("Vector: ([secondary_fire_target_x],[secondary_fire_target_y])")
 						terminal_display_line("READY TO FIRE.")
-						if(tgui_input_list(usr, "READY TO FIRE", "FIRE", list("FIRE","Cancel"), timeout = 0) == "FIRE")
+						if(tgui_alert(usr, "READY TO FIRE", "FIRE", list("FIRE","Cancel"), timeout = 0) == "FIRE")
 							if(x_to_secondary_fire <= 0 || x_to_secondary_fire > GLOB.sector_map_x || y_to_secondary_fire <= 0 || y_to_secondary_fire > GLOB.sector_map_y)
 								terminal_display_line("Error: Coordinates out of bounds. Review current position and target vector")
 							else
@@ -184,6 +215,7 @@
 										else
 											linked_master_console.ProcessDamage(ammount = 5, x = x_to_secondary_fire, y = y_to_secondary_fire)
 											terminal_display_line("Direct hit detected.")
+								terminal_parse("STATUS")
 				else
 					terminal_display_line("Error:Secondary Cannon not primed.")
 			else
@@ -194,6 +226,31 @@
 	if(!string_to_parse) return "error - null string parsed"
 	var/starting_buffer_length = terminal_buffer.len
 	switch(string_to_parse)
+		if("STATUS")
+			var/primary_status
+			if(linked_primary_cannon.loaded_projectile["loaded"] != 1)
+				primary_status = 0
+			else
+				primary_status = 1
+			var/secondary_status
+			if(linked_secondary_cannon.loaded_projectile["loaded"] != 1)
+				secondary_status = 0
+			else
+				secondary_status = 1
+			switch(primary_status)
+				if(null)
+					terminal_display_line("Primary Cannon OFFLINE")
+				if(1)
+					terminal_display_line("Primary Cannon: READY")
+				if(0)
+					terminal_display_line("Primary Cannon: RELOAD NEEDED")
+			switch(secondary_status)
+				if(null)
+					terminal_display_line("Secondary Cannon OFFLINE")
+				if(1)
+					terminal_display_line("Secondary Cannon: READY")
+				if(0)
+					terminal_display_line("Secondary Cannon: RELOAD NEEDED")
 		if("HELP")
 			terminal_display_line("Available Commands:")
 			terminal_display_line("STATUS - Display status of all linked cannons. This is also the welcome screen of this terminal.")
@@ -212,24 +269,7 @@
 
 /obj/structure/terminal/weapons_console/attack_hand(mob/user)
 	if(repair_shutdown == 0)
-		var/primary_status
-		if(!linked_primary_cannon)
-			primary_status = "OFFLINE"
-		else if(linked_primary_cannon.loaded_projectile["loaded"] != 1)
-			primary_status = "MISSILE NOT PRIMED, RELOAD NEEDED"
-		else
-			primary_status = "READY TO FIRE. MISSILE: [uppertext(linked_primary_cannon.loaded_projectile["name"])]-[uppertext(linked_primary_cannon.loaded_projectile["missile"])]WARHEAD: [uppertext(linked_primary_cannon.loaded_projectile["warhead"])]"
-		var/secondary_status
-		if(!linked_secondary_cannon)
-			secondary_status = "OFFLINE"
-		else if(linked_secondary_cannon.loaded_projectile["loaded"] != 1)
-			secondary_status = "NO AMMO BOX PRIMED, RELOAD NEEDED"
-		else
-			secondary_status = "READY TO FIRE. AMMO: [uppertext(linked_secondary_cannon.loaded_projectile["type"])]"
-		terminal_display_line("Welcome, [usr.name].")
-		terminal_display()
-		terminal_display_line("Primary Cannon: [primary_status]")
-		terminal_display_line("Secondary Cannon: [secondary_status]")
+		terminal_parse("STATUS")
 		terminal_input()
 		return "Primary input loop end"
 	if(repair_shutdown == 1)

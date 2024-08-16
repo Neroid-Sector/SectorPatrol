@@ -94,7 +94,7 @@
 				</div>
 				"}
 		if("Main")
-			dat += {"<div_class="box">
+			dat += {"<div class="box">
 				<div class="text">
 				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];open_mission_control=General'>Load/Save, Review and Set IC Infromation</a></p>
 				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];sts_control_panel=1'>Ship to Ship Control Panel</A></p>
@@ -102,7 +102,6 @@
 				</div>
 				</div>
 				"}
-		if("Comms")
 		if("ShipToShip")
 			if(!sts_master)
 				to_chat(usr, SPAN_WARNING("Error: No STS Master found in world. Most likely a mapping error."))
@@ -115,7 +114,9 @@
 				if(GLOB.sector_map_y == null) GLOB.sector_map_y = 100
 				sts_master.sector_map = new/list(GLOB.sector_map_x, GLOB.sector_map_y)
 				if(sts_master.populate_map() == 1) GLOB.sector_map_initialized = 1
-			dat += {"<div_class="box">
+				load_template()
+				link_player_ships()
+			dat += {"<div class="box">
 				<div class="text">
 				<p><b>SHIP TO SHIP PANEL</b></p>
 				<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];toggle_sts=initialized'>INITIATED</A>: [GLOB.combat_initiated] | <A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];toggle_sts=turn'>ROUND</A>: <b>[GLOB.combat_round]</b></p>
@@ -126,7 +127,7 @@
 				"}
 		if("ShipToShip_Entities")
 			var/displayed_entities = (jointext((sts_master.scan_entites(category = 0, output_format = 0)), "</p><p>")+"</p><p>"+jointext((sts_master.scan_entites(category = 1, output_format = 0)), "</p><p>"))
-			dat += {"<div_class="box">
+			dat += {"<div class="box">
 				<div class="text">
 				<p><b>ENTITY_CONTROL</b></p>
 				<p>[displayed_entities]</p>
@@ -140,7 +141,7 @@
 		if("ShipToShip_RoundControl")
 			var/round_phase_text
 			var/round_next_text
-			dat += {"<div_class="box">
+			dat += {"<div class="box">
 				<div class="text">
 				<p><b>SHIP TO SHIP ROUND FLOW PANEL</b></p>
 				</div>
@@ -159,21 +160,21 @@
 				if(4)
 					round_phase_text = "Advancing Turn..."
 			if(GLOB.round_phase == 4)
-				dat+= {"<div_class="box">
+				dat+= {"<div class="box">
 				<div class="text">
 				<p>TURN ADVANCING...</p>
 				</div>
 				</div>
 				"}
 			else
-				dat += {"<div_class="box">
+				dat += {"<div class="box">
 					<div class="text">
 					<p>Round: <b><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];toggle_sts=turn'>[GLOB.combat_round]</A></b></p>
 					<p>Phase: <b>[round_phase_text]</b></p>
 					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];next_phase=1'>[round_next_text]</A></p>
 					</div>
 					</div>
-					<div_class="box">
+					<div class="box">
 					<div class="text">
 					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];view_ship_log=round'>View Round Log</A></p>
 					<p><A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];view_ship_log=full'>View Full Log</A></p>
@@ -186,13 +187,13 @@
 					"}
 		if("ShipToShip_LastRoundLog")
 			var/log_to_display = jointext(sts_master.round_history_current, "</p><p>")
-			dat += {"<div_class="box">
+			dat += {"<div class="box">
 				<div class="text">
 				<p>Current Log Round</p>
 				<p>ROUND: [GLOB.combat_round]</p>
 				</div>
 				</div>
-				<div_class="box">
+				<div class="box">
 				<div class="text">
 				<p>[log_to_display]</p>
 				</div>
@@ -200,12 +201,12 @@
 				"}
 		if("ShipToShip_FullRoundLog")
 			var/log_to_display = jointext(sts_master.round_history, "</p><p>")
-			dat += {"<div_class="box">
+			dat += {"<div class="box">
 				<div class="text">
 				<p>Full StS Log</p>
 				</div>
 				</div>
-				<div_class="box">
+				<div class="box">
 				<div class="text">
 				<p>[log_to_display]</p>
 				</div>
@@ -213,12 +214,12 @@
 				"}
 		if("ShipToShip_PrevRoundLog")
 			var/log_to_display = jointext(sts_master.round_history_previous, "</p><p>")
-			dat += {"<div_class="box">
+			dat += {"<div class="box">
 				<div class="text">
 				<p>End of Round log for Round [GLOB.combat_round]</p>
 				</div>
 				</div>
-				<div_class="box">
+				<div class="box">
 				<div class="text">
 				<p>[log_to_display]</p>
 				</div>
@@ -232,7 +233,7 @@
 
 	usr << browse(dat,"window=mission_control_[usr]_[window];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	if(usr.sp_uis.Find("mission_control_[usr]_[window]") == 0)
-		usr.sp_uis += "mission_control_[usr]_[window]"
+		usr.sp_uis.Add("mission_control_[usr]_[window]")
 	onclose(usr, "mission_control_[usr]_[window]")
 
 /datum/admins/proc/load_template()
@@ -433,7 +434,7 @@
 	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
 		sts_master = sts_master_to_link
 		break
-	if(tgui_input_list(usr, "Advance to next phase? (Current Phase: [GLOB.round_phase])", "PHASE confirmation", list("Yes","No"), timeout = 0) == "Yes")
+	if(tgui_alert(usr, "Advance to next phase? (Current Phase: [GLOB.round_phase])", "PHASE confirmation", list("Yes","No"), timeout = 0) == "Yes")
 		switch(GLOB.round_phase)
 			if(1)
 				to_chat(world, narrate_head("<b>Player Turn</b>"))
@@ -477,10 +478,10 @@
 		while(fire_scan_y <= GLOB.sector_map_y)
 			if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["id_tag"] != "none")
 				if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["status"] == "Player")
-					fire_targets += sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["name"]
+					fire_targets.Add(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["name"])
 				if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["status"] != "Player")
 					if(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["system"]["salvos_left"] > 0)
-						fire_sources += sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["name"]
+						fire_sources.Add(sts_master.sector_map[fire_scan_x][fire_scan_y]["ship"]["name"])
 			fire_scan_y += 1
 		fire_scan_y = 1
 		fire_scan_x += 1
@@ -515,9 +516,9 @@
 		while(secondary_scan_current_y <= secondary_scan_top_y)
 			if(abs(firing_ship_y - secondary_scan_current_y) + abs(firing_ship_x - secondary_scan_current_x) <= 5)
 				if(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"] != "none")
-					secondary_targets += sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"]
+					secondary_targets.Add(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"])
 				if(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["missile"]["id_tag"] != "none")
-					secondary_targets += sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["missile"]["id_tag"]
+					secondary_targets.Add(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["missile"]["id_tag"])
 			secondary_scan_current_y += 1
 		secondary_scan_current_y = secodnary_scan_bottom_y
 		secondary_scan_current_x += 1
@@ -531,7 +532,8 @@
 			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["missile"]["id_tag"] != "none")
 				to_chat(usr,SPAN_WARNING("Cannot fire Primary - Missle present at location."))
 				return
-			var/target_to_fire = tgui_input_list(usr, "Select Target", "TARGET choice", list(fire_targets,"Coordinates"), timeout = 0)
+			fire_targets.Add("Coordinates")
+			var/target_to_fire = tgui_input_list(usr, "Select Target", "TARGET choice", fire_targets, timeout = 0)
 			if(target_to_fire == null) return
 			var/fire_target_x
 			var/fire_target_y
@@ -572,7 +574,7 @@
 				if("Direct-Explosive")
 					sts_master.add_entity (entity_type = 1, x = firing_ship_x, y = firing_ship_y, name = firing_missile_name, type = "Standard Explosive", vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = "Explosive", warhead_payload = firing_missile_payload, target_tag = "none", missile_speed = firing_missile_speed)
 				if("Direct-Nuclear")
-					if(tgui_input_list(usr, "Are you SURE you want to send a nuke at [target_to_fire]? Values will be overwritten with lowest, edit them directly.","NUKE Confirm", list("Yes","No"), timeout = 0) == "Yes")
+					if(tgui_alert(usr, "Are you SURE you want to send a nuke at [target_to_fire]? Values will be overwritten with lowest, edit them directly.","NUKE Confirm", list("Yes","No"), timeout = 0) == "Yes")
 						sts_master.add_entity (entity_type = 1, x = firing_ship_x, y = firing_ship_y, name = firing_missile_name, type = "Nuclear", vector_x = fire_target_x, vector_y = fire_target_y, warhead_type = "Nuclear", warhead_payload = 1, target_tag = "none", missile_speed = 1)
 			sts_master.log_round_history(event = "missile_launch", log_source = ship_to_fire, log_dest_x = firing_ship_x, log_dest_y = firing_ship_y)
 			for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
@@ -583,8 +585,9 @@
 			sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] -= 1
 		if("Secondary")
 			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] == sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_max"])
-				if(tgui_input_list(usr, "Confirm Secondary Fire without firing Primary?", "Secondary Fire CONFIRM", list("Yes","No"), timeout = 0) == "No") return
-			var/id_to_secondary_target = tgui_input_list(usr, "Select a target for Secondary fire", "Secondary TARGET", list(secondary_targets,"Vector"),timeout = 0)
+				if(tgui_alert(usr, "Confirm Secondary Fire without firing Primary?", "Secondary Fire CONFIRM", list("Yes","No"), timeout = 0) == "No") return
+			secondary_targets.Add("Vector")
+			var/id_to_secondary_target = tgui_input_list(usr, "Select a target for Secondary fire", "Secondary TARGET", secondary_targets,timeout = 0)
 			if(id_to_secondary_target == null) return
 			var/secondary_target_x
 			var/secondary_target_y
@@ -645,9 +648,9 @@
 		while(sonar_scan_y <= GLOB.sector_map_y)
 			if(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["id_tag"] != "none")
 				if(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["status"] == "Player")
-					sonar_player_ships += sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["name"]
+					sonar_player_ships.Add(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["name"])
 				if(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["status"] != "Player")
-					sonar_npc_ships += sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["name"]
+					sonar_npc_ships.Add(sts_master.sector_map[sonar_scan_x][sonar_scan_y]["ship"]["name"])
 			sonar_scan_y += 1
 		sonar_scan_y = 1
 		sonar_scan_x += 1
@@ -690,7 +693,7 @@
 		while(control_scan_y <= GLOB.sector_map_y)
 			if(sts_master.sector_map[control_scan_x][control_scan_y]["ship"]["id_tag"] != "none")
 				if(sts_master.sector_map[control_scan_x][control_scan_y]["ship"]["status"] != "Player")
-					control_npc_ships += sts_master.sector_map[control_scan_x][control_scan_y]["ship"]["name"]
+					control_npc_ships.Add(sts_master.sector_map[control_scan_x][control_scan_y]["ship"]["name"])
 			control_scan_y += 1
 		control_scan_y = 1
 		control_scan_x += 1
@@ -728,13 +731,16 @@
 		while(comms_scan_y <= GLOB.sector_map_y)
 			if(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["id_tag"] != "none")
 				if(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["status"] == "Player")
-					comms_player_ships += sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["name"]
+					comms_player_ships.Add(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["name"])
 				if(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["status"] != "Player")
-					comms_npc_ships += sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["name"]
+					comms_npc_ships.Add(sts_master.sector_map[comms_scan_x][comms_scan_y]["ship"]["name"])
 			comms_scan_y += 1
 		comms_scan_y = 1
 		comms_scan_x += 1
-	var/comms_source = tgui_input_list(usr, "Select Message Sender","Sender Select",list(comms_npc_ships,"Custom"),timeout = 0)
+	var/list/final_source_list = list()
+	final_source_list.Add(comms_npc_ships)
+	final_source_list.Add("Vector")
+	var/comms_source = tgui_input_list(usr, "Select Message Sender","Sender Select",final_source_list,timeout = 0)
 	var/comms_source_x
 	var/comms_source_y
 	var/comms_source_custom
@@ -744,7 +750,11 @@
 	if(comms_source == "Custom")
 		comms_source_custom = tgui_input_text(usr, "Enter Name of comms source, will be displayed on all player comms consoles", "Custom Comms Source", timeout = 0)
 		if(comms_source_custom == null) comms_source_custom = "Unknown"
-	var/comms_dest = tgui_input_list(usr, "Select Message Destination", "Destination Select", list(comms_player_ships,comms_npc_ships,"System-Wide"))
+	var/list/final_destination_list = list()
+	final_destination_list.Add(comms_player_ships)
+	final_destination_list.Add(comms_npc_ships)
+	final_destination_list.Add("System-Wide")
+	var/comms_dest = tgui_input_list(usr, "Select Message Destination", "Destination Select", final_destination_list, timeout = 0)
 	if(comms_dest == null) return
 	if(comms_source != "Custom")
 		comms_scan_x = 1
@@ -841,7 +851,7 @@
 	var/list/comms_destination = list("Everyone")
 	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_to_comm_list in world)
 		if(ship_mc_to_comm_list.sector_map_data["initialized"] == 1)
-			comms_destination += ship_mc_to_comm_list.sector_map_data["name"]
+			comms_destination.Add(ship_mc_to_comm_list.sector_map_data["name"])
 	var/comms_destination_choice
 	if(comms_destination.len <= 1)
 		comms_destination_choice = "Everyone"

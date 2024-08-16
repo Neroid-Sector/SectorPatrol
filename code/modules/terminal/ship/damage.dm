@@ -6,7 +6,7 @@
 	icon = 'icons/obj/structures/machinery/clio_term.dmi'
 	plane = GAME_PLANE
 	icon_state = "open_ok"
-	terminal_reserved_lines = 2
+	terminal_reserved_lines = 0
 	terminal_id = "_weapons_control"
 	var/ship_name
 	var/repair_shutdown = 0
@@ -23,6 +23,12 @@
 			"hull" = 0,
 			),
 		)
+
+/obj/structure/terminal/damage_console/Initialize(mapload, ...)
+	. = ..()
+	terminal_header = {"<center><b> [header_name]</b><br>UACM 2ND LOGISTICS</center></p><p><[usage_data["damage"]["HP"]]|[usage_data["damage"]["engine"]]/[usage_data["damage"]["systems"]]/[usage_data["damage"]["weapons"]]/usage_data["damage"]["hull"]</center>"}
+
+
 
 /obj/structure/terminal/damage_console/proc/UpdateMapData()
 	linked_master_console.sector_map[linked_master_console.sector_map_data["x"]][linked_master_console.sector_map_data["y"]]["ship"]["damage"]["HP"] = usage_data["damage"]["HP"]
@@ -90,7 +96,8 @@
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
 	UpdateMapData()
-	terminal_header += {"<div class="box"><p><center><b>"}+ html_encode("[linked_master_console.sector_map_data["name"]] - DAMAGE CONTROL") + {"</b><br>"} + html_encode("UACM 2ND LOGISTICS") + {"</center></p></div><div class="box_console"><p><center>[usage_data["damage"]["HP"]]|[usage_data["damage"]["engine"]]/[usage_data["damage"]["systems"]]/[usage_data["damage"]["weapons"]]/usage_data["damage"]["hull"]</center></p>"}
+	header_name = "[linked_master_console.sector_map_data["name"]] - DAMAGE CONTROL"
+	WriteHeader()
 	reset_buffer()
 
 /obj/structure/terminal/damage_console/proc/ProcessShipDamage(system = null, value = 0)

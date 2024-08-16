@@ -11,6 +11,7 @@
 	var/obj/structure/ship_elements/command_monitor/bottom/linked_bot_screen
 	var/ship_name = "none"
 	var/repair_shutdown = 0
+	var/window_size = "500x300"
 
 /obj/structure/ship_elements/command_chair/proc/ProcessShutdown(status = null)
 	switch(status)
@@ -44,18 +45,21 @@
 		for(var/obj/structure/ship_elements/command_monitor/top/top_to_link in area_contents)
 			if(top_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_top_screen = top_to_link
+				linked_top_screen.linked_command_chair = src
 				to_chat(world, SPAN_INFO("Top Moniotor for ship [linked_master_console.sector_map_data["name"]] loaded."))
 				break
 	if(!linked_front_screen)
 		for(var/obj/structure/ship_elements/command_monitor/front/front_to_link in area_contents)
 			if(front_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_front_screen = front_to_link
+				linked_front_screen.linked_command_chair = src
 				to_chat(world, SPAN_INFO("Front Monitor for ship [linked_master_console.sector_map_data["name"]] loaded."))
 				break
 	if(!linked_bot_screen)
 		for(var/obj/structure/ship_elements/command_monitor/bottom/bot_to_link in area_contents)
 			if(bot_to_link.ship_name == linked_master_console.sector_map_data["name"])
 				linked_bot_screen = bot_to_link
+				linked_bot_screen.linked_command_chair = src
 				to_chat(world, SPAN_INFO("Bottom Monitor for ship [linked_master_console.sector_map_data["name"]] loaded."))
 				break
 
@@ -84,18 +88,11 @@
 		}
 		</head>
 		</style>
-		<body>
-		<div id="main_window">
-		<div class="box">
-		<div class="text">
-		<p style="font-size: 120%;">
-		<b>SECTOR PATROL DM PANEL</b>
-		</p>
-		</div>
-		</div>
 		"}
 	//content
 	dat += {"
+		<body>
+		<div id="main_window"
 		<div class="box">
 		<div class="text">
 		"}
@@ -144,9 +141,12 @@
 				"}
 		if("ship_status")
 			var/ship_status = jointext(linked_master_console.GetStatusReadout(), "</p><p>")
+			window_size = "500x400"
 			dat +={"<p><b>Systems Integrity:</b></p>
 				<p>[ship_status]</p>
 				"}
+		else
+			return
 	dat += {"</div>
 		</div>
 		"}
@@ -155,9 +155,10 @@
 		</div>
 		</body>
 		"}
-	buckled_mob << browse(dat,"window=commander_console_[usr]_[type];display=1;size=800x800;border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	buckled_mob << browse(dat,"window=commander_console_[usr]_[type];display=1;size=[window_size];border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	window_size = initial(window_size)
 	if(buckled_mob.sp_uis.Find("commander_console_[usr]_[type]") == 0)
-		buckled_mob.sp_uis += "commander_console_[usr]_[type]"
+		buckled_mob.sp_uis.Add("commander_console_[usr]_[type]")
 	onclose(buckled_mob, "commander_console_[usr]_[type]")
 
 /obj/structure/ship_elements/command_chair/proc/turn_off_check()

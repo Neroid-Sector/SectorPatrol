@@ -15,9 +15,9 @@
 	if(state_to_animate == null)
 		switch(icon_state)
 			if("cargo_bay_open")
-				state_to_animate = "open"
-			if("cargo_bay_closed")
 				state_to_animate = "close"
+			if("cargo_bay_closed")
+				state_to_animate = "open"
 	switch(state_to_animate)
 		if("open")
 			icon_state = "cargo_bay_opening"
@@ -42,8 +42,8 @@
 	if(object_to_dispense == null) return
 	AnimateUse(state = "open")
 	new object_to_dispense(get_turf(src))
-	sleep(100)
-	AnimateUse()
+	sleep(50)
+	AnimateUse(state = "close")
 	return 1
 
 /obj/structure/ship_elements/cargo_bay/proc/RecieveObject(object_to_recieve as obj)

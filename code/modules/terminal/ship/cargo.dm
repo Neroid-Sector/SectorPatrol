@@ -6,7 +6,7 @@
 	icon = 'icons/obj/structures/machinery/clio_term.dmi'
 	plane = GAME_PLANE
 	icon_state = "open_ok"
-	terminal_reserved_lines = 2
+	terminal_reserved_lines = 0
 	terminal_id = "_cargo_control"
 	var/ship_name
 	var/repair_shutdown = 0
@@ -35,7 +35,8 @@
 				break
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
-	terminal_header += {"<div class="box"><p><center><b>"}+ html_encode("[linked_master_console.sector_map_data["name"]] - CARGO BAY CONTROL") + {"</b><br>"} + html_encode("UACM 2ND LOGISTICS") + {"</center></p></div><div class="box_console">"}
+	header_name = "[linked_master_console.sector_map_data["name"]] CARGO CONTROL"
+	WriteHeader()
 	reset_buffer()
 
 /obj/structure/terminal/cargo_console/proc/ProcessShutdown(status = null)
@@ -176,7 +177,7 @@
 			terminal_display_line("MISSILES | TAG: M")
 			var/obj/structure/ship_elements/cargo_bay/bay_to_scan = linked_cargo_bays["primary_munitions"]
 			terminal_display_line("Hunter | ID: H20 | [bay_to_scan.cargo_data["missile_pst_homing"]] in storage.")
-			terminal_display_line("Panther | ID: D40 | [bay_to_scan.cargo_data["missile_pst_dumbfire"]]in storage.")
+			terminal_display_line("Panther | ID: D40 | [bay_to_scan.cargo_data["missile_pst_dumbfire"]] in storage.")
 			terminal_display_line("Inferno | ID: T05 | [bay_to_scan.cargo_data["missile_pst_torpedo"]] in storage.")
 			terminal_display_line("WARHEADS | TAG: W")
 			terminal_display_line("Standard | ID: D03 | [bay_to_scan.cargo_data["warhead_direct"]] in storage.")

@@ -174,14 +174,14 @@
 	if(message_source == null || message_to_add == null) return
 	switch(message_type)
 		if(0)
-			comms_messages.Add("Direct message recieved. <b>Sender: [message_source]. Message: <[message_to_add]>.</b>")
+			comms_messages.Add({"Direct message recieved. <b>Sender: [message_source]. Message: \<[message_to_add]\>.</b>"})
 		if(1)
-			comms_messages.Add("Communications <b>activity detected in sector ([message_source]).</b>")
+			comms_messages.Add({"Communications <b>activity detected in sector ([message_source]).</b>"})
 		if(2)
-			comms_messages.Add("Incoming System-Wide <b>Message from [message_source]:</b> \"[message_to_add]\"")
+			comms_messages.Add({"Incoming System-Wide <b>Message from [message_source]:</b> \<[message_to_add]\>"})
 		if(3)
-			comms_messages.Add("Out of sector <b>comms pulse detected</b>!")
-	linked_command_chair.open_command_window("comms_messages")
+			comms_messages.Add({"Out of sector <b>comms pulse detected</b>!"})
+	linked_command_chair.open_command_window("ship_messages")
 
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/CommsPing(incoming_console as obj, x_to_comms_ping = 0, y_to_comms_ping = 0, message_to_comms_ping = null)
@@ -429,23 +429,23 @@
 	return status_list_to_return
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/GetWeaponsReadout()
-	var/list/weapons_status_to_return
+	var/list/weapons_status_to_return = list()
 	if(linked_weapons_console.linked_primary_cannon.loaded_projectile["loaded"] == 0)
-		weapons_status_to_return += "Primary Weapon: <b>NOT PRIMED</b>"
+		weapons_status_to_return.Add("Primary Weapon: <b>NOT PRIMED</b>")
 	else
-		weapons_status_to_return += "Primary Weapon: <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["missile"]]</b> - <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["warhead"]]</b>"
+		weapons_status_to_return.Add("Primary Weapon: <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["missile"]]</b> - <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["warhead"]]</b>")
 	if(linked_weapons_console.linked_secondary_cannon.loaded_projectile["loaded"] == 0)
-		weapons_status_to_return += "Secondary Weapon: <b>NOT PRIMED</b>"
+		weapons_status_to_return.Add("Secondary Weapon: <b>NOT PRIMED</b>")
 	else
-		weapons_status_to_return += "Secodary Weapon: <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["type"]]</b>"
+		weapons_status_to_return.Add("Secodary Weapon: <b>[linked_weapons_console.linked_primary_cannon.loaded_projectile["type"]]</b>")
 	var/probe_status
 	if(linked_signals_console.linked_probe_launcher.probe_loaded == 0) probe_status = "EMPTY"
 	if(linked_signals_console.linked_probe_launcher.probe_loaded == 1) probe_status = "LOADED"
 	var/tracker_status
 	if(linked_signals_console.linked_tracker_launcher.tracker_loaded == 0) tracker_status = "EMPTY"
 	if(linked_signals_console.linked_tracker_launcher.tracker_loaded == 1) tracker_status = "LOADED"
-	weapons_status_to_return += "PROBE: <b>[probe_status]</b>"
-	weapons_status_to_return += "TRACKER: <b>[tracker_status]</b>"
+	weapons_status_to_return.Add("PROBE: <b>[probe_status]</b>")
+	weapons_status_to_return.Add("TRACKER: <b>[tracker_status]</b>")
 	return weapons_status_to_return
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/GetMobsInShipAreas()
