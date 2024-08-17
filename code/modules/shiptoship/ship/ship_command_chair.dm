@@ -103,6 +103,7 @@
 			var/current_round
 			if(linked_master_console.local_round_log.len == 0) current_round = "No recent Sonar activity."
 			if(linked_master_console.local_round_log.len != 0) current_round = jointext(linked_master_console.local_round_log, "</p><p>")
+			window_size="700x400"
 			dat +={"<p><b>Sonar Activity:</b></p>
 				<p>[current_round]</p>
 				"}
@@ -110,6 +111,7 @@
 			var/round_history
 			if(linked_master_console.local_round_log_full.len == 0) round_history = "No Sonar history in buffer."
 			if(linked_master_console.local_round_log_full.len != 0) round_history = jointext(linked_master_console.local_round_log_full, "</p><p>")
+			window_size="700x400"
 			dat +={"<p><b>Sonar Activity History Buffer:</b></p>
 				<p>[round_history]</p>
 				"}
@@ -120,7 +122,7 @@
 			if(linked_master_console.ping_history.len != 0) pings_and_tracking += jointext(linked_master_console.ping_history, "</p><p>")
 			pings_and_tracking += jointext(linked_master_console.GetTrackingList(), "</p><p>")
 			if(linked_master_console.local_round_log_moves.len == 0) activity_summary = "No recent activity."
-			if(linked_master_console.local_round_log_moves.len != 0) activity_summary = jointext(linked_master_console.local_round_log_moves, " | ")
+			if(linked_master_console.local_round_log_moves.len != 0) activity_summary = jointext(linked_master_console.local_round_log_moves, "</p><p>")
 			dat +={"<p><b>Pings and Tracking:</b></p>
 				<p>Activity update:</p>
 				<p><b>[activity_summary]</b></p>
@@ -131,6 +133,7 @@
 			var/ship_messages
 			if(linked_master_console.comms_messages.len == 0) ship_messages = "No messages to display."
 			if(linked_master_console.comms_messages.len != 0) ship_messages = jointext(linked_master_console.comms_messages, "</p><p>")
+			window_size="700x400"
 			dat +={"<p><b>Recieved Messages:</b></p>
 				<p>[ship_messages]</p>
 				"}
@@ -175,7 +178,7 @@
 		INVOKE_ASYNC(linked_top_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
 		INVOKE_ASYNC(linked_front_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
 		INVOKE_ASYNC(linked_bot_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
-		if(tgui_input_list(usr, "Do you want to open all interfaces?","OPEN ALL",list("Yes","No"), timeout = 0) == "Yes")
+		if(tgui_alert(usr, "Do you want to open all interfaces?","OPEN ALL",list("Yes","No"), timeout = 0) == "Yes")
 			open_command_window(type = "current_round")
 			open_command_window(type = "round_history")
 			open_command_window(type = "pings_and_tracking")

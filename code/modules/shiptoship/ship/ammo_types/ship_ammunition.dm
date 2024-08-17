@@ -65,25 +65,25 @@
 	element_value = 3
 
 /obj/item/ship_elements/secondary_ammo/direct
-	name = "prepackaged box of Type-S \"Direct\" ammunition"
+	name = "prepackaged box of Type-S Direct ammunition"
 	desc = "A large box with multiple rows of high caliber ammunition with green colored tips."
 	desc_lore = "The design idea behind this type of ammo follows a classic idea - a sharpened mixture of metals that aims to penetrate anything it hits. This method of combat was unfeasible in the distances typical spaceship combat takes place in and only with the PST's Mission Control system, specifically its hyper accuracy, guaranteeing a virtually 100 percent hit rate, can it potentially make a comeback."
 	icon = 'icons/sectorpatrol/ship/weapon_ammo.dmi'
 	icon_state = "secondary_direct"
-	ammo_type = "direct"
+	ammo_type = "Direct"
 
 /obj/item/ship_elements/secondary_ammo/flak
-	name = "prepackaged box of Type-S \"Flak\" ammunition"
+	name = "prepackaged box of Type-S Flak ammunition"
 	desc = "A large box with multiple rows of high caliber ammunition with red colored tips."
 	desc_lore = "Flak ammunition utilizes a localized LD rift shaped and maintained by the PST's Mission Control system to supercharge and send the ammo through an unstable LD rift, much like the shrapnel of explosive missile warheads. This method of delivery is only possible due to the Mission Control system's unusual energy capabilities, but the result is a reliable, short range large area clearing tool. Care must be utilized while targeting this type of ammunition, as the LD rift charged ammo will strike its origin point as much as any other target in its area."
 	icon = 'icons/sectorpatrol/ship/weapon_ammo.dmi'
 	icon_state = "secondary_flak"
-	ammo_type = "flak"
+	ammo_type = "Flak"
 
 /obj/item/ship_elements/secondary_ammo/broadside
-	name = "prepackaged box of Type-S \"Broadside\" ammunition"
+	name = "prepackaged box of Type-S Broadside ammunition"
 	desc = "A large box with multiple rows of high caliber ammunition with yellow colored tips."
 	desc_lore = "Broadside ammunition follows a design idea laid out by Mission Control and as such is one of the first devices in human hands which was designed for human use by a non-human. Broadside ammunition uses a targeted, short range Hyperspace field that is calibrated and targeted by the Mission Control system. Due to the systems unique compatibility with Hyperspace based computations, unique LD enhanced polymers used during production of the ammunition and the Type-S cannons natural accuracy, Broadside projectiles are delivered directly inside or on top of their targets, then detonate immediately causing massive internal damage."
 	icon = 'icons/sectorpatrol/ship/weapon_ammo.dmi'
 	icon_state = "secondary_broadside"
-	ammo_type = "broadside"
+	ammo_type = "Broadside"

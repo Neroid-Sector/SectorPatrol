@@ -242,15 +242,30 @@
 	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
 		sts_master = sts_master_to_link
 		break
-	switch(tgui_input_list(usr, "Select Template, this will REPLACE the current map:","TEMPLATE select",list("Blank","Function Test"),timeout = 0))
+	switch(tgui_input_list(usr, "Select Template, this will REPLACE the current map:","TEMPLATE select",list("Blank","Firing Test","Damage Test","Critical Damage Test","Tracker Test"),timeout = 0))
 		if(null)
 			return
 		if("Blank")
 			sts_master.clear_map()
-		if("Function Test")
+		if("Firing Test")
 			sts_master.clear_map()
 			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
 			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "Testing Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
+			sts_master.add_entity(entity_type = 0, x = 23, y = 50, name = "Close Range Testing Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
+		if("Damage Test")
+			sts_master.clear_map()
+			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 1, x = 55, y = 50, name = "Tester Missile", type = "Direct-Direct", missile_speed = 20, vector_x = 50, vector_y = 50, warhead_type = "Direct", warhead_payload = 3)
+			sts_master.add_entity(entity_type = 1, x = 45, y = 50, name = "Tester Missile", type = "Direct-Direct", missile_speed = 20, vector_x = 50, vector_y = 50, warhead_type = "Direct", warhead_payload = 3)
+		if("Critical Damage Test")
+			sts_master.clear_map()
+			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 1, x = 55, y = 50, name = "Tester Missile", type = "Direct-Direct", missile_speed = 20, vector_x = 50, vector_y = 50, warhead_type = "Direct", warhead_payload = 6)
+			sts_master.add_entity(entity_type = 1, x = 45, y = 50, name = "Tester Missile", type = "Direct-Direct", missile_speed = 20, vector_x = 50, vector_y = 50, warhead_type = "Direct", warhead_payload = 6)
+		if("Tracker Test")
+			sts_master.clear_map()
+			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "Testing Target", type = "Testing Vessel", vector_x = 3, vector_y = 2, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
 	sts_entity_panel()
 	return
 

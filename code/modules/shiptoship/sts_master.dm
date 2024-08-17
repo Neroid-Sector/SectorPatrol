@@ -659,6 +659,7 @@
 					rem_entity(type = "coord", id = "missile", coord_x = current_x_splash, coord_y = current_y_splash)
 					if(counter == 1) output_counter += 1
 			current_y_splash += 1
+		current_y_splash = y_to_splash_damage_min
 		current_x_splash += 1
 	if (counter == 0) return 1
 	if (counter == 1) return output_counter

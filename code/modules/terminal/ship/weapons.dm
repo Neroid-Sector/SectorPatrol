@@ -126,7 +126,7 @@
 								usage_data["salvos_left"] -= 1
 								usage_data["primary_fired"] = 1
 								UpdateMapData()
-								terminal_parse("STATUS")
+								terminal_parse("STATUS", no_input = 1)
 								linked_master_console.log_round_history(event = "missile_launch", log_source = linked_master_console.sector_map_data["name"], log_dest_x = linked_master_console.sector_map_data["x"], log_dest_y = linked_master_console.sector_map_data["y"])
 								for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
 									if(ship_sts_to_log.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
@@ -146,12 +146,12 @@
 								usage_data["salvos_left"] -= 1
 								usage_data["primary_fired"] = 1
 								UpdateMapData()
-								terminal_parse("STATUS")
+								terminal_parse("STATUS", no_input = 1)
 								linked_master_console.log_round_history(event = "missile_launch", log_source = linked_master_console.sector_map_data["name"], log_dest_x = linked_master_console.sector_map_data["x"], log_dest_y = linked_master_console.sector_map_data["y"])
 								for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
 									if(ship_sts_to_log.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
 										ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_own_launch")
-									if(ship_sts_to_log.sector_map_data["name"] != linked_master_console.sector_map_data["name"])
+									else
 										ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_launch")
 					else
 						terminal_display_line("Error: Projectile type entity already located in current position. Cannot fire primary cannon due to LD resonance.")
@@ -171,9 +171,8 @@
 					if(secondary_fire_target_y == null) secondary_fire_target_y = 0
 					if(secondary_fire_target_x == 0 && secondary_fire_target_y == 0)
 						terminal_display_line("Error: Targeting own position is not advisable. Aborting.")
-					else if (abs(secondary_fire_target_x) + abs(secondary_fire_target_y) < 3)
-						terminal_display_line("Warning: Expected hit is danger close.")
 					else
+						if (abs(secondary_fire_target_x) + abs(secondary_fire_target_y) < 3) terminal_display_line("Warning: Expected hit is danger close.")
 						var/x_to_secondary_fire = linked_master_console.sector_map_data["x"] + secondary_fire_target_x
 						var/y_to_secondary_fire = linked_master_console.sector_map_data["y"] + secondary_fire_target_y
 						terminal_display_line("Vector: ([secondary_fire_target_x],[secondary_fire_target_y])")
@@ -182,6 +181,7 @@
 							if(x_to_secondary_fire <= 0 || x_to_secondary_fire > GLOB.sector_map_x || y_to_secondary_fire <= 0 || y_to_secondary_fire > GLOB.sector_map_y)
 								terminal_display_line("Error: Coordinates out of bounds. Review current position and target vector")
 							else
+								var/fired_secondary_ammo = linked_secondary_cannon.loaded_projectile["type"]
 								linked_secondary_cannon.FireCannon()
 								usage_data["salvos_left"] -= 1
 								UpdateMapData()
@@ -190,38 +190,59 @@
 								for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log in world)
 									if(ship_sts_to_log.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
 										ship_sts_to_log.WriteToShipLog(shiplog_event = "secondary_own_fire")
-									if(ship_sts_to_log.sector_map_data["name"] != linked_master_console.sector_map_data["name"])
+									else
 										ship_sts_to_log.WriteToShipLog(shiplog_event = "secondary_fire")
-								switch(linked_secondary_cannon.loaded_projectile["type"])
+								switch(fired_secondary_ammo)
 									if("Direct")
 										if(linked_master_console.sector_map[x_to_secondary_fire][y_to_secondary_fire]["ship"]["id_tag"] != "none")
 											linked_master_console.ProcessDamage(ammount = 2, x = x_to_secondary_fire, y = y_to_secondary_fire)
 											terminal_display_line("Direct impact on ship detected.")
+											for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log_effect in world)
+												if(ship_sts_to_log_effect.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+													ship_sts_to_log_effect.WriteToShipLog(shiplog_event = "secondary_hit")
 										else if (linked_master_console.sector_map[x_to_secondary_fire][y_to_secondary_fire]["missile"]["id_tag"] != "none")
 											linked_master_console.rem_entity(type = "coord", id = "missile", coord_x = x_to_secondary_fire, coord_y = y_to_secondary_fire)
 											terminal_display_line("Direct impact on projectile detected. Projectile destroyed.")
+											for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log_effect in world)
+												if(ship_sts_to_log_effect.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+													ship_sts_to_log_effect.WriteToShipLog(shiplog_event = "secondary_hit")
 										else
 											terminal_display_line("No impact detected.")
-									if("Splash")
+											for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log_effect in world)
+												if(ship_sts_to_log_effect.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+													ship_sts_to_log_effect.WriteToShipLog(shiplog_event = "secondary_miss")
+									if("Flak")
 										terminal_display_line("Explosion detected. Analyzing...")
 										var/hit_targets = linked_master_console.ProcessSplashDamage(ammount = 3, x = x_to_secondary_fire, y = y_to_secondary_fire, counter = 1)
 										if(hit_targets != 0)
 											terminal_display_line("Targets hit: [hit_targets]")
+											for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log_effect in world)
+												if(ship_sts_to_log_effect.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+													ship_sts_to_log_effect.WriteToShipLog(shiplog_event = "secondary_hit")
 										else
 											terminal_display_line("No impact detected.")
+											for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log_effect in world)
+												if(ship_sts_to_log_effect.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+													ship_sts_to_log_effect.WriteToShipLog(shiplog_event = "secondary_miss")
 									if("Broadside")
 										if(abs(secondary_fire_target_x) + abs(secondary_fire_target_y) > 1 || linked_master_console.sector_map[x_to_secondary_fire][y_to_secondary_fire]["ship"]["it_tag"] == "none")
 											terminal_display_line("No impact detected.")
+											for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log_effect in world)
+												if(ship_sts_to_log_effect.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+													ship_sts_to_log_effect.WriteToShipLog(shiplog_event = "secondary_miss")
 										else
 											linked_master_console.ProcessDamage(ammount = 5, x = x_to_secondary_fire, y = y_to_secondary_fire)
 											terminal_display_line("Direct hit detected.")
-								terminal_parse("STATUS")
+											for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_sts_to_log_effect in world)
+												if(ship_sts_to_log_effect.sector_map_data["name"] == linked_master_console.sector_map_data["name"])
+													ship_sts_to_log_effect.WriteToShipLog(shiplog_event = "secondary_hit")
+								terminal_parse("STATUS", no_input = 1)
 				else
 					terminal_display_line("Error:Secondary Cannon not primed.")
 			else
 				terminal_display_line("Error: Out of cannon salvos in this interval.")
 
-/obj/structure/terminal/weapons_console/terminal_parse(str)
+/obj/structure/terminal/weapons_console/terminal_parse(str, no_input = 0)
 	var/string_to_parse = uppertext(str)
 	if(!string_to_parse) return "error - null string parsed"
 	var/starting_buffer_length = terminal_buffer.len
@@ -261,15 +282,15 @@
 			terminal_display_line("Establishing LD Protocol connection to Primary Cannon", TERMINAL_LOOKUP_SLEEP)
 			terminal_advanced_parse(type = "PRIMARY")
 		if("SECONDARY")
-			terminal_display_line("Establishing LD Protocol connection to Primary Cannon", TERMINAL_LOOKUP_SLEEP)
+			terminal_display_line("Establishing LD Protocol connection to Secondary Cannon", TERMINAL_LOOKUP_SLEEP)
 			terminal_advanced_parse(type = "SECONDARY")
 	if(starting_buffer_length == terminal_buffer.len) terminal_display_line("Error: Unknown command. Please use HELP for a list of available commands.")
-	terminal_input()
+	if(no_input == 0) terminal_input()
 	return "Parsing Loop End"
 
 /obj/structure/terminal/weapons_console/attack_hand(mob/user)
 	if(repair_shutdown == 0)
-		terminal_parse("STATUS")
+		terminal_parse("STATUS", no_input = 1)
 		terminal_input()
 		return "Primary input loop end"
 	if(repair_shutdown == 1)

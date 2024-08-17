@@ -49,9 +49,9 @@
 	density = TRUE
 	anchored = TRUE
 	layer = LADDER_LAYER
-	bound_width = 96
-	bound_height = 96
-	bound_y = 32
+	bound_width = 128
+	bound_height = 64
+	bound_y = 64
 	unslashable = TRUE
 	unacidable = TRUE
 	var/repair_shutdown = 0
@@ -334,9 +334,9 @@
 	density = TRUE
 	anchored = TRUE
 	layer = LADDER_LAYER
-	bound_width = 96
-	bound_height = 96
-	bound_y = 32
+	bound_width = 128
+	bound_height = 64
+	bound_y = 64
 	unslashable = TRUE
 	unacidable = TRUE
 	var/repair_shutdown = 0
@@ -411,7 +411,7 @@
 		if(loaded_projectile["type"] == "none")
 			to_chat(usr, SPAN_INFO("The ammo box slides into place and is ready for priming!"))
 			var/obj/item/ship_elements/secondary_ammo/AmmoToInsert = W
-			loaded_projectile = AmmoToInsert.ammo_type
+			loaded_projectile["type"] = AmmoToInsert.ammo_type
 			qdel(AmmoToInsert)
 			return
 

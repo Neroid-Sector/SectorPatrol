@@ -84,6 +84,7 @@
 	local_round_log = null
 	local_round_log = list()
 	SyncPosToMap()
+	if(sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] < 2) sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] += 1
 	INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
 	INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
 	INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, SetUsageData),0,null)
@@ -262,6 +263,10 @@
 			local_round_log.Add("<b>Secondary fire detected</b> in sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
 		if("secondary_own_fire")
 			local_round_log.Add("Secondary fire from own vessel.")
+		if("secondary_hit")
+			local_round_log.Add("<b>Impact detected!</b>")
+		if("secondary_miss")
+			local_round_log.Add("<b>No Impact!</b>")
 	linked_command_chair.open_command_window("current_round")
 
 /obj/structure/shiptoship_master/ship_missioncontrol/Initialize(mapload, ...)
