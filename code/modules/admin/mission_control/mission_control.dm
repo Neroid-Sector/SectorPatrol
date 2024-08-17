@@ -254,12 +254,12 @@
 			sts_master.add_entity(entity_type = 0, x = 23, y = 50, name = "Close Range Testing Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
 		if("Damage Test")
 			sts_master.clear_map()
-			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
 			sts_master.add_entity(entity_type = 1, x = 55, y = 50, name = "Tester Missile", type = "Direct-Direct", missile_speed = 20, vector_x = 50, vector_y = 50, warhead_type = "Direct", warhead_payload = 3)
 			sts_master.add_entity(entity_type = 1, x = 45, y = 50, name = "Tester Missile", type = "Direct-Direct", missile_speed = 20, vector_x = 50, vector_y = 50, warhead_type = "Direct", warhead_payload = 3)
 		if("Critical Damage Test")
 			sts_master.clear_map()
-			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
 			sts_master.add_entity(entity_type = 1, x = 55, y = 50, name = "Tester Missile", type = "Direct-Direct", missile_speed = 20, vector_x = 50, vector_y = 50, warhead_type = "Direct", warhead_payload = 6)
 			sts_master.add_entity(entity_type = 1, x = 45, y = 50, name = "Tester Missile", type = "Direct-Direct", missile_speed = 20, vector_x = 50, vector_y = 50, warhead_type = "Direct", warhead_payload = 6)
 		if("Tracker Test")
@@ -389,14 +389,14 @@
 		if(null)
 			return
 		if("combat_initiate")
-			show_blurb(world, duration = 10 SECONDS, message = "SPACE COMBAT INITALIZED", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
+			show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "SPACE COMBAT INITALIZED", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
 			sleep(100)
-			show_blurb(world, duration = 10 SECONDS, message = "TURN [GLOB.combat_round] STARTING...", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
+			show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "TURN [GLOB.combat_round] STARTING...", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
 			sleep(100)
 			to_chat(world, narrate_head("Ship to ship combat initiated!"))
 			to_chat(world, narrate_body("<b>Hostile ships detected in your sector.</b> Please standby as the DM sets up the initial round."))
 		if("combat_end")
-			show_blurb(world, duration = 10 SECONDS, message = "SPACE COMBAT CONCLUDED", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
+			show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "SPACE COMBAT CONCLUDED", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
 
 /datum/admins/proc/toggle_sts(type = null)
 	if(!check_rights(R_ADMIN)) return
@@ -469,7 +469,7 @@
 				MissionControl(window = "ShipToShip_PrevRoundLog")
 				GLOB.combat_round += 1
 				GLOB.round_phase = 1
-				show_blurb(world, duration = 10 SECONDS, message = "TURN [GLOB.combat_round] STARTING...", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
+				show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "TURN [GLOB.combat_round] STARTING...", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "turn_number", ignore_key = FALSE, speed = 1)
 				to_chat(world, narrate_head("<b>DM Turn</b>"))
 				to_chat(world, narrate_body("The DM is now setting up ship movement, secondary fire and any other round-critical factors. <b>You may react to initial damage, coming from long range projectiles in an IC fashion</b>, but refrain from doing any mechanical fixes or other actions just yet."))
 				to_chat(world, narrate_body("The DM may not have time to respond to queries during this time in order to resolve this state as quick as possible."))

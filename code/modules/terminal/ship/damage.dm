@@ -110,11 +110,13 @@
 				control_points_to_pick.Add(control_element_to_list)
 		if(control_points_to_pick.len == 0) return "Error - Out of damage control points."
 		var/obj/structure/ship_elements/damage_control_element/damage_point_to_process = pick(control_points_to_pick)
-		damage_point_to_process.GetDamaged(damage_type = system)
+		INVOKE_ASYNC(damage_point_to_process, TYPE_PROC_REF(/obj/structure/ship_elements/damage_control_element, GetDamaged), system)
 		usage_data["damage"][system] += 1
 		damage_point_processed += 1
+	UpdateMapData()
 	if(usage_data["damage"]["engine"] > usage_data["damage"]["HP"] || usage_data["damage"]["systems"] > usage_data["damage"]["HP"] || usage_data["damage"]["weapons"] > usage_data["damage"]["HP"] || usage_data["damage"]["hull"] > usage_data["damage"]["HP"])
 		talkas("Warning. Critical damage recieved. Engaging emergency Hyperspace leapfrog.")
+		linked_master_console.RepairShutdown(1)
 		world << browse(null, "window=[terminal_id]")
 		return
 	else
@@ -142,6 +144,9 @@
 	var/saved_buffer_len = terminal_buffer.len
 	for (var/obj/structure/ship_elements/damage_control_element/control_element_to_check in damage_controls)
 		if(control_element_to_check.repair_damaged == 1)
-			terminal_display_line("Coil [control_element_to_check.item_serial], Location: [get_area_name(control_element_to_check)]")
+			var/system_to_show = uppertext(copytext(control_element_to_check.repair_system,1,2))
+			terminal_display_line("[system_to_show]:[control_element_to_check.item_serial], Location: [get_area_name(control_element_to_check)]")
 	if(saved_buffer_len == terminal_buffer.len) terminal_display_line("No damaged coils detected.")
+	if(tgui_alert(usr, "The console does not react to any inputs. Press Any key to continue.", "DAMAGE output", list("Any"), timeout = 0) == "Any")
+		kill_window()
 	return

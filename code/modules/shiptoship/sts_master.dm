@@ -842,6 +842,7 @@
 				current_x += 1
 			current_x = 1
 			current_y += 1
+		return 1
 
 /obj/structure/shiptoship_master/proc/ResetMovementInfo()
 	var/current_x = 1
@@ -861,24 +862,24 @@
 
 
 /obj/structure/shiptoship_master/proc/NextTurn()
-	var/len_to_test = round_history_current.len
-	if(ProcessMovement(type = "ship") == 1)
-		while(len_to_test != round_history_current.len)
-			len_to_test = round_history_current.len
-			ProcessMovement(type = "ship")
-		len_to_test = 0
-		while(len_to_test != round_history_current.len)
-			len_to_test = round_history_current.len
-			ProcessMovement(type = "ship")
+	var/len_to_test
+	ProcessMovement(type = "ship")
+	while(len_to_test != round_history_current.len)
 		len_to_test = round_history_current.len
-		if(ProcessMovement(type = "missile") == 1)
-			while(len_to_test != round_history_current.len)
-				len_to_test = round_history_current.len
-				ProcessMovement(type = "missile")
-		len_to_test = 0
-		while(len_to_test != round_history_current.len)
-			len_to_test = round_history_current.len
-			ProcessMovement(type = "missile")
+		ProcessMovement(type = "ship")
+	len_to_test = null
+	while(len_to_test != round_history_current.len)
+		len_to_test = round_history_current.len
+		ProcessMovement(type = "ship")
+	ProcessMovement(type = "missile")
+	len_to_test = null
+	while(len_to_test != round_history_current.len)
+		len_to_test = round_history_current.len
+		ProcessMovement(type = "missile")
+	len_to_test = null
+	while(len_to_test != round_history_current.len)
+		len_to_test = round_history_current.len
+		ProcessMovement(type = "missile")
 	CycleSpaceRoundLog()
 	rem_entity(type = "special")
 	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc in world)

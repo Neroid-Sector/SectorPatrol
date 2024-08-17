@@ -28,7 +28,7 @@
 	repair_generate_steps()
 	repair_damaged = 1
 	if(damage_type) repair_system = damage_type
-	icon_state = "damage_2"
+	icon_state = "damage_1"
 	update_icon()
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(5, 1, src)
@@ -42,16 +42,16 @@
 	var/area/sts_ship/area_to_test = get_area(src)
 	var/first_part_to_add = area_to_test.area_id
 	if(first_part_to_add == null) first_part_to_add = "UNK"
-	var/number_to_add = linked_damage_console.damage_controls.len
+	var/number_to_add = linked_damage_console.damage_controls.len + 1
 	var/number_to_type
 	if(number_to_add == null)
 		number_to_type = "000"
 	if(number_to_add < 10)
-		number_to_type = "00" + num2text(number_to_type)
+		number_to_type = "00[num2text(number_to_add)]"
 	if(number_to_add < 100 && number_to_add > 10)
-		number_to_type = "0" + num2text(number_to_type)
+		number_to_type = "0[num2text(number_to_add)]"
 	if(number_to_add > 100)
-		number_to_type = num2text(number_to_type)
+		number_to_type = num2text(number_to_add)
 	item_serial = "[first_part_to_add]-[number_to_type]-[initial(item_serial)]"
 
 /obj/structure/ship_elements/damage_control_element/update_icon()
@@ -198,7 +198,7 @@
 			linked_damage_console.usage_data["damage"][repair_system] -= 1
 			linked_damage_console.usage_data["repairs_done"] += 1
 			repair_damaged = 0
-			linked_damage_console.talkas("Ship [repair_system] LD Coil [item_serial] repair complete. Repairs left this interval: [linked_damage_console.usage_data["repairs_max"] - linked_damage_console.usage_data["repairs_done"]].")
+			linked_damage_console.talkas("Ship [repair_system] LD Coil [item_serial] repair complete. Repairs left this interval: [linked_damage_console.usage_data["repairs_max"] - linked_damage_console.usage_data["repairs_done"]].",1)
 			return
 	else
 		repair_damaged = 0
@@ -210,14 +210,15 @@
 		to_chat(usr, SPAN_INFO(repair_text))
 	if(repair_current_step > repair_steps)
 		to_chat(usr, SPAN_INFO("The repairs are finished. The module can be retracted."))
-		ProcessFix()
 		icon_state = "damage_4"
+		update_icon()
+		ProcessFix()
 
 /obj/structure/ship_elements/damage_control_element/examine(mob/user)
 	..()
 	if(icon_state == "damage_0") to_chat(usr, SPAN_INFO("This device is functioning correctly."))
 	if(icon_state == "damage_1") to_chat(usr, SPAN_INFO("The device indicates damage. Use an <b>empty hand</b> on <b>GRAB</b> intent to open it."))
-	if(icon_state == "damage_3") to_chat(usr, SPAN_INFO(repair_generate_text()))
+	if(icon_state == "damage_3") to_chat(usr, SPAN_INFO(repair_return_step_text()))
 	if(icon_state == "damage_4") to_chat(usr, SPAN_INFO("The repairs to the device are finished and it can be pushed back into its socket. Use an <b>empty hand</b> with <b>HELP</b> intent."))
 
 /obj/structure/ship_elements/damage_control_element/proc/repair_process_step()
@@ -225,11 +226,14 @@
 	repair_generate_av(tool = repair_array[1][repair_current_step])
 	repair_in_use = 1
 	if(do_after(usr, (CRAFTING_DELAY_NORMAL * usr.get_skill_duration_multiplier(SKILL_CONSTRUCTION)), INTERRUPT_ALL|BEHAVIOR_IMMOBILE, BUSY_ICON_BUILD))
-		to_chat(usr, SPAN_INFO(repair_generate_text(text = repair_array[1][repair_current_step], state = "finished")))
-		repair_in_use = 0
-		repair_current_step += 1
-		repair_return_step_text()
-		return 1
+		if(linked_damage_console.usage_data["repairs_done"] < linked_damage_console.usage_data["repairs_max"] || linked_damage_console.repair_shutdown == 1)
+			to_chat(usr, SPAN_INFO(repair_generate_text(text = repair_array[1][repair_current_step], state = "finished")))
+			repair_in_use = 0
+			repair_current_step += 1
+			repair_return_step_text()
+			return 1
+		else
+			to_chat(usr, SPAN_WARNING("You cannot fix any more systems this turn."))
 	repair_in_use = 0
 	return 0
 
@@ -254,12 +258,22 @@
 	to_chat(usr, SPAN_INFO("You have no idea how to combine these two together."))
 
 /obj/structure/ship_elements/damage_control_element/attack_hand(mob/user)
-	if(linked_damage_console.repair_shutdown == 0)
+	if(icon_state == "damage_5" || icon_state == "damage_2")
+		return
+	if(icon_state == "damage_4")
+		icon_state = "damage_5"
+		update_icon()
+		playsound(src, 'sound/machines/windowdoor.ogg', 25)
+		emoteas("slides back into its socket.", 1)
+		sleep(9)
+		icon_state = "damage_0"
+		update_icon()
+		return
+	if(icon_state == "damage_1")
 		if(linked_damage_console.usage_data["repairs_done"] >= linked_damage_console.usage_data["repairs_max"])
 			to_chat(usr, SPAN_WARNING("No more repairs can be done this round."))
 			return
-	if(linked_damage_console.repair_shutdown == 1 || linked_damage_console.usage_data["repairs_done"] < linked_damage_console.usage_data["repairs_max"])
-		if(icon_state == "damage_1")
+		if(linked_damage_console.repair_shutdown == 1 || linked_damage_console.usage_data["repairs_done"] < linked_damage_console.usage_data["repairs_max"])
 			icon_state = "damage_2"
 			update_icon()
 			playsound(src, 'sound/machines/windowdoor.ogg', 25)
@@ -267,14 +281,7 @@
 			sleep(9)
 			icon_state = "damage_3"
 			update_icon()
+			to_chat(usr, SPAN_INFO(repair_return_step_text()))
 			return
-		if(icon_state == "damage_4")
-			icon_state = "damage_5"
-			update_icon()
-			playsound(src, 'sound/machines/windowdoor.ogg', 25)
-			emoteas("slides back into its socket.", 1)
-			sleep(9)
-			icon_state = "damage_1"
-			update_icon()
-			return
-		to_chat(usr, SPAN_INFO("The device does not budge and does not seem to have any direct way of interaction."))
+
+	to_chat(usr, SPAN_INFO("The device does not budge and does not seem to have any direct way of interaction."))
