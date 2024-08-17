@@ -42,13 +42,13 @@
 	var/area/sts_ship/area_to_test = get_area(src)
 	var/first_part_to_add = area_to_test.area_id
 	if(first_part_to_add == null) first_part_to_add = "UNK"
-	var/number_to_add = linked_damage_console.damage_controls.len + 1
+	var/number_to_add = linked_damage_console.damage_controls.len
 	var/number_to_type
 	if(number_to_add == null)
 		number_to_type = "000"
 	if(number_to_add < 10)
 		number_to_type = "00[num2text(number_to_add)]"
-	if(number_to_add < 100 && number_to_add > 10)
+	if(number_to_add < 100 && number_to_add >= 10)
 		number_to_type = "0[num2text(number_to_add)]"
 	if(number_to_add > 100)
 		number_to_type = num2text(number_to_add)
@@ -203,6 +203,7 @@
 	else
 		repair_damaged = 0
 		linked_damage_console.talkas("LD Coil [item_serial] reintialization complete.")
+		linked_damage_console.CheckCriticalFix()
 
 /obj/structure/ship_elements/damage_control_element/proc/repair_return_step_text()
 	if(repair_current_step <= repair_steps)
@@ -212,7 +213,6 @@
 		to_chat(usr, SPAN_INFO("The repairs are finished. The module can be retracted."))
 		icon_state = "damage_4"
 		update_icon()
-		ProcessFix()
 
 /obj/structure/ship_elements/damage_control_element/examine(mob/user)
 	..()
@@ -238,6 +238,10 @@
 	return 0
 
 /obj/structure/ship_elements/damage_control_element/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/fixer))
+		repair_current_step = repair_steps + 1
+		repair_return_step_text()
+		return
 	if(repair_current_step > repair_steps)
 		to_chat(usr, SPAN_INFO("This device has been fully repaired."))
 		return
@@ -267,6 +271,7 @@
 		emoteas("slides back into its socket.", 1)
 		sleep(9)
 		icon_state = "damage_0"
+		ProcessFix()
 		update_icon()
 		return
 	if(icon_state == "damage_1")

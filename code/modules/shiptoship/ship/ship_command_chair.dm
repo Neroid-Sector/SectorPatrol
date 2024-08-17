@@ -20,18 +20,27 @@
 		if(1)
 			repair_shutdown = 1
 			linked_top_screen.repair_shutdown = 1
+			linked_top_screen.use_fx(type = "off")
 			linked_front_screen.repair_shutdown = 1
+			linked_front_screen.use_fx(type = "off")
 			linked_bot_screen.repair_shutdown = 1
+			linked_bot_screen.use_fx(type = "off")
 			talkas("Warning. Critical damage recieved. Engaging emergency Hyperspace leapfrog.")
+			buckled_mob << browse(null,"window=commander_console_[buckled_mob]_current_round")
+			buckled_mob << browse(null,"window=commander_console_[buckled_mob]_round_history")
+			buckled_mob << browse(null,"window=commander_console_[buckled_mob]_pings_and_tracking")
+			buckled_mob << browse(null,"window=commander_console_[buckled_mob]_ship_messages")
+			buckled_mob << browse(null,"window=commander_console_[buckled_mob]_weapon_status")
+			buckled_mob << browse(null,"window=commander_console_[buckled_mob]_ship_status")
 			return
 		if(0)
 			repair_shutdown = 0
 			linked_top_screen.repair_shutdown = 0
-			linked_top_screen.use_fx(type = "off")
+			linked_top_screen.use_fx(type = "on")
 			linked_front_screen.repair_shutdown = 0
-			linked_front_screen.use_fx(type = "off")
+			linked_front_screen.use_fx(type = "on")
 			linked_bot_screen.repair_shutdown = 0
-			linked_bot_screen.use_fx(type = "off")
+			linked_bot_screen.use_fx(type = "on")
 			talkas("Critical damage resolved. Lifting lockout.")
 			return
 
@@ -158,11 +167,11 @@
 		</div>
 		</body>
 		"}
-	buckled_mob << browse(dat,"window=commander_console_[usr]_[type];display=1;size=[window_size];border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
+	buckled_mob << browse(dat,"window=commander_console_[buckled_mob]_[type];display=1;size=[window_size];border=5px;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	window_size = initial(window_size)
-	if(buckled_mob.sp_uis.Find("commander_console_[usr]_[type]") == 0)
-		buckled_mob.sp_uis.Add("commander_console_[usr]_[type]")
-	onclose(buckled_mob, "commander_console_[usr]_[type]")
+	if(buckled_mob.sp_uis.Find("commander_console_[buckled_mob]_[type]") == 0)
+		buckled_mob.sp_uis.Add("commander_console_[buckled_mob]_[type]")
+	onclose(buckled_mob, "commander_console_[buckled_mob]_[type]")
 
 /obj/structure/ship_elements/command_chair/proc/turn_off_check()
 	sleep(100)
@@ -187,6 +196,13 @@
 			open_command_window(type = "ship_status")
 	if(buckled_mob == null)
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/ship_elements/command_chair/, turn_off_check))
+		M << browse(null,"window=commander_console_[M]_current_round")
+		M << browse(null,"window=commander_console_[M]_round_history")
+		M << browse(null,"window=commander_console_[M]_pings_and_tracking")
+		M << browse(null,"window=commander_console_[M]_ship_messages")
+		M << browse(null,"window=commander_console_[M]_weapon_status")
+		M << browse(null,"window=commander_console_[M]_ship_status")
+
 
 
 

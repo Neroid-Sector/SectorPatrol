@@ -1,5 +1,11 @@
 //Sector Patrol Ship to Ship combat master defs. I'm using master defs because GLOBs/Datums sure are fun, but when it comes to actually live editing values in game, being able to VV a controller wihtout any other admin commands is the best chocie I find, and that sollution needs these.area
 //Because this thin guses /global/ for the grid, IN THEORY the whole system should work as long as at least one IC console is in game. For obvious reasons assuming that this will always be the case in game is not wise, so this thing will likely exist in game too.
+/obj/item/fixer
+	name = "admin fixer"
+	desc = "Finally, something to fix my damage."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "drill"
+
 /obj/structure/shiptoship_master
 	name = "Ship to Ship Master Control"
 	desc = "This shoudnt be in the main IC space, but if you're ghosted and peering behind the secenes, one of these is somewhere in the admin area. Congrats on findng it :p"

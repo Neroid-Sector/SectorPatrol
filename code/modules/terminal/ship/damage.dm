@@ -73,6 +73,7 @@
 			repair_shutdown = 1
 			SetUsageData(state = 1, damage = 1)
 			world << browse(null,"window=[terminal_id]")
+			talkas("Warning. Critical damage recieved. Engaging emergency Hyperspace leapfrog.")
 			return
 		if(0)
 			repair_shutdown = 0
@@ -115,7 +116,6 @@
 		damage_point_processed += 1
 	UpdateMapData()
 	if(usage_data["damage"]["engine"] > usage_data["damage"]["HP"] || usage_data["damage"]["systems"] > usage_data["damage"]["HP"] || usage_data["damage"]["weapons"] > usage_data["damage"]["HP"] || usage_data["damage"]["hull"] > usage_data["damage"]["HP"])
-		talkas("Warning. Critical damage recieved. Engaging emergency Hyperspace leapfrog.")
 		linked_master_console.RepairShutdown(1)
 		world << browse(null, "window=[terminal_id]")
 		return
@@ -129,8 +129,10 @@
 	for(var/obj/structure/ship_elements/damage_control_element/element_to_add in damage_controls)
 		if(element_to_add.repair_damaged == 1)
 			coils_left += 1
-	if(coils_left != 0) return coils_left
+	if(coils_left != 0)
+		talkas("Critical Damage unresolved. [coils_left] coils to reinitialize.")
 	if(coils_left == 0)
+		talkas("Critical Damage resolved. Restarting systems.")
 		linked_master_console.RepairShutdown(state = 0)
 
 
