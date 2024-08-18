@@ -245,13 +245,6 @@
 // create a new lighting fixture
 /obj/structure/machinery/light/Initialize()
 	. = ..()
-	switch(fitting)
-		if("tube")
-			brightness = 8
-		if("bulb")
-			brightness = 4
-		if("marker")
-			brightness = 6
 
 	active_power_usage = (brightness * 10)
 	addtimer(CALLBACK(src, PROC_REF(update), 0), 1)
@@ -736,15 +729,6 @@
 			var/newdesc = "[desc]" + "It's been smashed. It won't work anymore and should be thrown away or recycled."
 			desc = newdesc
 
-
-/obj/item/light_bulb/Initialize()
-	. = ..()
-	switch(name)
-		if("light tube")
-			brightness = rand(6,9)
-		if("light bulb")
-			brightness = rand(4,6)
-	update()
 
 // called after an attack with a light item
 // shatter light, unless it was an attempt to put it in a light socket

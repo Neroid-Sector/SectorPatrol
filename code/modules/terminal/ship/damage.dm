@@ -84,9 +84,9 @@
 /obj/structure/terminal/damage_console/proc/LinkToShipMaster(master_console as obj)
 
 	linked_master_console = master_console
-	var/list/area_contents
+	var/list/area_contents = list()
 	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
-		area_contents += areas_to_scan.GetAllContents()
+		area_contents.Add(areas_to_scan.GetAllContents())
 	var/element_counter = 0
 	for (var/obj/structure/ship_elements/damage_control_element/control_element_to_link in area_contents)
 		if(control_element_to_link.ship_name == linked_master_console.sector_map_data["name"])

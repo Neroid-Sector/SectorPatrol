@@ -3,7 +3,7 @@
 	desc = "A tube made from resins and LD polymers, giving it a sleek, somewhat shimmering appearance."
 	desc_lore = "Mission Control units are central intelligence and processing systems that occupy the same space that \"traditional\"ships fill with an on-board AI. Unlike conventional AIs, Mission Control units instead are fully realized, intelligent sophonts, each instanced from a central version stored at the PST. Due to properties inherent to how Liquid Data works, this allows individual MC units to divert resources, be it energy or information, to the crews under its care as needed while utilizing the instantaneous transportation capabilities of Liquid Data."
 	icon = 'icons/sectorpatrol/ship/mission_control.dmi'
-	icon_state = "mc_on"
+	icon_state = "mc_off"
 	var/list/sector_map_data = list(
 		"name" = "none",
 		"id_tag" = "none,",
@@ -17,6 +17,11 @@
 	var/obj/structure/terminal/damage_console/linked_damage_console
 	var/obj/structure/terminal/cargo_console/linked_cargo_console
 	var/obj/structure/ship_elements/command_chair/linked_command_chair
+	var/ignition = 0
+	var/list/light_group_weapons = list()
+	var/list/light_group_signals = list()
+	var/list/light_group_command = list()
+	var/list/light_group_general = list()
 	var/list/tracking_list
 	var/tracking_max = 3
 	var/list/local_round_log = list()
@@ -24,6 +29,9 @@
 	var/list/local_round_log_full = list()
 	var/list/ping_history = list()
 	var/list/comms_messages = list()
+	light_system = HYBRID_LIGHT
+	light_color = "#660166"
+	langchat_color = "#ec2fb3"
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/AnimateUse(type)
 	switch(type)
@@ -32,15 +40,85 @@
 		if("on")
 			icon_state = "mc_off_on"
 			update_icon()
+			set_light(2)
 			sleep(20)
 			icon_state = "mc_on"
+			set_light(5)
 			update_icon()
 		if("off")
 			icon_state = "mc_on_off"
 			update_icon()
+			set_light(2)
 			sleep(15)
 			icon_state = "mc_off"
 			update_icon()
+			set_light(0)
+
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/GetMobsInShipAreas()
+	var/list/mobs_to_return = list()
+	for(var/mob/mob_to_add in GLOB.mob_list)
+		var/area/sts_ship/area_to_test = get_area(mob_to_add)
+		if(area_to_test != null)
+			if(area_to_test.ship_name == sector_map_data["name"])
+				mobs_to_return.Add(mob_to_add)
+	return mobs_to_return
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/AnnounceToCrew(message)
+	to_chat(GetMobsInShipAreas(), "<span class='big'><span class='radio'><span class='name'>Mission Control<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005B[sector_map_data["name"]] \u0028PST-MC\u0029\u005D </b></span><span class='message'>, says \"[message]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/LightGroup(group = null, state = null)
+	switch(group)
+		if("weapons")
+			for(var/obj/structure/machinery/light/shiplight/light_to_switch in light_group_weapons)
+				INVOKE_ASYNC(light_to_switch, TYPE_PROC_REF(/obj/structure/machinery/light/shiplight, StatusChange), state)
+			return
+		if("signals")
+			for(var/obj/structure/machinery/light/shiplight/light_to_switch in light_group_signals)
+				INVOKE_ASYNC(light_to_switch, TYPE_PROC_REF(/obj/structure/machinery/light/shiplight, StatusChange), state)
+			return
+		if("command")
+			for(var/obj/structure/machinery/light/shiplight/light_to_switch in light_group_command)
+				INVOKE_ASYNC(light_to_switch, TYPE_PROC_REF(/obj/structure/machinery/light/shiplight, StatusChange), state)
+			return
+		if("general")
+			for(var/obj/structure/machinery/light/shiplight/light_to_switch in light_group_general)
+				INVOKE_ASYNC(light_to_switch, TYPE_PROC_REF(/obj/structure/machinery/light/shiplight, StatusChange), state)
+			return
+		if("all")
+			for(var/obj/structure/machinery/light/shiplight/w_light_to_switch in light_group_weapons)
+				INVOKE_ASYNC(w_light_to_switch, TYPE_PROC_REF(/obj/structure/machinery/light/shiplight, StatusChange), state)
+			for(var/obj/structure/machinery/light/shiplight/s_light_to_switch in light_group_signals)
+				INVOKE_ASYNC(s_light_to_switch, TYPE_PROC_REF(/obj/structure/machinery/light/shiplight, StatusChange), state)
+			for(var/obj/structure/machinery/light/shiplight/c_light_to_switch in light_group_command)
+				INVOKE_ASYNC(c_light_to_switch, TYPE_PROC_REF(/obj/structure/machinery/light/shiplight, StatusChange), state)
+			for(var/obj/structure/machinery/light/shiplight/g_light_to_switch in light_group_general)
+				INVOKE_ASYNC(g_light_to_switch, TYPE_PROC_REF(/obj/structure/machinery/light/shiplight, StatusChange), state)
+			return
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/Ignition()
+	talkas("Standby. Beginning takeoff.")
+	AnnounceToCrew("Attention crew of the [sector_map_data["name"]]. Launch procedure is under way. Takeoff in ten seconds.")
+	sleep(100)
+	AnnounceToCrew("Detaching from local power network. Activating LD transfer coils.")
+	LightGroup(group = "all", state = "dim")
+	sleep(30)
+	AnimateUse("on")
+	talkas("Mission Control Online. Hello, Arbiter [linked_command_chair.buckled_mob].")
+	talkas("Activating main power loop. Stansby.")
+	LightGroup(group = "weapons", state = "turn_on")
+	linked_weapons_console.AnimateUse(1)
+	talkas("Weapon systems online. Primary and Secondary cannon detected and linked.")
+	LightGroup(group = "signals", state = "turn_on")
+	linked_signals_console.AnimateUse(1)
+	talkas("Signals system online. Probe and Tracking systems online. Communications uplink online.")
+	LightGroup(group = "command", state = "turn_on")
+	linked_damage_console.AnimateUse(1)
+	linked_cargo_console.AnimateUse(1)
+	talkas("Command chair uplink established.")
+	LightGroup(group = "general", state = "turn_on")
+	talkas("Navigation systems ready for your input, Arbiter. The ship is yours.")
+	ignition = 1
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/RepairShutdown(state = null)
 	switch(state)
@@ -396,9 +474,9 @@
 	if(sector_map_data["x"] == 0 || sector_map_data["y"] == 0)
 		to_chat(usr, SPAN_WARNING("Error. [sector_map_data["name"]] not found on Sector Map or invalid coords. Aborting."))
 		return
-	var/list/area_contents
+	var/list/area_contents = list()
 	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
-		area_contents += areas_to_scan.GetAllContents()
+		area_contents.Add(areas_to_scan.GetAllContents())
 	if(linked_signals_console == null)
 		for(var/obj/structure/terminal/signals_console/console in area_contents)
 			if(console.ship_name == sector_map_data["name"])
@@ -439,6 +517,25 @@
 				var/turf/turf_return = get_turf(linked_command_chair)
 				to_chat(world, SPAN_INFO("Command Chair Linked at [turf_return.x],[turf_return.y]"))
 				break
+	var/light_counter = 0
+	for(var/obj/structure/machinery/light/shiplight/shiplight_to_add in world)
+		if(shiplight_to_add.ship_name == sector_map_data["name"])
+			switch(shiplight_to_add.ship_light_group)
+				if(null)
+					return
+				if("weapons")
+					light_group_weapons.Add(shiplight_to_add)
+					light_counter += 1
+				if("signals")
+					light_group_weapons.Add(shiplight_to_add)
+					light_counter += 1
+				if("command")
+					light_group_command.Add(shiplight_to_add)
+					light_counter += 1
+				if("general")
+					light_group_general.Add(shiplight_to_add)
+					light_counter += 1
+	to_chat(world, SPAN_INFO("Light groups initialized, [light_counter] active."))
 	sector_map_data["initialized"] = 1
 	to_chat(world, SPAN_INFO("Ship [sector_map_data["name"]] Initalized on the Sector Map."))
 
@@ -491,11 +588,3 @@
 	weapons_status_to_return.Add("PROBE: <b>[probe_status]</b>")
 	weapons_status_to_return.Add("TRACKER: <b>[tracker_status]</b>")
 	return weapons_status_to_return
-
-/obj/structure/shiptoship_master/ship_missioncontrol/proc/GetMobsInShipAreas()
-	var/list/mobs_to_return
-	for(var/mob/mob_to_add in GLOB.mob_list)
-		var/area/sts_ship/area_to_test = get_area(mob_to_add)
-		if(area_to_test.ship_name == sector_map_data["name"])
-			mobs_to_return += mob_to_add
-	return mobs_to_return

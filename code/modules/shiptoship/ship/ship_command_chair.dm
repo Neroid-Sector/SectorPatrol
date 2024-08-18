@@ -45,11 +45,10 @@
 			return
 
 /obj/structure/ship_elements/command_chair/proc/LinkToShipMaster(master_console as obj)
-	GetAllContents()
 	linked_master_console = master_console
-	var/list/area_contents
+	var/list/area_contents = list()
 	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
-		area_contents += areas_to_scan.GetAllContents()
+		area_contents.Add(areas_to_scan.GetAllContents())
 	if(!linked_top_screen)
 		for(var/obj/structure/ship_elements/command_monitor/top/top_to_link in area_contents)
 			if(top_to_link.ship_name == linked_master_console.sector_map_data["name"])
@@ -160,6 +159,13 @@
 			dat +={"<p><b>Systems Integrity:</b></p>
 				<p>[ship_status]</p>
 				"}
+		if("docked")
+			window_size = "500x400"
+			dat +={"<p><b>Ship Docked</b></p>
+				<p>Current Location:</p>
+				<p>[GLOB.ingame_location], [GLOB.ingame_current_system].</p>
+				<p><b>READY TO DEPART</b></p>
+				"}
 		else
 			return
 	dat += {"</div>
@@ -186,17 +192,18 @@
 /obj/structure/ship_elements/command_chair/afterbuckle(mob/M)
 	. = ..()
 	if(buckled_mob == usr)
-		to_chat(usr, SPAN_INFO("The displays slowly come to life and will appear on your screen whenever somethng new is posted. To stop this, leave the command chair."))
-		INVOKE_ASYNC(linked_top_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
-		INVOKE_ASYNC(linked_front_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
-		INVOKE_ASYNC(linked_bot_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
-		if(tgui_alert(usr, "Do you want to open all interfaces?","OPEN ALL",list("Yes","No"), timeout = 0) == "Yes")
-			open_command_window(type = "current_round")
-			open_command_window(type = "round_history")
-			open_command_window(type = "pings_and_tracking")
-			open_command_window(type = "ship_messages")
-			open_command_window(type = "weapon_status")
-			open_command_window(type = "ship_status")
+		if(linked_master_console.ignition == 0)
+			open_command_window("docked")
+			if(tgui_alert(buckled_mob, "The ship is ready to launch.", "LAUNCH", list("Launch", "Abort"), timeout = 0) == "Launch")
+				linked_master_console.Ignition()
+				INVOKE_ASYNC(linked_top_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
+				INVOKE_ASYNC(linked_front_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
+				INVOKE_ASYNC(linked_bot_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
+		if(linked_master_console.ignition == 1)
+			to_chat(usr, SPAN_INFO("The displays slowly come to life and will appear on your screen whenever somethng new is posted. To stop this, leave the command chair."))
+			INVOKE_ASYNC(linked_top_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
+			INVOKE_ASYNC(linked_front_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
+			INVOKE_ASYNC(linked_bot_screen,TYPE_PROC_REF(/obj/structure/ship_elements/command_monitor/, use_fx), "on")
 	if(buckled_mob == null)
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/ship_elements/command_chair/, turn_off_check))
 		M << browse(null,"window=commander_console_[M]_current_round")
@@ -219,6 +226,8 @@
 	var/obj/structure/ship_elements/command_chair/linked_command_chair
 	var/repair_shutdown = 0
 	var/icon_base
+	light_system = HYBRID_LIGHT
+	light_color = "#0bb427"
 
 
 /obj/structure/ship_elements/command_monitor/proc/ChairLink(chair_to_link as obj)
@@ -231,9 +240,11 @@
 		if("on")
 			sleep(rand(1,15))
 			icon_state = icon_base + "_on"
+			set_light(3)
 			update_icon()
 		if("off")
 			icon_state = icon_base + "_off"
+			set_light(0)
 			update_icon()
 
 /obj/structure/ship_elements/command_monitor/top
@@ -242,7 +253,7 @@
 	icon_base = "top"
 
 /obj/structure/ship_elements/command_monitor/top/attack_hand(mob/user)
-	if(usr != linked_command_chair.buckled_mob) return
+	if(usr != linked_command_chair.buckled_mob || linked_command_chair.linked_master_console.ignition == 0) return
 	switch(usr.a_intent)
 		if(INTENT_HELP,INTENT_DISARM)
 			linked_command_chair.open_command_window("current_round")
@@ -261,7 +272,7 @@
 	icon_base = "front"
 
 /obj/structure/ship_elements/command_monitor/front/attack_hand(mob/user)
-	if(usr != linked_command_chair.buckled_mob) return
+	if(usr != linked_command_chair.buckled_mob || linked_command_chair.linked_master_console.ignition == 0) return
 	switch(usr.a_intent)
 		if(INTENT_HELP,INTENT_DISARM)
 			linked_command_chair.open_command_window("pings_and_tracking")
@@ -280,7 +291,7 @@
 	icon_base = "bot"
 
 /obj/structure/ship_elements/command_monitor/bottom/attack_hand(mob/user)
-	if(usr != linked_command_chair.buckled_mob) return
+	if(usr != linked_command_chair.buckled_mob || linked_command_chair.linked_master_console.ignition == 0) return
 	switch(usr.a_intent)
 		if(INTENT_HELP,INTENT_DISARM)
 			linked_command_chair.open_command_window("ship_status")

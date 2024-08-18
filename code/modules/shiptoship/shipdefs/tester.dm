@@ -111,3 +111,21 @@
 	name = "UAS Tester - Engineering Bay"
 	area_id = "TST"
 	icon_state = "engie"
+
+
+/obj/structure/machinery/light/shiplight/tester/weapons
+	ship_name = "UAS Tester"
+	ship_light_group = "weapons"
+
+/obj/structure/machinery/light/shiplight/tester/signals
+	ship_name = "UAS Tester"
+	ship_light_group = "signals"
+
+/obj/structure/machinery/light/shiplight/tester/command
+	ship_name = "UAS Tester"
+	ship_light_group = "command"
+
+/obj/structure/machinery/light/shiplight/tester/general
+	ship_name = "UAS Tester"
+	ship_light_group = "general"
+

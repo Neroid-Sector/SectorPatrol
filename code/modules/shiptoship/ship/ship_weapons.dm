@@ -71,9 +71,9 @@
 		)
 
 /obj/structure/ship_elements/primary_cannon/proc/LeverLink()
-	var/list/area_contents
+	var/list/area_contents = list()
 	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
-		area_contents += areas_to_scan.GetAllContents()
+		area_contents.Add(areas_to_scan.GetAllContents())
 	for(var/obj/structure/ship_elements/primer_lever/primary/primary_lever in area_contents)
 		if(primary_lever.ship_name == ship_name)
 			primary_lever.paired_device = src
@@ -347,9 +347,9 @@
 		)
 
 /obj/structure/ship_elements/secondary_cannon/proc/LeverLink()
-	var/list/area_contents
+	var/list/area_contents = list()
 	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
-		area_contents += areas_to_scan.GetAllContents()
+		area_contents.Add(areas_to_scan.GetAllContents())
 	for(var/obj/structure/ship_elements/primer_lever/secondary/secondary_lever in area_contents)
 		if(secondary_lever.ship_name == ship_name)
 			secondary_lever.paired_device = src

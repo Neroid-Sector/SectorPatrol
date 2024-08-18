@@ -16,14 +16,31 @@
 	var/terminal_window_size = "800x800"
 	var/header_name = "NAME GOES HERE"
 	var/terminal_header
+	light_range = 3
+	light_power = 3
+	light_color = "#67ac67"
+	light_system = HYBRID_LIGHT
 
 /obj/structure/terminal/proc/WriteHeader()
 	terminal_header = {"<center><b>[header_name]</b><br>UACM 2ND LOGISTICS</center>"}
 
+/obj/structure/terminal/proc/AnimateUse(use)
+	switch(use)
+		if(null)
+			return
+		if(0)
+			icon_state = "open_off"
+			set_light(0)
+			update_icon()
+		if(1)
+			icon_state = "open_ok"
+			set_light(3)
+			update_icon()
+
 /obj/structure/terminal/Initialize(mapload, ...)
 	WriteHeader()
+	AnimateUse(0)
 	. = ..()
-
 
 /obj/structure/terminal/proc/reset_buffer() // resets terminal buffer and creates fresh list.
 	terminal_trimmed_buffer = null
