@@ -265,6 +265,7 @@
 		if("Tracker Test")
 			sts_master.clear_map()
 			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 1, x = 19, y = 20, name = "Tester Missile", type = "Direct-Direct", missile_speed = 5, vector_x = 20, vector_y = 99, warhead_type = "Direct", warhead_payload = 6)
 			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "Testing Target", type = "Testing Vessel", vector_x = 3, vector_y = 2, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
 	sts_entity_panel()
 	return

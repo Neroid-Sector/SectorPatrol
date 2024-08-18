@@ -586,21 +586,29 @@
 	var/missile_target_x = target_x
 	var/missile_target_y = target_y
 	var/missile_speed = speed
-	var/missile_displacement_x = missile_speed / 2
-	var/missile_displacement_y = floor(missile_speed / 2)
-	if(missile_x == 0 || missile_y == 0 || missile_speed == 0 || missile_target_x == 0 || missile_target_y == 0) return
 	var/distance_x = abs(target_x - start_x)
 	var/distance_y = abs(target_y - start_y)
 	if((distance_x + distance_y) <= missile_speed) return "in_range"
+	var/missile_displacement_x = ceil(missile_speed / 2)
+	var/missile_displacement_y = floor(missile_speed / 2)
+	if(missile_x == 0 || missile_y == 0 || missile_speed == 0 || missile_target_x == 0 || missile_target_y == 0) return
+	if(distance_x < missile_displacement_x)
+		var/extra_x = missile_displacement_x - distance_x
+		missile_displacement_x -= extra_x
+		missile_displacement_y += extra_x
+	if(distance_y < missile_displacement_y)
+		var/extra_y = missile_displacement_y - distance_y
+		missile_displacement_y -= extra_y
+		missile_displacement_y += extra_y
 	if(only_test == 0)
 		if((distance_x - missile_displacement_x) > 0)
-			if((missile_target_x - missile_x) > 0)
+			if((missile_target_x - missile_x) >= 0)
 				sector_map[missile_x][missile_y]["missile"]["system"]["derived_vector_x"] = missile_displacement_x
 			if((missile_target_x - missile_x) < 0)
 				sector_map[missile_x][missile_y]["missile"]["system"]["derived_vector_x"] = 0 - missile_displacement_x
 		if((distance_x - missile_displacement_x) <= 0 ) sector_map[missile_x][missile_y]["missile"]["system"]["derived_vector_x"] = distance_x
 		if((distance_y - missile_displacement_y) > 0)
-			if((missile_target_y - missile_x) > 0)
+			if((missile_target_y - missile_x) >= 0)
 				sector_map[missile_x][missile_y]["missile"]["system"]["derived_vector_y"] = missile_displacement_y
 			if((missile_target_y - missile_x) < 0)
 				sector_map[missile_x][missile_y]["missile"]["system"]["derived_vector_y"] = 0 - missile_displacement_y
@@ -868,6 +876,10 @@
 
 
 /obj/structure/shiptoship_master/proc/NextTurn()
+	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_pre in world)
+		if(ship_mc_pre.sector_map_data["initialized"] == 1)
+			ship_mc_pre.local_round_log_moves = null
+			ship_mc_pre.local_round_log_moves = list()
 	var/len_to_test
 	ProcessMovement(type = "ship")
 	while(len_to_test != round_history_current.len)

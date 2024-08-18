@@ -112,7 +112,7 @@
 			var/current_round
 			if(linked_master_console.local_round_log.len == 0) current_round = "No recent Sonar activity."
 			if(linked_master_console.local_round_log.len != 0) current_round = jointext(linked_master_console.local_round_log, "</p><p>")
-			window_size="700x400"
+			window_size="700x500"
 			dat +={"<p><b>Sonar Activity:</b></p>
 				<p>[current_round]</p>
 				"}
@@ -120,23 +120,26 @@
 			var/round_history
 			if(linked_master_console.local_round_log_full.len == 0) round_history = "No Sonar history in buffer."
 			if(linked_master_console.local_round_log_full.len != 0) round_history = jointext(linked_master_console.local_round_log_full, "</p><p>")
-			window_size="700x400"
+			window_size="700x500"
 			dat +={"<p><b>Sonar Activity History Buffer:</b></p>
 				<p>[round_history]</p>
 				"}
 		if("pings_and_tracking")
+			window_size="500x500"
 			var/activity_summary
-			var/pings_and_tracking
-			if(linked_master_console.ping_history.len == 0) pings_and_tracking += "No ping history."
-			if(linked_master_console.ping_history.len != 0) pings_and_tracking += jointext(linked_master_console.ping_history, "</p><p>")
-			pings_and_tracking += jointext(linked_master_console.GetTrackingList(), "</p><p>")
+			var/list/pings_and_tracking = list()
+			pings_and_tracking.Add("<b>PINGS</b>")
+			if(linked_master_console.ping_history.len == 0) pings_and_tracking.Add("No ping history.")
+			if(linked_master_console.ping_history.len != 0) pings_and_tracking.Add(jointext(linked_master_console.ping_history, "</p><p>"))
+			pings_and_tracking.Add("<b>TRACKING</b>")
+			pings_and_tracking.Add(jointext(linked_master_console.GetTrackingList(), "</p><p>"))
+			var/pings_and_tracking_output = jointext(pings_and_tracking, "</p><p>")
 			if(linked_master_console.local_round_log_moves.len == 0) activity_summary = "No recent activity."
 			if(linked_master_console.local_round_log_moves.len != 0) activity_summary = jointext(linked_master_console.local_round_log_moves, "</p><p>")
 			dat +={"<p><b>Pings and Tracking:</b></p>
 				<p>Activity update:</p>
 				<p><b>[activity_summary]</b></p>
-				<p>Pings and Trackers readout:</p>
-				<p>[pings_and_tracking]</p>
+				<p>[pings_and_tracking_output]</p>
 				"}
 		if("ship_messages")
 			var/ship_messages

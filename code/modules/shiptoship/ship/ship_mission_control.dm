@@ -77,13 +77,47 @@
 		current_y = 1
 		current_x += 1
 
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/TrackerUpdate()
+	var/current_tracker_pos = 1
+	while(current_tracker_pos <= tracking_max)
+		if(tracking_list[current_tracker_pos]["id_tag"] != "none")
+			var/id_tag_to_track = tracking_list[current_tracker_pos]["id_tag"]
+			var/current_tracker_scan_x = 1
+			var/current_tracker_scan_y = 1
+			var/new_tracker_x
+			var/new_tracker_y
+			while(current_tracker_scan_x <= GLOB.sector_map_x)
+				while(current_tracker_scan_y <= GLOB.sector_map_y)
+					if(sector_map[current_tracker_scan_x][current_tracker_scan_y]["ship"]["id_tag"] == id_tag_to_track)
+						new_tracker_x = current_tracker_scan_x
+						new_tracker_y = current_tracker_scan_y
+						break
+					if(sector_map[current_tracker_scan_x][current_tracker_scan_y]["missile"]["id_tag"] == id_tag_to_track)
+						new_tracker_x = current_tracker_scan_x
+						new_tracker_y = current_tracker_scan_y
+						break
+					current_tracker_scan_y += 1
+				if(new_tracker_x != null) break
+				current_tracker_scan_y = 1
+				current_tracker_scan_x += 1
+			if(new_tracker_x == null)
+				tracking_list[current_tracker_pos]["id_tag"] = "none"
+				tracking_list[current_tracker_pos]["x"] = 0
+				tracking_list[current_tracker_pos]["y"] = 0
+			else
+				tracking_list[current_tracker_pos]["x"] = new_tracker_x
+				tracking_list[current_tracker_pos]["y"] = new_tracker_y
+		current_tracker_pos += 1
+
+
 /obj/structure/shiptoship_master/ship_missioncontrol/NextTurn()
-	local_round_log_full.Add("<hr><b>ROUND [GLOB.combat_round]</b><hr>")
+	local_round_log_full.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
 	local_round_log_full.Add(local_round_log)
 	linked_command_chair.open_command_window("round_history")
 	local_round_log = null
 	local_round_log = list()
 	SyncPosToMap()
+	TrackerUpdate()
 	if(sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] < 2) sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] += 1
 	INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
 	INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
@@ -93,13 +127,13 @@
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/PingLog(entity_type = 0, pos_x = 0, pos_y = 0, name = "none", type = "none", target_x = 0, target_y = 0, speed = 0, hp = 0, faction = "none")
 	switch(entity_type)
 		if(1)
-			ping_history.Add("<b>([pos_x],[pos_y])</b> | <b>Ship [name] - [type]</b> | IFF: <b>[faction]</b><br>Vector:<b>([target_x],[target_y])</b> Max: <b>[speed]</b> | Integrity: <b>[hp]</b>)")
+			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Ship [name] - [type]</b> | IFF: <b>[faction]</b><br>Vector:<b>([target_x],[target_y])</b> Max: <b>[speed]</b> | Integrity: <b>[hp]</b>)")
 		if(2)
-			ping_history.Add("<b>([pos_x],[pos_y])</b> | <b>Pojectile [name] | Warhead: [type]<br>Payload: [hp] | Target:([target_x],[target_y]) | Velocity: [speed]")
+			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Pojectile [name] | Warhead: [type]<br>Payload: [hp] | Target:([target_x],[target_y]) | Velocity: [speed]")
 		if(3)
-			ping_history.Add("<b>([pos_x],[pos_y])</b> | <b>Unknown Ship:</b> Bearing: [type] | Velocity: [speed]")
+			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Unknown Ship:</b> Bearing: [type] | Velocity: [speed]")
 		if(4)
-			ping_history.Add("<b>([pos_x],[pos_y])</b> | <b>Unknown Projectile</b> Bearing: [type] | Velocity: [speed]")
+			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Unknown Projectile</b> Bearing: [type] | Velocity: [speed]")
 	linked_command_chair.open_command_window("pings_and_tracking")
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/ScannerPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0, range = 0)
@@ -145,16 +179,16 @@
 
 				var/saved_len = target_console.terminal_buffer.len
 				if(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["id_tag"] != "none")
-					target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT")
-					target_console.terminal_display_line("Sound consistant with ship engine movement.")
-					target_console.terminal_display_line("Bearing: [ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]]")
+					target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT", 10)
+					target_console.terminal_display_line("Sound consistant with ship engine movement.",2)
+					target_console.terminal_display_line("Bearing: [ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]]",10)
 					PingLog(entity_type = 3, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])
 				if(sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["id_tag"] != "none")
-					if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT")
-					target_console.terminal_display_line("Contact. Projectile leapfrog trace detected.")
-					target_console.terminal_display_line("Bearing: [ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y))], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"]]")
+					if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT",10)
+					target_console.terminal_display_line("Contact. Projectile leapfrog trace detected.",2)
+					target_console.terminal_display_line("Bearing: [ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y))], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"]]", 10)
 					PingLog(entity_type = 4, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y)), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"])
-				if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]): No contacts.")
+				if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]): No contacts.",2)
 			current_scan_pos_x += 1
 		current_scan_pos_x = scan_boundary_x_min
 		current_scan_pos_y += 1
@@ -175,13 +209,13 @@
 	if(message_source == null || message_to_add == null) return
 	switch(message_type)
 		if(0)
-			comms_messages.Add({"Direct message recieved. <b>Sender: [message_source]. Message: \<[message_to_add]\>.</b>"})
+			comms_messages.Add({"[GLOB.combat_round]|Direct message recieved. <b>Sender: [message_source]. Message: \<[message_to_add]\>.</b>"})
 		if(1)
-			comms_messages.Add({"Communications <b>activity detected in sector ([message_source]).</b>"})
+			comms_messages.Add({"[GLOB.combat_round]|Communications <b>activity detected in sector ([message_source]).</b>"})
 		if(2)
-			comms_messages.Add({"Incoming System-Wide <b>Message from [message_source]:</b> \<[message_to_add]\>"})
+			comms_messages.Add({"[GLOB.combat_round]|Incoming System-Wide <b>Message from [message_source]:</b> \<[message_to_add]\>"})
 		if(3)
-			comms_messages.Add({"Out of sector <b>comms pulse detected</b>!"})
+			comms_messages.Add({"[GLOB.combat_round]|Out of sector <b>comms pulse detected</b>!"})
 	linked_command_chair.open_command_window("ship_messages")
 
 
@@ -284,13 +318,15 @@
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/TrackerCheck(id = null) //Checks tracker buffer, if no id is given, returns free tracker slot. If id is passed, returns the slot where a the given ID resides.
 	var/current_track_pos = 1
-	while (current_track_pos <= tracking_max)
-		if(tracking_list[current_track_pos]["id_tag"] != "none")
-			if(id != null)
+	if(id != null)
+		while (current_track_pos <= tracking_max)
+			if(tracking_list[current_track_pos]["id_tag"] != "none")
 				if (tracking_list[current_track_pos]["id_tag"] == id) break
-			else
-				break
-		current_track_pos += 1
+			current_track_pos += 1
+	if(id == null)
+		while (current_track_pos <= tracking_max)
+			if(tracking_list[current_track_pos]["id_tag"] == "none") break
+			current_track_pos += 1
 	if(current_track_pos > tracking_max) current_track_pos = 0
 	return current_track_pos
 
@@ -309,31 +345,33 @@
 		target_console.usage_data["tracker_uses_current"] += 1
 		return 1
 	if(sector_map[x_to_target_track][y_to_target_track]["ship"]["id_tag"] != "none")
-		if(TrackerCheck(id = sector_map[x_to_target_track][y_to_target_track]["ship"]["id_tag"]) == 0)
-			if(TrackerCheck() != 0)
-				tracking_list[TrackerCheck()]["x"] = x_to_target_track
-				tracking_list[TrackerCheck()]["y"] = y_to_target_track
-				target_console.terminal_display_line("Success. Tracker ID [TrackerCheck()] installed on ship entity at ([x_to_target_track],[y_to_target_track])")
-				tracking_list[TrackerCheck()]["id_tag"] = sector_map[x_to_target_track][y_to_target_track]["ship"]["id_tag"]
-				target_console.usage_data["tracker_uses_current"] += 1
-				return 1
-			else
-				target_console.terminal_display_line("Error: No free trackers. Use TRACKER R to terminate a tracker by ID. Tracker Lost.")
-				target_console.usage_data["tracker_uses_current"] += 1
-				return 1
+		var/tracker_check_result = TrackerCheck(id = sector_map[x_to_target_track][y_to_target_track]["ship"]["id_tag"])
+		var/tracker_empty_slot = TrackerCheck (id = null)
+		if(tracker_empty_slot == 0)
+			target_console.terminal_display_line("Error: No free trackers. Use TRACKER R to terminate a tracker by ID. Tracker Lost.")
+			target_console.usage_data["tracker_uses_current"] += 1
+			return 1
+		else if(tracker_check_result == 0)
+			tracking_list[tracker_empty_slot]["x"] = x_to_target_track
+			tracking_list[tracker_empty_slot]["y"] = y_to_target_track
+			target_console.terminal_display_line("Success. Tracker ID [tracker_empty_slot] installed on ship entity at ([x_to_target_track],[y_to_target_track])")
+			tracking_list[tracker_empty_slot]["id_tag"] = sector_map[x_to_target_track][y_to_target_track]["ship"]["id_tag"]
+			target_console.usage_data["tracker_uses_current"] += 1
+			return 1
 	if(sector_map[x_to_target_track][y_to_target_track]["missile"]["id_tag"] != "none")
-		if(TrackerCheck(id = sector_map[x_to_target_track][y_to_target_track]["missile"]["id_tag"]) == 0)
-			if(TrackerCheck() != 0)
-				tracking_list[TrackerCheck()]["x"] = x_to_target_track
-				tracking_list[TrackerCheck()]["y"] = y_to_target_track
-				target_console.terminal_display_line("Success. Tracker ID [TrackerCheck()] installed on ship entity at ([x_to_target_track],[y_to_target_track])")
-				tracking_list[TrackerCheck()]["id_tag"] = sector_map[x_to_target_track][y_to_target_track]["missile"]["id_tag"]
-				target_console.usage_data["tracker_uses_current"] += 1
-				return 1
-			else
-				target_console.terminal_display_line("Error: No free trackers. Use TRACKER R to terminate a tracker by ID.")
-				target_console.usage_data["tracker_uses_current"] += 1
-				return 1
+		var/tracker_check_result = TrackerCheck(id = sector_map[x_to_target_track][y_to_target_track]["missile"]["id_tag"])
+		var/tracker_empty_slot = TrackerCheck (id = null)
+		if(tracker_empty_slot == 0)
+			target_console.terminal_display_line("Error: No free trackers. Use TRACKER R to terminate a tracker by ID. Tracker Lost.")
+			target_console.usage_data["tracker_uses_current"] += 1
+			return 1
+		else if(tracker_check_result == 0)
+			tracking_list[tracker_empty_slot]["x"] = x_to_target_track
+			tracking_list[tracker_empty_slot]["y"] = y_to_target_track
+			target_console.terminal_display_line("Success. Tracker ID [tracker_empty_slot] installed on missile entity at ([x_to_target_track],[y_to_target_track])")
+			tracking_list[tracker_empty_slot]["id_tag"] = sector_map[x_to_target_track][y_to_target_track]["missile"]["id_tag"]
+			target_console.usage_data["tracker_uses_current"] += 1
+			return 1
 	else
 		target_console.terminal_display_line("Error: No entity to track detected. Tracker lost.")
 		target_console.usage_data["tracker_uses_current"] += 1
@@ -401,6 +439,7 @@
 				var/turf/turf_return = get_turf(linked_command_chair)
 				to_chat(world, SPAN_INFO("Command Chair Linked at [turf_return.x],[turf_return.y]"))
 				break
+	sector_map_data["initialized"] = 1
 	to_chat(world, SPAN_INFO("Ship [sector_map_data["name"]] Initalized on the Sector Map."))
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/IncomingMapDamage(type = null, ammount = null)
