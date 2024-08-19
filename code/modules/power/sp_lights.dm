@@ -114,19 +114,17 @@
 			return
 		if("dim")
 			light_color = COLOR_WHITE
-			set_light(3)
+			set_light(2)
 		if("normal")
 			light_color = COLOR_WHITE
 			set_light(8)
 		if("turn_on")
 			light_color = COLOR_WHITE
-			set_light(2)
-			sleep(2)
-			set_light(4)
-			sleep(2)
-			set_light(6)
-			sleep(2)
-			set_light(8)
+			var/starting_value = 2
+			while(starting_value <= 8)
+				set_light(starting_value)
+				starting_value += 1
+				sleep(1)
 		if("red_alert")
 			light_color = "#be0606"
 			set_light(8)

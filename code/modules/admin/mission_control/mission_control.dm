@@ -249,7 +249,7 @@
 			sts_master.clear_map()
 		if("Firing Test")
 			sts_master.clear_map()
-			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 0, x = 20, y = 50, name = "UAS Tester", type = "Testing Vessel", vector_x = 3, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
 			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "Testing Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
 			sts_master.add_entity(entity_type = 0, x = 23, y = 50, name = "Close Range Testing Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
 		if("Damage Test")

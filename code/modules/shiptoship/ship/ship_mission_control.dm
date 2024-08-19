@@ -17,6 +17,7 @@
 	var/obj/structure/terminal/damage_console/linked_damage_console
 	var/obj/structure/terminal/cargo_console/linked_cargo_console
 	var/obj/structure/ship_elements/command_chair/linked_command_chair
+	var/obj/structure/ship_elements/control_pad/linked_control_pad
 	var/ignition = 0
 	var/list/light_group_weapons = list()
 	var/list/light_group_signals = list()
@@ -117,6 +118,7 @@
 	linked_cargo_console.AnimateUse(1)
 	talkas("Command chair uplink established.")
 	LightGroup(group = "general", state = "turn_on")
+	linked_control_pad.AnimateUse(1)
 	talkas("Navigation systems ready for your input, Arbiter. The ship is yours.")
 	ignition = 1
 
@@ -130,6 +132,7 @@
 			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),1)
 			INVOKE_ASYNC(linked_cargo_console,TYPE_PROC_REF(/obj/structure/terminal/cargo_console/, ProcessShutdown),1)
 			INVOKE_ASYNC(linked_command_chair,TYPE_PROC_REF(/obj/structure/ship_elements/command_chair/, ProcessShutdown),1)
+			INVOKE_ASYNC(linked_control_pad,TYPE_PROC_REF(/obj/structure/ship_elements/control_pad/, ProcessShutdown),1)
 			repair_shutdown = 1
 		if(0)
 			INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, ProcessShutdown),0)
@@ -137,6 +140,7 @@
 			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, ProcessShutdown),0)
 			INVOKE_ASYNC(linked_cargo_console,TYPE_PROC_REF(/obj/structure/terminal/cargo_console/, ProcessShutdown),0)
 			INVOKE_ASYNC(linked_command_chair,TYPE_PROC_REF(/obj/structure/ship_elements/command_chair/, ProcessShutdown),0)
+			INVOKE_ASYNC(linked_control_pad,TYPE_PROC_REF(/obj/structure/ship_elements/control_pad/, ProcessShutdown),0)
 			repair_shutdown = 0
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/SyncPosToMap()
@@ -199,6 +203,7 @@
 	if(sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] < 2) sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] += 1
 	INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
 	INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
+	INVOKE_ASYNC(linked_control_pad,TYPE_PROC_REF(/obj/structure/ship_elements/control_pad/, SetUsageData),0)
 	INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, SetUsageData),0,null)
 	return 1
 
@@ -516,6 +521,14 @@
 				chair.LinkToShipMaster(master_console = src)
 				var/turf/turf_return = get_turf(linked_command_chair)
 				to_chat(world, SPAN_INFO("Command Chair Linked at [turf_return.x],[turf_return.y]"))
+				break
+	if(linked_control_pad == null)
+		for(var/obj/structure/ship_elements/control_pad/pad in area_contents)
+			if(pad.ship_name == sector_map_data["name"])
+				linked_control_pad = pad
+				pad.LinkToShipMaster(master_console = src)
+				var/turf/turf_return = get_turf(linked_control_pad)
+				to_chat(world, SPAN_INFO("Ship Control Pad at [turf_return.x],[turf_return.y]"))
 				break
 	var/light_counter = 0
 	for(var/obj/structure/machinery/light/shiplight/shiplight_to_add in world)

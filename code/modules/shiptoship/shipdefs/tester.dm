@@ -129,3 +129,5 @@
 	ship_name = "UAS Tester"
 	ship_light_group = "general"
 
+/obj/structure/ship_elements/control_pad/tester
+	ship_name = "UAS Tester"
