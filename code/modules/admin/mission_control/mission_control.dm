@@ -345,8 +345,11 @@
 					if(vector_x_to_enter == null) vector_x_to_enter = 0
 					var/vector_y_to_enter = tgui_input_number(usr, "Pick Y coord of target", "Target - Y", default = 0,max_value = 1000 ,min_value = -1000, timeout = 0)
 					if(vector_y_to_enter == null) vector_y_to_enter = 0
-					var/target_tag_to_enter = tgui_input_list(usr, "Select a target Tag", "Tag Ship", sts_master.scan_entites(category = 0, output_format = 1), timeout = 0)
-					if(target_tag_to_enter == null) target_tag_to_enter = "none"
+					var/list/target_tag_list = list()
+					target_tag_list.Add(sts_master.scan_entites(category = 0, output_format = 1))
+					target_tag_list.Add("None")
+					var/target_tag_to_enter = tgui_input_list(usr, "Select a target Tag", "Tag Ship", target_tag_list , timeout = 0)
+					if(target_tag_to_enter == null || target_tag_to_enter == "None") target_tag_to_enter = "none"
 					sts_master.add_entity(entity_type = 1, x = coordinate_x, y = coordinate_y, name = name_to_enter, type = type_to_enter, vector_x = vector_x_to_enter, vector_y = vector_y_to_enter, warhead_type = warhead_to_enter, target_tag = target_tag_to_enter, missile_speed = speed_to_enter)
 			to_chat(usr, SPAN_INFO("Entity Added."))
 		if("remove")
