@@ -20,11 +20,11 @@
 		if(null)
 			return
 		if(0)
-			ship_data["moves"] = ship_speed
+			ship_data["moves"] = 0
 			UpdateMapData()
 			return
 		if(1)
-			ship_data["moves"] = 0
+			ship_data["moves"] = ship_speed
 			UpdateMapData()
 			return
 
@@ -164,7 +164,7 @@
 			DisplayControl()
 			return
 		if("-X")
-			if((ship_data["vector_x"] + ship_data["new_x"] - 1) < -ship_speed || (ship_data["new_x"] - 1) < -ship_speed)
+			if((ship_data["vector_x"] +   ship_data["new_x"] - 1) < -ship_speed || (ship_data["new_x"] - 1) < -ship_speed)
 				to_chat(usr, SPAN_WARNING("Error: Proposed value would be over safe velocity. Aborting"))
 			else
 				if((ship_data["new_x"] - 1) < 0)
@@ -207,8 +207,9 @@
 	if(repair_shutdown == 1)
 		to_chat(usr, SPAN_WARNING("The panel does not respond."))
 		return
-	if(ship_data["moves"] == 0)
+	if(ship_data["moves"] == ship_speed)
 		to_chat(usr, SPAN_WARNING("Movement for [linked_master_console.sector_map_data["name"]] has been already set!"))
+		DisplayControl()
 		return
 	if(ship_steering == 1)
 		to_chat(usr, SPAN_WARNING("Someone is already using this panel."))
@@ -216,10 +217,15 @@
 	ship_steering = 1
 	ship_data["new_x"] = 0
 	ship_data["new_y"] = 0
-	ship_data["moves_made"] = 0
+	ship_data["moves_made"] = ship_data["moves"]
+	icon_state = "cpad_working"
+	update_icon()
 	UpdateMapData()
 	DisplayControl()
 	ship_steering = 0
+	world << browse(null, "window=[linked_master_console.sector_map_data["name"]]_CPAD")
+	icon_state = "cpad_on"
+	update_icon()
 	return
 
 
