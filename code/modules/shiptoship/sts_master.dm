@@ -743,6 +743,7 @@
 						return 1
 				if(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["tag"] != "none")
 					if(sector_map[exploding_missile_x][exploding_missile_y]["missile"]["target"]["tag"] == sector_map[x_to_explode][y_to_explode]["ship"]["id_tag"])
+						log_round_history(event = "warhead_hit", log_source = "[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["name"]],[sector_map[exploding_missile_x][exploding_missile_y]["missile"]["type"]] - [sector_map[exploding_missile_x][exploding_missile_y]["missile"]["id_tag"]]")
 						if(ProcessDamage(ammount = sector_map[exploding_missile_x][exploding_missile_y]["missile"]["warhead"]["payload"], x = x_to_explode, y = y_to_explode) == 1)
 							rem_entity(type = "coord", id = "missile", coord_x = exploding_missile_x, coord_y = exploding_missile_y)
 							return 1

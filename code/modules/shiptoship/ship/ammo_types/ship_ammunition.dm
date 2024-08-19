@@ -1,5 +1,5 @@
 /obj/structure/ship_elements/missile_ammo/missile_homing
-	name = "UACM \"Hunter\" Missile"
+	name = "UACM 'Hunter' Missile"
 	desc = "A medium sized missile painted in a very characteristic orange, without a warhead in a protective transport clamp."
 	desc_lore = "Hunter missiles were designed on the OV-PST from the ground up and unlike other Mission Control-bound devices which are adaptations of existing technology contains components designed on and produced only on the PST. Unlike conventional homing missiles which fly towards their destination, then launch a short-range homing warhead, the PST homing missile is imprinted with an LD energy signature of its target which the missile actively re-homes towards during its journey."
 	icon = 'icons/sectorpatrol/ship/weapon_ammo64.dmi'
@@ -10,7 +10,7 @@
 	element_value = 20
 
 /obj/structure/ship_elements/missile_ammo/missile_dumbfire
-	name = "Modified UACM \"Panther\" Missile"
+	name = "Modified UACM 'Panther' Missile"
 	desc = "A small missile with most of its internal systems taken out, secured in protective clamps. Does not have a warhead."
 	desc_lore = "Panther missiles are already the fastest UACM projectile, but the models made compatible with the PST's Mission Control system tap into the PSTs energy reserves and push it closer to TWE close-combat rockets which currently hold the crown in that specific performance category. The sacrifice here is the lack of a homing system or any other supplementary guidance. This device is almost literally just an LD engine carrying a warhead."
 	icon = 'icons/sectorpatrol/ship/weapon_ammo64.dmi'
@@ -21,7 +21,7 @@
 	element_value = 40
 
 /obj/structure/ship_elements/missile_ammo/missile_torpedo
-	name = "Modified UACM \"Inferno\" Torpedo"
+	name = "Modified UACM 'Inferno' Torpedo"
 	desc = "A massive projectile with what looks like a pair of LD power storage devices attached to it. It's secured by a protective clamp and does not have a warhead attached."
 	desc_lore = "Meant for striking space stations, disabled, or larger ships, the Inferno sees use mostly on bigger capital ships during planetary sieges. The PST modified; Mission Control enabled variant attaches a Liquid Data power spooling device to the projectile which accumulates more energy with each successive LD leapfrog, which is then fed back into the torpedoes systems, increasing both its payload and speed. Essentially, the longer this projectile files, the faster it gets and the harder it hits, regardless of attached warhead."
 	icon = 'icons/sectorpatrol/ship/weapon_ammo64.dmi'
