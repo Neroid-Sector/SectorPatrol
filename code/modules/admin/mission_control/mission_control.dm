@@ -486,8 +486,8 @@
 	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
 		sts_master = sts_master_to_link
 		break
-	var/list/fire_sources
-	var/list/fire_targets
+	var/list/fire_sources = list()
+	var/list/fire_targets = list()
 	var/fire_scan_x = 1
 	var/fire_scan_y = 1
 	while (fire_scan_x <= GLOB.sector_map_x)
@@ -527,11 +527,11 @@
 	var/secondary_scan_top_y = sts_master.BoundaryAdjust(firing_ship_y + 5,3)
 	var/secondary_scan_current_x = secondary_scan_bottom_x
 	var/secondary_scan_current_y = secodnary_scan_bottom_y
-	var/list/secondary_targets
+	var/list/secondary_targets = list()
 	while(secondary_scan_current_x <= secondary_scan_top_x)
 		while(secondary_scan_current_y <= secondary_scan_top_y)
 			if(abs(firing_ship_y - secondary_scan_current_y) + abs(firing_ship_x - secondary_scan_current_x) <= 5)
-				if(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"] != "none")
+				if(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"] != "none" && sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"] != sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["id_tag"])
 					secondary_targets.Add(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["ship"]["id_tag"])
 				if(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["missile"]["id_tag"] != "none")
 					secondary_targets.Add(sts_master.sector_map[secondary_scan_current_x][secondary_scan_current_y]["missile"]["id_tag"])
@@ -545,7 +545,7 @@
 			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] != sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_max"])
 				to_chat(usr,SPAN_WARNING("Cannot fire Primary - Ship already fired."))
 				return
-			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["missile"]["id_tag"] != "none")
+			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["missile"]["id_tag"] != "none")
 				to_chat(usr,SPAN_WARNING("Cannot fire Primary - Missle present at location."))
 				return
 			fire_targets.Add("Coordinates")
@@ -599,6 +599,7 @@
 				if(ship_sts_to_log.sector_map_data["name"] != ship_to_fire)
 					ship_sts_to_log.WriteToShipLog(shiplog_event = "missile_launch")
 			sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] -= 1
+			to_chat(usr, SPAN_INFO("Primary Weapon fired."))
 		if("Secondary")
 			if(sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] == sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_max"])
 				if(tgui_alert(usr, "Confirm Secondary Fire without firing Primary?", "Secondary Fire CONFIRM", list("Yes","No"), timeout = 0) == "No") return
@@ -623,10 +624,14 @@
 						fire_scan_y += 1
 					if(secondary_target_x != null) break
 					fire_scan_y = 1
-				fire_scan_x += 1
+					fire_scan_x += 1
 			if(id_to_secondary_target == "Vector")
-				secondary_target_x = tgui_input_number(usr, "Enter vector X of secondary fire", "Secondary VECTOR_X", 0, 5, -5, timeout = 0)
-				secondary_target_y = tgui_input_number(usr, "Enter vector Y of secondary fire", "Secondary VECTOR_Y", 0, 5, -5, timeout = 0)
+				var/secondary_target_vector_x = tgui_input_number(usr, "Enter vector X of secondary fire", "Secondary VECTOR_X", 0, 5, -5, timeout = 0)
+				if(secondary_target_vector_x == null) return
+				var/secondary_target_vector_y = tgui_input_number(usr, "Enter vector Y of secondary fire", "Secondary VECTOR_Y", 0, 5, -5, timeout = 0)
+				if(secondary_target_vector_y == null) return
+				secondary_target_x = firing_ship_x + secondary_target_vector_x
+				secondary_target_y = firing_ship_y + secondary_target_vector_y
 			if(secondary_target_x == null || secondary_target_y == null) return
 			var/secondary_payload = tgui_input_number(usr, "Select Secondary Damage", "Secondary PAYLOAD", 1, min_value = 1, timeout = 0)
 			if(secondary_payload == null) return
@@ -644,10 +649,13 @@
 						ship_sts_to_log.WriteToShipLog(shiplog_event = "secondary_fire", shiplog_dest_x = firing_ship_x, shiplog_dest_y = firing_ship_y)
 					sts_master.ProcessSplashDamage(ammount = secondary_payload, x = secondary_target_x, y = secondary_target_y)
 			sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] -= 1
+			to_chat(usr, SPAN_INFO("Secondary weapon fired."))
 		if("Mark Ship As Fired")
 			sts_master.sector_map[firing_ship_x][firing_ship_y]["ship"]["system"]["salvos_left"] = 0
 			sts_master.log_round_history(event = "passes_turn", log_source = ship_to_fire, log_dest_x = firing_ship_x, log_dest_y = firing_ship_y)
+			to_chat(usr, SPAN_INFO("Ship marked as complete."))
 	MissionControl(window = "ShipToShip_RoundControl")
+	view_ship_log("round")
 	return
 
 /datum/admins/proc/sonar_ping()

@@ -250,7 +250,6 @@
 				sector_map[current_x][current_y]["ship"]["system"]["movement_left"] = 0
 				sector_map[current_x][current_y]["ship"]["system"]["processed_movement"] = 0
 				sector_map[current_x][current_y]["ship"]["system"]["repairs_left"] = 2
-				sector_map[current_x][current_y]["ship"]["system"]["salvos_max"] = 0
 				sector_map[current_x][current_y]["ship"]["system"]["salvos_left"] = sector_map[current_x][current_y]["ship"]["system"]["salvos_max"]
 				sector_map[current_x][current_y]["missile"]["system"]["processed_movement"] = 0
 				sector_map[current_x][current_y]["missile"]["system"]["has_moved"] = 0
@@ -656,7 +655,8 @@
 	var/x_to_splash_damage_min = BoundaryAdjust(value = (x_to_splash_damage - (ship_splash_damage_payload + 1)), type = 1)
 	var/y_to_splash_damage_max = BoundaryAdjust(value = (y_to_splash_damage + (ship_splash_damage_payload - 1)), type = 3)
 	var/y_to_splash_damage_min = BoundaryAdjust(value = (y_to_splash_damage - (ship_splash_damage_payload + 1)), type = 1)
-	if(sector_map[x_to_splash_damage][y_to_splash_damage]["ship"]["id_tag"] != "none")
+	var/splash_center_id = sector_map[x_to_splash_damage][y_to_splash_damage]["ship"]["id_tag"]
+	if(splash_center_id != "none")
 		ProcessDamage(ammount = ship_splash_damage_payload, x = x_to_splash_damage, y = y_to_splash_damage)
 		if(counter == 1) output_counter += 1
 	var/current_x_splash = x_to_splash_damage_min
@@ -665,7 +665,7 @@
 		while(current_y_splash < y_to_splash_damage_max)
 			var/damage_to_splash = ship_splash_damage_payload - (abs(y_to_splash_damage - current_y_splash) + abs(x_to_splash_damage - current_x_splash))
 			if(damage_to_splash > 0)
-				if(sector_map[current_x_splash][current_y_splash]["ship"]["id_tag"] != "none")
+				if(sector_map[current_x_splash][current_y_splash]["ship"]["id_tag"] != "none" && sector_map[current_x_splash][current_y_splash]["ship"]["id_tag"] != splash_center_id)
 					ProcessDamage(ammount = damage_to_splash, x = current_x_splash, y = current_y_splash)
 					if(counter == 1) output_counter += 1
 				if(sector_map[current_x_splash][current_y_splash]["missile"]["id_tag"] != "none")
@@ -1127,7 +1127,7 @@
 				open_movement_console(x = variable_storage["stored_x"], y = variable_storage["stored_y"])
 				return
 		if("y_minus")
-			var/reversed_max = 0 - sector_map["stored_x"]["stored_y"]["ship"]["vector"]["speed"]
+			var/reversed_max = 0 - sector_map[variable_storage["stored_x"]][variable_storage["stored_y"]]["ship"]["vector"]["speed"]
 			if(sector_map[variable_storage["stored_x"]][variable_storage["stored_y"]]["ship"]["vector"]["y"] <= reversed_max)
 				to_chat(usr,SPAN_WARNING("Error: Maxium velocity reached. Safeguards in place. Acceleration denied."))
 				open_movement_console(x = variable_storage["stored_x"], y = variable_storage["stored_y"])
@@ -1150,7 +1150,7 @@
 				open_movement_console(x = variable_storage["stored_x"], y = variable_storage["stored_y"])
 				return
 		if("x_minus")
-			var/reversed_max = 0 - sector_map["stored_x"]["stored_y"]["ship"]["vector"]["speed"]
+			var/reversed_max = 0 - sector_map[variable_storage["stored_x"]][variable_storage["stored_y"]]["ship"]["vector"]["speed"]
 			if(sector_map[variable_storage["stored_x"]][variable_storage["stored_y"]]["ship"]["vector"]["x"] <= reversed_max)
 				to_chat(usr,SPAN_WARNING("Error: Maxium velocity reached. Safeguards in place. Acceleration denied."))
 				open_movement_console(x = variable_storage["stored_x"], y = variable_storage["stored_y"])
