@@ -15,17 +15,6 @@
 	show_blurb(GLOB.player_list, duration, message, TRUE, "center", "center", "#bd2020", "ADMIN")
 	message_admins("[key_name(usr)] sent an admin blurb alert to all players. Alert reads: '[message]' and lasts [(duration / 10)] seconds.")
 
-/client/proc/prepare_admin_song_blurb()
-	set name = "Setup Custom Song Blurb"
-	set category = "Admin.SectorPatrol"
-
-	if(!check_rights(R_ADMIN|R_DEBUG))
-		return FALSE
-
-	GLOB.song_title = tgui_input_text(usr, "Enter a Song Title", "Title selection", GLOB.song_title, MAX_MESSAGE_LEN, FALSE, TRUE, 0)
-	GLOB.song_info = tgui_input_text(usr, "Enter a Song Artist/Album", "Artist/Album selection", GLOB.song_info, MAX_MESSAGE_LEN, FALSE, TRUE, 0)
-	to_chat(src, SPAN_INFO("[GLOB.song_title] / [GLOB.song_info] set"))
-
 
 /client/proc/cmd_admin_pythia_say() // Checks for a Pythia reciever and talks as it and any of its voices.
 	set name = "Speak As Pythia"
