@@ -203,7 +203,7 @@
 			var/log_to_display = jointext(sts_master.round_history, "</p><p>")
 			dat += {"<div class="box">
 				<div class="text">
-				<p>Full StS Log</p>
+				<p>Full STS Log</p>
 				</div>
 				</div>
 				<div class="box">
@@ -846,7 +846,7 @@
 			return
 
 /datum/admins/proc/set_narration_preset()
-	set name = "Comms Set Preset"
+	set name = "Speak as NPC over comms - setup NPC"
 	set category = "DM.Narration"
 	if(!check_rights(R_ADMIN)) return
 
@@ -877,7 +877,7 @@
 	return
 
 /datum/admins/proc/speak_to_comms()
-	set name = "Comms Speak"
+	set name = "Speak as NPC over comms"
 	set category = "DM.Narration"
 	if(!check_rights(R_ADMIN)) return
 
@@ -1011,6 +1011,40 @@
 		if(GLOB.savefile_initiated == 0) GLOB.savefile_initiated = 1
 		MissionControl(window = "General")
 
+/datum/admins/proc/ChangeSpaceLocation()
+	set name = "Change ingame location and backdrop"
+	set category = "DM.Narration"
+
+	if(!check_rights(R_ADMIN)) return
+
+	var/new_location = tgui_input_list(usr, "Current backdrop: [GLOB.backdrop_type]","LOCATION",list("space","space_cat"))
+	switch(new_location)
+		if("space")
+			GLOB.ingame_current_system = "Tau-Gamma 331, Neroid Sector"
+			show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "NOW ARRIVING:\n<b>[GLOB.ingame_current_system]</b>", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "now_arriving", ignore_key = TRUE, speed = 1)
+			GLOB.backdrop_type = "space"
+			for(var/mob/mob in GLOB.mob_list)
+				mob.update_backdrop()
+		if("space_cat")
+			GLOB.ingame_current_system = "Mew-Orionis 420, Nyaoid Sewctow"
+			show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "NOW ARRIVING:\n<b>[GLOB.ingame_current_system]</b>", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "now_arriving", ignore_key = TRUE, speed = 1)
+			GLOB.backdrop_type = "space_cat"
+			for(var/mob/mob in GLOB.mob_list)
+				mob.update_backdrop()
+		else
+			return
+
+/datum/admins/proc/SaveLog()
+	set name = "Save STS Logs"
+	set category = "DM.Control"
+
+	if(!check_rights(R_ADMIN)) return
+
+	for(var/obj/structure/shiptoship_master/sts_master in world)
+		sts_master.SaveLog()
+		break
+	to_chat(usr, SPAN_INFO("Logs saved."))
+
 /datum/admins/proc/mission_control_panel()
 	set name = "Mission Control Panel"
 	set category = "DM.Control"
@@ -1020,24 +1054,24 @@
 	return
 
 /datum/admins/proc/sts_control_panel()
-	set name = "Sector - Setup Panel"
-	set category = "DM.Sector"
+	set name = "STS Setup Panel"
+	set category = "DM.STS"
 
 	if(!check_rights(R_ADMIN)) return
 	usr.client.admin_holder.MissionControl(window = "ShipToShip")
 	return
 
 /datum/admins/proc/sts_round_flow_panel()
-	set name = "Combat - Round Flow Panel"
-	set category = "DM.Sector"
+	set name = "STS Round Flow Panel"
+	set category = "DM.STS"
 
 	if(!check_rights(R_ADMIN)) return
 	usr.client.admin_holder.MissionControl(window = "ShipToShip_RoundControl")
 	return
 
 /datum/admins/proc/sts_entity_panel()
-	set name = "Combat - Entity Control Panel"
-	set category = "DM.Sector"
+	set name = "STS Entity Control Panel"
+	set category = "DM.STS"
 
 	if(!check_rights(R_ADMIN)) return
 	usr.client.admin_holder.MissionControl(window = "ShipToShip_Entities")

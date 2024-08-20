@@ -78,3 +78,4 @@ GLOBAL_VAR_INIT(combat_round, 1)
 GLOBAL_VAR_INIT(round_phase, 1)
 
 GLOBAL_LIST_EMPTY(sts_ship_areas)
+GLOBAL_VAR_INIT(backdrop_type, "space")

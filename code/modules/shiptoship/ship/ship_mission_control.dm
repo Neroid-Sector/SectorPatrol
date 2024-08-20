@@ -34,6 +34,15 @@
 	light_color = "#660166"
 	langchat_color = "#ec2fb3"
 
+/obj/structure/shiptoship_master/ship_missioncontrol/SaveLog()
+	var/log_output = jointext(local_round_log_full, "\n")
+	log_output += "\nROUND [GLOB.combat_round]\n"
+	log_output += jointext(local_round_log, "\n")
+	log_output = replacetext(log_output,"<b>","")
+	log_output = replacetext(log_output,"</b>","")
+	log_output = replacetext(log_output,"<hr>","")
+	text2file(log_output,"[GLOB.log_directory]/sts_ship_[sector_map_data["name"]].txt")
+
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/AnimateUse(type)
 	switch(type)
 		if(null)

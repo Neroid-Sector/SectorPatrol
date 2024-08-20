@@ -180,6 +180,9 @@ GLOBAL_LIST_INIT(admin_verbs_major_event, list(
 	/datum/admins/proc/sts_entity_panel,
 	/datum/admins/proc/set_narration_preset,
 	/datum/admins/proc/speak_to_comms,
+	/datum/admins/proc/SaveLog,
+	/datum/admins/proc/ChangeSpaceLocation,
+
 ))
 
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(

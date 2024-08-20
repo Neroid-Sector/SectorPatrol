@@ -414,6 +414,16 @@
 			round_history_current.Add("The <b>[log_source_to_add]</b> at coordinates <b>([x_to_move],[y_to_move]) passes the rest of its combat turn<b> and does not fire the rest of its salvoes.")
 			return
 
+/obj/structure/shiptoship_master/proc/SaveLog()
+	var/log_output = jointext(round_history, "\n")
+	log_output += "\nROUND [GLOB.combat_round]\n"
+	log_output += jointext(round_history_current, "\n")
+	log_output = replacetext(log_output,"<b>","")
+	log_output = replacetext(log_output,"</b>","")
+	text2file(log_output,"[GLOB.log_directory]/sts_global.txt")
+	for(var/obj/structure/shiptoship_master/ship_missioncontrol/mc_to_save in world)
+		mc_to_save.SaveLog()
+
 /obj/structure/shiptoship_master/proc/move_on_map(type_to_move = null, origin_x = 0, origin_y = 0, target_x = 0, target_y = 0) // Actually move the ship on grid. Will account for boudaries and "bump" ships away form them, at cost of losing all velocity. Different formulas are used for ships and projectiles, so make sure to pass the right type. For type "ship", pass ship vector as destination_x/y
 	var/selected_type = type_to_move
 	var/move_starting_x = origin_x
