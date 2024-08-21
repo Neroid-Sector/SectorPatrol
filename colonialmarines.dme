@@ -2365,6 +2365,7 @@
 #include "code\modules\shiptoship\ship\ship_command_chair.dm"
 #include "code\modules\shiptoship\ship\ship_damage_control.dm"
 #include "code\modules\shiptoship\ship\ship_mission_control.dm"
+#include "code\modules\shiptoship\ship\ship_props.dm"
 #include "code\modules\shiptoship\ship\ship_weapons.dm"
 #include "code\modules\shiptoship\ship\ammo_types\ship_ammunition.dm"
 #include "code\modules\shiptoship\shipdefs\tester.dm"
