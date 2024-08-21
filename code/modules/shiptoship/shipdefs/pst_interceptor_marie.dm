@@ -85,33 +85,7 @@
 /obj/structure/ship_elements/command_monitor/bottom/marie
 	ship_name = "UAS Marie"
 
-//AREAS
-
-/area/sts_ship/marie/
-	name = "UAS Marie"
-	ship_name = "UAS Marie"
-	area_id = "TST"
-
-/area/sts_ship/marie/command
-	name = "UAS Marie - Bridge"
-	area_id = "TST"
-	icon_state = "command"
-
-/area/sts_ship/marie/weapons
-	name = "UAS Marie - Weapons Bay"
-	area_id = "TST"
-	icon_state = "weapons"
-
-/area/sts_ship/marie/cargo
-	name = "UAS Marie - Cargo Bay"
-	area_id = "TST"
-	icon_state = "cargo"
-
-/area/sts_ship/marie/engineering
-	name = "UAS Marie - Engineering Bay"
-	area_id = "TST"
-	icon_state = "engie"
-
+//light groups
 
 /obj/structure/machinery/light/shiplight/marie/weapons
 	ship_name = "UAS Marie"
@@ -131,3 +105,93 @@
 
 /obj/structure/ship_elements/control_pad/marie
 	ship_name = "UAS Marie"
+
+
+//AREAS
+
+/area/sts_ship/marie/
+	name = "UAS Marie"
+	ship_name = "UAS Marie"
+	area_id = "XXX"
+	unlimited_power = 1
+
+/area/sts_ship/marie/airlock
+	name = "UAS Marie - External Airlock"
+	ship_name = "UAS Marie"
+	area_id = "AIR"
+	unlimited_power = 1
+
+/area/sts_ship/marie/hall
+	name = "UAS Marie - Main Hallway"
+	ship_name = "UAS Marie"
+	area_id = "HLW"
+
+/area/sts_ship/marie/rec
+	name = "UAS Marie - Recreation"
+	ship_name = "UAS Marie"
+	area_id = "REC"
+
+/area/sts_ship/marie/med
+	name = "UAS Marie - Medical"
+	ship_name = "UAS Marie"
+	area_id = "MED"
+
+/area/sts_ship/marie/cryo
+	name = "UAS Marie - Emergency Cryogenics"
+	ship_name = "UAS Marie"
+	area_id = "CRY"
+
+/area/sts_ship/marie/wc
+	name = "UAS Marie - Toilet and Shower"
+	ship_name = "UAS Marie"
+	area_id = "SAN"
+
+/area/sts_ship/marie/command
+	name = "UAS Marie - CIC"
+	area_id = "CIC"
+	icon_state = "command"
+
+/area/sts_ship/marie/command_comms
+	name = "UAS Marie - Liquid Data Telecommunications Array"
+	area_id = "COM"
+	icon_state = "command"
+
+/area/sts_ship/marie/command/twryplus
+	name = "UAS Marie - Twilight Rail - Y-Positive"
+	area_id = "TYP"
+	icon_state = "command"
+
+/area/sts_ship/marie/command/twryminus
+	name = "UAS Marie - Twilight Rail - Y-Negative"
+	area_id = "TYM"
+	icon_state = "command"
+
+/area/sts_ship/marie/command/twrxplus
+	name = "UAS Marie - Twilight Rail - X-Positive"
+	area_id = "TXP"
+	icon_state = "command"
+
+/area/sts_ship/marie/command/twrxminus
+	name = "UAS Marie - Twilight Rail - X-Negative"
+	area_id = "TXM"
+	icon_state = "command"
+
+/area/sts_ship/marie/weapons_p
+	name = "UAS Marie - Primary Weapons Bay"
+	area_id = "PWP"
+	icon_state = "weapons"
+
+/area/sts_ship/marie/weapons_s
+	name = "UAS Marie - Secondary Weapons Bay"
+	area_id = "SWP"
+	icon_state = "weapons"
+
+/area/sts_ship/marie/cargo
+	name = "UAS Marie - Cargo Bays"
+	area_id = "CAR"
+	icon_state = "cargo"
+
+/area/sts_ship/marie/engineering
+	name = "UAS Marie - Damage Control and Power Distribution"
+	area_id = "ENG"
+	icon_state = "engie"

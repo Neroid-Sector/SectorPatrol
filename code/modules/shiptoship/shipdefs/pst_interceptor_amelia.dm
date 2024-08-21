@@ -85,33 +85,7 @@
 /obj/structure/ship_elements/command_monitor/bottom/amelia
 	ship_name = "UAS Amelia"
 
-//AREAS
-
-/area/sts_ship/amelia/
-	name = "UAS Amelia"
-	ship_name = "UAS Amelia"
-	area_id = "TST"
-
-/area/sts_ship/amelia/command
-	name = "UAS Amelia - Bridge"
-	area_id = "TST"
-	icon_state = "command"
-
-/area/sts_ship/amelia/weapons
-	name = "UAS Amelia - Weapons Bay"
-	area_id = "TST"
-	icon_state = "weapons"
-
-/area/sts_ship/amelia/cargo
-	name = "UAS Amelia - Cargo Bay"
-	area_id = "TST"
-	icon_state = "cargo"
-
-/area/sts_ship/amelia/engineering
-	name = "UAS Amelia - Engineering Bay"
-	area_id = "TST"
-	icon_state = "engie"
-
+//light groups
 
 /obj/structure/machinery/light/shiplight/amelia/weapons
 	ship_name = "UAS Amelia"
@@ -131,3 +105,93 @@
 
 /obj/structure/ship_elements/control_pad/amelia
 	ship_name = "UAS Amelia"
+
+
+//AREAS
+
+/area/sts_ship/amelia/
+	name = "UAS Amelia"
+	ship_name = "UAS Amelia"
+	area_id = "XXX"
+	unlimited_power = 1
+
+/area/sts_ship/amelia/airlock
+	name = "UAS Amelia - External Airlock"
+	ship_name = "UAS Amelia"
+	area_id = "AIR"
+	unlimited_power = 1
+
+/area/sts_ship/amelia/hall
+	name = "UAS Amelia - Main Hallway"
+	ship_name = "UAS Amelia"
+	area_id = "HLW"
+
+/area/sts_ship/amelia/rec
+	name = "UAS Amelia - Recreation"
+	ship_name = "UAS Amelia"
+	area_id = "REC"
+
+/area/sts_ship/amelia/med
+	name = "UAS Amelia - Medical"
+	ship_name = "UAS Amelia"
+	area_id = "MED"
+
+/area/sts_ship/amelia/cryo
+	name = "UAS Amelia - Emergency Cryogenics"
+	ship_name = "UAS Amelia"
+	area_id = "CRY"
+
+/area/sts_ship/amelia/wc
+	name = "UAS Amelia - Toilet and Shower"
+	ship_name = "UAS Amelia"
+	area_id = "SAN"
+
+/area/sts_ship/amelia/command
+	name = "UAS Amelia - CIC"
+	area_id = "CIC"
+	icon_state = "command"
+
+/area/sts_ship/amelia/command_comms
+	name = "UAS Amelia - Liquid Data Telecommunications Array"
+	area_id = "COM"
+	icon_state = "command"
+
+/area/sts_ship/amelia/command/twryplus
+	name = "UAS Amelia - Twilight Rail - Y-Positive"
+	area_id = "TYP"
+	icon_state = "command"
+
+/area/sts_ship/amelia/command/twryminus
+	name = "UAS Amelia - Twilight Rail - Y-Negative"
+	area_id = "TYM"
+	icon_state = "command"
+
+/area/sts_ship/amelia/command/twrxplus
+	name = "UAS Amelia - Twilight Rail - X-Positive"
+	area_id = "TXP"
+	icon_state = "command"
+
+/area/sts_ship/amelia/command/twrxminus
+	name = "UAS Amelia - Twilight Rail - X-Negative"
+	area_id = "TXM"
+	icon_state = "command"
+
+/area/sts_ship/amelia/weapons_p
+	name = "UAS Amelia - Primary Weapons Bay"
+	area_id = "PWP"
+	icon_state = "weapons"
+
+/area/sts_ship/amelia/weapons_s
+	name = "UAS Amelia - Secondary Weapons Bay"
+	area_id = "SWP"
+	icon_state = "weapons"
+
+/area/sts_ship/amelia/cargo
+	name = "UAS Amelia - Cargo Bays"
+	area_id = "CAR"
+	icon_state = "cargo"
+
+/area/sts_ship/amelia/engineering
+	name = "UAS Amelia - Damage Control and Power Distribution"
+	area_id = "ENG"
+	icon_state = "engie"

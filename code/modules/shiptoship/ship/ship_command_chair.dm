@@ -12,6 +12,8 @@
 	var/ship_name = "none"
 	var/repair_shutdown = 0
 	var/window_size = "500x300"
+	var/buckling_x = 0
+	var/buckling_y = 0
 
 /obj/structure/ship_elements/command_chair/proc/ProcessShutdown(status = null)
 	switch(status)
@@ -191,6 +193,16 @@
 
 /obj/structure/ship_elements/command_chair/afterbuckle(mob/M)
 	. = ..()
+	if(. && buckled_mob == M)
+		M.pixel_y = buckling_y
+		M.old_y = buckling_y
+		M.pixel_x = buckling_x
+		M.old_x = buckling_x
+	else
+		M.pixel_y = initial(buckled_mob.pixel_y)
+		M.old_y = initial(buckled_mob.pixel_y)
+		M.pixel_x = initial(buckled_mob.pixel_x)
+		M.old_x = initial(buckled_mob.pixel_x)
 	if(buckled_mob == usr)
 		if(linked_master_console.ignition == 0)
 			open_command_window("docked")
