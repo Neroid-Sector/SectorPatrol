@@ -341,19 +341,19 @@
 	name = "SAN orientation label"
 	desc = "OV-PST Interceptor<br><big>- SAN -</big><br>"
 	desc_lore = "The label SAN designates the ship's sanitation and hygiene area."
-	icon_state = "ship_int_car"
+	icon_state = "ship_int_san"
 
 /obj/effect/decal/info_tag/sts/pst_interceptor/rec/
 	name = "REC orientation label"
 	desc = "OV-PST Interceptor<br><big>- REC -</big><br>"
 	desc_lore = "The label REC designates the ship's recreation area, which also beverage and food dispensers along with some other recreational items."
-	icon_state = "ship_int_med"
+	icon_state = "ship_int_rec"
 
 /obj/effect/decal/info_tag/sts/pst_interceptor/med/
 	name = "MED orientation label"
 	desc = "OV-PST Interceptor<br><big>- MED -</big><br>"
 	desc_lore = "The label MED designates the ship's medbay, the place to go for any injury, major or minor."
-	icon_state = "ship_int_car"
+	icon_state = "ship_int_med"
 
 /obj/effect/decal/info_tag/sts/pst_interceptor/cry/
 	name = "CRY orientation label"
@@ -367,8 +367,8 @@
 	desc_lore = "The label COM indicates an entrance to the ship's Liquid Data comms systems and are typically restricted to specially trained personnel."
 	icon_state = "ship_int_com"
 
-/obj/effect/decal/info_tag/sts/pst_interceptor/com/
+/obj/effect/decal/info_tag/sts/pst_interceptor/ext/
 	name = "EXT orientation label"
 	desc = "OV-PST Interceptor<br><big>- EXT -</big><br>"
 	desc_lore = "The label EXT indicates an external airlock, a way in and off the ship."
-	icon_state = "ship_int_com"
+	icon_state = "ship_int_ext"
