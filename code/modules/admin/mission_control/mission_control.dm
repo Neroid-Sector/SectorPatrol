@@ -1007,20 +1007,25 @@
 
 	if(!check_rights(R_ADMIN)) return
 
-	var/new_location = tgui_input_list(usr, "Current backdrop: [GLOB.backdrop_type]","LOCATION",list("space","space_cat"))
+	var/new_location = tgui_input_list(usr, "Current backdrop: [GLOB.backdrop_type]","LOCATION",list("OV-PST","test_site","space_cat"))
 	switch(new_location)
-		if("space")
+		if("OV-PST")
 			GLOB.ingame_current_system = "Tau-Gamma 331, Neroid Sector"
 			show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "NOW ARRIVING:\n<b>[GLOB.ingame_current_system]</b>", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "now_arriving", ignore_key = TRUE, speed = 1)
 			GLOB.backdrop_type = "space"
 			for(var/mob/mob in GLOB.mob_list)
-				mob.update_backdrop()
+				mob.update_backdrop(1)
+		if("test_site")
+			GLOB.ingame_current_system = "Tau-Lambda 937, Neroid Sector"
+			show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "NOW ARRIVING:\n<b>[GLOB.ingame_current_system]</b>", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "now_arriving", ignore_key = TRUE, speed = 1)
+			for(var/mob/mob in GLOB.mob_list)
+				mob.update_backdrop(0)
 		if("space_cat")
 			GLOB.ingame_current_system = "Mew-Orionis 420, Nyaoid Sewctow"
 			show_blurb(GLOB.player_list, duration = 10 SECONDS, message = "NOW ARRIVING:\n<b>[GLOB.ingame_current_system]</b>", screen_position = "CENTER,BOTTOM+1.5:16", text_alignment = "center", text_color = "#ffffff", blurb_key = "now_arriving", ignore_key = TRUE, speed = 1)
 			GLOB.backdrop_type = "space_cat"
 			for(var/mob/mob in GLOB.mob_list)
-				mob.update_backdrop()
+				mob.update_backdrop(1)
 		else
 			return
 
