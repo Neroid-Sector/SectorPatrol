@@ -132,6 +132,7 @@
 	density = TRUE
 	set_opacity(1)
 	layer = closed_layer
+	icon_state = "door_closed"
 	do_animate("closing")
 
 	addtimer(CALLBACK(src, PROC_REF(finish_close)), openspeed)

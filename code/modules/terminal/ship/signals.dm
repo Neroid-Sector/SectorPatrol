@@ -98,7 +98,7 @@
 					terminal_display_line("If used with B and a number, breaks specified link. ID number is fed to Command Overview or reported during establishing link.")
 				if("COMM")
 					terminal_display_line("COMM")
-					terminal_display_line("Usage: COMM <NUMBER>,<NUMBER> TEXT Attempts to establish two way link using LD comm protocols to an entity in the indicated grid.")
+					terminal_display_line("Usage: COMM <NUMBER>,<NUMBER> Attempts to establish two way link using LD comm protocols to an entity in the indicated grid, then lets the user send a message to.")
 					terminal_display_line("While this link is unlikely to be exploited, the recepient is not compelled to answer or maintain comms.")
 				else
 					terminal_display_line("Error: HELP: [string] command not found. Use HELP with no arguments for a list of commands.")
@@ -165,13 +165,16 @@
 				var/commapos = findtext(string, ",")
 				if(commapos == 0)
 					terminal_display_line("Error: Missing comma separator.")
-				var/textpos = findtext(string, " ")
-				if(textpos == 0 || (textpos >= (length(string) -1)))
-					terminal_display_line("Error: No message to send found.")
-				var/x_to_comms = text2num(copytext(string, 1, commapos))
-				var/y_to_comms = text2num(copytext(string, commapos, textpos))
-				var/text_to_comms = copytext(string, textpos)
-				linked_master_console.CommsPing(src, x_to_comms_ping = x_to_comms, y_to_comms_ping = y_to_comms, message_to_comms_ping = text_to_comms)
+				else
+					var/textpos = findtext(string, " ")
+					if(textpos == 0 || (textpos >= (length(string) -1)))
+						terminal_display_line("Error: No message to send found.")
+					else
+						commapos += 1
+						var/x_to_comms = text2num(copytext(string, 1, commapos))
+						var/y_to_comms = text2num(copytext(string, commapos, textpos))
+						var/text_to_comms = copytext(string, textpos)
+						linked_master_console.CommsPing(src, x_to_comms_ping = x_to_comms, y_to_comms_ping = y_to_comms, message_to_comms_ping = text_to_comms)
 			if(usage_data["signal_pulses_current"] >= usage_data["signal_pulses"])
 				terminal_display_line("Error: Signal pulses depleted in this interval.")
 

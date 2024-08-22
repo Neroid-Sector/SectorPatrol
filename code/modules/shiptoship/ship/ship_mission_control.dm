@@ -322,9 +322,11 @@
 		target_console.usage_data["signal_pulses_current"] += 1
 		return 1
 	target_console.terminal_display_line("Sending comms pulse to coordinates ([x_to_comms_ping],[y_to_comms_ping])")
+	target_console.usage_data["signal_pulses_current"] += 1
 	log_round_history(event = "comms_ping", log_source = sector_map_data["name"], log_target = message_to_comms_ping, log_dest_x = x_to_comms_ping, log_dest_y = y_to_comms_ping)
 	for(var/obj/structure/shiptoship_master/ship_missioncontrol/all_ship_consoles in world)
-		all_ship_consoles.CommsLog(message_type = 1, message_source = SectorConversion(x = x_to_comms_ping, y = y_to_comms_ping))
+		if(target_console.linked_master_console.sector_map_data["id_tag"] != all_ship_consoles.sector_map_data["id_tag"])
+			all_ship_consoles.CommsLog(message_type = 1, message_source = SectorConversion(x = x_to_comms_ping, y = y_to_comms_ping))
 	if(sector_map[x_to_comms_ping][y_to_comms_ping]["ship"]["id_tag"] != "none")
 		if(sector_map[x_to_comms_ping][y_to_comms_ping]["ship"]["status"] == "Player")
 			for (var/obj/structure/shiptoship_master/ship_missioncontrol/player_ship_console in world)

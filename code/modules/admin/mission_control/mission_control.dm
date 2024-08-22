@@ -242,40 +242,18 @@
 	for(var/obj/structure/shiptoship_master/sts_master_to_link in world)
 		sts_master = sts_master_to_link
 		break
-	switch(tgui_input_list(usr, "Select Template, this will REPLACE the current map:","TEMPLATE select",list("Blank","Tracker Missles","Direct Missiles","Torpedoes"),timeout = 0))
+	var/new_map = tgui_alert(usr, "Do yo wish to destroy everything on the old map?", "REPLACE?", list("Yes","No"), timeout = 0)
+	if(new_map == null) new_map = "No"
+	switch(tgui_input_list(usr, "Select Template:","TEMPLATE select",list("Blank","Comms and Ship loading test"),timeout = 0))
 		if(null)
 			return
 		if("Blank")
 			sts_master.clear_map()
-		if("Tracker Missles")
-			sts_master.clear_map()
-			sts_master.add_entity(entity_type = 0, x = 1, y = 1, name = "UAS Tester", type = "Testing Vessel", vector_x = 3, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
-			sts_master.add_entity(entity_type = 0, x = 20, y = 90, name = "Standard Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 18, y = 20, name = "UACM 'Hunter' Missile", type = "LD Homing", vector_x = 20, vector_y = 90, warhead_type = "Homing", warhead_payload = 3, target_tag = "UACM-SHIP-2", missile_speed = 20)
-			sts_master.add_entity(entity_type = 0, x = 50, y = 90, name = "Explosion Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 48, y = 20, name = "UACM 'Hunter' Missile", type = "LD Homing", vector_x = 50, vector_y = 90, warhead_type = "Explosive", warhead_payload = 2, target_tag = "UACM-SHIP-4", missile_speed = 20)
-			sts_master.add_entity(entity_type = 0, x = 80, y = 90, name = "MIP Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 78, y = 20, name = "UACM 'Hunter' Missile", type = "LD Homing", vector_x = 80, vector_y = 90, warhead_type = "MIP", warhead_payload = 3, target_tag = "UACM-SHIP-6" ,missile_speed = 20)
-		if("Direct Missiles")
-			sts_master.clear_map()
-			sts_master.add_entity(entity_type = 0, x = 1, y = 1, name = "UAS Tester", type = "Testing Vessel", vector_x = 3, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
-			sts_master.add_entity(entity_type = 0, x = 20, y = 90, name = "Standard Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 18, y = 20, name = "Modified UACM 'Panther' Missile", type = "Direct", vector_x = 20, vector_y = 90, warhead_type = "Homing", warhead_payload = 3, target_tag = "UACM-SHIP-2", missile_speed = 40)
-			sts_master.add_entity(entity_type = 0, x = 50, y = 90, name = "Explosion Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 48, y = 20, name = "Modified UACM 'Panther' Missile", type = "Direct", vector_x = 50, vector_y = 90, warhead_type = "Explosive", warhead_payload = 2, target_tag = "UACM-SHIP-4", missile_speed = 40)
-			sts_master.add_entity(entity_type = 0, x = 80, y = 90, name = "MIP Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 78, y = 20, name = "Modified UACM 'Panther' Missile", type = "Direct", vector_x = 80, vector_y = 90, warhead_type = "MIP", warhead_payload = 3, target_tag = "UACM-SHIP-6" ,missile_speed = 40)
-		if("Torpedoes")
-			sts_master.clear_map()
-			sts_master.add_entity(entity_type = 0, x = 1, y = 1, name = "UAS Tester", type = "Testing Vessel", vector_x = 3, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 10, ship_speed = 5, salvos = 2)
-			sts_master.add_entity(entity_type = 0, x = 20, y = 90, name = "Standard Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 18, y = 20, name = "Modified UACM 'Inferno' Torpedo", type = "Accelerating Torpedo", vector_x = 20, vector_y = 90, warhead_type = "Homing", warhead_payload = 3, target_tag = "UACM-SHIP-2", missile_speed = 5)
-			sts_master.add_entity(entity_type = 0, x = 50, y = 90, name = "Explosion Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 48, y = 20, name = "Modified UACM 'Inferno' Torpedo", type = "Accelerating Torpedo", vector_x = 50, vector_y = 90, warhead_type = "Explosive", warhead_payload = 2, target_tag = "UACM-SHIP-4", missile_speed = 5)
-			sts_master.add_entity(entity_type = 0, x = 80, y = 90, name = "MIP Target", type = "Testing Vessel", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 10, ship_shield = 0, ship_speed = 5, salvos = 5)
-			sts_master.add_entity(entity_type = 1, x = 78, y = 20, name = "Modified UACM 'Inferno' Torpedo", type = "Accelerating Torpedo", vector_x = 80, vector_y = 90, warhead_type = "MIP", warhead_payload = 3, target_tag = "UACM-SHIP-6" ,missile_speed = 5)
-	sts_entity_panel()
-	return
+		if("Comms and Ship loading test")
+			if(new_map == "Yes") sts_master.clear_map()
+			sts_master.add_entity(entity_type = 0, x = 1, y = 1, name = "UAS Marie", type = "OV-PST Rapid Pursuit Interceptor", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "UAS Amelia", type = "OV-PST Rapid Pursuit Interceptor", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
+			return
 
 /datum/admins/proc/link_player_ships()
 	if(!check_rights(R_ADMIN)) return

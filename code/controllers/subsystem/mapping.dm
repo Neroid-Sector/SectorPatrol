@@ -268,6 +268,10 @@ SUBSYSTEM_DEF(mapping)
 	for(var/map in filelist)
 		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
 		map_templates[T.name] = T
+	var/list/sts_filelist = flist("maps/map_files/SectorPatrol/sts_ship/")
+	for(var/stsmap in sts_filelist)
+		var/datum/map_template/sts = new(path = "["maps/map_files/SectorPatrol/sts_ship/"][stsmap]", rename = "[stsmap]")
+		map_templates[sts.name] = sts
 
 	preloadShuttleTemplates()
 	preload_tent_templates()

@@ -370,6 +370,7 @@
 "vf" = (/turf/open/floor/plating/modular,/area/ovpst/dorm/a7)
 "vg" = (/turf/open/floor/almayer{icon_state = "white"; dir = 1},/area/ovpst/dorm/b1)
 "vj" = (/turf/open/floor/plating/modular,/area/ovpst/dorm/b7)
+"vp" = (/obj/effect/landmark/late_join,/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/ovpst)
 "vr" = (/obj/structure/surface/table/reinforced/black,/turf/open/floor/almayer{dir = 8; icon_state = "orange"},/area/ovpst)
 "vs" = (/obj/structure/bed/chair/comfy/black{dir = 1; pixel_y = 0},/obj/structure/machinery/light/small{dir = 4},/turf/open/floor/almayer{allow_construction = 0},/area/ovpst)
 "vu" = (/turf/closed/wall/almayer/outer,/area/ovpst/airlock/d31)
@@ -463,6 +464,7 @@
 "Ba" = (/obj/structure/closet/secure_closet/sp{pixel_x = 9; pixel_y = -2},/turf/open/floor/almayer{icon_state = "whitefull"; dir = 4},/area/ovpst)
 "Bc" = (/obj/structure/sink{dir = 4; pixel_y = 3; pixel_x = 12},/obj/structure/mirror{pixel_x = 26},/turf/open/floor/almayer{icon_state = "whitefull"; dir = 4},/area/ovpst)
 "Be" = (/obj/structure/closet/secure_closet/sp/yellow/g01/engiebasics{pixel_y = 18; density = 0},/turf/open/floor/almayer,/area/ovpst/dorm/a1)
+"Bg" = (/obj/effect/landmark/observer_start,/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/ovpst)
 "Bi" = (/turf/open/floor/almayer{dir = 4; icon_state = "emeraldcorner"},/area/ovpst)
 "Bl" = (/turf/closed/wall/almayer,/area/ovpst/dorm/c5)
 "Bm" = (/obj/structure/machinery/light/small{dir = 1},/turf/open/floor/almayer{dir = 4; icon_state = "orangecorner"},/area/ovpst)
@@ -496,6 +498,7 @@
 "CY" = (/obj/structure/machinery/light,/obj/effect/decal/info_tag/pst/san{dir = 4; pixel_y = 16; desc = "UACM Outer Veil Primary Supply Terminal <br><big>- SAN -</big><br>Dock 31 Personnel Sanitation"},/turf/open/floor/almayer{dir = 8; icon_state = "emerald-silver"},/area/ovpst)
 "De" = (/obj/structure/machinery/light{dir = 4; brightness = 14},/turf/open/floor/almayer{icon_state = "black"; dir = 8},/area/ovpst)
 "Di" = (/obj/structure/dorm_button{pixel_y = -34},/turf/open/floor/almayer{icon_state = "whitecorner"},/area/ovpst/dorm/b6)
+"Dr" = (/obj/effect/landmark/start/basepc,/turf/open/floor/almayer{allow_construction = 0; icon_state = "plate"},/area/ovpst)
 "Dt" = (/turf/open/floor/plating/modular,/area/ovpst/dorm/b5)
 "Du" = (/obj/structure/machinery/conveyor{dir = 8; id = "d31-entrance"; drag_delay = 1; backwards = SOUTH; forwards = WEST},/turf/open/floor/almayer{allow_construction = 0},/area/ovpst)
 "Dx" = (/turf/open/floor/almayer{icon_state = "black"; dir = 5},/area/ovpst)
@@ -940,7 +943,7 @@ qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIAxvcepOhdhd
 qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIAxvIRpOpOpOpOpOpOpOpOpOpOpOIRxvIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqgIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIATSSLRvDtDtDtPygigigifeXSXSXSRIvFvFvFQdYaYaYalhnalhlhiohdhdhdhdPePehdhdhdhdiolhlhSLwkWUWUWUTvTyTyTyVNjXjXjXnJCACACAiZeHeHeHlhSLTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqg
 qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIAxvIRpOpOpOpOpOpOpOpOpOpOpOIRxvIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqgIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIATSsDRvDtpjDtPyginPgifeXSNVXSRIvFnqvFQdYaksYalhsDlhlhFdhdhdhdhdPePehdhdhdhdNBlhlhsDwkWULwWUTvTyLHTyVNjXpIjXnJCAjZCAiZeHWreHlhsDTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqg
 qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIAxvbopOpOpOpOpOpOpOpOpOpOpOboxvIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqgIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIATSCSRvErRvRvPyaVPyPyfegbfefeRIgZRIRIQdIbQdQdlhCSlhlhfphdhdhdhdPePehdhdhdhdvJlhlhCSwkrJwkwkTvmuTvTvVNSnVNVNnJzUnJnJiZgziZiZlhCSTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqg
-qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIATSpOpOpOwRpOhWVaVaMdpOwRpOpOTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqgIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIATSlFeNlnsdiDjEoFdvVnIpuonxVMQfKQOJVUcNvgMmZLNblFCgzGhMPePePePePePePePePePetLxLXVlFqZHRZjBevNtBkfFSsifDOpllnLWHytoXFfjpeEMYNbaATSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqg
+qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIATSpOpOpOwRpOhWVaVaMdpOwRpOpOTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqgIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIATSlFeNlnsdiDjEoFdvVnIpuonxVMQfKQOJVUcNvgMmZLNblFCgzGhMPePePePevpBgDrPePePetLxLXVlFqZHRZjBevNtBkfFSsifDOpllnLWHytoXFfjpeEMYNbaATSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqg
 qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIATSlhlhlhlhlhlhyXpOlhlhlhlhlhTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqgIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIATSKzLjEVyWlRwJyhiKDDxhRWgcPKuKQyFqxDzsshDiHVWqcoyFzohMPePePePePePePePePePetLkqPjTACaTnfRBTcjGbYgYKGnRTerMoRGaLzOFxjlmHSXZwFAcoTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqg
 qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIATSpOAqFizFpOlhRBZWlhZhZhGMGMTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqgIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIATSCSOUOUOUAeYvYvYveFtxtxtxZDMwMwMwnIrvrvrvsZlhCSlhlhNshdhdhdhdPePehdhdhdhdEjlhlhCSIIIIIIQcGOGOGOOgXwXwXwdmFBFBFBcavQvQvQQhlhCSTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqg
 qgIAIAIAIAIAIAIAIAIAIAIAIASaSESESESESESESESESESESESaIAIAIAIAIAIAIAIAIATSpOpOpOpOpOlhfvCBlhnbZhGMGMTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqgIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIATSsDOUUyEgUyYvTlqNTltxdhrrdhMwvjjhvjrvPlQzPllhsDlhlhFdhdhdhdhdPePehdhdhdhdNBlhlhsDIIlThFlTGOvfoLvfXwRNglRNFBDERODEvQdAJPdAlhsDTSIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAIAqg

@@ -248,6 +248,7 @@
 	operating = TRUE
 	src.density = TRUE
 	src.layer = closed_layer
+	icon_state = "door_closed"
 	do_animate("closing")
 	addtimer(CALLBACK(src, PROC_REF(finish_close)), openspeed)
 

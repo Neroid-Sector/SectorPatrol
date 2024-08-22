@@ -1,129 +1,548 @@
+"ad" = (/obj/effect/decal/info_tag/sts/pst_interceptor/cic{desc = "OV-PST Interceptor<br><big>- CIC -</big><br>Combat Information Center"; pixel_x = -16; pixel_y = 16},/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 1},/area/sts_ship/amelia/hall)
+"ag" = (/obj/effect/decal/info_tag/sts/pst_interceptor/med{desc = "OV-PST Interceptor<br><big>- MED -</big><br>Medical Treatment Area"; pixel_x = -16; pixel_y = 16},/turf/open/floor/almayer{icon_state = "greencorner"; dir = 1},/area/sts_ship/amelia/hall)
+"ak" = (/obj/structure/bed/chair{dir = 4},/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"am" = (/obj/structure/bed/chair/comfy/charlie{dir = 8},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"ay" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/cargo_console/amelia{dir = 4; pixel_x = 5; pixel_y = 3},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"aB" = (/obj/structure/machinery/telecomms/server/presets/medical,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"aF" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/command_comms)
+"aL" = (/obj/structure/machinery/light/shiplight/marie/general{dir = 1},/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/marie/cryo)
+"aN" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/obj/structure/ship_elements/command_monitor/bottom/amelia{pixel_y = 24},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"aQ" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/weapons_s)
+"aR" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/command)
+"bg" = (/turf/open/floor/almayer{icon_state = "emeraldcorner"; dir = 4},/area/sts_ship/marie/hall)
+"bi" = (/turf/open/floor/almayer{icon_state = "orangecorner"},/area/sts_ship/marie/hall)
+"bj" = (/turf/open/space/basic,/area/sts_ship/amelia)
+"br" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/marie/cryo)
+"bt" = (/obj/effect/decal/cargo_stripes{icon_state = "s"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"bu" = (/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"bv" = (/turf/open/floor/almayer{icon_state = "red"; dir = 8},/area/sts_ship/marie/hall)
 "bM" = (/turf/closed/wall/almayer/outer,/area/almayer/powered)
-"cf" = (/obj/effect/landmark/start/basepc,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"eQ" = (/obj/vehicle/powerloader,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
-"gn" = (/obj/structure/ship_elements/tracker_launcher/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"gA" = (/obj/structure/machinery/light/shiplight/tester/command,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"gV" = (/obj/structure/ship_elements/command_monitor/bottom/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"im" = (/obj/effect/landmark/observer_start,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
+"bO" = (/obj/structure/machinery/telecomms/server/presets/security,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"bP" = (/obj/structure/machinery/light/shiplight/amelia/signals{dir = 1},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"cj" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/hot_drink,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"ck" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/hall)
+"cz" = (/obj/structure/ship_elements/shipprop/power_distribution,/obj/effect/decal/warning_stripes{icon_state = "SW-in"},/obj/structure/machinery/light/shiplight/amelia/signals,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"cE" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/command{dir = 8},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twrxplus)
+"cW" = (/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/marie/cryo)
+"dc" = (/obj/effect/decal/info_tag/sts/pst_interceptor/cic{desc = "OV-PST Interceptor<br><big>- CIC -</big><br>Combat Information Center"; pixel_x = -16; pixel_y = 16},/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 1},/area/sts_ship/marie/hall)
+"dd" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/weapons_p)
+"df" = (/turf/open/floor/almayer{icon_state = "purple"; dir = 2},/area/sts_ship/amelia/hall)
+"dA" = (/obj/structure/machinery/light/shiplight/amelia/general,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/amelia/med)
+"dF" = (/obj/structure/machinery/telecomms/broadcaster/preset_right,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"dK" = (/obj/structure/surface/table/reinforced/black,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"dM" = (/obj/effect/decal/warning_stripes{icon_state = "NS-center"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"dV" = (/obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general{dir = 1; icon = 'icons/obj/structures/doors/personaldoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/cryo)
+"eg" = (/obj/structure/machinery/light/shiplight/amelia/general{dir = 1},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/amelia/wc)
+"em" = (/turf/open/floor/almayer{icon_state = "silvercorner"; dir = 8},/area/sts_ship/amelia/hall)
+"eq" = (/obj/structure/surface/rack,/obj/effect/decal/cargo_stripes{icon_state = "open"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"ev" = (/turf/open/floor/almayer{icon_state = "green"; dir = 1},/area/sts_ship/marie/hall)
+"eH" = (/turf/open/floor/almayer{dir = 6; icon_state = "orange"},/area/sts_ship/marie/engineering)
+"eL" = (/obj/effect/decal/cargo_stripes{icon_state = "w"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"eM" = (/obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general{dir = 1; icon = 'icons/obj/structures/doors/personaldoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/wc)
+"eR" = (/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"eS" = (/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"eT" = (/obj/effect/decal/cargo_stripes{icon_state = "open"},/obj/structure/machinery/light/shiplight/amelia/weapons{dir = 1},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"eU" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/command/twrxplus)
+"eX" = (/obj/structure/machinery/light/shiplight/marie/signals{dir = 1},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/command_comms)
+"eZ" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/cigrette,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"fg" = (/obj/structure/ship_elements/shipprop/power_distribution,/obj/effect/decal/warning_stripes{icon_state = "SE-in"},/obj/structure/machinery/light/shiplight/amelia/signals,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"fo" = (/turf/open/floor/almayer{icon_state = "floor"},/area/sts_ship/marie/hall)
+"ft" = (/obj/effect/decal/info_tag/sts/pst_interceptor/twr{desc = "OV-PST Interceptor<br><big>- TWR -</big><br>Y-Negative Twilight Rail"; pixel_x = -16; dir = 1},/turf/open/floor/almayer{icon_state = "orange"},/area/sts_ship/marie/hall)
+"fB" = (/obj/structure/window/framed/almayer/hull,/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/amelia/airlock)
+"fI" = (/obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general{dir = 1; icon = 'icons/obj/structures/doors/personaldoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/wc)
+"fR" = (/turf/open/floor/almayer{icon_state = "red"; dir = 4},/area/sts_ship/amelia/hall)
+"fX" = (/turf/open/floor/almayer{icon_state = "orange"; dir = 4},/area/sts_ship/amelia/hall)
+"ga" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{opacity = 0},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/command)
+"ge" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/cargo)
+"gh" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/weapons_p)
+"gq" = (/turf/open/floor/almayer{icon_state = "red"; dir = 4},/area/sts_ship/marie/hall)
+"gG" = (/turf/closed/wall/almayer,/area/sts_ship/marie/command/twryplus)
+"gH" = (/obj/structure/machinery/telecomms/broadcaster/preset_right,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"gI" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/marie/weapons_p)
+"gK" = (/obj/effect/decal/cargo_stripes{icon_state = "open"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"gR" = (/obj/structure/machinery/light/shiplight/marie/general{dir = 1},/turf/open/floor/almayer,/area/sts_ship/marie/hall)
+"gU" = (/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"gV" = (/obj/structure/machinery/telecomms/hub/preset,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"hb" = (/obj/structure/machinery/optable,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/marie/med)
+"hd" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/signals_console/amelia{dir = 4; pixel_x = 6; pixel_y = 0},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"hi" = (/obj/effect/decal/cargo_stripes{icon_state = "open"},/obj/structure/ship_elements/cargo_bay/secondary_munitions/amelia,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"hl" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/general{dir = 1},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/marie/wc)
+"hp" = (/obj/structure/surface/table/reinforced/black,/obj/structure/closet/secure_closet/surgical{pixel_x = -30},/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/amelia/med)
+"ht" = (/obj/structure/window/framed/almayer/hull,/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/marie/airlock)
+"hz" = (/obj/structure/toilet{dir = 4},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/amelia/wc)
+"hC" = (/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/marie/wc)
+"hU" = (/obj/effect/decal/info_tag/sts/pst_interceptor/twr{desc = "OV-PST Interceptor<br><big>- TWR -</big><br>X-Negative Twilight Rail"; dir = 4; pixel_x = -16},/turf/open/floor/almayer{dir = 5; icon_state = "orange"},/area/sts_ship/amelia/engineering)
+"hW" = (/turf/open/floor/almayer{icon_state = "greencorner"; dir = 4},/area/sts_ship/amelia/hall)
+"ii" = (/obj/structure/machinery/telecomms/processor/preset_two,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"il" = (/turf/closed/wall/almayer,/area/sts_ship/marie/command/twrxminus)
+"im" = (/obj/structure/machinery/telecomms/receiver/preset_left,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"io" = (/turf/open/floor/almayer{icon_state = "emeraldcorner"; dir = 8},/area/sts_ship/marie/hall)
+"ir" = (/obj/effect/decal/info_tag/sts/pst_interceptor/wep{desc = "OV-PST Interceptor<br><big>- WEP -</big><br>Secondary Weapon Systems"; dir = 4; pixel_x = -16; pixel_y = 16},/turf/open/floor/almayer{icon_state = "red"; dir = 8},/area/sts_ship/amelia/hall)
+"iv" = (/obj/structure/ship_elements/shipprop/twilight_rail,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twryplus)
+"iw" = (/obj/structure/machinery/telecomms/receiver/preset,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"iB" = (/obj/effect/decal/info_tag/sts/pst_interceptor/car{desc = "OV-PST Interceptor<br><big>- CAR - Cargo Control and Carbo Bays</big><br>"; pixel_x = -16; pixel_y = 16},/turf/open/floor/almayer{icon_state = "emeraldcorner"; dir = 1},/area/sts_ship/amelia/hall)
+"iH" = (/obj/effect/decal/cargo_stripes{icon_state = "w"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"iJ" = (/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/marie/med)
+"iO" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/weapons_console/amelia{dir = 4; pixel_y = 1; pixel_x = 6},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"iP" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/obj/structure/ship_elements/command_monitor/front/marie{pixel_y = 19; pixel_x = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"iR" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/obj/structure/ship_elements/command_monitor/top/marie{pixel_y = 11},/obj/structure/ship_elements/command_chair/marie{dir = 8; pixel_y = -12; buckling_y = -12},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
 "iX" = (/obj/structure/machinery/power/apc/almayer/hardened{dir = 1},/obj/structure/machinery/telecomms/relay/preset/tower,/obj/structure/machinery/telecomms/relay/preset/tower/all,/obj/structure/machinery/telecomms/relay/preset/tower/mapcomms,/turf/open/floor/almayer,/area/almayer/powered)
-"kB" = (/turf/open/floor/almayer,/area/sts_ship/tester)
-"kZ" = (/obj/structure/ship_elements/damage_control_element/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"ni" = (/obj/structure/ship_elements/cargo_bay/secondary_munitions/tester,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
-"no" = (/obj/structure/ship_elements/damage_control_element/tester,/obj/structure/ship_elements/secondary_cannon/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"pb" = (/obj/structure/ship_elements/command_monitor/front/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"ps" = (/obj/structure/ship_elements/damage_control_element/tester,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/tester/engineering)
-"px" = (/obj/structure/machinery/light/shiplight/tester/signals,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"qQ" = (/obj/structure/ship_elements/command_chair/tester{dir = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"ro" = (/obj/structure/ship_elements/damage_control_element/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"sj" = (/obj/effect/landmark/late_join,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"sV" = (/obj/structure/ship_elements/damage_control_element/tester,/obj/structure/machinery/light/shiplight/tester/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"uo" = (/turf/closed/wall/almayer/outer{mouse_opacity = 0; invisibility = 90},/area/sts_ship/tester)
-"yh" = (/obj/structure/shiptoship_master/ship_missioncontrol/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"zJ" = (/obj/structure/ship_elements/probe_launcher/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
+"jh" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/cargo_console/marie{dir = 4; pixel_x = 5; pixel_y = 3},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"jj" = (/obj/structure/ship_elements/secondary_cannon/amelia,/obj/structure/machinery/light/shiplight/amelia/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"ju" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1engidoor_glass.dmi'; opacity = 0},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/engineering)
+"jv" = (/obj/structure/ship_elements/damage_control_element/amelia,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"jE" = (/obj/structure/ship_elements/secondary_cannon/marie,/obj/structure/machinery/light/shiplight/marie/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"jM" = (/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/amelia/cryo)
+"jN" = (/obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general{dir = 1; icon = 'icons/obj/structures/doors/personaldoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/cryo)
+"jO" = (/turf/open/space/basic,/area/sts_ship/marie)
+"jT" = (/turf/open/floor/almayer{icon_state = "silver"},/area/sts_ship/marie/hall)
+"jY" = (/obj/structure/ship_elements/damage_control_element/marie,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"jZ" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/general{dir = 1},/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/marie/cryo)
+"kg" = (/obj/structure/bed/chair,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"kp" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/hall)
+"kG" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/weapons,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"kJ" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/command_comms)
+"kS" = (/turf/open/floor/almayer{icon_state = "orange"; dir = 8},/area/sts_ship/marie/hall)
+"kW" = (/obj/structure/machinery/telecomms/server/presets/common,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"kY" = (/turf/open/floor/almayer{icon_state = "green"; dir = 1},/area/sts_ship/amelia/hall)
+"le" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/food_prepackaged,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"lh" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/soda,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"lj" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1secdoor_glass.dmi'; dir = 1},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/weapons_p)
+"ll" = (/obj/effect/decal/info_tag/sts/pst_interceptor/car{desc = "OV-PST Interceptor<br><big>- CAR - Cargo Control and Carbo Bays</big><br>"; dir = 8; pixel_y = 16},/turf/open/floor/almayer{icon_state = "emeraldcorner"; dir = 4},/area/sts_ship/marie/hall)
+"lo" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/wc)
+"lr" = (/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/amelia/airlock)
+"ls" = (/obj/effect/decal/info_tag/sts/pst_interceptor/com{desc = "OV-PST Interceptor<br><big>- COM -</big><br>Liquid Data Communications Array"; dir = 4; pixel_y = 0; pixel_x = -16},/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 8},/area/sts_ship/marie/hall)
+"lx" = (/turf/open/floor/almayer,/area/sts_ship/marie/hall)
+"lA" = (/obj/structure/ship_elements/shipprop/twilight_rail,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twrxplus)
+"lL" = (/turf/open/floor/almayer{icon_state = "blackcorner"; dir = 4},/area/sts_ship/amelia/hall)
+"lR" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"lS" = (/obj/effect/decal/cargo_stripes{icon_state = "w"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"lW" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twryplus)
+"lY" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/obj/structure/ship_elements/command_monitor/bottom/marie{pixel_y = 24},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"lZ" = (/obj/effect/decal/cargo_stripes{icon_state = "w"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"ma" = (/obj/structure/machinery/light/shiplight/marie/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"mb" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/signals{dir = 1},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"mc" = (/obj/structure/machinery/light/shiplight/marie/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"mq" = (/obj/structure/machinery/bioprinter{stored_metal = 125},/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/amelia/med)
+"mt" = (/turf/closed/wall/almayer,/area/sts_ship/marie/cryo)
+"mu" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/amelia/rec)
+"mC" = (/turf/closed/wall/almayer,/area/sts_ship/marie/weapons_p)
+"mG" = (/obj/effect/decal/info_tag/sts/pst_interceptor/car{desc = "OV-PST Interceptor<br><big>- CAR - Cargo Control and Carbo Bays</big><br>"; dir = 1},/turf/open/floor/almayer{icon_state = "emeraldcorner"},/area/sts_ship/amelia/hall)
+"mI" = (/obj/structure/ship_elements/damage_control_element/amelia,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"mJ" = (/obj/effect/decal/info_tag/sts/pst_interceptor/twr{desc = "OV-PST Interceptor<br><big>- TWR -</big><br>Y-Positive Twilight Rail"; pixel_y = 16},/turf/open/floor/almayer{icon_state = "orange"; dir = 1},/area/sts_ship/amelia/hall)
+"mK" = (/obj/structure/machinery/telecomms/server/presets/engineering,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"mO" = (/turf/closed/wall/almayer,/area/sts_ship/amelia)
+"mU" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/command)
+"mW" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/rec)
+"mZ" = (/obj/structure/bed/chair/comfy/alpha{dir = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"nc" = (/obj/effect/decal/cargo_stripes{icon_state = "n"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"ni" = (/obj/structure/machinery/telecomms/bus/preset_two,/obj/structure/machinery/light/shiplight/amelia/signals,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"nk" = (/obj/effect/decal/info_tag/sts/pst_interceptor/car{desc = "OV-PST Interceptor<br><big>- CAR - Cargo Control and Carbo Bays</big><br>"; dir = 8; pixel_y = 16},/turf/open/floor/almayer{icon_state = "emeraldcorner"; dir = 4},/area/sts_ship/amelia/hall)
+"nm" = (/obj/structure/machinery/telecomms/server/presets/squads,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"nn" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/command/twryplus)
+"nt" = (/obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general{dir = 1; icon = 'icons/obj/structures/doors/personaldoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/rec)
+"nu" = (/obj/structure/window/framed/almayer/hull,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"nv" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/food_prepackaged,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"nz" = (/obj/effect/decal/info_tag/sts/pst_interceptor/car{desc = "OV-PST Interceptor<br><big>- CAR - Cargo Control and Carbo Bays</big><br>"; dir = 1},/turf/open/floor/almayer{icon_state = "emeraldcorner"},/area/sts_ship/marie/hall)
+"nD" = (/obj/effect/decal/cargo_stripes{icon_state = "sw"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"nH" = (/obj/effect/decal/warning_stripes{icon_state = "NS-center"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"nL" = (/obj/structure/machinery/light/shiplight/marie/general,/turf/open/floor/almayer,/area/sts_ship/marie/hall)
+"nM" = (/turf/open/floor/almayer{icon_state = "emerald"},/area/sts_ship/amelia/hall)
+"oe" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/hall)
+"og" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/med)
+"oq" = (/obj/item/storage/firstaid/toxin{pixel_x = 6; pixel_y = 6},/obj/item/storage/firstaid/fire{pixel_x = 3; pixel_y = 3},/obj/item/storage/firstaid/o2,/obj/item/storage/firstaid/adv{pixel_x = 6; pixel_y = 6},/obj/item/storage/firstaid/adv{pixel_x = 3; pixel_y = 3},/obj/item/storage/firstaid/adv,/obj/item/device/healthanalyzer,/obj/item/device/healthanalyzer,/obj/item/device/healthanalyzer,/obj/structure/surface/table/reinforced/prison,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/marie/med)
+"oA" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1engidoor_glass.dmi'; opacity = 0},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/engineering)
+"oB" = (/turf/open/floor/almayer{icon_state = "redcorner"},/area/sts_ship/amelia/hall)
+"oS" = (/obj/structure/surface/rack,/obj/effect/decal/cargo_stripes{icon_state = "n"},/obj/structure/machinery/light/shiplight/amelia/weapons{dir = 4},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"pb" = (/obj/structure/machinery/light/shiplight/amelia/general{dir = 1},/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/amelia/cryo)
+"pm" = (/obj/structure/ship_elements/shipprop/twilight_rail,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twrxplus)
+"pv" = (/obj/effect/decal/cargo_stripes{icon_state = "w"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"pT" = (/obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general{dir = 1; icon = 'icons/obj/structures/doors/personaldoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/med)
+"pX" = (/turf/open/floor/almayer{icon_state = "blue"; dir = 8},/area/sts_ship/marie/command)
+"qa" = (/turf/closed/wall/almayer,/area/sts_ship/marie/command/twrxplus)
+"qi" = (/turf/open/floor/almayer{icon_state = "purplecorner"; dir = 8},/area/sts_ship/marie/hall)
+"qj" = (/obj/structure/surface/table/reinforced/black,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"qm" = (/obj/structure/machinery/telecomms/receiver/preset_left,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"qp" = (/turf/open/floor/almayer{icon_state = "blue"; dir = 8},/area/sts_ship/marie/hall)
+"qu" = (/obj/structure/ship_elements/primer_lever/secondary/amelia{pixel_x = -4; pixel_y = 5},/obj/effect/decal/warning_stripes{icon_state = "NE-in"; pixel_x = -8},/obj/effect/decal/warning_stripes{icon_state = "NW-in"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"qD" = (/obj/structure/bed/chair{dir = 4},/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"qU" = (/obj/vehicle/powerloader{dir = 8},/obj/effect/decal/cargo_stripes,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"qW" = (/obj/structure/mirror{pixel_y = -28},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/amelia/wc)
+"rb" = (/obj/structure/bed/chair{dir = 8},/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"rl" = (/obj/structure/ship_elements/primary_cannon/amelia,/obj/structure/machinery/light/shiplight/amelia/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"rm" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/soda,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"rq" = (/obj/structure/machinery/light/shiplight/amelia/general{dir = 1},/turf/open/floor/almayer,/area/sts_ship/amelia/hall)
+"rt" = (/turf/open/floor/almayer{icon_state = "blue"},/area/sts_ship/amelia/hall)
+"rv" = (/obj/structure/surface/rack,/obj/effect/decal/cargo_stripes{icon_state = "n"},/obj/structure/machinery/light/shiplight/marie/weapons{dir = 4},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"rD" = (/turf/closed/wall/almayer,/area/sts_ship/marie/command)
+"rK" = (/turf/open/floor/almayer{icon_state = "orange"; dir = 4},/area/sts_ship/amelia/engineering)
+"rS" = (/turf/open/floor/almayer{icon_state = "purple"; dir = 2},/area/sts_ship/marie/hall)
+"rT" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/damage_console/amelia,/obj/structure/machinery/light/shiplight/amelia/signals{dir = 1},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"rY" = (/obj/effect/decal/info_tag/sts/pst_interceptor/san{desc = "OV-PST Interceptor<br><big>- SAN -</big><br>Toilet and Shower"; dir = 1},/turf/open/floor/almayer{icon_state = "silvercorner"},/area/sts_ship/amelia/hall)
+"sa" = (/turf/open/floor/almayer{icon_state = "silvercorner"; dir = 8},/area/sts_ship/marie/hall)
+"sb" = (/turf/closed/wall/almayer,/area/sts_ship/marie/command/twryminus)
+"sm" = (/turf/open/floor/almayer{icon_state = "black"; dir = 1},/area/sts_ship/amelia/hall)
+"so" = (/obj/structure/machinery/telecomms/hub/preset,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"sp" = (/obj/structure/surface/rack,/obj/effect/decal/cargo_stripes{icon_state = "se"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"sB" = (/turf/closed/wall/almayer,/area/sts_ship/marie/engineering)
+"ta" = (/obj/structure/machinery/telecomms/bus/preset_three,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"td" = (/obj/structure/machinery/door/poddoor/almayer,/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/weapons_s)
+"th" = (/obj/structure/machinery/cryopod,/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/amelia/cryo)
+"tl" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/command{dir = 1},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twryminus)
+"tq" = (/obj/structure/machinery/telecomms/bus/preset_three,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"tv" = (/obj/structure/bed/chair/comfy/bravo,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"tA" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/command_comms)
+"tW" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/engineering)
+"tY" = (/turf/closed/wall/almayer,/area/sts_ship/marie/cargo)
+"uc" = (/obj/structure/machinery/cryopod,/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/marie/cryo)
+"ui" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twrxplus)
+"un" = (/turf/open/floor/almayer{icon_state = "orange"; dir = 8},/area/sts_ship/amelia/hall)
+"uu" = (/obj/structure/machinery/telecomms/server/presets/squads,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"uv" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/command{dir = 8},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twrxplus)
+"uB" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/general{dir = 1},/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/amelia/cryo)
+"uD" = (/turf/open/floor/almayer{icon_state = "emerald"; dir = 1},/area/sts_ship/marie/hall)
+"uJ" = (/obj/effect/decal/info_tag/sts/pst_interceptor/com{desc = "OV-PST Interceptor<br><big>- COM -</big><br>Liquid Data Communications Array"; dir = 8; pixel_y = 16},/turf/open/floor/almayer{dir = 10; icon_state = "blue"},/area/sts_ship/amelia/command)
+"uL" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1secdoor_glass.dmi'; dir = 1},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/weapons_s)
+"uV" = (/turf/open/floor/almayer{dir = 6; icon_state = "orange"},/area/sts_ship/amelia/engineering)
+"vb" = (/obj/effect/decal/info_tag/sts/pst_interceptor/eng{desc = "OV-PST Interceptor<br><big>- ENG -</big><br>Damage Control and Engineering Supply"; dir = 4; pixel_x = -16; pixel_y = 0},/turf/open/floor/almayer{icon_state = "orangecorner"; dir = 8},/area/sts_ship/amelia/hall)
+"vm" = (/obj/structure/machinery/telecomms/relay/preset/telecomms{listening_level = 6},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"vr" = (/obj/effect/decal/info_tag/sts/pst_interceptor/com{desc = "OV-PST Interceptor<br><big>- COM -</big><br>Liquid Data Communications Array"; dir = 4; pixel_y = 0; pixel_x = -16},/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 8},/area/sts_ship/amelia/hall)
+"vs" = (/obj/item/storage/firstaid/toxin{pixel_x = 6; pixel_y = 6},/obj/item/storage/firstaid/fire{pixel_x = 3; pixel_y = 3},/obj/item/storage/firstaid/o2,/obj/item/storage/firstaid/adv{pixel_x = 6; pixel_y = 6},/obj/item/storage/firstaid/adv{pixel_x = 3; pixel_y = 3},/obj/item/storage/firstaid/adv,/obj/item/device/healthanalyzer,/obj/item/device/healthanalyzer,/obj/item/device/healthanalyzer,/obj/structure/surface/table/reinforced/prison,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/amelia/med)
+"vD" = (/obj/structure/machinery/light/shiplight/amelia/signals{dir = 1},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/command_comms)
+"vS" = (/obj/effect/decal/cargo_stripes{icon_state = "nw"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"wg" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/hall)
+"wi" = (/obj/effect/decal/info_tag/sts/pst_interceptor/san{desc = "OV-PST Interceptor<br><big>- SAN -</big><br>Toilet and Shower"; dir = 1},/turf/open/floor/almayer{icon_state = "silvercorner"},/area/sts_ship/marie/hall)
+"ws" = (/obj/structure/closet/secure_closet/sp/yellow/g01/engiebasics,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"wK" = (/obj/structure/machinery/door/poddoor/almayer,/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/weapons_p)
+"wS" = (/obj/structure/surface/table/reinforced/black,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"xa" = (/obj/structure/toilet{dir = 4},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/marie/wc)
+"xh" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/amelia/weapons_s)
+"xo" = (/obj/structure/surface/rack,/obj/effect/decal/cargo_stripes{icon_state = "e"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"xs" = (/obj/structure/machinery/telecomms/processor/preset_two,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"xz" = (/obj/structure/machinery/light/shiplight/marie/command{dir = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"xN" = (/obj/structure/ship_elements/shipprop/twilight_rail,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twryminus)
+"xV" = (/obj/structure/ship_elements/damage_control_element/marie,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"xW" = (/obj/structure/machinery/optable,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/amelia/med)
+"yr" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/command/twrxminus)
+"yt" = (/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 4},/area/sts_ship/marie/hall)
+"yw" = (/obj/structure/ship_elements/primary_cannon/marie,/obj/structure/machinery/light/shiplight/marie/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"yE" = (/obj/effect/decal/cargo_stripes{icon_state = "n"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"yM" = (/obj/effect/decal/warning_stripes{icon_state = "S"; pixel_x = -1; pixel_y = 13},/obj/effect/decal/warning_stripes{icon_state = "N"; pixel_x = -1; pixel_y = 21},/obj/effect/decal/warning_stripes{icon_state = "SW-out"; pixel_x = 31; pixel_y = 48},/obj/effect/decal/warning_stripes{icon_state = "E"; pixel_x = 4; pixel_y = 16},/obj/effect/decal/warning_stripes{icon_state = "NW-out"; pixel_x = 31; pixel_y = -14},/obj/structure/shiptoship_master/ship_missioncontrol/amelia{pixel_y = 24; name = "UAS Amelia mission control unit"},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"yN" = (/obj/structure/surface/rack,/obj/effect/decal/cargo_stripes{icon_state = "e"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"yY" = (/obj/structure/machinery/telecomms/bus/preset_four,/obj/structure/machinery/light/shiplight/marie/signals{dir = 1},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"zc" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/marie/wc)
+"zd" = (/turf/open/floor/almayer{icon_state = "floor"},/area/sts_ship/amelia/hall)
+"zh" = (/obj/structure/ship_elements/probe_launcher/amelia{pixel_y = 25; opacity = 0; density = 0},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"zm" = (/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 4},/area/sts_ship/amelia/hall)
+"zB" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/general,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"zC" = (/obj/effect/decal/warning_stripes{icon_state = "NS-center"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"zD" = (/obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general{dir = 1; icon = 'icons/obj/structures/doors/personaldoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/med)
+"zK" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/command{dir = 4},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twrxminus)
+"Ad" = (/obj/effect/decal/warning_stripes{icon_state = "SW-in"},/obj/effect/decal/warning_stripes{icon_state = "SE-in"; pixel_y = 0; pixel_x = -7},/obj/structure/ship_elements/primer_lever/primary/amelia{pixel_x = -3},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"Aj" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin{icon = 'icons/obj/structures/doors/2x1almayerdoor_glass.dmi'; opacity = 0},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"Ak" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/obj/structure/ship_elements/command_monitor/front/amelia{pixel_y = 19; pixel_x = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"An" = (/obj/structure/ship_elements/tracker_launcher/marie{density = 0; opacity = 0; pixel_y = -77; bound_y = -96},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"Aq" = (/obj/structure/surface/rack,/obj/effect/decal/cargo_stripes{icon_state = "open"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
 "As" = (/turf/closed/wall/almayer/outer,/area/almayer/powered{unlimited_power = 1})
-"CH" = (/obj/structure/ship_elements/primer_lever/secondary/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"Gm" = (/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"Gx" = (/obj/structure/machinery/light/shiplight/tester/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"GA" = (/obj/structure/ship_elements/control_pad/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"GM" = (/obj/structure/ship_elements/cargo_bay/primary_munitions/tester,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
-"JU" = (/obj/structure/terminal/weapons_console/tester{dir = 4},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"JY" = (/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"Ko" = (/obj/structure/ship_elements/command_monitor/top/tester,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"KD" = (/turf/open/space/basic,/area/space)
-"LJ" = (/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/tester/engineering)
-"MG" = (/obj/structure/ship_elements/primary_cannon/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"MP" = (/obj/structure/terminal/cargo_console/tester{dir = 8},/obj/structure/machinery/light/shiplight/tester/general,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
-"MU" = (/obj/structure/ship_elements/primer_lever/primary/tester,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/tester/weapons)
-"OE" = (/obj/structure/ship_elements/damage_control_element/tester,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
-"PK" = (/obj/structure/terminal/damage_console/tester{dir = 8},/obj/structure/machinery/light/shiplight/tester/general,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/tester/engineering)
-"Tc" = (/obj/structure/terminal/signals_console/tester{dir = 4},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/tester/command)
-"Uz" = (/turf/closed/wall/almayer/outer{mouse_opacity = 0; invisibility = 90},/area/space)
-"Vu" = (/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/tester/cargo)
+"Aw" = (/obj/effect/decal/info_tag/sts/pst_interceptor/wep{desc = "OV-PST Interceptor<br><big>- WEP -</big><br>Primary Weapons Systems"; dir = 4; pixel_x = -16},/turf/open/floor/almayer{icon_state = "redcorner"; dir = 8},/area/sts_ship/marie/hall)
+"Ay" = (/obj/effect/decal/info_tag/sts/pst_interceptor/twr{desc = "OV-PST Interceptor<br><big>- TWR -</big><br>Y-Positive Twilight Rail"; pixel_y = 16},/turf/open/floor/almayer{icon_state = "orange"; dir = 1},/area/sts_ship/marie/hall)
+"AC" = (/turf/open/floor/almayer{icon_state = "greencorner"; dir = 4},/area/sts_ship/marie/hall)
+"AI" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/command_comms)
+"AJ" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/cargo)
+"AO" = (/obj/structure/machinery/light/shiplight/marie/general{dir = 4},/turf/open/floor/almayer,/area/sts_ship/marie/hall)
+"AP" = (/obj/effect/decal/cargo_stripes{icon_state = "nw"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"Bd" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/command,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twryplus)
+"Bk" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin{icon = 'icons/obj/structures/doors/Door2x1_secure.dmi'; dir = 1},/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/marie/airlock)
+"Bq" = (/obj/structure/window/framed/almayer/hull,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"Bu" = (/obj/effect/decal/info_tag/sts/pst_interceptor/cic{desc = "OV-PST Interceptor<br><big>- CIC -</big><br>Combat Information Center"; dir = 1},/turf/open/floor/almayer{icon_state = "bluecorner"},/area/sts_ship/amelia/hall)
+"BC" = (/turf/open/floor/almayer{icon_state = "emerald"; dir = 4},/area/sts_ship/amelia/hall)
+"BE" = (/turf/closed/wall/indestructible/invisible,/area/sts_ship/amelia)
+"BG" = (/obj/structure/machinery/telecomms/bus/preset_four,/obj/structure/machinery/light/shiplight/amelia/signals{dir = 1},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"BH" = (/obj/structure/bed/chair/comfy/charlie{dir = 8},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"BL" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{opacity = 0; icon = 'icons/obj/structures/doors/2x1prepdoor_charlie.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/cargo)
+"Ch" = (/obj/effect/decal/cargo_stripes{icon_state = "open"},/obj/structure/machinery/light/shiplight/marie/weapons{dir = 1},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"Cn" = (/obj/effect/decal/cargo_stripes{icon_state = "w"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"Cp" = (/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"CD" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{opacity = 0},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/command)
+"CF" = (/turf/open/floor/almayer{icon_state = "orange"; dir = 4},/area/sts_ship/marie/hall)
+"CG" = (/obj/structure/ship_elements/shipprop/power_distribution,/obj/effect/decal/warning_stripes{icon_state = "SW-in"},/obj/structure/machinery/light/shiplight/marie/signals,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"CI" = (/obj/structure/window/framed/almayer/hull,/turf/open/space/basic,/area/sts_ship/amelia/airlock)
+"CK" = (/turf/open/floor/almayer{dir = 9; icon_state = "blue"},/area/sts_ship/marie/command)
+"CO" = (/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/amelia/wc)
+"CU" = (/obj/structure/machinery/telecomms/server/presets/security,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"CZ" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/obj/structure/ship_elements/command_monitor/top/amelia{pixel_y = 11},/obj/structure/ship_elements/command_chair/amelia{pixel_y = -12; dir = 8; buckling_y = -12},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"Dc" = (/obj/structure/ship_elements/probe_launcher/marie{pixel_y = 25; opacity = 0; density = 0},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"Dd" = (/obj/effect/decal/info_tag/sts/pst_interceptor/cry{desc = "OV-PST Interceptor<br><big>- CRY -</big><br>Cryosleep Bays"; dir = 1},/turf/open/floor/almayer{icon_state = "purplecorner"; dir = 2},/area/sts_ship/amelia/hall)
+"Df" = (/obj/structure/machinery/telecomms/broadcaster/preset_left,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"Dm" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/obj/structure/ship_elements/control_pad/marie{pixel_y = 10; pixel_x = 12},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"Dq" = (/obj/structure/window/framed/almayer/hull,/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/hall)
+"Ds" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1secdoor_glass.dmi'; dir = 1},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/weapons_s)
+"Dy" = (/obj/structure/machinery/light/shiplight/marie/signals,/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/command_comms)
+"DA" = (/obj/structure/sink{pixel_y = -14; dir = 1},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/amelia/wc)
+"DL" = (/obj/effect/decal/cargo_stripes{icon_state = "open"},/obj/structure/ship_elements/cargo_bay/primary_munitions/marie,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"Ee" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"Ek" = (/obj/effect/decal/info_tag/sts/pst_interceptor/med{desc = "OV-PST Interceptor<br><big>- MED -</big><br>Medical Treatment Area"; pixel_x = -16; pixel_y = 16},/turf/open/floor/almayer{icon_state = "greencorner"; dir = 1},/area/sts_ship/marie/hall)
+"Ep" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/command)
+"Eq" = (/obj/effect/decal/info_tag/sts/pst_interceptor/twr{desc = "OV-PST Interceptor<br><big>- TWR -</big><br>X-Negative Twilight Rail"; dir = 4; pixel_x = -16},/turf/open/floor/almayer{dir = 5; icon_state = "orange"},/area/sts_ship/marie/engineering)
+"Er" = (/turf/open/floor/almayer{icon_state = "purplecorner"; dir = 8},/area/sts_ship/amelia/hall)
+"Et" = (/turf/open/floor/almayer{icon_state = "emerald"},/area/sts_ship/marie/hall)
+"EE" = (/obj/effect/decal/cargo_stripes,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"EK" = (/turf/open/floor/almayer{icon_state = "orangecorner"; dir = 1},/area/sts_ship/amelia/hall)
+"EP" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/general,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"EZ" = (/obj/effect/decal/info_tag/sts/pst_interceptor/rec{desc = "OV-PST Interceptor<br><big>- REC -</big><br>Break Room"; pixel_y = 16; pixel_x = -16},/turf/open/floor/almayer{icon_state = "blackcorner"; dir = 1},/area/sts_ship/amelia/hall)
+"Fc" = (/turf/open/floor/almayer{icon_state = "orange"},/area/sts_ship/amelia/hall)
+"Fe" = (/obj/effect/decal/cargo_stripes{icon_state = "s"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"Fh" = (/turf/open/floor/almayer{icon_state = "orange"; dir = 4},/area/sts_ship/marie/engineering)
+"Fk" = (/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/amelia/hall)
+"Fm" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/command,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twryplus)
+"Fo" = (/obj/structure/ship_elements/shipprop/power_distribution,/obj/effect/decal/warning_stripes{icon_state = "N-corner"},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"Fq" = (/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 1},/area/sts_ship/marie/hall)
+"Fv" = (/turf/closed/wall/almayer,/area/sts_ship/marie/wc)
+"FD" = (/turf/closed/wall/indestructible/invisible,/area/sts_ship/marie)
+"FF" = (/obj/effect/decal/info_tag/sts/pst_interceptor/twr{desc = "OV-PST Interceptor<br><big>- TWR -</big><br>X-Positive Twilight Rail"; dir = 8; pixel_y = 16},/turf/open/floor/almayer{icon_state = "orangecorner"; dir = 4},/area/sts_ship/amelia/hall)
+"FL" = (/turf/open/floor/almayer{icon_state = "emeraldcorner"; dir = 8},/area/sts_ship/amelia/hall)
+"FR" = (/obj/effect/decal/cargo_stripes{icon_state = "sw"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"Gz" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin{icon = 'icons/obj/structures/doors/Door2x1_secure.dmi'; dir = 1},/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/amelia/hall)
+"GT" = (/turf/closed/wall/almayer,/area/sts_ship/marie/rec)
+"GX" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/signals{dir = 1},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"GY" = (/obj/structure/machinery/cm_vending/sorted/medical/bolted,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/amelia/med)
+"Ha" = (/obj/structure/machinery/light/shiplight/marie/signals{dir = 1},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"Hg" = (/obj/effect/decal/info_tag/sts/pst_interceptor/wep{desc = "OV-PST Interceptor<br><big>- WEP -</big><br>Secondary Weapon Systems"; dir = 4; pixel_x = -16; pixel_y = 16},/turf/open/floor/almayer{icon_state = "red"; dir = 8},/area/sts_ship/marie/hall)
+"Hq" = (/turf/open/floor/almayer{icon_state = "redcorner"; dir = 1},/area/sts_ship/amelia/hall)
+"Ht" = (/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 1},/area/sts_ship/amelia/hall)
+"HB" = (/obj/structure/ship_elements/shipprop/twilight_rail,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twryplus)
+"HE" = (/obj/structure/window/framed/almayer/hull,/turf/open/space/basic,/area/sts_ship/marie/airlock)
+"HG" = (/obj/structure/machinery/light/shiplight/amelia/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"HO" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 8; opacity = 0; icon = 'icons/obj/structures/doors/2x1prepdoor_charlie.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/cargo)
+"HQ" = (/turf/open/floor/almayer{dir = 9; icon_state = "blue"},/area/sts_ship/amelia/command)
+"Ib" = (/obj/effect/decal/cargo_stripes{icon_state = "nw"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"Id" = (/obj/structure/bed/chair{dir = 8},/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"It" = (/turf/open/floor/almayer{icon_state = "blue"; dir = 1},/area/sts_ship/marie/hall)
+"Iw" = (/turf/open/floor/almayer{icon_state = "orange"; dir = 1},/area/sts_ship/marie/hall)
+"IA" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; opacity = 0; icon = 'icons/obj/structures/doors/2x1prepdoor_charlie.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/cargo)
+"IH" = (/obj/structure/ship_elements/shipprop/twilight_rail,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twrxminus)
+"IL" = (/obj/structure/machinery/light/shiplight/amelia/signals,/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/command_comms)
+"IO" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; opacity = 0; icon = 'icons/obj/structures/doors/2x1prepdoor_charlie.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/cargo)
+"IT" = (/obj/effect/decal/cargo_stripes{icon_state = "open"},/obj/structure/ship_elements/cargo_bay/secondary_munitions/marie,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"IU" = (/turf/closed/wall/almayer/outer,/area/space)
+"IV" = (/obj/structure/surface/table/reinforced/black,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"IX" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/amelia/med)
+"Ja" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/cryo)
+"Jc" = (/obj/structure/machinery/light/shiplight/amelia/weapons,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"Jd" = (/obj/effect/decal/cargo_stripes{icon_state = "s"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"Jo" = (/obj/structure/machinery/door/poddoor/almayer,/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/weapons_p)
+"Ju" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twryplus)
+"JA" = (/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/marie/hall)
+"JQ" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/amelia/cryo)
+"JX" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin{icon = 'icons/obj/structures/doors/2x1almayerdoor_glass.dmi'; opacity = 0},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"Kc" = (/obj/effect/decal/cargo_stripes{icon_state = "sw"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"Ke" = (/obj/structure/window/framed/almayer/hull,/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/hall)
+"Kf" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"Kh" = (/turf/open/floor/almayer{icon_state = "blue"},/area/sts_ship/marie/hall)
+"Kl" = (/obj/structure/surface/table/reinforced/black,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"Ko" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/engineering)
+"Kp" = (/obj/structure/machinery/light/shiplight/amelia/general{dir = 4},/turf/open/floor/almayer,/area/sts_ship/amelia/hall)
+"Kr" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twrxminus)
+"Ks" = (/obj/structure/machinery/telecomms/server/presets/command,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"KC" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/cigrette,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"KD" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twryminus)
+"KG" = (/obj/effect/decal/warning_stripes{icon_state = "SW-in"},/obj/effect/decal/warning_stripes{icon_state = "SE-in"; pixel_y = 0; pixel_x = -7},/obj/structure/ship_elements/primer_lever/primary/marie{pixel_x = -3},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"KO" = (/obj/structure/machinery/cm_vending/sorted/medical/bolted,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/marie/med)
+"Lq" = (/obj/structure/machinery/light/shiplight/amelia/general,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"Lu" = (/obj/effect/decal/warning_stripes{icon_state = "NS-center"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"LC" = (/obj/structure/machinery/telecomms/receiver/preset,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"LE" = (/obj/structure/sink{pixel_y = -14; dir = 1},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/marie/wc)
+"LR" = (/obj/structure/machinery/telecomms/processor/preset_one,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"LT" = (/turf/closed/wall/almayer,/area/sts_ship/marie/weapons_s)
+"LU" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{opacity = 0; icon = 'icons/obj/structures/doors/2x1prepdoor_charlie.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/cargo)
+"LV" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/weapons_s)
+"LY" = (/obj/structure/machinery/telecomms/bus/preset_two,/obj/structure/machinery/light/shiplight/marie/signals,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"Md" = (/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 8},/area/sts_ship/marie/hall)
+"Mg" = (/obj/structure/machinery/door/airlock/almayer/uacm/ovpst/general{dir = 1; icon = 'icons/obj/structures/doors/personaldoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/rec)
+"Mk" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/hall)
+"Mn" = (/obj/structure/ship_elements/tracker_launcher/amelia{density = 0; opacity = 0; pixel_y = -77; bound_y = -96},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"Mt" = (/obj/structure/machinery/light/shiplight/amelia/command{dir = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"Mz" = (/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"MF" = (/obj/structure/machinery/light/shiplight/marie/general,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"MP" = (/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"MY" = (/turf/open/floor/almayer,/area/sts_ship/amelia/hall)
+"Nf" = (/obj/structure/ship_elements/damage_control_element/marie,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"Nj" = (/obj/structure/machinery/light/shiplight/marie/general,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/marie/med)
+"Nk" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/weapons,/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"Nm" = (/obj/effect/decal/warning_stripes{icon_state = "S"; pixel_x = -1; pixel_y = 13},/obj/effect/decal/warning_stripes{icon_state = "N"; pixel_x = -1; pixel_y = 21},/obj/effect/decal/warning_stripes{icon_state = "SW-out"; pixel_x = 31; pixel_y = 48},/obj/effect/decal/warning_stripes{icon_state = "E"; pixel_x = 4; pixel_y = 16},/obj/effect/decal/warning_stripes{icon_state = "NW-out"; pixel_x = 31; pixel_y = -14},/obj/structure/shiptoship_master/ship_missioncontrol/marie{pixel_y = 24; name = "UAS Marie mission control unit"},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"No" = (/obj/structure/ship_elements/damage_control_element/marie,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"Ny" = (/turf/closed/wall/almayer,/area/sts_ship/marie/hall)
+"NG" = (/obj/structure/ship_elements/primer_lever/secondary/marie{pixel_x = -4; pixel_y = 5},/obj/effect/decal/warning_stripes{icon_state = "NE-in"; pixel_x = -8},/obj/effect/decal/warning_stripes{icon_state = "NW-in"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"NP" = (/turf/open/floor/almayer{icon_state = "black"; dir = 1},/area/sts_ship/marie/hall)
+"Og" = (/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/marie/airlock)
+"Ol" = (/turf/open/floor/almayer{icon_state = "emeraldcorner"},/area/sts_ship/marie/hall)
+"OK" = (/obj/effect/decal/info_tag/sts/pst_interceptor/wep{desc = "OV-PST Interceptor<br><big>- WEP -</big><br>Primary Weapons Systems"; dir = 4; pixel_x = -16},/turf/open/floor/almayer{icon_state = "redcorner"; dir = 8},/area/sts_ship/amelia/hall)
+"ON" = (/obj/structure/bed/chair,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"OU" = (/turf/open/floor/almayer{icon_state = "redcorner"; dir = 1},/area/sts_ship/marie/hall)
+"Pa" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twrxplus)
+"Pc" = (/obj/structure/machinery/telecomms/bus/preset_one,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"Pd" = (/obj/effect/decal/info_tag/sts/pst_interceptor/ext{dir = 8; desc = "OV-PST Interceptor<br><big>- EXT -</big><br>External Airlock"},/turf/open/floor/almayer{icon_state = "red"; dir = 4},/area/sts_ship/marie/hall)
+"Pm" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/amelia/wc)
+"Pt" = (/obj/structure/machinery/shower{dir = 1},/obj/structure/window/reinforced/ultra{dir = 4; name = "shower stall glass wall"; desc = "A piece of hardened glass in a frame."},/obj/structure/window/reinforced/ultra{dir = 8; desc = "A piece of hardened glass in a frame."; name = "shower stall glass wall"},/obj/structure/machinery/door/window/ultra{dir = 1; desc = "A piece of hardened glass in a frame that can slide to the side."; name = "shower stall glass door"},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/amelia/wc)
+"PA" = (/obj/structure/machinery/door/poddoor/almayer,/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/weapons_s)
+"PB" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/amelia/weapons_p)
+"PF" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/marie/weapons_s)
+"PJ" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/cargo)
+"PO" = (/obj/structure/surface/rack,/obj/effect/decal/cargo_stripes{icon_state = "se"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"PP" = (/obj/structure/bed/chair/comfy/alpha{dir = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"PU" = (/turf/closed/wall/almayer,/area/sts_ship/marie/command_comms)
+"PV" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twrxminus)
+"PX" = (/obj/structure/surface/table/reinforced/black{pixel_y = 16},/obj/structure/ship_elements/control_pad/amelia{pixel_y = 10; pixel_x = 12},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"PY" = (/obj/structure/ship_elements/shipprop/twilight_rail,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twryminus)
+"Qe" = (/obj/structure/machinery/telecomms/server/presets/common,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"Qf" = (/turf/closed/wall/almayer,/area/sts_ship/marie/med)
+"Ql" = (/obj/structure/machinery/telecomms/server/presets/medical,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"Qq" = (/obj/vehicle/powerloader{dir = 8},/obj/effect/decal/cargo_stripes,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"Qt" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1secdoor_glass.dmi'; dir = 1},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/weapons_p)
+"Qv" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"QA" = (/turf/open/floor/almayer{icon_state = "orangecorner"},/area/sts_ship/amelia/hall)
+"QD" = (/obj/effect/decal/cargo_stripes{icon_state = "nw"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"QK" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/hall)
+"QO" = (/obj/effect/decal/info_tag/sts/pst_interceptor/ext{dir = 8; pixel_y = 16; desc = "OV-PST Interceptor<br><big>- EXT -</big><br>External Airlock"},/turf/open/floor/almayer{icon_state = "redcorner"; dir = 4},/area/sts_ship/marie/hall)
+"QU" = (/obj/structure/machinery/telecomms/broadcaster/preset_left,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"Ra" = (/obj/effect/decal/cargo_stripes{icon_state = "s"},/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_p)
+"Rh" = (/obj/structure/machinery/bioprinter{stored_metal = 125},/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/marie/med)
+"Ri" = (/turf/open/floor/almayer{icon_state = "emerald"; dir = 1},/area/sts_ship/amelia/hall)
+"Rj" = (/obj/effect/decal/info_tag/sts/pst_interceptor/eng{desc = "OV-PST Interceptor<br><big>- ENG -</big><br>Damage Control and Engineering Supply"; dir = 4; pixel_x = -16; pixel_y = 0},/turf/open/floor/almayer{icon_state = "orangecorner"; dir = 8},/area/sts_ship/marie/hall)
+"Rp" = (/obj/structure/ship_elements/shipprop/twilight_rail,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twrxminus)
+"RG" = (/turf/open/floor/almayer{icon_state = "emerald"; dir = 4},/area/sts_ship/marie/hall)
+"RJ" = (/obj/structure/ship_elements/damage_control_element/amelia,/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"RQ" = (/obj/structure/machinery/cryopod/right,/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/amelia/cryo)
+"RR" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/hall)
+"Sb" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/general{dir = 1},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/amelia/wc)
+"Sl" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/signals_console/marie{dir = 4; pixel_x = 6; pixel_y = 0},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"So" = (/obj/structure/ship_elements/damage_control_element/amelia,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"Sw" = (/obj/structure/mirror{pixel_y = -28},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/marie/wc)
+"SB" = (/obj/structure/ship_elements/shipprop/power_distribution,/obj/effect/decal/warning_stripes{icon_state = "N-corner"},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"SR" = (/turf/open/floor/almayer{icon_state = "silver"},/area/sts_ship/amelia/hall)
+"SS" = (/obj/structure/machinery/light/shiplight/amelia/general,/turf/open/floor/almayer,/area/sts_ship/amelia/hall)
+"SX" = (/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_s)
+"SY" = (/obj/structure/closet/secure_closet/sp/yellow/g01/engiebasics,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
+"SZ" = (/obj/structure/machinery/cryopod/right,/turf/open/floor/almayer{icon_state = "purplefull"; dir = 8},/area/sts_ship/marie/cryo)
+"Td" = (/turf/open/floor/almayer{icon_state = "redcorner"},/area/sts_ship/marie/hall)
+"Ti" = (/obj/effect/decal/info_tag/sts/pst_interceptor/car{desc = "OV-PST Interceptor<br><big>- CAR - Cargo Control and Carbo Bays</big><br>"; pixel_x = -16; pixel_y = 16},/turf/open/floor/almayer{icon_state = "emeraldcorner"; dir = 1},/area/sts_ship/marie/hall)
+"Tl" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/marie/rec)
+"Tn" = (/obj/effect/decal/info_tag/sts/pst_interceptor/twr{desc = "OV-PST Interceptor<br><big>- TWR -</big><br>Y-Negative Twilight Rail"; pixel_x = -16; dir = 1},/turf/open/floor/almayer{icon_state = "orange"},/area/sts_ship/amelia/hall)
+"To" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/command/twryminus)
+"Tp" = (/obj/structure/machinery/light/shiplight/amelia/command{dir = 4},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"Tq" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/marie/med)
+"Ts" = (/turf/open/floor/almayer{icon_state = "bluecorner"; dir = 8},/area/sts_ship/amelia/hall)
+"Ty" = (/obj/structure/surface/table/reinforced/black,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/marie/rec)
+"TB" = (/obj/structure/machinery/telecomms/bus/preset_one,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"TF" = (/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/marie/weapons_p)
+"TL" = (/obj/effect/decal/info_tag/sts/pst_interceptor/ext{dir = 8; pixel_y = 16; desc = "OV-PST Interceptor<br><big>- EXT -</big><br>External Airlock"},/turf/open/floor/almayer{icon_state = "redcorner"; dir = 4},/area/sts_ship/amelia/hall)
+"TO" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/command_comms)
+"Ua" = (/obj/effect/decal/info_tag/sts/pst_interceptor/ext{dir = 8; desc = "OV-PST Interceptor<br><big>- EXT -</big><br>External Airlock"},/turf/open/floor/almayer{icon_state = "red"; dir = 4},/area/sts_ship/amelia/hall)
+"Ui" = (/turf/open/floor/almayer{icon_state = "emeraldcorner"},/area/sts_ship/amelia/hall)
+"Ul" = (/turf/open/floor/almayer{icon_state = "blue"; dir = 8},/area/sts_ship/amelia/command)
+"Uo" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/weapons_p)
+"Up" = (/obj/structure/bed/chair/comfy/bravo,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"Ux" = (/turf/open/floor/almayer{icon_state = "orange"; dir = 1},/area/sts_ship/amelia/hall)
+"UG" = (/obj/effect/decal/info_tag/sts/pst_interceptor/twr{desc = "OV-PST Interceptor<br><big>- TWR -</big><br>X-Positive Twilight Rail"; dir = 8; pixel_y = 16},/turf/open/floor/almayer{icon_state = "orangecorner"; dir = 4},/area/sts_ship/marie/hall)
+"UH" = (/obj/structure/machinery/telecomms/server/presets/engineering,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"UL" = (/turf/open/floor/almayer{icon_state = "blackcorner"; dir = 4},/area/sts_ship/marie/hall)
+"UT" = (/obj/effect/decal/warning_stripes{icon_state = "warning"},/turf/closed/wall/almayer,/area/sts_ship/amelia/command)
+"Vd" = (/turf/open/floor/almayer{icon_state = "orangecorner"; dir = 1},/area/sts_ship/marie/hall)
+"Vf" = (/obj/effect/decal/cargo_stripes{icon_state = "open"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"Vv" = (/obj/structure/ship_elements/shipprop/power_distribution,/obj/effect/decal/warning_stripes{icon_state = "SE-in"},/obj/structure/machinery/light/shiplight/marie/signals,/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"VC" = (/obj/structure/machinery/telecomms/relay/preset/telecomms{listening_level = 6},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"VG" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin{icon = 'icons/obj/structures/doors/Door2x1_secure.dmi'; dir = 1},/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/amelia/airlock)
+"VN" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/command{dir = 1},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twryminus)
+"VO" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/marie/hall)
+"VX" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/engineering)
+"We" = (/obj/effect/decal/cargo_stripes,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/marie/cargo)
+"Wn" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 8; opacity = 0; icon = 'icons/obj/structures/doors/2x1prepdoor_charlie.dmi'},/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/cargo)
+"Ww" = (/obj/effect/decal/info_tag/sts/pst_interceptor/cic{desc = "OV-PST Interceptor<br><big>- CIC -</big><br>Combat Information Center"; dir = 1},/turf/open/floor/almayer{icon_state = "bluecorner"},/area/sts_ship/marie/hall)
+"WB" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/amelia/command)
+"WE" = (/obj/effect/decal/info_tag/sts/pst_interceptor/rec{desc = "OV-PST Interceptor<br><big>- REC -</big><br>Break Room"; pixel_y = 16; pixel_x = -16},/turf/open/floor/almayer{icon_state = "blackcorner"; dir = 1},/area/sts_ship/marie/hall)
+"WI" = (/turf/open/floor/almayer{icon_state = "plate"},/area/sts_ship/marie/weapons_s)
+"WV" = (/obj/structure/ship_elements/damage_control_element/marie,/obj/structure/machinery/light/shiplight/marie/general,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/marie/med)
+"WZ" = (/turf/open/floor/almayer{icon_state = "red"; dir = 8},/area/sts_ship/amelia/hall)
+"Xd" = (/obj/structure/machinery/light/shiplight/marie/command{dir = 4},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"Xp" = (/obj/structure/bed/chair/comfy/delta{dir = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"Xu" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/command{dir = 4},/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command/twrxminus)
+"XU" = (/obj/structure/machinery/telecomms/server/presets/command,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"XY" = (/turf/open/floor/almayer{icon_state = "emeraldcorner"; dir = 4},/area/sts_ship/amelia/hall)
+"Yc" = (/turf/open/floor/almayer{icon_state = "redfull"},/area/sts_ship/amelia/weapons_s)
+"Yd" = (/turf/open/floor/almayer{icon_state = "blue"; dir = 1},/area/sts_ship/amelia/hall)
+"Yf" = (/obj/structure/machinery/light/shiplight/marie/general{dir = 1},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/marie/wc)
+"Yk" = (/obj/structure/surface/table/reinforced/black,/obj/structure/closet/secure_closet/surgical{pixel_x = -30},/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/marie/med)
+"Yl" = (/obj/effect/decal/warning_stripes{icon_state = "warning"},/turf/closed/wall/almayer,/area/sts_ship/marie/command)
+"Yq" = (/obj/structure/bed/chair/comfy/delta{dir = 8},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/amelia/command)
+"Yt" = (/turf/open/floor/almayer{icon_state = "blue"; dir = 8},/area/sts_ship/amelia/hall)
+"Yx" = (/obj/effect/decal/cargo_stripes{icon_state = "sw"},/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"Yz" = (/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/amelia/med)
+"YA" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/amelia/command_comms)
+"YB" = (/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command/twryminus)
+"YH" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general/admin{icon = 'icons/obj/structures/doors/Door2x1_secure.dmi'; dir = 1},/turf/open/floor/almayer{icon_state = "plating_catwalk"},/area/sts_ship/marie/hall)
+"YO" = (/obj/structure/machinery/telecomms/processor/preset_one,/turf/open/floor/almayer{icon_state = "tcomms"},/area/sts_ship/marie/command_comms)
+"YP" = (/obj/effect/decal/info_tag/sts/pst_interceptor/com{desc = "OV-PST Interceptor<br><big>- COM -</big><br>Liquid Data Communications Array"; dir = 8; pixel_y = 16},/turf/open/floor/almayer{dir = 10; icon_state = "blue"},/area/sts_ship/marie/command)
+"YR" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/weapons_console/marie{dir = 4; pixel_y = 1; pixel_x = 6},/turf/open/floor/almayer{icon_state = "bluefull"},/area/sts_ship/marie/command)
+"YS" = (/obj/structure/machinery/shower{dir = 1},/obj/structure/window/reinforced/ultra{dir = 4; name = "shower stall glass wall"; desc = "A piece of hardened glass in a frame."},/obj/structure/window/reinforced/ultra{dir = 8; desc = "A piece of hardened glass in a frame."; name = "shower stall glass wall"},/obj/structure/machinery/door/window/ultra{dir = 1; desc = "A piece of hardened glass in a frame that can slide to the side."; name = "shower stall glass door"},/turf/open/floor/almayer{icon_state = "silverfull"},/area/sts_ship/marie/wc)
+"Zg" = (/obj/structure/ship_elements/damage_control_element/amelia,/obj/structure/machinery/light/shiplight/amelia/general,/turf/open/floor/almayer{icon_state = "greenfull"},/area/sts_ship/amelia/med)
+"Zk" = (/obj/effect/decal/info_tag/sts/pst_interceptor/cry{desc = "OV-PST Interceptor<br><big>- CRY -</big><br>Cryosleep Bays"; dir = 1},/turf/open/floor/almayer{icon_state = "purplecorner"; dir = 2},/area/sts_ship/marie/hall)
+"Zn" = (/obj/structure/surface/table/reinforced/black,/obj/structure/terminal/damage_console/marie,/obj/structure/machinery/light/shiplight/marie/signals{dir = 1},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/marie/engineering)
+"Zo" = (/turf/open/floor/almayer{icon_state = "orange"},/area/sts_ship/marie/hall)
+"Zq" = (/turf/closed/wall/almayer,/area/sts_ship/amelia/command)
+"Zs" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer,/area/sts_ship/amelia/hall)
+"Zt" = (/obj/structure/machinery/cm_vending/sorted/sectorpatrol/hot_drink,/turf/open/floor/almayer{icon_state = "blackfull"},/area/sts_ship/amelia/rec)
+"Zu" = (/obj/effect/decal/cargo_stripes{icon_state = "open"},/obj/structure/ship_elements/cargo_bay/primary_munitions/amelia,/turf/open/floor/almayer{icon_state = "emeraldfull"; dir = 1},/area/sts_ship/amelia/cargo)
+"Zv" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{dir = 2; icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'},/turf/open/floor/almayer{icon_state = "orangefull"},/area/sts_ship/amelia/engineering)
 
 (1,1,1) = {"
-bMbMbMKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-bMiXAsKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-bMbMbMKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-KDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKD
-UzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuouououououououououououououououououououoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmGmpxJYroJYroJYLJpsLJLJkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmCHGmGmJYTcJYJYJYLJLJLJpskBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBpxGmGmGmGmzJGmJYJYJYgAJYpsLJLJPKkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBnoGmGmkZGmGmGmJYGAKoJYJYLJLJLJpskBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmsjimkZyhpbqQJYroLJpsLJLJkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBsVGmGmkZGmGmcfJYJYgVJYJYOEVuVuOEkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmMUGmGmJYJYJYgAJYVuVuVunikBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmGmGmJYJUJYJYJYOEeQVuMPkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBGmGmGmGmGmGmGmJYroJYroJYVuVuVuGMkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBMGGmGmGmGmgnGxJYJYJYJYJYOEVuVuOEkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuokBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBuoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDuouououououououououououououououououououoKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDKDUz
-UzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUzUz
+bMbMbMBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEIUFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFD
+bMiXAsBEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+bMbMbMBEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEBEBEBEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOgGgGgGgGgGgGgGgGjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjnnnnnnnnnnnnnnnnbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOgGJuJuJuJuJuJugGjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjnnlWlWlWlWlWlWnnbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOgGHBJuHBJuHBJugGjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjnnivlWivlWivlWnnbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOgGFmJuJuJuJuFmgGjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjnnBdlWlWlWlWBdnnbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOQfQfTqTqQfQfQfwgkpGTGTGTTlTlGTGTjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjogogIXIXogogogMkRRmWmWmWmumumWmWbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOQfhbiJRhKOoqQfIwAyGTeZqDTyrblhGTjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjogxWYzmqGYvsogUxmJmWKCakwSIdrmmWbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOQfYkiJNjiJWVQflxlxGTcjMFONEPnvGTjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjoghpYzdAYzZgogMYMYmWZtLqkgzBlemWbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOLTLTLTLTLTPFPFPFQfQfQfQfzDQfQflxlxGTGTGTMgGTGTGTNyNyNyNyNyVOVOVONyNyNyhthtHEHEjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjaQaQaQaQaQxhxhxhogogogogpTogogMYMYmWmWmWntmWmWmWoeoeoeoeoeZsZsZsoeoeoefBfBCICIbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOPASXSXSXSXdMNGDcWIHggRACevEkgRlxlxgRfoULNPWEfofogRlxlxlxlxlxlxlxgRgqJAOgOgOgOgjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjtdYcYcYcYczCquzhLVirrqhWkYagrqMYMYrqzdlLsmEZzdzdrqMYMYMYMYMYMYMYrqfRFklrlrlrlrbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOPASXSXSXSXdMjYSXuLbvlxlxlxlxWwKhKhMdlxlxlxlxlxlxlxlxnzEtEtiolxlxlxgqYHOgOgOgBkjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjtdYcYcYcYczCRJYcDsWZMYMYMYMYBurtrtTsMYMYMYMYMYMYMYMYmGnMnMFLMYMYMYfRGzlrlrlrVGbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOLTSXSXSXSXdMAPrvLTOUlxrDrDrDrDgaaRrDPUPUPUPUPUlxlxtYtYLUAJtYtYtYlxQONyHEHEHEHEjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjaQYcYcYcYczCvSoSaQHqMYZqZqZqZqCDWBZqkJkJkJkJkJMYMYPJPJBLgePJPJPJMYTLoeCICICICIbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOLTjESXSXmcdMeLAqLTlxlxrDdKCpGXCpCprDQeiiyYaBPUlxlxtYyNMzMzlSVftYlxlxNyjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjaQjjYcYcHGzCpveqaQMYMYZqKlMPmbMPMPZqkWxsBGQlkJMYMYPJxoeSeSCngKPJMYMYoebjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOililililLTLTLTLTLTLTLTLTLTlxlxrDYRmZCpCpCprDXUYOTBmKPUlxlxtYyNMzMzlSITtYlxlxNyqaqaqaqajOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjmOyryryraQaQaQaQaQaQaQaQaQMYMYZqiOPPMPMPMPZqKsLRPcUHkJMYMYPJxoeSeSCnhiPJMYMYoeeUeUeUeUbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOilPVPVzKsBNfHawswswsZneRsBlxAOrDCpCpCpCpXdrDgHEeEeVCPUlxAOtYyNMzMzFRJdtYlxAONyuvuiuiqajOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjmOKrKrXuVXSobPSYSYSYrTbuVXMYKpZqMPMPMPMPTpZqdFYAYAvmkJMYKpPJxoeSeSYxFePJMYKpoecEPaPaeUbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOilIHPVPVsBEqeReReReRUpeRsBRjlxrDxzCpCpCpCKrDBqAjEeBqPUlsOltYspMzMzNoMztYlxbiNyuilAuiqajOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjmORpKrKrVXhUbubububutvbuVXvbMYZqMtMPMPMPHQZqnuJXYAnukJvrUiPJPOeSeSjveSPJMYQAoePapmPaeUbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOilPVPVPVeRFheReReReReReRKokSlxrDCpDmiRCppXaReXtAtAeXtAqpRGAJMzMzMzMzqUtYlxCFkpuiuiuiqajOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjmOKrKrKrburKbubububububutWunMYZqMPPXCZMPUlWBvDaFaFvDaFYtBCgeeSeSeSeSQqPJMYfXRRPaPaPaeUbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOilIHPVPVQvFheReReReReReRoAkSlxrDNmiPCpCppXEpDytAtADyTOqpRGIAMzMzMzMzWetYlxCFckuilAuiqajOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjmORpKrKrZvrKbubububububujuunMYZqyMAkMPMPUlmUILaFaFILAIYtBCIOeSeSeSeSEEPJMYfXQKPapmPaeUbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOilPVPVPVsBeHeReReReReReRsBVdlxYlxzlRlYCpYPrDBqAjEeBqPUFqlltYMzMzMzNoMztYlxUGNyuiuiuiqajOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjmOKrKrKrVXuVbubububububuVXEKMYUTMtKfaNMPuJZqnuJXYAnukJHtnkPJeSeSeSjveSPJMYFFoePaPaPaeUbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOilIHPVzKsBNfVvSBSBSBCGeRsBlxAOrDCpCpCpCpXdrDQUsoEeVCPUlxAOtYjhamMzQDyEtYlxlxNyuvlAuiqajOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjmORpKrXuVXSofgFoFoFoczbuVXMYKpZqMPMPMPMPTpZqDfgVYAvmkJMYKpPJayBHeSIbncPJMYMYoecEpmPaeUbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOililililmCmCmCmCmCmCmCmCmClxlxrDSlXpCpCpCprDiwYOtabOPUlxlxtYIVMzMzlSDLtYlxAONyqaqaqaqajOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjmOyryryrghghghghghghghghghMYMYZqhdYqMPMPMPZqLCLRtqCUkJMYMYPJqjeSeSCnZuPJMYKpoeeUeUeUeUbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOwKTFTFTFTFLulZChmClxlxrDdKCpkGCpCprDqmiiLYnmPUlxlxtYMzMzMzlSVftYlxlxNyjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjJogUgUgUgUnHiHeTghMYMYZqKlMPNkMPMPZqimxsniuukJMYMYPJeSeSeSCngKPJMYMYoebjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOwKTFTFTFTFLunDbtmCAwlxrDrDrDrDgaaRrDPUPUPUPUPUlxlxtYtYWnAJtYtYtYlxTdNyHEHEHEHEjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjJogUgUgUgUnHKcRaghOKMYZqZqZqZqCDWBZqkJkJkJkJkJMYMYPJPJHOgePJPJPJMYoBoeCICICICIbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOmCTFTFTFTFLuxVTFUobvlxlxlxlxytItItdclxlxlxlxlxlxlxlxbguDuDTilxlxlxgqJAOgOgOgOgjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjghgUgUgUgUnHmIgUddWZMYMYMYMYzmYdYdadMYMYMYMYMYMYMYMYXYRiRiiBMYMYMYfRFklrlrlrlrbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOmCywTFTFmaLuKGAnljbvnLwijTsanLlxlxnLlxZkrSqilxlxnLlxlxlxlxlxlxlxnLPdYHOgOgOgBkjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjghrlgUgUJcnHAdMnQtWZSSrYSRemSSMYMYSSMYDddfErMYMYSSMYMYMYMYMYMYMYSSUaGzlrlrlrVGbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOmCmCmCmCmCgIgIgIFvFvFvFveMFvFvlxlxmtmtmtjNmtmtmtNyNyNyNyNyVODqDqNyNyNyHEHEHEHEjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjghghghghghPBPBPBlolololofIloloMYMYJaJaJadVJaJaJaoeoeoeoeoeZsKeKeoeoeoeCICICICIbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFvxahCYfhChlFvlxlxmtSZaLcWjZucmtjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjlohzCOegCOSbloMYMYJaRQpbjMuBthJabjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFvhCLEYSSwhCFvftZomtSZcWuccWucmtjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjloCODAPtqWCOloTnFcJaRQjMthjMthJabjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFvFvzczcFvFvFvwgkpmtmtmtbrbrmtmtjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjloloPmPmlololoMkRRJaJaJaJQJQJaJabjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOsbtlYBYBYBYBtlsbjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjToVNKDKDKDKDVNTobjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOsbYBYBYBYBYBYBsbjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjToKDKDKDKDKDKDTobjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOsbPYYBPYYBPYYBsbjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjToxNKDxNKDxNKDTobjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOsbsbsbsbsbsbsbsbjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjToToToToToToToTobjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjBEIUFDjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOjOFD
+BEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEBEIUFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFDFD
 "}
