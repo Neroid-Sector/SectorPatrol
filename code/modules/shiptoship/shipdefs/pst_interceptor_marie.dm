@@ -88,18 +88,22 @@
 //light groups
 
 /obj/structure/machinery/light/shiplight/marie/weapons
+	name = "ship light"
 	ship_name = "UAS Marie"
 	ship_light_group = "weapons"
 
 /obj/structure/machinery/light/shiplight/marie/signals
+	name = "ship light"
 	ship_name = "UAS Marie"
 	ship_light_group = "signals"
 
 /obj/structure/machinery/light/shiplight/marie/command
+	name = "ship light"
 	ship_name = "UAS Marie"
 	ship_light_group = "command"
 
 /obj/structure/machinery/light/shiplight/marie/general
+	name = "ship light"
 	ship_name = "UAS Marie"
 	ship_light_group = "general"
 
@@ -114,6 +118,13 @@
 	ship_name = "UAS Marie"
 	area_id = "XXX"
 	unlimited_power = 1
+
+/area/sts_ship/marie/exterior
+	name = "UAS Marie"
+	ship_name = "UAS Marie - Exterior"
+	area_id = "XXX"
+	unlimited_power = 1
+	base_lighting_alpha = 255
 
 /area/sts_ship/marie/airlock
 	name = "UAS Marie - External Airlock"

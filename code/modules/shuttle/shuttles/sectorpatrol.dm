@@ -255,7 +255,59 @@
 /area/shuttle/uacm_ovpst_salvage_tug
 	name = "OV-PST Test Crew Salvage Tug"
 
-//Salvage landing pad
+//StS
 
+/obj/docking_port/mobile/emergency_response/uacm_ship_transit
+	name = "OV-PST Crew Transit Shutte"
+	id = "uacm_ship_transit"
+	preferred_direction = EAST
+	port_direction = EAST
+	width = 7
+	height = 6
+	callTime = 10
+	ignitionTime = 55
+	rechargeTime = 0
+	prearrivalTime = 0
+	var/starboard_door
 
+/obj/docking_port/mobile/emergency_response/uacm_ship_transit/Initialize(mapload)
+	. = ..()
+	external_doors = list()
+	for(var/place in shuttle_areas)
+		for(var/obj/structure/machinery/door/air in place)
+			if(air.id == "starboard_door")
+				starboard_door = air
+				external_doors += list(air)
+				air.breakable = FALSE
+				air.indestructible = TRUE
+				air.unacidable = TRUE
+	if(!starboard_door)
+		WARNING("No port starboard found for [src]")
 
+/obj/docking_port/stationary/emergency_response/side_ship_dock
+	name = "OV-PST Dock 37 - Prototype Testing"
+	dir = NORTH
+	id = "ovpst_d37_side"
+	roundstart_template = /datum/map_template/shuttle/uacm_ship_transit
+	width = 7
+	height = 6
+
+/obj/docking_port/stationary/emergency_response/ship_amelia
+	name = "UAS Amelia - External Access Port"
+	dir = NORTH
+	id = "ship_amelia"
+	width = 7
+	height = 6
+
+/obj/docking_port/stationary/emergency_response/ship_marie
+	name = "UAS Marie - External Access Port"
+	dir = NORTH
+	id = "ship_marie"
+	width = 7
+	height = 6
+/datum/map_template/shuttle/uacm_ship_transit
+	name = "OV-PST Crew Transit Shutte"
+	shuttle_id = "uacm_ship_transit"
+
+/area/shuttle/uacm_ship_transit
+	name = "OV-PST Crew Transit Shutte"

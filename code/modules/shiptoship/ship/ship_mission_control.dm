@@ -107,6 +107,7 @@
 			return
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/Ignition()
+	var/saved_name = linked_command_chair.buckled_mob //In case someone gets up.
 	talkas("Standby. Beginning takeoff.")
 	AnnounceToCrew("Attention crew of the [sector_map_data["name"]]. Launch procedure is under way. Takeoff in ten seconds.")
 	sleep(100)
@@ -114,7 +115,7 @@
 	LightGroup(group = "all", state = "dim")
 	sleep(30)
 	AnimateUse("on")
-	talkas("Mission Control Online. Hello, Arbiter [linked_command_chair.buckled_mob].")
+	talkas("Mission Control Online. Hello, Arbiter [saved_name].")
 	talkas("Activating main power loop. Stansby.")
 	LightGroup(group = "weapons", state = "turn_on")
 	linked_weapons_console.AnimateUse(1)

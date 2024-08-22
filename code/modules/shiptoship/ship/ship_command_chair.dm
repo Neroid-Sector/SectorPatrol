@@ -199,6 +199,7 @@
 		M.pixel_x = buckling_x
 		M.old_x = buckling_x
 	else
+		M.client.East()
 		M.pixel_y = initial(buckled_mob.pixel_y)
 		M.old_y = initial(buckled_mob.pixel_y)
 		M.pixel_x = initial(buckled_mob.pixel_x)

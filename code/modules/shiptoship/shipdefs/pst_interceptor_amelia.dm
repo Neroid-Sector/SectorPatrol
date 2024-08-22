@@ -88,18 +88,22 @@
 //light groups
 
 /obj/structure/machinery/light/shiplight/amelia/weapons
+	name = "ship light"
 	ship_name = "UAS Amelia"
 	ship_light_group = "weapons"
 
 /obj/structure/machinery/light/shiplight/amelia/signals
+	name = "ship light"
 	ship_name = "UAS Amelia"
 	ship_light_group = "signals"
 
 /obj/structure/machinery/light/shiplight/amelia/command
+	name = "ship light"
 	ship_name = "UAS Amelia"
 	ship_light_group = "command"
 
 /obj/structure/machinery/light/shiplight/amelia/general
+	name = "ship light"
 	ship_name = "UAS Amelia"
 	ship_light_group = "general"
 
@@ -114,6 +118,13 @@
 	ship_name = "UAS Amelia"
 	area_id = "XXX"
 	unlimited_power = 1
+
+/area/sts_ship/amelia/exterior
+	name = "UAS Amelia"
+	ship_name = "UAS Amelia - Exterior"
+	area_id = "XXX"
+	unlimited_power = 1
+	base_lighting_alpha = 255
 
 /area/sts_ship/amelia/airlock
 	name = "UAS Amelia - External Airlock"
