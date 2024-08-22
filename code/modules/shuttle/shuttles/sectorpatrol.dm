@@ -266,8 +266,8 @@
 	height = 6
 	callTime = 10
 	ignitionTime = 55
-	rechargeTime = 0
-	prearrivalTime = 0
+	rechargeTime = 10
+	prearrivalTime = 60
 	var/starboard_door
 
 /obj/docking_port/mobile/emergency_response/uacm_ship_transit/Initialize(mapload)

@@ -1,7 +1,7 @@
 /datum/job/uacm/basepc
 	title = JOB_UACM_BASEPC
-	total_positions = 12
-	spawn_positions = 12
+	total_positions = 10
+	spawn_positions = 10
 	flags_startup_parameters = ROLE_ADD_TO_DEFAULT
 	gear_preset = /datum/equipment_preset/uacm/basepc
 

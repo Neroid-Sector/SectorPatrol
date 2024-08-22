@@ -113,7 +113,7 @@
 		terminal_trimmed_buffer.Cut((1+terminal_reserved_lines),(2+terminal_reserved_lines))
 
 
-/obj/structure/terminal/proc/terminal_display_line(text = null,delay = TERMINAL_STANDARD_SLEEP, cache = 0) // cache = 1 bypasses displaying, this is for briefing terminals that may want to parse multiple lines before displaying
+/obj/structure/terminal/proc/terminal_display_line(text = null,delay = TERMINAL_STANDARD_SLEEP, cache = 0, center = 0) // cache = 1 bypasses displaying, this is for briefing terminals that may want to parse multiple lines before displaying
 	var/line_to_display = text
 	if(!line_to_display) return "null string passed to display line."
 	if(length(line_to_display) > terminal_line_length)
@@ -122,15 +122,24 @@
 			cut_line = copytext(line_to_display,1,terminal_line_length)
 			var/last_space = findlasttext(cut_line, " ")
 			cut_line = copytext(line_to_display,1,last_space)
-			terminal_trimmed_buffer += (html_encode(cut_line) + "&nbsp")
-			terminal_buffer +=  (html_encode(cut_line) + "&nbsp")
+			if(center == 1)
+				terminal_trimmed_buffer += ("<center>" + html_encode(cut_line) + "</center> &nbsp")
+				terminal_buffer +=  ("<center>" + html_encode(cut_line) + "</center> &nbsp")
+			else
+				terminal_trimmed_buffer += (html_encode(cut_line) + "&nbsp")
+				terminal_buffer +=  (html_encode(cut_line) + "&nbsp")
 			if(cache == 0)
+				if(center == 1) terminal_buffer += "</center>"
 				terminal_display()
 				if(delay != 0) sleep(delay)
 			line_to_display = copytext(line_to_display,last_space,0)
 	if(length(line_to_display) <= terminal_line_length)
-		terminal_trimmed_buffer += (html_encode(line_to_display) + "&nbsp")
-		terminal_buffer +=  (html_encode(line_to_display) + "&nbsp")
+		if(center == 1)
+			terminal_trimmed_buffer += ("<center>" + html_encode(line_to_display) + "</center> &nbsp")
+			terminal_buffer +=  ("<center>" + html_encode(line_to_display) + "</center> &nbsp")
+		else
+			terminal_trimmed_buffer += (html_encode(line_to_display) + "&nbsp")
+			terminal_buffer +=  (html_encode(line_to_display) + "&nbsp")
 		if(cache == 0)
 			terminal_display()
 			if(delay != 0) sleep(delay)

@@ -244,16 +244,28 @@
 		break
 	var/new_map = tgui_alert(usr, "Do yo wish to destroy everything on the old map?", "REPLACE?", list("Yes","No"), timeout = 0)
 	if(new_map == null) new_map = "No"
-	switch(tgui_input_list(usr, "Select Template:","TEMPLATE select",list("Blank","Comms and Ship loading test"),timeout = 0))
+	switch(tgui_input_list(usr, "Select Template:","TEMPLATE select",list("Blank","Deploy the Amelia", "Deploy the Marie","Tester Targets","Escapees","Pursuers"),timeout = 0))
 		if(null)
 			return
 		if("Blank")
 			sts_master.clear_map()
-		if("Comms and Ship loading test")
+		if("Deploy the Amelia")
 			if(new_map == "Yes") sts_master.clear_map()
-			sts_master.add_entity(entity_type = 0, x = 1, y = 1, name = "UAS Marie", type = "OV-PST Rapid Pursuit Interceptor", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
-			sts_master.add_entity(entity_type = 0, x = 50, y = 50, name = "UAS Amelia", type = "OV-PST Rapid Pursuit Interceptor", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
+			sts_master.add_entity(entity_type = 0, x = 3, y = 2, name = "UAS Amelia", type = "OV-PST Rapid Pursuit Interceptor", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
 			return
+		if("Deploy the Marie")
+			if(new_map == "Yes") sts_master.clear_map()
+			sts_master.add_entity(entity_type = 0, x = 4, y = 73, name = "UAS Amelia", type = "OV-PST Rapid Pursuit Interceptor", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 5, ship_shield = 2, ship_speed = 5, salvos = 2)
+			return
+		if("Tester Targets")
+			sts_master.add_entity(entity_type = 0, x = 7, y = 5, name = "Weapons Test Drone Alpha", type = "OV-PST Prototype Testing Drone", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 1, ship_shield = 0, ship_speed = 2, salvos = 0)
+			sts_master.add_entity(entity_type = 0, x = 2, y = 72, name = "Weapons Test Drone Beta", type = "OV-PST Prototype Testing Drone", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UACM", ship_damage = 1, ship_shield = 0, ship_speed = 2, salvos = 0)
+		if("Escapees")
+			sts_master.add_entity(entity_type = 0, x = 52, y = 98, name = "TPS Workers Glory", type = "Chelyabinsk Class Heavy Transport", vector_x = 0, vector_y = -3, ship_status = "Operational", ship_faction = "UPP", ship_damage = 10, ship_shield = 0, ship_speed = 3, salvos = 0)
+		if("Pursuers")
+			sts_master.add_entity(entity_type = 0, x = 92, y = 98, name = "TPS Devils Bones", type = "Kaifeng Class Frigate", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UPP", ship_damage = 5, ship_shield = 0, ship_speed = 4, salvos = 1)
+			sts_master.add_entity(entity_type = 0, x = 90, y = 97, name = "TPS Peoples Hammer", type = "Kaifeng Class Frigate", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UPP", ship_damage = 5, ship_shield = 0, ship_speed = 4, salvos = 1)
+			sts_master.add_entity(entity_type = 0, x = 94, y = 99, name = "TPS Tyrants Ashes", type = "Kaifeng Class Frigate", vector_x = 0, vector_y = 0, ship_status = "Operational", ship_faction = "UPP", ship_damage = 5, ship_shield = 0, ship_speed = 4, salvos = 1)
 
 /datum/admins/proc/link_player_ships()
 	if(!check_rights(R_ADMIN)) return

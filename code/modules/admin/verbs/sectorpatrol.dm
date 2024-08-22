@@ -35,29 +35,39 @@
 
 /client/proc/cmd_start_sequence()
 	set name = "Start Sequence"
-	set category = "Admin.SectorPatrol"
+	set category = "DM.Narration"
 
 	if (!admin_holder || !(admin_holder.rights & R_MOD))
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	var/puzzlebox_admin_option = tgui_input_list(usr, "Select a Sequence", "Start Sequence", list("None - Leave", "Open Hideaway Podlocks", "Open TOS Outer Podlocks", "Open TOS Inner Podlocks"), 0)
+	var/puzzlebox_admin_option = tgui_input_list(usr, "Select a Sequence", "Start Sequence", list("None - Leave", "The Interceptor Takes Off"), 0)
 	if (!puzzlebox_admin_option) return
 	switch(puzzlebox_admin_option)
 		if("None - Leave")
 			return
-		if("Open Hideaway Podlocks")
-			for (var/obj/structure/machinery/door/poddoor/almayer/locked/A in world)
-				if(A.id == "crypt-a")
-					A.open()
-		if("Open TOS Outer Podlocks")
-			for (var/obj/structure/machinery/door/poddoor/almayer/locked/A in world)
-				if(A.id == "crypt-b")
-					A.open()
-		if("Open TOS Inner Podlocks")
-			for (var/obj/structure/machinery/door/poddoor/almayer/locked/A in world)
-				if(A.id == "crypt-c")
-					A.open()
+		if("The Interceptor Takes Off")
+			to_chat(world, narrate_body("The ships Twilight Rails kick in and it begins its glide to its destination point. The Interceptor feels quieter than most spaceships you've been on."))
+			sleep(150)
+			to_chat(world, narrate_body("As the ship positions itself in its starting point, you start to hear chatter over the comms, it seems obvious that currently, all eyes on the PST are on you."))
+			sleep(140)
+			to_chat(world, narrate_body("The ship comes to a halt again and for a few seconds, it seems like its gone inert."))
+			sleep(130)
+			to_chat(world, narrate_body("A loud humming starts to fill the ship as everyone on board can smell the familiar smell of burnt ozone, a very common occurrence on the PST."))
+			sleep(140)
+			to_chat(world, narrate_body("The Twilight Rails are overcharged and start to expel excess Twilight energy. Normally, this would be a reason to panic. A ship overcharging its hyperspace rails like this  risks getting drawn into the Hyperspace field without a vector, never to come back."))
+			sleep(140)
+			to_chat(world, narrate_body("The crew of the PST watches as a blue wormhole opens underneath the Interceptor, slowly matching it in size. "))
+			sleep(140)
+			to_chat(world, narrate_body("The tear is complete and the ship nosedives into it, resembling a submarine dive. You feel the hair rise at the back of your head as reality seems to distort for a second. "))
+			sleep(160)
+			to_chat(world, narrate_body("Suddenly, something pulls on the craft. It feels like it was tethered to something as you feel it accelerate through Hyperspace. You feel like someone is watching you, but the presence does not feel hostile or out of place. "))
+			sleep(150)
+			to_chat(world, narrate_body("As the ship continues to make its way through Hyperspace, the presence intensifies. You feel like you've known this presence from somewhere but can't put it into words. "))
+			sleep(130)
+			to_chat(world, narrate_body("The feeling passes as the ship breaches the Hyperspace boundary again and conventional drives kick in. It seems like this was too short to be an actual Hyperspace jump... "))
+			sleep(140)
+			to_chat(world, narrate_body("Wherever you are, it seems like the jump at least was completed safely. It takes a moment for the ships sensors to come alive..." ))
 
 /client/proc/cmd_save_turfs()
 
