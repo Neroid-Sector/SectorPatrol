@@ -98,3 +98,43 @@
 	color_state = null
 	bulb_color = COLOR_WHITE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/structure/machinery/light/shiplight
+	name = "ship light"
+	desc = "A sturdy looking see through tube with multiple rows of small diodes lined up on a small circuit board."
+	desc_lore = "Manufacturers of hardened light bulbs saw a complete revival of their industry as space flight exploded and humanity became accommodated with the encroachment of the dark during their travel through the stars. These bulbs are the product of continued prosperity guaranteed to anyone lucky enough to break it into the highly competitive field. This light bulb is capable of changing its brightness and color and has a LD enabled chip which lets it be tied into other PST systems."
+	light_color = COLOR_WHITE
+	light_range = 8
+	var/ship_name
+	var/ship_light_group
+
+/obj/structure/machinery/light/shiplight/proc/StatusChange(status)
+	switch(status)
+		if(null)
+			return
+		if("dim")
+			light_color = COLOR_WHITE
+			set_light(2)
+		if("normal")
+			light_color = COLOR_WHITE
+			set_light(8)
+		if("turn_on")
+			light_color = COLOR_WHITE
+			var/starting_value = 2
+			while(starting_value <= 8)
+				set_light(starting_value)
+				starting_value += 1
+				sleep(1)
+		if("red_alert")
+			light_color = "#be0606"
+			set_light(8)
+			sleep(15)
+			set_light(3)
+			sleep(5)
+			set_light(8)
+			sleep(15)
+			set_light(3)
+			sleep(5)
+			set_light(8)
+		if("off")
+			set_light(0)

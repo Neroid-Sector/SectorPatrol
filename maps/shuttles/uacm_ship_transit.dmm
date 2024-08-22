@@ -1,0 +1,16 @@
+"a" = (/obj/structure/window/framed/almayer/hull,/turf/closed/wall/almayer/outer,/area/shuttle/ert)
+"g" = (/obj/structure/machinery/door/airlock/multi_tile/uacm/general{icon = 'icons/obj/structures/doors/2x1almayerdoor.dmi'; dir = 1; id = "starboard_door"},/turf/open/floor/almayer,/area/shuttle/ert)
+"D" = (/turf/open/floor/almayer,/area/shuttle/ert)
+"L" = (/obj/docking_port/mobile/emergency_response/uacm_ship_transit,/turf/closed/wall/almayer/outer,/area/shuttle/ert)
+"M" = (/obj/structure/bed/chair/vehicle{dir = 1},/turf/open/floor/almayer,/area/shuttle/ert)
+"R" = (/turf/closed/wall/almayer/outer,/area/shuttle/ert)
+"S" = (/obj/structure/bed/chair/vehicle,/turf/open/floor/almayer,/area/shuttle/ert)
+
+(1,1,1) = {"
+RaaRaaR
+RSSSSSR
+DDDDDDa
+gDDDDDa
+RMMMMMR
+LaaRaaR
+"}

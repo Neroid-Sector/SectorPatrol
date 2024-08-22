@@ -2333,7 +2333,75 @@
 		for(var/client/staff in GLOB.admins)
 			if((R_ADMIN|R_MOD) & staff.admin_holder.rights)
 				to_chat(staff, SPAN_STAFF_IC("<b>ADMINS/MODS: [SPAN_RED("[src.owner] marked [key_name(speaker)]'s ARES message for response.")]</b>"))
-
+	//Sector Patrol stuff starts here. I think :P
+	if(href_list["open_mission_control"])
+		if(!check_rights(R_ADMIN))
+			return
+		MissionControl(window = href_list["open_mission_control"])
+	if(href_list["load_general_save"])
+		if(!check_rights(R_ADMIN))
+			return
+		load_general_save()
+	if(href_list["save_general_save"])
+		if(!check_rights(R_ADMIN))
+			return
+		save_general_save(save = null)
+	if(href_list["edit_general_info"])
+		if(!check_rights(R_ADMIN))
+			return
+		edit_general_info(type_to_edit = href_list["edit_general_info"])
+	if(href_list["send_ship_comms"])
+		if(!check_rights(R_ADMIN))
+			return
+		send_ship_comms()
+	if(href_list["view_ship_log"])
+		if(!check_rights(R_ADMIN))
+			return
+		view_ship_log(log_type = href_list["view_ship_log"])
+	if(href_list["control_npc_ship"])
+		if(!check_rights(R_ADMIN))
+			return
+		control_npc_ship()
+	if(href_list["sonar_ping"])
+		if(!check_rights(R_ADMIN))
+			return
+		sonar_ping()
+	if(href_list["fire_as_ship"])
+		if(!check_rights(R_ADMIN))
+			return
+		fire_as_ship()
+	if(href_list["next_phase"])
+		if(!check_rights(R_ADMIN))
+			return
+		next_phase()
+	if(href_list["sts_control_panel"])
+		if(!check_rights(R_ADMIN))
+			return
+		sts_control_panel()
+	if(href_list["toggle_sts"])
+		if(!check_rights(R_ADMIN))
+			return
+		toggle_sts(href_list["toggle_sts"])
+	if(href_list["sts_round_flow_panel"])
+		if(!check_rights(R_ADMIN))
+			return
+		sts_round_flow_panel()
+	if(href_list["sts_entity_panel"])
+		if(!check_rights(R_ADMIN))
+			return
+		sts_entity_panel()
+	if(href_list["entity_editor"])
+		if(!check_rights(R_ADMIN))
+			return
+		entity_editor(href_list["entity_editor"])
+	if(href_list["link_player_ships"])
+		if(!check_rights(R_ADMIN))
+			return
+		link_player_ships()
+	if(href_list["load_template"])
+		if(!check_rights(R_ADMIN))
+			return
+		load_template()
 	return
 
 /datum/admins/proc/accept_ert(mob/approver, mob/ref_person)

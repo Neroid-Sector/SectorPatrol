@@ -1024,14 +1024,6 @@
 // Sector Patrol
 // Underlay
 
-/turf/open/underlay
-	name = "underlay graphic"
-	icon = 'icons/turf/floors/underlay.dmi'
-	icon_state = "test"
-	mouse_opacity = FALSE
-	can_bloody = FALSE
-	supports_surgery = FALSE
-	layer = SPACE_UNDERLAY_LAYER
 /turf/open/underlay/clear
 	icon = 'icons/turf/floors/glass.dmi'
 	icon_state = "glass-555"

@@ -52,7 +52,7 @@
 /atom/movable/screen/plane_master/space_backdrop/backdrop(mob/mymob)
 	. = ..()
 
-	mymob.overlay_fullscreen("space", /atom/movable/screen/fullscreen/space)
+	mymob.overlay_fullscreen("space", text2path("/atom/movable/screen/fullscreen/[GLOB.backdrop_type]"))
 
 ///Contains most things in the game world
 /atom/movable/screen/plane_master/game_world

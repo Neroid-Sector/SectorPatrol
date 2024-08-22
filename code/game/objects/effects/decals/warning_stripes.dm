@@ -304,3 +304,71 @@
 	desc = "UACM Outer Veil Primary Supply Terminal <br><big>- MUP -</big><br>"
 	desc_lore = "The label MUP indicates the Main Upload Point of a space station or spaceship and is usually one of the most extremely guarded spots on these objects. With proper access credentials, an MUP can be used to tweak or directly override the AI governing the stations systems. Because such access is typically impossible to trace as malicious software destroys any systems and data that it touches, agents delivering malicious software through a MUP is a very infamous way of the three superpowers sabotaging each other's endeavors. "
 	icon_state = "pst_mup"
+
+//ships
+//pst interceptor
+/obj/effect/decal/info_tag/sts/pst_interceptor/wep/
+	name = "WEP orientation label"
+	desc = "OV-PST Interceptor<br><big>- WEP -</big><br>"
+	desc_lore = "The label WEP is used to designate areas related to the use of a ships weapon systems, be it the primary and secondary cannons or any auxiliary systems that the ship may have."
+	icon_state = "ship_int_wep"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/eng/
+	name = "ENG orientation label"
+	desc = "OV-PST Interceptor<br><big>- ENG -</big><br>"
+	desc_lore = "The label ENG designates areas containing machinery related to the ships power, air filtration or engine systems, or areas with tools or other helpful equipment related to maintenance or servicing of those systems."
+	icon_state = "ship_int_eng"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/cic/
+	name = "CIC orientation label"
+	desc = "OV-PST Interceptor<br><big>- CIC -</big><br>"
+	desc_lore = "The label CIC is used to designate the ship's Combat Information Center, which is essentially the ships bridge."
+	icon_state = "ship_int_cic"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/twr/
+	name = "TWR orientation label"
+	desc = "OV-PST Interceptor<br><big>- TWR -</big><br>"
+	desc_lore = "The label TWR designates the ship's Twilight Rail rooms, one of four rooms that serve as the ships power generators, conventional and hyperspace drives."
+	icon_state = "ship_int_twr"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/car/
+	name = "CAR orientation label"
+	desc = "OV-PST Interceptor<br><big>- CAR -</big><br>"
+	desc_lore = "The label CAR designates the ship's cargo hold, where munitions and other relevant cargo are stored."
+	icon_state = "ship_int_car"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/san/
+	name = "SAN orientation label"
+	desc = "OV-PST Interceptor<br><big>- SAN -</big><br>"
+	desc_lore = "The label SAN designates the ship's sanitation and hygiene area."
+	icon_state = "ship_int_san"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/rec/
+	name = "REC orientation label"
+	desc = "OV-PST Interceptor<br><big>- REC -</big><br>"
+	desc_lore = "The label REC designates the ship's recreation area, which also beverage and food dispensers along with some other recreational items."
+	icon_state = "ship_int_rec"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/med/
+	name = "MED orientation label"
+	desc = "OV-PST Interceptor<br><big>- MED -</big><br>"
+	desc_lore = "The label MED designates the ship's medbay, the place to go for any injury, major or minor."
+	icon_state = "ship_int_med"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/cry/
+	name = "CRY orientation label"
+	desc = "OV-PST Interceptor<br><big>- CRY -</big><br>"
+	desc_lore = "The label CRY indicates the ships emergency cryobays, where crew members head into for prolonged rest."
+	icon_state = "ship_int_cry"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/com/
+	name = "COM orientation label"
+	desc = "OV-PST Interceptor<br><big>- COM -</big><br>"
+	desc_lore = "The label COM indicates an entrance to the ship's Liquid Data comms systems and are typically restricted to specially trained personnel."
+	icon_state = "ship_int_com"
+
+/obj/effect/decal/info_tag/sts/pst_interceptor/ext/
+	name = "EXT orientation label"
+	desc = "OV-PST Interceptor<br><big>- EXT -</big><br>"
+	desc_lore = "The label EXT indicates an external airlock, a way in and off the ship."
+	icon_state = "ship_int_ext"

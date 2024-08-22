@@ -26,11 +26,12 @@
 	desc_lore = "The energy required to properly create, cultivate, harvest, and turn biomatter into something edible on-board ships or space stations means that any technology of this type remained a fever dream and to anyone's knowledge never was explored to any extent. It is curious then that the PST not only seems to have a pipeline fully capable of just that, but this does also not seem to be the initial iteration of this technology considering how refined it seems to be. This would likely mean this technology was pioneered back when the PST belonged to the cult of the Godseekers and Deep Void. Bon Appetit!"
 	icon = 'icons/obj/items/sp_cargo.dmi'
 	icon_state = "pstmeal"
+	bitesize = 3
 
 /obj/item/reagent_container/food/snacks/mre_pack/uacm/Initialize()
 	. = ..()
 	reagents.add_reagent("nutriment", 25)
-	bitesize = 3
+
 /obj/structure/machinery/cm_vending/sorted/sectorpatrol/food
 	name = "OV-PST Meal Assembly Station"
 	desc = "USCM Food Vendor, containing standard military Prepared Meals."

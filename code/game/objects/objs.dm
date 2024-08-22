@@ -42,6 +42,9 @@
 	var/customizable = 0 //Checked by the customizers to escape Sector Patrol 'approved' drip
 	var/customizable_desc
 	var/customizable_desc_lore
+	// Sector Patorl Dorms - Vars related to dorm control loading and saving
+	var/dorms_PrimaryStorage = 0
+	var/dorms_ItemOwner // Set to a character name or use a proc to set it from within the game. Once Persistancy loads object data, this will determine whose general locker is it sent to.
 
 
 /obj/Initialize(mapload, ...)
@@ -489,3 +492,16 @@
 		desc_lore = "<p>[initial(desc_lore)]</p><p>[customizable_desc_lore]</p>"
 	if (customizable_desc_lore == null)
 		desc_lore = "[initial(desc_lore)]"
+
+//Dorms
+//Prmary storage update function called while loading
+/obj/proc/update_dorm_storage() // updates areas storage ref to src
+	var/area/ovpst/dorm/area = get_area(src)
+	area.dorm_primary_storage = src
+
+/obj/proc/move_to_primary_dorm_locker()
+	for(var/obj/object_to_move in world)
+		for (var/area/ovpst/dorm/dorm_area_to_moveto in world)
+			if(object_to_move.dorms_ItemOwner == dorm_area_to_moveto.dorm_owner_name)
+				if(dorm_area_to_moveto.dorm_primary_storage)
+					object_to_move.forceMove(dorm_area_to_moveto.dorm_primary_storage)

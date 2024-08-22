@@ -2,6 +2,8 @@
 
 /mob
 	var/list/fullscreens = list()
+	var/list/sp_uis = list()
+	var/list/narration_settings = list("Name" = null, "Location" = null, "Position" = null, "Target" = null)
 
 /mob/proc/overlay_fullscreen(category, type, severity)
 	var/atom/movable/screen/fullscreen/screen = fullscreens[category]

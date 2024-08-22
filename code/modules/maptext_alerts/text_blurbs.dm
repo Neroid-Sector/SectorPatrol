@@ -159,7 +159,6 @@ but should see their own spawn message even if the player already dropped as USC
 
 //Sector Patrol
 //Song Title blurb
-/proc/show_blurb_song(title = "Song Name",additonal = "Song Artist - Song Album",) // Formatting is: First line is bolded, second line is regular.
-	var/message_to_display = "<b>[title]</b>\n[additonal]"
-	for(var/mob/living/mob in world)
-		INVOKE_ASYNC(mob, PROC_REF(show_blurb), GLOB.player_list, 10 SECONDS, "[message_to_display]", "LEFT+0:16,BOTTOM+1:16", "left", "#FFFFFF", "song[title]", FALSE, 1)
+/proc/show_blurb_song(title = "Song Name",additional = "Song Artist - Song Album",) // Formatting is: First line is bolded, second line is regular.
+	var/message_to_display = "<b>[title]</b>\n[additional]"
+	show_blurb(GLOB.player_list, 10 SECONDS, "[message_to_display]", screen_position = "LEFT+0:16,BOTTOM+1:16", text_alignment = "left", text_color = "#FFFFFF", blurb_key = "song[title]", ignore_key = TRUE, speed = 1)

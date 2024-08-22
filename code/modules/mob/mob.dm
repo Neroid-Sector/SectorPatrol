@@ -1031,3 +1031,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	mind.transfer_to(new_player)
 
 	qdel(src)
+
+/mob/proc/update_backdrop()
+	src.clear_fullscreen("space", 0)
+	src.overlay_fullscreen("space", text2path("/atom/movable/screen/fullscreen/[GLOB.backdrop_type]"))

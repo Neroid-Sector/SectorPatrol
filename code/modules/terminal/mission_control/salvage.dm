@@ -6,14 +6,9 @@
 	icon = 'icons/obj/structures/machinery/clio_term.dmi'
 	plane = GAME_PLANE
 	icon_state = "open_ok"
-	terminal_reserved_lines = 2
+	terminal_reserved_lines = 0
 	terminal_id = "mission_control"
-
-/obj/structure/terminal/mc_salvage/Initialize(mapload, ...)
-
-	terminal_header += "<center><b>"+ html_encode("MISSION CONTROL RC3") + "</B><BR>" + html_encode("OV-PST TEST CREW"+"<BR>")
-	terminal_header += html_encode("COMMANDS: HELP; RESOURCES; SPIKE") + "</center>"
-	. = ..()
+	terminal_header = {"<center></b>MISSION CONTROL RC3</b><br>OV-PST TEST CREW<BR>COMMANDS: HELP; RESOURCES; SPIKE</center>"}
 
 /obj/structure/terminal/mc_salvage/proc/terminal_spike(str)
 	var/spike_string = str

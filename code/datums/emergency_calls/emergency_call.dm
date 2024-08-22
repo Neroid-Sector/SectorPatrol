@@ -11,7 +11,7 @@
 	var/ert_dispatched = FALSE
 
 /datum/game_mode/proc/ares_online()
-	to_chat(world, "<span class='big'><span class='radio'><span class='name'>Mission Control<b>[icon2html('icons/obj/items/radio.dmi', usr, "beacon")] \u005BOV-PST \u0028TC-MC\u0029\u005D </b></span><span class='message'>, says \"[GLOB.mission_control_hello]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
+	to_chat(world, "<span class='big'><span class='radio'><span class='name'>Mission Control<b>[icon2html('icons/obj/items/radio.dmi', world, "beacon")] \u005BOV-PST \u0028TC-MC\u0029\u005D </b></span><span class='message'>, says \"[GLOB.mission_control_hello]\"</span></span></span>", type = MESSAGE_TYPE_RADIO)
 
 /datum/game_mode/proc/request_ert(user, ares = FALSE)
 	if(!user)

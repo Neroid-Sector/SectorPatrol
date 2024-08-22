@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(statpanels)
 		num_fires++
 		global_data = list(
 			"Sector Patrol ALPHA",
-			"[GLOB.ingame_location]",
+			"[GLOB.ingame_location] - The [GLOB.ingame_current_system] solar system.",
 			"[GLOB.ingame_date]",
 			"Local Time: [time_displayed]",
 			"---------",

@@ -1,13 +1,16 @@
+GLOBAL_VAR_INIT(savefile_initiated, 0)
 GLOBAL_VAR_INIT(savefile_number, 0) //Savefile number reference. Should be set automatically by the persistance system. Tells it which save file is latest while loding/saving
 //Song blurb vars
 GLOBAL_VAR_INIT(song_title, "")
 GLOBAL_VAR_INIT(song_info, "")
 //Round infopanel readout:
 
-GLOBAL_VAR_INIT(ingame_location, "UACM OV-PST, Neroid Sector")
+GLOBAL_VAR_INIT(ingame_location, "UACM OV-PST")
 GLOBAL_VAR_INIT(ingame_date, "Unknown Date/Time")
 GLOBAL_VAR_INIT(ingame_time, 0)
 GLOBAL_VAR_INIT(ingame_mission_type, "Open Session")
+
+GLOBAL_VAR_INIT(ingame_current_system, "Tau-Gamma 331, Neroid Sector")
 
 //Hello message
 GLOBAL_VAR_INIT(mission_control_hello, "Mission Control Online. Interval recording online. Hello, Test Crews!")
@@ -55,3 +58,24 @@ GLOBAL_LIST_EMPTY(salvaging_turfs_all)
 GLOBAL_LIST_EMPTY(salvaging_turfs_open)
 
 GLOBAL_LIST_EMPTY(salvaging_active_spikes)
+
+// Dorms and realted
+
+GLOBAL_LIST_EMPTY(dorms_button_list)
+
+GLOBAL_LIST_EMPTY(dorms_name_list)
+
+// Navigation/Ship to Ship etc
+
+GLOBAL_VAR_INIT(sector_map_x, 100)
+GLOBAL_VAR_INIT(sector_map_y, 100)
+GLOBAL_VAR_INIT(sector_map_sector_size, 10)
+GLOBAL_VAR_INIT(sector_map_initialized, 0)
+GLOBAL_VAR_INIT(sector_map_id_tag, 1)
+
+GLOBAL_VAR_INIT(combat_initiated, 0)
+GLOBAL_VAR_INIT(combat_round, 1)
+GLOBAL_VAR_INIT(round_phase, 1)
+
+GLOBAL_LIST_EMPTY(sts_ship_areas)
+GLOBAL_VAR_INIT(backdrop_type, "space")
