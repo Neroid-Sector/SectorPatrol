@@ -889,8 +889,7 @@
 /obj/structure/shiptoship_master/proc/NextTurn()
 	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_pre in world)
 		if(ship_mc_pre.sector_map_data["initialized"] == 1)
-			ship_mc_pre.local_round_log_moves = null
-			ship_mc_pre.local_round_log_moves = list()
+			ship_mc_pre.NextTurn(0)
 	var/len_to_test
 	ProcessMovement(type = "ship")
 	while(len_to_test != round_history_current.len)
@@ -913,7 +912,7 @@
 	rem_entity(type = "special")
 	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc in world)
 		if(ship_mc.sector_map_data["initialized"] == 1)
-			ship_mc.NextTurn()
+			ship_mc.NextTurn(1)
 
 
 /obj/structure/shiptoship_master/proc/scan_entites(category = 0, output_format = 0) // category = 0 for ships, 1 for missiles, 2 for specials. format = 0 text for screen display/ref lists. 1 creates buttons with references.

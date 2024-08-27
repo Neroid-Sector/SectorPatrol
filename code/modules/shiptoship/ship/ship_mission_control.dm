@@ -202,20 +202,28 @@
 		current_tracker_pos += 1
 
 
-/obj/structure/shiptoship_master/ship_missioncontrol/NextTurn()
-	local_round_log_full.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
-	local_round_log_full.Add(local_round_log)
-	linked_command_chair.open_command_window("round_history")
-	local_round_log = null
-	local_round_log = list()
-	SyncPosToMap()
-	TrackerUpdate()
-	if(sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] < 2) sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] += 1
-	INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
-	INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
-	INVOKE_ASYNC(linked_control_pad,TYPE_PROC_REF(/obj/structure/ship_elements/control_pad/, SetUsageData),0)
-	INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, SetUsageData),0,null)
-	return 1
+/obj/structure/shiptoship_master/ship_missioncontrol/NextTurn(status = null)
+	switch(status)
+		if(null)
+			return
+		if(0)
+			local_round_log_full.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
+			local_round_log_full.Add(local_round_log)
+			linked_command_chair.open_command_window("round_history")
+			local_round_log = null
+			local_round_log = list()
+			local_round_log_moves = null
+			local_round_log_moves = list()
+			return 1
+		if(1)
+			SyncPosToMap()
+			TrackerUpdate()
+			if(sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] < 2) sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] += 1
+			INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
+			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
+			INVOKE_ASYNC(linked_control_pad,TYPE_PROC_REF(/obj/structure/ship_elements/control_pad/, SetUsageData),0)
+			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, SetUsageData),0,null)
+			return 1
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/PingLog(entity_type = 0, pos_x = 0, pos_y = 0, name = "none", type = "none", target_x = 0, target_y = 0, speed = 0, hp = 0, faction = "none")
 	switch(entity_type)
