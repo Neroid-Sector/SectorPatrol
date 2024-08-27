@@ -29,6 +29,7 @@
 	var/list/local_round_log_moves = list()
 	var/list/local_round_log_full = list()
 	var/list/ping_history = list()
+	var/list/current_pings = list()
 	var/list/comms_messages = list()
 	light_system = HYBRID_LIGHT
 	light_color = "#660166"
@@ -209,7 +210,11 @@
 		if(0)
 			local_round_log_full.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
 			local_round_log_full.Add(local_round_log)
+			ping_history.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
+			ping_history.Add(current_pings)
 			linked_command_chair.open_command_window("round_history")
+			current_pings = null
+			current_pings = list()
 			local_round_log = null
 			local_round_log = list()
 			local_round_log_moves = null
@@ -228,13 +233,13 @@
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/PingLog(entity_type = 0, pos_x = 0, pos_y = 0, name = "none", type = "none", target_x = 0, target_y = 0, speed = 0, hp = 0, faction = "none")
 	switch(entity_type)
 		if(1)
-			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Ship [name] - [type]</b> | IFF: <b>[faction]</b><br>Vector:<b>([target_x],[target_y])</b> Max: <b>[speed]</b> | Integrity: <b>[hp]</b>)")
+			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Ship [name] - [type]</b> | IFF: <b>[faction]</b><br>Vector:<b>([target_x],[target_y])</b> Max: <b>[speed]</b> | Integrity: <b>[hp]</b>)"})
 		if(2)
-			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Pojectile [name] | Warhead: [type]<br>Payload: [hp] | Target:([target_x],[target_y]) | Velocity: [speed]")
+			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Pojectile [name] | Warhead: [type]<br>Payload: [hp] | Target:([target_x],[target_y]) | Velocity: [speed]"})
 		if(3)
-			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Unknown Ship:</b> Bearing: [type] | Velocity: [speed]")
+			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span>| <b>Unknown Ship:</b> Bearing: [type] | Velocity: [speed]"})
 		if(4)
-			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Unknown Projectile</b> Bearing: [type] | Velocity: [speed]")
+			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Unknown Projectile</b> Bearing: [type] | Velocity: [speed]"})
 	linked_command_chair.open_command_window("pings_and_tracking")
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/ScannerPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0, range = 0)

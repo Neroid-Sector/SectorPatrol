@@ -96,6 +96,12 @@
 		.text{
 		padding: 5px;
 		}
+		.coord {
+		color: #eb8de0;
+		}
+		.sector {
+		color: #9be7e8;
+		}
 		</head>
 		</style>
 		"}
@@ -121,17 +127,22 @@
 			var/round_history
 			if(linked_master_console.local_round_log_full.len == 0) round_history = "No Sonar history in buffer."
 			if(linked_master_console.local_round_log_full.len != 0) round_history = jointext(linked_master_console.local_round_log_full, "</p><p>")
+			var/displayed_ping_history
+			if(linked_master_console.ping_history.len == 0) displayed_ping_history = "No Ping history in buffer."
+			if(linked_master_console.ping_history.len != 0) displayed_ping_history = jointext(linked_master_console.ping_history, "</p><p>")
 			window_size="700x500"
-			dat +={"<p><b>Sonar Activity History Buffer:</b></p>
+			dat +={"<p><b>Sonar Activity History:</b></p>
 				<p>[round_history]</p>
+				<p><b>Probe Ping History:</b></p>
+				<p>[displayed_ping_history]</p>
 				"}
 		if("pings_and_tracking")
 			window_size="500x500"
 			var/activity_summary
 			var/list/pings_and_tracking = list()
 			pings_and_tracking.Add("<b>PINGS</b>")
-			if(linked_master_console.ping_history.len == 0) pings_and_tracking.Add("No ping history.")
-			if(linked_master_console.ping_history.len != 0) pings_and_tracking.Add(jointext(linked_master_console.ping_history, "</p><p>"))
+			if(linked_master_console.current_pings.len == 0) pings_and_tracking.Add("No ping history.")
+			if(linked_master_console.current_pings.len != 0) pings_and_tracking.Add(jointext(linked_master_console.current_pings, "</p><p>"))
 			pings_and_tracking.Add("<b>TRACKING</b>")
 			pings_and_tracking.Add(jointext(linked_master_console.GetTrackingList(), "</p><p>"))
 			var/pings_and_tracking_output = jointext(pings_and_tracking, "</p><p>")
@@ -277,7 +288,7 @@
 	. = ..()
 	if(usr == buckled_mob)
 		to_chat(usr, SPAN_INFO("Use the console with <b>HELP</b> or <b>DISARM</b> intent to open the <b>sonar activity</b> screen."))
-		to_chat(usr, SPAN_INFO("Use the console with <b>GRAB</b> or <b>HARM</b> intent to open the <b>sonar activity history buffer</b> screen."))
+		to_chat(usr, SPAN_INFO("Use the console with <b>GRAB</b> or <b>HARM</b> intent to open the <b>sonar and ping history buffer</b> screen."))
 
 /obj/structure/ship_elements/command_monitor/front
 	name = "front command monitor"
