@@ -9,17 +9,42 @@
 	var/terminal_id = "default"
 	var/list/terminal_buffer = list()
 	var/list/terminal_trimmed_buffer = list()
-	var/terminal_busy = 0
+	var/terminal_user
+	var/list/terminal_observers = list()
+	var/turf/terminal_user_turf
+	var/terminal_input
 	var/terminal_line_length = 70
 	var/terminal_line_height = 19
 	var/terminal_reserved_lines = 0
-	var/terminal_window_size = "800x800"
+	var/terminal_window_size = "900x900"
 	var/header_name = "NAME GOES HERE"
 	var/terminal_header
 	light_range = 3
 	light_power = 3
 	light_color = "#67ac67"
 	light_system = HYBRID_LIGHT
+
+/obj/structure/terminal/proc/new_user()
+	if(!(terminal_id in usr.saw_narrations))
+		terminal_display_line("New user detected. Welcome, [usr.name].")
+		usr.saw_narrations.Add(terminal_id)
+	else
+		terminal_display_line("Welcome back, [usr].")
+	terminal_input()
+	return "end of input loop"
+
+/obj/structure/terminal/proc/del_user()
+	if(terminal_user != null)
+		terminal_user << browse(null, "window=[terminal_id]")
+	terminal_user = null
+	terminal_user_turf = null
+	kill_window()
+
+/obj/structure/terminal/proc/check_user()
+	if(terminal_user == usr && terminal_user_turf == get_turf(usr))
+		return 1
+	else
+		return 0
 
 /obj/structure/terminal/proc/WriteHeader()
 	terminal_header = {"<center><b>[header_name]</b><br>UACM 2ND LOGISTICS</center>"}
@@ -48,9 +73,24 @@
 
 /obj/structure/terminal/proc/kill_window()
 	usr << browse(null, "window=[terminal_id]")
-	reset_buffer()
+	if(terminal_observers.Find(usr) != 0) terminal_observers.Remove(usr)
+	if(usr.sp_uis.Find(terminal_id) != 0) usr.sp_uis.Remove(terminal_id)
+
+/obj/structure/terminal/proc/reset_terminal()
+	if(check_user() == 1)
+		reset_buffer()
+		for(var/mob/mobs_to_reset_terminal in terminal_observers)
+			mobs_to_reset_terminal << browse(null, "window=[terminal_id]")
+		terminal_observers = null
+		terminal_observers = list()
+		del_user()
+		return
+	else
+		to_chat(usr, SPAN_WARNING("Error: You are not the user of the terminal."))
+		return
 
 /obj/structure/terminal/proc/terminal_display() // Display loop. HTML encodes (which incidentally should also prevent a lot of HTML shenanigans since it escapes characters) and displays current buffer. Please don't laugh at my placeholder HTML -_- , in normal circumstances should not need edits unless you want to change the style for an individual terminal.
+	if(terminal_observers.Find(usr) == 0) terminal_observers.Add(usr)
 	trim_buffer()
 	var/terminal_output = jointext(terminal_trimmed_buffer, "</p><p>")
 	var/terminal_html ={"<!DOCTYPE html>
@@ -59,21 +99,42 @@
 	<style>
 	body {
 	background-color:black;
-	width: calc(800px - 2em);
     }
     .box {
     border-style: solid;
     height: 66px;
-    }
+	width: 800px;
+	}
     .text {
-    padding: 0px 5px;
+    padding: 0px 1em;
     }
 	.text_head {
-    padding: 10px 5px;
+    padding: 0px 1em;
     }
     .box_console {
     border-style: solid;
     height: 734px;
+	width: 800px;
+    }
+    .box_footer_container {
+    text-align: center;
+    height: 50px;
+    border-style: solid;
+	width: 800px;
+    }
+    .box_footer_left {
+    float: left;
+    border-style: none solid none none;
+	width: 20%;
+    }
+    .box_footer_mid {
+    float: left;
+	width: 55%;
+    }
+    .box_footer_right {
+    float: right;
+    border-style: none none none solid;
+	width: 20%;
     }
 	#terminal_text {
 	font-family: 'Courier New',
@@ -100,13 +161,24 @@
 	</p>
 	</div>
 	</div>
+    <div class="box_footer_container">
+    <div class="box_footer_left">
+    <a href='?src=\ref[src];reset_terminal=1'><p>RESET</p></a>
     </div>
+    <div class="box_footer_mid">
+    <a href='?src=\ref[src];open_terminal=1'><p>START TYPING INTO THE CONSOLE</p></a>
+    </div>
+    <div class="box_footer_right">
+    <a href='?src=\ref[src];close_terminal=1'><p>CLOSE</p></a>
+    </div>
+    </div>
+	</div>
 	</body>
 	"}
-	usr << browse(terminal_html,"window=[terminal_id];display=1;size=[terminal_window_size];border=5px;can_close=0;can_resize=0;can_minimize=0;titlebar=0")
-	if(usr.sp_uis.Find(terminal_id) == 0)
-		usr.sp_uis.Add(terminal_id)
-	onclose(usr, "[terminal_id]")
+	for(var/mob/mobs_to_show_terminal in terminal_observers)
+		mobs_to_show_terminal << browse(terminal_html,"window=[terminal_id];display=1;size=[terminal_window_size];border=5px;can_close=0;can_resize=0;can_minimize=0;titlebar=0")
+		if(mobs_to_show_terminal.sp_uis.Find(terminal_id) == 0)
+			mobs_to_show_terminal.sp_uis.Add(terminal_id)
 
 /obj/structure/terminal/proc/trim_buffer()
 	while (terminal_trimmed_buffer.len > (terminal_line_height - terminal_reserved_lines))
@@ -116,6 +188,7 @@
 /obj/structure/terminal/proc/terminal_display_line(text = null,delay = TERMINAL_STANDARD_SLEEP, cache = 0, center = 0) // cache = 1 bypasses displaying, this is for briefing terminals that may want to parse multiple lines before displaying
 	var/line_to_display = text
 	if(!line_to_display) return "null string passed to display line."
+	terminal_trimmed_buffer.Cut(terminal_trimmed_buffer.len)
 	if(length(line_to_display) > terminal_line_length)
 		var/cut_line
 		while(length(line_to_display) > terminal_line_length)
@@ -140,6 +213,7 @@
 		else
 			terminal_trimmed_buffer += (html_encode(line_to_display) + "&nbsp")
 			terminal_buffer +=  (html_encode(line_to_display) + "&nbsp")
+		terminal_trimmed_buffer += html_encode(">_")
 		if(cache == 0)
 			terminal_display()
 			if(delay != 0) sleep(delay)
@@ -158,27 +232,65 @@
 			terminal_input()
 			return
 
-/obj/structure/terminal/proc/terminal_input() //Asks for input, kills window on cancel or escape
-	terminal_display_line(">_")
-	terminal_display()
-	var/terminal_input = tgui_input_text(usr, message = "Please enter a command, use cancel or close the window to close the terminal.", title = "Terminal Input", encode = TRUE, timeout = 0)
-	if(!terminal_input)
-		kill_window()
-		return "normal exit"
-	terminal_trimmed_buffer.Cut(terminal_trimmed_buffer.len)
-	terminal_trimmed_buffer += (html_encode(">  [uppertext(terminal_input)]_"))
-	terminal_buffer += (html_encode(">  [uppertext(terminal_input)]_"))
-	terminal_display()
-	sleep(TERMINAL_STANDARD_SLEEP)
-	terminal_parse(str = terminal_input)
+/obj/structure/terminal/proc/terminal_input_loop()
+	while(check_user() == 1)
+		if(terminal_input == null)
+			sleep(TERMINAL_STANDARD_SLEEP)
+		else break
+	if(terminal_user != null)
+		to_chat(terminal_user, SPAN_WARNING("You moved away from the console."))
+		del_user()
+	return
 
+
+/obj/structure/terminal/proc/terminal_input_prompt()
+	terminal_input = tgui_input_text(terminal_user, message = "Please enter a command, use cancel or close the window to close the terminal.", title = "Terminal Input", encode = TRUE, timeout = 0)
+	if(!terminal_input) del_user()
+	else
+		if(check_user() == 1)
+			terminal_trimmed_buffer += (html_encode(">  [uppertext(terminal_input)]_"))
+			terminal_buffer += (html_encode(">  [uppertext(terminal_input)]_"))
+			terminal_display()
+			sleep(TERMINAL_STANDARD_SLEEP)
+			terminal_parse(str = terminal_input)
+		else
+			to_chat(terminal_user, SPAN_WARNING("You moved away from the console."))
+			del_user()
+
+/obj/structure/terminal/proc/terminal_input()
+	if(check_user() == 1)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/terminal/, terminal_input_prompt))
+		terminal_input_loop()
+		return
+	else
+		if(terminal_user == usr)
+			to_chat(terminal_user, SPAN_WARNING("You moved away from the console."))
+			del_user()
+			return
+		else
+			to_chat(usr, SPAN_WARNING("Someone else is alsready using the terminal, you can only watch."))
+			return
 
 /obj/structure/terminal/attack_hand(mob/user)
-	if(!(terminal_id in usr.saw_narrations))
-		terminal_display_line("New user detected. Welcome, [usr.name].")
-		usr.saw_narrations += terminal_id
-		terminal_input()
+	if(terminal_user != null)
+		terminal_display()
+		return
 	else
-		terminal_display_line("Welcome back, [usr].")
+		terminal_user = usr
+		terminal_user_turf = get_turf(usr)
+		new_user()
+		return
+
+/obj/structure/terminal/Topic(href, list/href_list)
+	if(..())
+		return
+
+	if(href_list["reset_terminal"])
+		reset_terminal()
+		return
+	if(href_list["open_terminal"])
 		terminal_input()
-	return "end of input loop"
+		return
+	if(href_list["close_terminal"])
+		kill_window()
+		return

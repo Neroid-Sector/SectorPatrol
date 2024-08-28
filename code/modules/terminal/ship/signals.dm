@@ -207,7 +207,7 @@
 	terminal_input()
 	return "Parsing Loop End"
 
-/obj/structure/terminal/signals_console/attack_hand(mob/user)
+/obj/structure/terminal/signals_console/new_user()
 	if(repair_shutdown == 0)
 		terminal_display_line("Welcome, [usr.name].")
 		terminal_display()
