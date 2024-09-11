@@ -124,15 +124,18 @@
     }
     .box_footer_left {
     float: left;
+	height: 50px;
     border-style: none solid none none;
 	width: 20%;
     }
     .box_footer_mid {
+	height: 50px;
     float: left;
 	width: 55%;
     }
     .box_footer_right {
-    float: right;
+    height: 50px;
+	float: right;
     border-style: none none none solid;
 	width: 20%;
     }

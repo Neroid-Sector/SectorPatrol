@@ -242,10 +242,10 @@
 			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Unknown Projectile</b> Bearing: [type] | Velocity: [speed]"})
 	linked_command_chair.open_command_window("pings_and_tracking")
 
-/obj/structure/shiptoship_master/ship_missioncontrol/proc/ScannerPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0, range = 0)
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/ScannerPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0)
 	var/obj/structure/terminal/signals_console/target_console = incoming_console
-	var/x_to_target_scan = target_console.linked_master_console.sector_map_data["x"] + probe_target_x
-	var/y_to_target_scan = target_console.linked_master_console.sector_map_data["y"] + probe_target_y
+	var/x_to_target_scan = probe_target_x
+	var/y_to_target_scan = probe_target_y
 	if(x_to_target_scan < 1 || x_to_target_scan > GLOB.sector_map_x)
 		target_console.terminal_display_line("Error: X coordinate outside of Twilight Boudary. Probe lost.")
 		target_console.usage_data["ping_uses_current"] += 1
@@ -255,12 +255,6 @@
 		target_console.usage_data["ping_uses_current"] += 1
 		return 1
 	target_console.terminal_display_line("Connection to probe established. Reading data...", TERMINAL_LOOKUP_SLEEP)
-	var/scan_boundary_x_min = BoundaryAdjust(x_to_target_scan - range, type = 1)
-	var/scan_boundary_y_min = BoundaryAdjust(y_to_target_scan - range, type = 1)
-	var/scan_boundary_x_max = BoundaryAdjust(x_to_target_scan + range, type = 2)
-	var/scan_boundary_y_max = BoundaryAdjust(y_to_target_scan + range, type = 3)
-	var/current_scan_pos_x = scan_boundary_x_min
-	var/current_scan_pos_y = scan_boundary_y_min
 	if(sector_map[x_to_target_scan][y_to_target_scan]["ship"]["id_tag"] != "none")
 		target_console.terminal_display_line("Probe reports presence of a ship in its sector. Querrying Pythia.", TERMINAL_LOOKUP_SLEEP)
 		target_console.terminal_display_line("Pythia reports entity as \"[sector_map[x_to_target_scan][y_to_target_scan]["ship"]["name"]]\"")
@@ -269,37 +263,44 @@
 		target_console.terminal_display_line("Hull Integrity Readout: [sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["HP"] - (sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["hull"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["weapons"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["systems"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["engines"])], Shield: [sector_map[x_to_target_scan][y_to_target_scan]["ship"]["shield"]]")
 		PingLog(entity_type = 1, pos_x = x_to_target_scan, pos_y = y_to_target_scan ,name = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["name"], type = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["type"], target_x = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["x"], target_y = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["y"], speed = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["speed"], hp = (sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["HP"] - (sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["hull"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["weapons"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["systems"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["engines"])), faction = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["faction"])
 		if(sector_map[x_to_target_scan][y_to_target_scan]["ship"]["status"] == "player") target_console.terminal_display_line("Upsilon-Pythia Node detected. This is an OV-PST Test Crew vessel.")
+	if(sector_map[x_to_target_scan][y_to_target_scan]["ship"]["id_tag"] == "none")
+		target_console.terminal_display_line("No ship entities found at coordinates.", TERMINAL_LOOKUP_SLEEP)
 	if(sector_map[x_to_target_scan][y_to_target_scan]["missile"]["id_tag"] != "none")
 		target_console.terminal_display_line("Projectile leapfrog trace detected in probe sector. Querrying Pythia.", TERMINAL_LOOKUP_SLEEP)
 		target_console.terminal_display_line("Projectile ID: \"[sector_map[x_to_target_scan][y_to_target_scan]["missile"]["type"]]\" relative velocity:[sector_map[x_to_target_scan][y_to_target_scan]["missile"]["speed"]].")
 		target_console.terminal_display_line("Warhead type: [sector_map[x_to_target_scan][y_to_target_scan]["missile"]["warhead"]["type"]], Payload: [sector_map[x_to_target_scan][y_to_target_scan]["missile"]["warhead"]["payload"]].")
 		target_console.terminal_display_line("Based on readout, the projectiles target is: ([sector_map[x_to_target_scan][y_to_target_scan]["missile"]["target"]["x"]],[sector_map[x_to_target_scan][y_to_target_scan]["missile"]["target"]["y"]]])")
 		PingLog(entity_type = 2, pos_x = x_to_target_scan, pos_y = y_to_target_scan, name = sector_map[x_to_target_scan][y_to_target_scan]["missile"]["type"], type = sector_map[x_to_target_scan][y_to_target_scan]["missile"]["warhead"]["type"], hp = sector_map[x_to_target_scan][y_to_target_scan]["missile"]["warhead"]["payload"], target_x = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["x"], target_y = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["y"], speed = sector_map[x_to_target_scan][y_to_target_scan]["missile"]["speed"])
-		if(sector_map[x_to_target_scan][y_to_target_scan]["missile"]["target"]["tag"] != "none") target_console.terminal_display_line("missile is homing onto a specific target and may change its vector.")
+		target_console.terminal_display_line("Missile is homing onto a specific target and may change its vector.")
+	if(sector_map[x_to_target_scan][y_to_target_scan]["missile"]["target"]["tag"] == "none")
+		target_console.terminal_display_line("No missile entities found at coordinates.", TERMINAL_LOOKUP_SLEEP)
+	return 1
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/SweeperPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0)
+	var/obj/structure/terminal/signals_console/target_console = incoming_console
+	var/scan_boundary_x_min = (probe_target_x * 10) - 9
+	var/scan_boundary_y_min = (probe_target_y * 10) - 9
+	var/scan_boundary_x_max = probe_target_x * 10
+	var/scan_boundary_y_max = probe_target_y * 10
+	var/current_scan_pos_x = scan_boundary_x_min
+	var/current_scan_pos_y = scan_boundary_y_min
 	while(current_scan_pos_y <= scan_boundary_y_max)
 		while(current_scan_pos_x <= scan_boundary_x_max)
-			if((current_scan_pos_x == x_to_target_scan) && (current_scan_pos_y == y_to_target_scan))
-				current_scan_pos_x += 1
-				continue
-			if((abs(x_to_target_scan - current_scan_pos_x) + abs(y_to_target_scan - current_scan_pos_y)) <= range)
-
-				var/saved_len = target_console.terminal_buffer.len
-				if(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["id_tag"] != "none")
-					target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT", 10)
-					target_console.terminal_display_line("Sound consistant with ship engine movement.",2)
-					target_console.terminal_display_line("Bearing: [ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]]",10)
-					PingLog(entity_type = 3, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])
-				if(sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["id_tag"] != "none")
-					if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT",10)
-					target_console.terminal_display_line("Contact. Projectile leapfrog trace detected.",2)
-					target_console.terminal_display_line("Bearing: [ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y))], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"]]", 10)
-					PingLog(entity_type = 4, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y)), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"])
-				if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]): No contacts.",2)
+			var/saved_len = target_console.terminal_buffer.len
+			if(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["id_tag"] != "none")
+				target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT", 10)
+				target_console.terminal_display_line("Sound consistant with ship engine movement.",2)
+				target_console.terminal_display_line("Bearing: [ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]]",10)
+				PingLog(entity_type = 3, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])
+			if(sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["id_tag"] != "none")
+				if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT",10)
+				target_console.terminal_display_line("Contact. Projectile leapfrog trace detected.",2)
+				target_console.terminal_display_line("Bearing: [ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y))], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"]]", 10)
+				PingLog(entity_type = 4, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y)), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"])
 			current_scan_pos_x += 1
 		current_scan_pos_x = scan_boundary_x_min
 		current_scan_pos_y += 1
 	target_console.usage_data["ping_uses_current"] += 1
-	return 1
 
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/SectorConversion(x = 0, y = 0) // Converts coords to map sector. If coordinates do not line up, even sectors should get the extra row.
