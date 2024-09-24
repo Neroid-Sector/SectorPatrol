@@ -11,8 +11,12 @@
 	var/ship_name
 	var/repair_shutdown = 0
 	var/obj/structure/shiptoship_master/ship_missioncontrol/linked_master_console
-	var/list/linked_cargo_bays = list("primary_munitions" = /obj/structure/ship_elements/cargo_bay/primary_munitions,
-		"secondary_munitions" = /obj/structure/ship_elements/cargo_bay/secondary_munitions,
+	var/list/linked_weapons_bays = list("LD Homing" = /obj/structure/ship_elements/weapon_store,
+		"Direct" = /obj/structure/ship_elements/weapon_store,
+		"Accelerating Torpedo" = /obj/structure/ship_elements/weapon_store,
+		"Homing" = /obj/structure/ship_elements/weapon_store,
+		"Explosive" = /obj/structure/ship_elements/weapon_store,
+		"MIP" = /obj/structure/ship_elements/weapon_store,
 		)
 
 /obj/structure/terminal/cargo_console/proc/LinkToShipMaster(master_console as obj)
@@ -21,18 +25,28 @@
 	var/list/area_contents = list()
 	for(var/area/areas_to_scan in GLOB.sts_ship_areas)
 		area_contents.Add(areas_to_scan.GetAllContents())
-	for(var/obj/structure/ship_elements/cargo_bay/primary_bay_to_link in area_contents)
-		if(linked_master_console.sector_map_data["name"] == primary_bay_to_link.ship_name)
-			if(primary_bay_to_link.bay_id == "primary_munitions")
-				linked_cargo_bays["primary_munitions"] = primary_bay_to_link
-				to_chat(world, SPAN_INFO("Primary Munitions bay for [linked_master_console.sector_map_data["name"]] initiated."))
-				break
-	for(var/obj/structure/ship_elements/cargo_bay/secondary_bay_to_link in area_contents)
-		if(linked_master_console.sector_map_data["name"] == secondary_bay_to_link.ship_name)
-			if(secondary_bay_to_link.bay_id == "secondary_munitions")
-				linked_cargo_bays["secondary_munitions"] = secondary_bay_to_link
-				to_chat(world, SPAN_INFO("Secondary Munitions bay for [linked_master_console.sector_map_data["name"]] initiated."))
-				break
+	var/weapons_bay_counter = 0
+	for(var/obj/structure/ship_elements/weapon_store/weapons_bay_to_link in area_contents)
+		if(weapons_bay_to_link.ship_name == ship_name)
+			if(weapons_bay_to_link.stored_ammo_type == "LD Homing")
+				linked_weapons_bays["LD Homing"] = weapons_bay_to_link
+				weapons_bay_counter += 1
+			if(weapons_bay_to_link.stored_ammo_type == "Direct")
+				linked_weapons_bays["Direct"] = weapons_bay_to_link
+				weapons_bay_counter += 1
+			if(weapons_bay_to_link.stored_ammo_type == "Accelerating Torpedo")
+				linked_weapons_bays["Accelerating Torpedo"] = weapons_bay_to_link
+				weapons_bay_counter += 1
+			if(weapons_bay_to_link.stored_ammo_type == "Homing")
+				linked_weapons_bays["Homing"] = weapons_bay_to_link
+				weapons_bay_counter += 1
+			if(weapons_bay_to_link.stored_ammo_type == "Explosive")
+				linked_weapons_bays["Explosive"] = weapons_bay_to_link
+				weapons_bay_counter += 1
+			if(weapons_bay_to_link.stored_ammo_type == "MIP")
+				linked_weapons_bays["MIP"] = weapons_bay_to_link
+				weapons_bay_counter += 1
+	to_chat(world, SPAN_INFO("[ship_name] weapons stores initalized. Stores found: [weapons_bay_counter]"))
 	terminal_id = "[linked_master_console.sector_map_data["name"]][initial(terminal_id)]"
 	item_serial = "[uppertext(linked_master_console.sector_map_data["name"])][initial(item_serial)]"
 	header_name = "[linked_master_console.sector_map_data["name"]] CARGO CONTROL"
@@ -46,159 +60,52 @@
 		if(1)
 			repair_shutdown = 1
 			world << browse(null, "window=[terminal_id]")
-			var/obj/structure/ship_elements/cargo_bay/bay_to_shutdown = linked_cargo_bays["primary_munitions"]
+			var/obj/structure/ship_elements/weapon_store/bay_to_shutdown = linked_weapons_bays["LD Homing"]
 			bay_to_shutdown.repair_shutdown = 1
-			bay_to_shutdown = linked_cargo_bays["secondary_munitions"]
+			bay_to_shutdown = linked_weapons_bays["Direct"]
+			bay_to_shutdown.repair_shutdown = 1
+			bay_to_shutdown = linked_weapons_bays["Accelerating Torpedo"]
+			bay_to_shutdown.repair_shutdown = 1
+			bay_to_shutdown = linked_weapons_bays["Homing"]
+			bay_to_shutdown.repair_shutdown = 1
+			bay_to_shutdown = linked_weapons_bays["Explosive"]
+			bay_to_shutdown.repair_shutdown = 1
+			bay_to_shutdown = linked_weapons_bays["MIP"]
 			bay_to_shutdown.repair_shutdown = 1
 			talkas("Warning. Critical damage recieved. Engaging emergency Hyperspace leapfrog.")
 			return
 		if(0)
 			repair_shutdown = 0
 			talkas("Critical damage resolved. Lifting lockout.")
-			var/obj/structure/ship_elements/cargo_bay/bay_to_shutdown = linked_cargo_bays["primary_munitions"]
+			var/obj/structure/ship_elements/weapon_store/bay_to_shutdown = linked_weapons_bays["LD Homing"]
 			bay_to_shutdown.repair_shutdown = 0
-			bay_to_shutdown = linked_cargo_bays["secondary_munitions"]
+			bay_to_shutdown = linked_weapons_bays["Direct"]
+			bay_to_shutdown.repair_shutdown = 0
+			bay_to_shutdown = linked_weapons_bays["Accelerating Torpedo"]
+			bay_to_shutdown.repair_shutdown = 0
+			bay_to_shutdown = linked_weapons_bays["Homing"]
+			bay_to_shutdown.repair_shutdown = 0
+			bay_to_shutdown = linked_weapons_bays["Explosive"]
+			bay_to_shutdown.repair_shutdown = 0
+			bay_to_shutdown = linked_weapons_bays["MIP"]
 			bay_to_shutdown.repair_shutdown = 0
 			return
 
-/obj/structure/terminal/cargo_console/proc/terminal_advanced_parse(type = null, string = null)
-	if(type == null || string == null) return
-	switch(type)
-		if("RETR")
-			var/obj/structure/ship_elements/cargo_bay/bay_to_dispense = linked_cargo_bays["primary_munitions"]
-			switch(string)
-				if("M_H20")
-					if(bay_to_dispense.cargo_data["missile_pst_homing"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["missile_pst_homing"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/structure/ship_elements/missile_ammo/missile_homing)
-						terminal_display_line("[bay_to_dispense.cargo_data["missile_pst_homing"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty. Resupply recommended.")
-				if("M_D40")
-					if(bay_to_dispense.cargo_data["missile_pst_dumbfire"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["missile_pst_dumbfire"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/structure/ship_elements/missile_ammo/missile_dumbfire)
-						terminal_display_line("[bay_to_dispense.cargo_data["missile_pst_dumbfire"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty.")
-				if("M_T05")
-					if(bay_to_dispense.cargo_data["missile_pst_torpedo"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["missile_pst_torpedo"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/structure/ship_elements/missile_ammo/missile_torpedo)
-						terminal_display_line("[bay_to_dispense.cargo_data["missile_pst_torpedo"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty.")
-				if("W_D03")
-					if(bay_to_dispense.cargo_data["warhead_direct"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["warhead_direct"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/structure/ship_elements/missile_ammo/warhead_direct)
-						terminal_display_line("[bay_to_dispense.cargo_data["warhead_direct"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty. Resupply recommended.")
-				if("W_E02")
-					if(bay_to_dispense.cargo_data["missile_pst_homing"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["missile_pst_homing"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/structure/ship_elements/missile_ammo/missile_homing)
-						terminal_display_line("[bay_to_dispense.cargo_data["missile_pst_homing"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty.")
-				if("W_M03")
-					if(bay_to_dispense.cargo_data["warhead_mip"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["warhead_mip"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/structure/ship_elements/missile_ammo/warhead_mip)
-						terminal_display_line("[bay_to_dispense.cargo_data["warhead_mip"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty.")
-			bay_to_dispense = linked_cargo_bays["secondary_munitions"]
-			switch(string)
-				if("S-D02")
-					if(bay_to_dispense.cargo_data["secondary_direct"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["secondary_direct"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/item/ship_elements/secondary_ammo/direct)
-						terminal_display_line("[bay_to_dispense.cargo_data["secondary_direct"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty. Resupply recommended.")
-				if("S-E03")
-					if(bay_to_dispense.cargo_data["secondary_flak"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["secondary_flak"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/item/ship_elements/secondary_ammo/flak)
-						terminal_display_line("[bay_to_dispense.cargo_data["secondary_flak"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty.")
-				if("S-B05")
-					if(bay_to_dispense.cargo_data["secondary_broadside"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["secondary_broadside"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/item/ship_elements/secondary_ammo/broadside)
-						terminal_display_line("[bay_to_dispense.cargo_data["secondary_broadside"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty.")
-				if("X-P01")
-					if(bay_to_dispense.cargo_data["probe"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["probe"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/item/ship_probe)
-						terminal_display_line("[bay_to_dispense.cargo_data["probe"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty.")
-				if("X-T01")
-					if(bay_to_dispense.cargo_data["tracker"] > 0)
-						to_chat(usr,SPAN_ADMIN("Dispensing."))
-						bay_to_dispense.cargo_data["tracker"] -= 1
-						INVOKE_ASYNC(bay_to_dispense,TYPE_PROC_REF(/obj/structure/ship_elements/cargo_bay, DispenseObject), /obj/item/ship_tracker)
-						terminal_display_line("[bay_to_dispense.cargo_data["tracker"]] left in store.")
-					else
-						terminal_display_line("Error: Stock empty.")
-
-
-
-/obj/structure/terminal/cargo_console/terminal_parse(str)
-	var/string_to_parse = uppertext(str)
-	if(!string_to_parse) return "error - null string parsed"
-	var/starting_buffer_length = terminal_buffer.len
-	switch(string_to_parse)
-		if("HELP")
-			terminal_display_line("Available Commands:")
-			terminal_display_line("CARGO - takes inventory of cargo bays. This display is also visible after login.")
-			terminal_display_line("RETR - Retrieve Cargo. Use format: TAG_ID , as seen in the CARGO readout.")
-			terminal_display_line("The cargo bay will automatically detect and pick up deposited munitions.")
-			terminal_display_line("No further information available.")
-		if("CARGO")
-			terminal_display_line("Current stocks:")
-			terminal_display_line("BAY 1 - primary ship ammo:")
-			terminal_display_line("MISSILES | TAG: M")
-			var/obj/structure/ship_elements/cargo_bay/bay_to_scan = linked_cargo_bays["primary_munitions"]
-			terminal_display_line("Hunter | ID: H20 | [bay_to_scan.cargo_data["missile_pst_homing"]] in storage.")
-			terminal_display_line("Panther | ID: D40 | [bay_to_scan.cargo_data["missile_pst_dumbfire"]] in storage.")
-			terminal_display_line("Inferno | ID: T05 | [bay_to_scan.cargo_data["missile_pst_torpedo"]] in storage.")
-			terminal_display_line("WARHEADS | TAG: W")
-			terminal_display_line("Standard | ID: D03 | [bay_to_scan.cargo_data["warhead_direct"]] in storage.")
-			terminal_display_line("Explosive | ID: E02 | [bay_to_scan.cargo_data["warhead_explosive"]] in storage.")
-			terminal_display_line("MIP | ID: M03 | [bay_to_scan.cargo_data["warhead_mip"]] in storage.")
-			terminal_display_line("BAY 2 - secondary ship ammo:")
-			bay_to_scan = linked_cargo_bays["secondary_munitions"]
-			terminal_display_line("TYPE S | TAG: S")
-			terminal_display_line("Direct | ID: D02 | [bay_to_scan.cargo_data["secondary_direct"]] in storage.")
-			terminal_display_line("Flak | ID: E03 | [bay_to_scan.cargo_data["secondary_flak"]] in storage.")
-			terminal_display_line("Broadside | ID: B05 | [bay_to_scan.cargo_data["secondary_broadside"]] in storage.")
-			terminal_display_line("SPECIAL | TAG: X")
-			terminal_display_line("EYE-7 probe | ID: P01 | [bay_to_scan.cargo_data["probe"]]")
-			terminal_display_line("PHA-1 tracker | ID: T01 | [bay_to_scan.cargo_data["tracker"]]")
-	if(starting_buffer_length == terminal_buffer.len)
-		var/tracked_position = 1
-		while(tracked_position <= length(string_to_parse))
-			var/type_to_parse = copytext(string_to_parse, 1, tracked_position + 1)
-			var/argument_to_parse = trimtext(copytext(string_to_parse, tracked_position + 1))
-			terminal_advanced_parse(type = type_to_parse, string = argument_to_parse)
-			tracked_position += 1
-	if(starting_buffer_length == terminal_buffer.len) terminal_display_line("Error: Unknown command. Please use HELP for a list of available commands.")
-	terminal_input()
-	return "Parsing Loop End"
+/obj/structure/terminal/cargo_console/attackby(obj/item/W, mob/user)
+	terminal_display_line("Welcome, [user]!", cache = 1)
+	terminal_display_line("PRIMARY DELIVERY METHODS", cache = 1)
+	var/obj/structure/ship_elements/weapon_store/cb = linked_weapons_bays["LD Homing"]
+	terminal_display_line("LD-HOMING - [cb.current_items] - BAY [linked_weapons_bays[cb.bay_number]]", cache = 1)
+	cb = linked_weapons_bays["Direct"]
+	terminal_display_line("DIRECT - [cb.current_items] - BAY [linked_weapons_bays[cb.bay_number]]", cache = 1)
+	cb = linked_weapons_bays["Accelerating Torpedo"]
+	terminal_display_line("ACCELERATING TORPEDO - [cb.current_items] - BAY [linked_weapons_bays[cb.bay_number]]", cache = 1)
+	terminal_display_line("PRIMARY WARHEADS", cache = 1)
+	cb = linked_weapons_bays["Homing"]
+	terminal_display_line("HOMING - [cb.current_items] - BAY [linked_weapons_bays[cb.bay_number]]", cache = 1)
+	cb = linked_weapons_bays["Explosive"]
+	terminal_display_line("EXPLOSIVE - [cb.current_items] - BAY [linked_weapons_bays[cb.bay_number]]", cache = 1)
+	cb = linked_weapons_bays["MIP"]
+	terminal_display_line("MIP - [cb.current_items] - BAY [linked_weapons_bays[cb.bay_number]]", cache = 1)
+	terminal_display_line("This terminal accepts no inputs! Have a nice day!")
+	return

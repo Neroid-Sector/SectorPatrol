@@ -2367,7 +2367,7 @@
 #include "code\modules\shiptoship\ship\ship_mission_control.dm"
 #include "code\modules\shiptoship\ship\ship_props.dm"
 #include "code\modules\shiptoship\ship\ship_weapons.dm"
-#include "code\modules\shiptoship\ship\ship_weapons_stores"
+#include "code\modules\shiptoship\ship\ship_weapons_stores.dm"
 #include "code\modules\shiptoship\ship\ammo_types\ship_ammunition.dm"
 #include "code\modules\shiptoship\shipdefs\pst_interceptor_amelia.dm"
 #include "code\modules\shiptoship\shipdefs\pst_interceptor_marie.dm"

@@ -10,6 +10,7 @@
 	var/stored_ammo_type
 	var/repair_shutdown = 0
 	var/ship_name
+	var/bay_number = 1
 
 /obj/structure/ship_elements/weapon_store/proc/AnimateUse(state = null)
 	var/state_to_animate = state
