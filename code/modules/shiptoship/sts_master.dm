@@ -304,19 +304,19 @@
 			round_history_current.Add("The <b>[log_source_to_add]</b> barely avoided <b>a collision</b> with the <b>[log_target_to_add]!</b>")
 			return
 		if("collision_move")
-			round_history_current.Add("The <b>[log_source_to_add]</b> reroutes towards coordinates <b>([x_to_move],[y_to_move])</b> during emergency maeouvers, <b>losing some of its momentum.</b>")
+			round_history_current.Add({"The <b>[log_source_to_add]</b> reroutes towards coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span> during emergency maeouvers, <b>losing some of its momentum.</b>"})
 			return
 		if("collision_boundary")
 			round_history_current.Add("The <b>[log_source_to_add]</b> engages its <b>emergency breaking thrusters</b> as it reaches the Twilight Boundary and risks being consumed by the void. <b>It's now in a dead stop!</b>")
 			return
 		if("regular_move")
-			round_history_current.Add("The <b>[log_source_to_add]</b> arrives at its destination at coordinates <b>([x_to_move],[y_to_move])</b>.")
+			round_history_current.Add({"The <b>[log_source_to_add]</b> arrives at its destination at coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span>."})
 			return
 		if("missile_collision")
 			round_history_current.Add("Projectiles <b>[log_source_to_add]</b> and <b>[log_target_to_add]</b> <b>detonate each other</b> as they leapfrog out of Hyperspace in close proximity.")
 			return
 		if("missile_move")
-			round_history_current.Add("Projectile <b>[log_source_to_add]</b> leapfrogs to coordinates <b>([x_to_move],[y_to_move])</b>.")
+			round_history_current.Add({"Projectile <b>[log_source_to_add]</b> leapfrogs to coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span>."})
 			return
 		if("missile_near_target")
 			round_history_current.Add("The projectile <b>will reach its target next round!</b>")
@@ -367,22 +367,22 @@
 			round_history_current.Add("Projectile <b>[log_source_to_add]</b> is <b>anihilated in an explosion!</b>")
 			return
 		if("explosive_splash")
-			round_history_current.Add("Projectile <b>[log_source_to_add]</b> explodes at coordinates <b>([x_to_move],[y_to_move])!</b>")
+			round_history_current.Add({"Projectile <b>[log_source_to_add]</b> explodes at coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span>!</b>"})
 			return
 		if("warhead_miss")
-			round_history_current.Add("Projectile <b>[log_source_to_add]</b> fails to hit anything at coordinates <b>([x_to_move],[y_to_move])</b> and flies off into the void.")
+			round_history_current.Add({"Projectile <b>[log_source_to_add]</b> fails to hit anything at coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span> and flies off into the void."})
 			return
 		if("nuclear_hit")
-			round_history_current.Add("Projectile <b>[log_source_to_add]</b> reaches its target at coordinates <b>([x_to_move],[y_to_move])</b>. The <b>[log_target_to_add] and its crew perishes in a nuclear blast!</b>")
+			round_history_current.Add({"Projectile <b>[log_source_to_add]</b> reaches its target at coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span>. The <b>[log_target_to_add] and its crew perishes in a nuclear blast!</b>"})
 			return
 		if("mip_deploy")
-			round_history_current.Add("MIP Warhead <b>[log_source_to_add]</b> deploys at coordinates <b>([x_to_move],[y_to_move])</b>")
+			round_history_current.Add({"MIP Warhead <b>[log_source_to_add]</b> deploys at coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span>"})
 			return
 		if("mip_payload_fail")
-			round_history_current.Add("MIP Warhead <b>[log_source_to_add]</b> fails to deply at coordiates <b>([x_to_move],[y_to_move]) due to a low payload.")
+			round_history_current.Add({"MIP Warhead <b>[log_source_to_add]</b> fails to deply at coordiates <span class="coord"><b>([x_to_move],[y_to_move])</b></span> due to a low payload."})
 			return
 		if("mip_warhead_hit")
-			round_history_current.Add("A MIP projectile hits <b>[log_source_to_add]</b> with a paylad of <b>[x_to_move]</b>!")
+			round_history_current.Add({"A MIP projectile hits <b>[log_source_to_add]</b> with a paylad of <b>[x_to_move]</b>!"})
 			return
 		if("ship_move")
 			round_history_current.Add("<b>SHIP MOVEMENT:</b><hr>")
@@ -391,7 +391,7 @@
 			round_history_current.Add("<b>PROJECTILE MOVEMENT AND DETONATION:</b><hr>")
 			return
 		if("comms_ping")
-			round_history_current.Add("Comms ping sent from <b>[log_source_to_add]</b> to coordinates <b>([x_to_move],[y_to_move])</b>: [log_target_to_add]")
+			round_history_current.Add({"Comms ping sent from <b>[log_source_to_add]</b> to coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span>: [log_target_to_add]"})
 			if(sector_map[x_to_move][y_to_move]["ship"]["id_tag"] != "none")
 				var/comms_recepient = "[sector_map[x_to_move][y_to_move]["ship"]["id_tag"]]-[sector_map[x_to_move][y_to_move]["ship"]["id_tag"]]"
 				round_history_current.Add("The message was recieved by <b>[comms_recepient]</b>")
@@ -405,13 +405,13 @@
 			round_history_current.Add("Conventional sonar pulse launched from <b>[log_source_to_add]</b> to <b>[log_target_to_add]</b> with the result <b>[x_to_move]</b>.")
 			return
 		if("missile_launch")
-			round_history_current.Add("Missile launched by <b>[log_source_to_add]</b> at coordinates <b>([x_to_move],[y_to_move])</b>")
+			round_history_current.Add({"Missile launched by <b>[log_source_to_add]</b> at coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span>"})
 			return
 		if("secondary_fire")
-			round_history_current.Add("The <b>[log_source_to_add]</b> fires its Secondary cannon at coordinates <b>([x_to_move],[y_to_move])</b>")
+			round_history_current.Add({"The <b>[log_source_to_add]</b> fires its Secondary cannon at coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span>"})
 			return
 		if("passes_turn")
-			round_history_current.Add("The <b>[log_source_to_add]</b> at coordinates <b>([x_to_move],[y_to_move]) passes the rest of its combat turn<b> and does not fire the rest of its salvoes.")
+			round_history_current.Add({"The <b>[log_source_to_add]</b> at coordinates <span class="coord"><b>([x_to_move],[y_to_move])</b></span> passes the rest of its combat turn<b> and does not fire the rest of its salvoes."})
 			return
 
 /obj/structure/shiptoship_master/proc/SaveLog()
@@ -889,8 +889,7 @@
 /obj/structure/shiptoship_master/proc/NextTurn()
 	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc_pre in world)
 		if(ship_mc_pre.sector_map_data["initialized"] == 1)
-			ship_mc_pre.local_round_log_moves = null
-			ship_mc_pre.local_round_log_moves = list()
+			ship_mc_pre.NextTurn(0)
 	var/len_to_test
 	ProcessMovement(type = "ship")
 	while(len_to_test != round_history_current.len)
@@ -913,7 +912,7 @@
 	rem_entity(type = "special")
 	for(var/obj/structure/shiptoship_master/ship_missioncontrol/ship_mc in world)
 		if(ship_mc.sector_map_data["initialized"] == 1)
-			ship_mc.NextTurn()
+			ship_mc.NextTurn(1)
 
 
 /obj/structure/shiptoship_master/proc/scan_entites(category = 0, output_format = 0) // category = 0 for ships, 1 for missiles, 2 for specials. format = 0 text for screen display/ref lists. 1 creates buttons with references.

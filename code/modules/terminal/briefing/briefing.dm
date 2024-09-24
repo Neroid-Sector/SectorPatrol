@@ -14,7 +14,7 @@
 	header_name = "RDML. Thomas Boulette"
 	var/op_info = "PST INTERCEPTOR PROTOTYPING"
 
-/obj/structure/terminal/Initialize(mapload, ...)
+/obj/structure/terminal/briefing/Initialize(mapload, ...)
 	. = ..()
 	icon_state = "off"
 	update_icon()

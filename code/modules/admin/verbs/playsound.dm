@@ -107,7 +107,8 @@
 	var/style = tgui_input_list(src, "Who do you want to play this to?", "Select Listeners", list("Globally", "Xenos", "Marines", "Ghosts", "All In View Range", "Single Mob"))
 	var/sound_type = tgui_input_list(src, "What kind of sound is this?", "Select Sound Type", sound_type_list)
 	sound_type = sound_type_list[sound_type]
-	var/display_title = tgui_input_list(src, "Display Title?", "Title Display", list("Yes", "No"))
+	var/display_title
+	display_title = tgui_input_list(src, "Display Title?", "Title Display", list("Yes", "No"))
 
 	switch(style)
 		if("Globally")
@@ -178,6 +179,7 @@
 	music_extra_data["title"] = tgui_input_text(usr, "Enter song Title. Leave blank for unknown.", "Title input", timeout = 0)
 	music_extra_data["artist"] = tgui_input_text(usr, "Enter song Artist. Leave blank for unknown.", "Artist input", timeout = 0)
 	music_extra_data["album"] = tgui_input_text(usr, "Enter song Album. Leave blank for unknown.","Album input", timeout = 0)
+	var/display_blurb_indicator = tgui_alert(usr, "Show title blurb?", "Blurb", list("No","Yes"), timeout = 0)
 	if(music_extra_data["title"] == null) music_extra_data["title"] = web_sound_url
 	if(music_extra_data["artist"] == null) music_extra_data["artist"] = "Unknown Artist"
 	if(music_extra_data["album"] == null) music_extra_data["album"] = "Unknown Album"
@@ -186,7 +188,7 @@
 	for(var/mob/mob as anything in targets)
 		var/client/client = mob?.client
 		if((client?.prefs?.toggles_sound & SOUND_MIDI) && (client?.prefs?.toggles_sound & SOUND_ADMIN_ATMOSPHERIC))
-			if(tgui_alert(usr, "Show title blurb?", "Blurb", list("No","Yes"), timeout = 0) == "Yes") show_blurb_song(title = music_extra_data["title"], additional = "[music_extra_data["artist"]] - [music_extra_data["album"]]")
+			if(display_blurb_indicator == "Yes") show_blurb_song(title = music_extra_data["title"], additional = "[music_extra_data["artist"]] - [music_extra_data["album"]]")
 			client?.tgui_panel?.play_music(web_sound_url, music_extra_data)
 		else
 			client?.tgui_panel?.stop_music()

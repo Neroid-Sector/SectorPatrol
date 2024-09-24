@@ -29,6 +29,8 @@
 	var/list/local_round_log_moves = list()
 	var/list/local_round_log_full = list()
 	var/list/ping_history = list()
+	var/list/current_pings = list()
+	var/list/ping_ids = list()
 	var/list/comms_messages = list()
 	light_system = HYBRID_LIGHT
 	light_color = "#660166"
@@ -202,37 +204,49 @@
 		current_tracker_pos += 1
 
 
-/obj/structure/shiptoship_master/ship_missioncontrol/NextTurn()
-	local_round_log_full.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
-	local_round_log_full.Add(local_round_log)
-	linked_command_chair.open_command_window("round_history")
-	local_round_log = null
-	local_round_log = list()
-	SyncPosToMap()
-	TrackerUpdate()
-	if(sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] < 2) sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] += 1
-	INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
-	INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
-	INVOKE_ASYNC(linked_control_pad,TYPE_PROC_REF(/obj/structure/ship_elements/control_pad/, SetUsageData),0)
-	INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, SetUsageData),0,null)
-	return 1
+/obj/structure/shiptoship_master/ship_missioncontrol/NextTurn(status = null)
+	switch(status)
+		if(null)
+			return
+		if(0)
+			local_round_log_full.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
+			local_round_log_full.Add(local_round_log)
+			ping_history.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
+			ping_history.Add(current_pings)
+			linked_command_chair.open_command_window("round_history")
+			current_pings = list()
+			ping_ids = list()
+			local_round_log = list()
+			local_round_log_moves = list()
+			return 1
+		if(1)
+			SyncPosToMap()
+			TrackerUpdate()
+			if(sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] < 2) sector_map[sector_map_data["x"]][sector_map_data["y"]]["ship"]["shield"] += 1
+			INVOKE_ASYNC(linked_signals_console,TYPE_PROC_REF(/obj/structure/terminal/signals_console/, SetUsageData),0)
+			INVOKE_ASYNC(linked_weapons_console,TYPE_PROC_REF(/obj/structure/terminal/weapons_console/, SetUsageData),0)
+			INVOKE_ASYNC(linked_control_pad,TYPE_PROC_REF(/obj/structure/ship_elements/control_pad/, SetUsageData),0)
+			INVOKE_ASYNC(linked_damage_console,TYPE_PROC_REF(/obj/structure/terminal/damage_console/, SetUsageData),0,null)
+			return 1
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/PingLog(entity_type = 0, pos_x = 0, pos_y = 0, name = "none", type = "none", target_x = 0, target_y = 0, speed = 0, hp = 0, faction = "none")
 	switch(entity_type)
 		if(1)
-			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Ship [name] - [type]</b> | IFF: <b>[faction]</b><br>Vector:<b>([target_x],[target_y])</b> Max: <b>[speed]</b> | Integrity: <b>[hp]</b>)")
+			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Ship [name] - [type]</b> | IFF: <b>[faction]</b><br>Vector:<b>([target_x],[target_y])</b> Max: <b>[speed]</b> | Integrity: <b>[hp]</b>)"})
+			if(ping_ids.Find(sector_map[pos_x][pos_y]["ship"]["id_tag"]) == 0) ping_ids.Add(sector_map[pos_x][pos_y]["ship"]["id_tag"])
 		if(2)
-			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Pojectile [name] | Warhead: [type]<br>Payload: [hp] | Target:([target_x],[target_y]) | Velocity: [speed]")
+			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Pojectile [name] | Warhead: [type]<br>Payload: [hp] | Target:([target_x],[target_y]) | Velocity: [speed]"})
+			if(ping_ids.Find(sector_map[pos_x][pos_y]["missile"]["id_tag"]) == 0) ping_ids.Add(sector_map[pos_x][pos_y]["missile"]["id_tag"])
 		if(3)
-			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Unknown Ship:</b> Bearing: [type] | Velocity: [speed]")
+			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span>| <b>Unknown Ship:</b> Bearing: [type] | Velocity: [speed]"})
 		if(4)
-			ping_history.Add("[GLOB.combat_round]|<b>([pos_x],[pos_y])</b> | <b>Unknown Projectile</b> Bearing: [type] | Velocity: [speed]")
+			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Unknown Projectile</b> Bearing: [type] | Velocity: [speed]"})
 	linked_command_chair.open_command_window("pings_and_tracking")
 
-/obj/structure/shiptoship_master/ship_missioncontrol/proc/ScannerPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0, range = 0)
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/ScannerPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0)
 	var/obj/structure/terminal/signals_console/target_console = incoming_console
-	var/x_to_target_scan = target_console.linked_master_console.sector_map_data["x"] + probe_target_x
-	var/y_to_target_scan = target_console.linked_master_console.sector_map_data["y"] + probe_target_y
+	var/x_to_target_scan = probe_target_x
+	var/y_to_target_scan = probe_target_y
 	if(x_to_target_scan < 1 || x_to_target_scan > GLOB.sector_map_x)
 		target_console.terminal_display_line("Error: X coordinate outside of Twilight Boudary. Probe lost.")
 		target_console.usage_data["ping_uses_current"] += 1
@@ -242,12 +256,6 @@
 		target_console.usage_data["ping_uses_current"] += 1
 		return 1
 	target_console.terminal_display_line("Connection to probe established. Reading data...", TERMINAL_LOOKUP_SLEEP)
-	var/scan_boundary_x_min = BoundaryAdjust(x_to_target_scan - range, type = 1)
-	var/scan_boundary_y_min = BoundaryAdjust(y_to_target_scan - range, type = 1)
-	var/scan_boundary_x_max = BoundaryAdjust(x_to_target_scan + range, type = 2)
-	var/scan_boundary_y_max = BoundaryAdjust(y_to_target_scan + range, type = 3)
-	var/current_scan_pos_x = scan_boundary_x_min
-	var/current_scan_pos_y = scan_boundary_y_min
 	if(sector_map[x_to_target_scan][y_to_target_scan]["ship"]["id_tag"] != "none")
 		target_console.terminal_display_line("Probe reports presence of a ship in its sector. Querrying Pythia.", TERMINAL_LOOKUP_SLEEP)
 		target_console.terminal_display_line("Pythia reports entity as \"[sector_map[x_to_target_scan][y_to_target_scan]["ship"]["name"]]\"")
@@ -256,45 +264,52 @@
 		target_console.terminal_display_line("Hull Integrity Readout: [sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["HP"] - (sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["hull"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["weapons"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["systems"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["engines"])], Shield: [sector_map[x_to_target_scan][y_to_target_scan]["ship"]["shield"]]")
 		PingLog(entity_type = 1, pos_x = x_to_target_scan, pos_y = y_to_target_scan ,name = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["name"], type = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["type"], target_x = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["x"], target_y = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["y"], speed = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["speed"], hp = (sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["HP"] - (sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["hull"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["weapons"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["systems"] + sector_map[x_to_target_scan][y_to_target_scan]["ship"]["damage"]["engines"])), faction = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["faction"])
 		if(sector_map[x_to_target_scan][y_to_target_scan]["ship"]["status"] == "player") target_console.terminal_display_line("Upsilon-Pythia Node detected. This is an OV-PST Test Crew vessel.")
+	if(sector_map[x_to_target_scan][y_to_target_scan]["ship"]["id_tag"] == "none")
+		target_console.terminal_display_line("No ship entities found at coordinates.", TERMINAL_LOOKUP_SLEEP)
 	if(sector_map[x_to_target_scan][y_to_target_scan]["missile"]["id_tag"] != "none")
 		target_console.terminal_display_line("Projectile leapfrog trace detected in probe sector. Querrying Pythia.", TERMINAL_LOOKUP_SLEEP)
 		target_console.terminal_display_line("Projectile ID: \"[sector_map[x_to_target_scan][y_to_target_scan]["missile"]["type"]]\" relative velocity:[sector_map[x_to_target_scan][y_to_target_scan]["missile"]["speed"]].")
 		target_console.terminal_display_line("Warhead type: [sector_map[x_to_target_scan][y_to_target_scan]["missile"]["warhead"]["type"]], Payload: [sector_map[x_to_target_scan][y_to_target_scan]["missile"]["warhead"]["payload"]].")
 		target_console.terminal_display_line("Based on readout, the projectiles target is: ([sector_map[x_to_target_scan][y_to_target_scan]["missile"]["target"]["x"]],[sector_map[x_to_target_scan][y_to_target_scan]["missile"]["target"]["y"]]])")
 		PingLog(entity_type = 2, pos_x = x_to_target_scan, pos_y = y_to_target_scan, name = sector_map[x_to_target_scan][y_to_target_scan]["missile"]["type"], type = sector_map[x_to_target_scan][y_to_target_scan]["missile"]["warhead"]["type"], hp = sector_map[x_to_target_scan][y_to_target_scan]["missile"]["warhead"]["payload"], target_x = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["x"], target_y = sector_map[x_to_target_scan][y_to_target_scan]["ship"]["vector"]["y"], speed = sector_map[x_to_target_scan][y_to_target_scan]["missile"]["speed"])
-		if(sector_map[x_to_target_scan][y_to_target_scan]["missile"]["target"]["tag"] != "none") target_console.terminal_display_line("missile is homing onto a specific target and may change its vector.")
+		target_console.terminal_display_line("Missile is homing onto a specific target and may change its vector.")
+	if(sector_map[x_to_target_scan][y_to_target_scan]["missile"]["target"]["tag"] == "none")
+		target_console.terminal_display_line("No missile entities found at coordinates.", TERMINAL_LOOKUP_SLEEP)
+	return 1
+
+/obj/structure/shiptoship_master/ship_missioncontrol/proc/SweeperPing(incoming_console as obj, probe_target_x = 0, probe_target_y = 0)
+	var/obj/structure/terminal/signals_console/target_console = incoming_console
+	var/scan_boundary_x_min = (probe_target_x * 10) - 9
+	var/scan_boundary_y_min = (probe_target_y * 10) - 9
+	var/scan_boundary_x_max = probe_target_x * 10
+	var/scan_boundary_y_max = probe_target_y * 10
+	var/current_scan_pos_x = scan_boundary_x_min
+	var/current_scan_pos_y = scan_boundary_y_min
 	while(current_scan_pos_y <= scan_boundary_y_max)
 		while(current_scan_pos_x <= scan_boundary_x_max)
-			if((current_scan_pos_x == x_to_target_scan) && (current_scan_pos_y == y_to_target_scan))
-				current_scan_pos_x += 1
-				continue
-			if((abs(x_to_target_scan - current_scan_pos_x) + abs(y_to_target_scan - current_scan_pos_y)) <= range)
-
-				var/saved_len = target_console.terminal_buffer.len
-				if(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["id_tag"] != "none")
-					target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT", 10)
-					target_console.terminal_display_line("Sound consistant with ship engine movement.",2)
-					target_console.terminal_display_line("Bearing: [ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]]",10)
-					PingLog(entity_type = 3, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])
-				if(sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["id_tag"] != "none")
-					if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT",10)
-					target_console.terminal_display_line("Contact. Projectile leapfrog trace detected.",2)
-					target_console.terminal_display_line("Bearing: [ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y))], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"]]", 10)
-					PingLog(entity_type = 4, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y)), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"])
-				if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]): No contacts.",2)
+			var/saved_len = target_console.terminal_buffer.len
+			if(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["id_tag"] != "none")
+				target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT", 10)
+				target_console.terminal_display_line("Sound consistant with ship engine movement.",2)
+				target_console.terminal_display_line("Bearing: [ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]]",10)
+				PingLog(entity_type = 3, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing(sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"], sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"]), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["x"] + sector_map[current_scan_pos_x][current_scan_pos_y]["ship"]["vector"]["y"])
+			if(sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["id_tag"] != "none")
+				if(saved_len == target_console.terminal_buffer.len) target_console.terminal_display_line("Coordinate: ([current_scan_pos_x]),([current_scan_pos_y]) - CONTACT",10)
+				target_console.terminal_display_line("Contact. Projectile leapfrog trace detected.",2)
+				target_console.terminal_display_line("Bearing: [ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y))], Velocity: [sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"]]", 10)
+				PingLog(entity_type = 4, pos_x = current_scan_pos_x, pos_y = current_scan_pos_y, type = ReturnBearing((sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["x"] - current_scan_pos_x), (sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["target"]["y"] - current_scan_pos_y)), speed = sector_map[current_scan_pos_x][current_scan_pos_y]["missile"]["speed"])
 			current_scan_pos_x += 1
 		current_scan_pos_x = scan_boundary_x_min
 		current_scan_pos_y += 1
 	target_console.usage_data["ping_uses_current"] += 1
-	return 1
 
 
 /obj/structure/shiptoship_master/ship_missioncontrol/proc/SectorConversion(x = 0, y = 0) // Converts coords to map sector. If coordinates do not line up, even sectors should get the extra row.
 	var/x_to_sectorconvert = x
 	var/y_to_sectorconvert = y
 	if(x_to_sectorconvert < 1 || x_to_sectorconvert > GLOB.sector_map_x || y_to_sectorconvert < 1 || y_to_sectorconvert > GLOB.sector_map_y) return "out_of_bounds"
-	var/sector_to_return_x = floor(x_to_sectorconvert / (floor(GLOB.sector_map_x / GLOB.sector_map_sector_size)))
-	var/sector_to_return_y = floor(y_to_sectorconvert / (floor(GLOB.sector_map_y / GLOB.sector_map_sector_size)))
+	var/sector_to_return_x = ceil(x_to_sectorconvert / (ceil(GLOB.sector_map_x / GLOB.sector_map_sector_size)))
+	var/sector_to_return_y = ceil(y_to_sectorconvert / (ceil(GLOB.sector_map_y / GLOB.sector_map_sector_size)))
 	var/value_to_return = "[sector_to_return_x]-[sector_to_return_y]"
 	return value_to_return
 
@@ -343,20 +358,20 @@
 	var/shiplog_coordinate_y = shiplog_dest_y
 	switch(event_to_add_ship)
 		if("collision_move")
-			local_round_log.Add("Ship engine pattern changes suggest a <b>near-collision in Sector [SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
+			local_round_log.Add({"Ship engine pattern changes suggest a <b>near-collision in Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span></b>"})
 		if("collision_boundary")
-			local_round_log.Add("<b>Emergency maneuvers and rapid engine deceleration<b> detected on Twilight Boundary of Sector [SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)].")
+			local_round_log.Add({"<b>Emergency maneuvers and rapid engine deceleration<b> detected on Twilight Boundary of Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>."})
 		if("regular_move")
-			local_round_log.Add("Engine noise related to <b>ship movement detected in Sector [SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>.")
-			if(local_round_log_moves.Find("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>") == 0) local_round_log_moves.Add("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
+			local_round_log.Add({"Engine noise related to <b>ship movement detected in Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span></b>."})
+			if(local_round_log_moves.Find({"<span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"}) == 0) local_round_log_moves.Add({"<span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"})
 		if("missile_collision")
-			local_round_log.Add("Detonation detected after mulitple Projectile movement traces in Sector [SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]")
+			local_round_log.Add({"Detonation detected after mulitple Projectile movement traces in Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"})
 		if("missile_move","warhead_miss","warhead_homing")
-			local_round_log.Add("Projectile leapfrog trace in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>.")
-			if(local_round_log_moves.Find("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>") == 0) local_round_log_moves.Add("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
+			local_round_log.Add({"Projectile leapfrog trace in Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>."})
+			if(local_round_log_moves.Find({"<span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"}) == 0) local_round_log_moves.Add({"<span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"})
 		if("warhead_hit", "explosive_splash")
-			local_round_log.Add("Warhead explosion detected in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
-			if(local_round_log_moves.Find("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>") == 0) local_round_log_moves.Add("<b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
+			local_round_log.Add({"Warhead explosion detected in Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"})
+			if(local_round_log_moves.Find({"<span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"}) == 0) local_round_log_moves.Add({"<span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"})
 		if("hit_shield")
 			local_round_log.Add("Deflector <b>shield impact</b> detected.")
 		if("shield_break")
@@ -372,24 +387,24 @@
 		if("destroy_hull")
 			local_round_log.Add("Cascading hull breach detected. Partial ship fragmentation and high casualty event expected.")
 		if("nuclear_hit")
-			local_round_log.Add("<b>WARNING:</b> Nuclear detonation detected in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
-			if(local_round_log_moves.Find("[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]") == 0) local_round_log_moves.Add("[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]")
+			local_round_log.Add({"<b>WARNING:</b> Nuclear detonation detected in Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>!"})
+			if(local_round_log_moves.Find({"<span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"}) == 0) local_round_log_moves.Add({"<span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"})
 		if("mip_deploy")
-			local_round_log.Add("MIP Warhead reports deploying its payload in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			local_round_log.Add({"MIP Warhead reports deploying its payload in Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>!"})
 		if("mip_payload_fail")
-			local_round_log.Add("MIP Warhead reports failure to deploy its payload due to misconfiguration in Sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>")
+			local_round_log.Add({"MIP Warhead reports failure to deploy its payload due to misconfiguration in Sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>"})
 		if("mip_warhead_hit")
 			local_round_log.Add("A MIP <b>projectile impact detected</b>.")
 		if("npc_sonar_hit")
-			local_round_log.Add("A conventional <b>sonar</b> pulse <b>is targetting this vessel</b>. Origin sector: <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			local_round_log.Add({"A conventional <b>sonar</b> pulse <b>is targetting this vessel</b>. Origin sector: <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>!"})
 		if("npc_sonar_miss")
 			local_round_log.Add("Conventional <b>sonar activity detected</b> in system.")
 		if("missile_launch")
-			local_round_log.Add("<b>Missile launch<b> detected in sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			local_round_log.Add({"<b>Missile launch<b> detected in sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>!"})
 		if("missile_own_launch")
 			local_round_log.Add("Missile launched from own vessel.")
 		if("secondary_fire")
-			local_round_log.Add("<b>Secondary fire detected</b> in sector <b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b>!")
+			local_round_log.Add({"<b>Secondary fire detected</b> in sector <span class="sector"><b>[SectorConversion(shiplog_coordinate_x,shiplog_coordinate_y)]</b></span>!"})
 		if("secondary_own_fire")
 			local_round_log.Add("Secondary fire from own vessel.")
 		if("secondary_hit")
