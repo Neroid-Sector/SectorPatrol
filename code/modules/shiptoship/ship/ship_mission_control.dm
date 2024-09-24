@@ -30,6 +30,7 @@
 	var/list/local_round_log_full = list()
 	var/list/ping_history = list()
 	var/list/current_pings = list()
+	var/list/ping_ids = list()
 	var/list/comms_messages = list()
 	light_system = HYBRID_LIGHT
 	light_color = "#660166"
@@ -213,11 +214,9 @@
 			ping_history.Add("<hr><b>TURN [GLOB.combat_round]</b><hr>")
 			ping_history.Add(current_pings)
 			linked_command_chair.open_command_window("round_history")
-			current_pings = null
 			current_pings = list()
-			local_round_log = null
+			ping_ids = list()
 			local_round_log = list()
-			local_round_log_moves = null
 			local_round_log_moves = list()
 			return 1
 		if(1)
@@ -234,8 +233,10 @@
 	switch(entity_type)
 		if(1)
 			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Ship [name] - [type]</b> | IFF: <b>[faction]</b><br>Vector:<b>([target_x],[target_y])</b> Max: <b>[speed]</b> | Integrity: <b>[hp]</b>)"})
+			if(ping_ids.Find(sector_map[pos_x][pos_y]["ship"]["id_tag"]) == 0) ping_ids.Add(sector_map[pos_x][pos_y]["ship"]["id_tag"])
 		if(2)
 			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span> | <b>Pojectile [name] | Warhead: [type]<br>Payload: [hp] | Target:([target_x],[target_y]) | Velocity: [speed]"})
+			if(ping_ids.Find(sector_map[pos_x][pos_y]["missile"]["id_tag"]) == 0) ping_ids.Add(sector_map[pos_x][pos_y]["missile"]["id_tag"])
 		if(3)
 			current_pings.Add({"<span class="coord"><b>([pos_x],[pos_y])</b></span>| <b>Unknown Ship:</b> Bearing: [type] | Velocity: [speed]"})
 		if(4)
