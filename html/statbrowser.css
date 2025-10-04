@@ -1,0 +1,299 @@
+body {
+	font-family: chakrapetch-regular, Geneva, Tahoma, sans-serif;
+	line-height: 100%;
+	font-size: 14px;
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: hidden;
+}
+
+.top-button-container {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #F9F9F9;
+}
+
+.menu-container {
+	background-color: #F0F0F0;
+	position: fixed;
+	top: 35px;
+	width: 100%;
+	z-index: 100;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.dark .menu-container {
+	background-color: #202020;
+}
+
+a {
+	color: #003399;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #007fff;
+}
+
+h3 {
+	margin: 0 -0.5em 0.25em;
+	padding: 1em 0.66em 0.5em;
+	border-bottom: 0.1667em solid;
+}
+
+img {
+	image-rendering: pixelated;
+}
+
+.stat-container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.button-container {
+	display: flex;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 0.25em 0.25em 0;
+	flex-wrap: wrap;
+}
+
+.button {
+	display: inline-table;
+	cursor: pointer;
+	user-select: none;
+
+	/* Remove after Byond 516 */
+	-ms-user-select: none;
+	text-align: center;
+	font-size: 1em;
+	min-width: 2.9em;
+	padding: 0.5em 0.5em 0.4em;
+	background-color: transparent;
+	color: rgba(0, 0, 0, 0.5);
+	border: 0;
+	border-bottom: 0.1667em solid transparent;
+	border-radius: 0.25em 0.25em 0 0;
+}
+
+.small-button-text {
+	font-family: sevastopol;
+	font-size: 22px;
+}
+
+.top-button {
+	display: block;
+	margin-left: 0;
+	margin-right: 0;
+	flex-grow: 1;
+
+	height: 16px;
+}
+
+.top-button-text {
+	font-family: sevastopol;
+	font-size: 20px;
+}
+
+.top-button-text>i {
+	display: none;
+	font-size: 14px;
+	padding-top: 3px;
+}
+
+
+@media only screen and (min-width: 430px) {
+	.top-button-text {
+		font-size: 24px;
+
+		&>i {
+			display: inline;
+		}
+	}
+}
+
+i {
+	padding-right: 5px;
+}
+
+.discord-button {
+	background-color: #7289da;
+}
+
+.changelog.unread {
+	text-decoration: underline;
+	font-weight: bolder;
+}
+
+.button:hover {
+	background-color: #ececec;
+}
+
+.button.active {
+	background-color: #dfdfdf;
+	color: black;
+	border-bottom-color: #000000;
+}
+
+#under-menu {
+	height: 0.5em;
+	background-color: #eeeeee;
+}
+
+#statcontent {
+	flex: 1;
+	padding: 0.75em 0.5em;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	border-top-style: solid;
+	border-top-width: 5px;
+	border-top-color: #F9F9F9;
+}
+
+.grid-container {
+	margin: 0;
+}
+
+.grid-item {
+	display: inline-flex;
+	position: relative;
+	user-select: none;
+	-ms-user-select: none;
+	/* Remove after Byond 516 */
+	width: 100%;
+	box-sizing: border-box;
+	text-decoration: none;
+	background-color: transparent;
+	color: black;
+}
+
+.grid-item:hover {
+	color: #003399;
+	height: 1.27em;
+	z-index: 1;
+}
+
+.grid-item-text {
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	box-sizing: border-box;
+	white-space: nowrap;
+	width: 100%;
+	padding: 0.33em 0.5em;
+	border-radius: 0.25em;
+}
+
+.grid-item-text:hover {
+	position: absolute;
+	white-space: normal;
+	background-color: #ececec;
+}
+
+.grid-item-text:active {
+	background-color: #dfdfdf;
+}
+
+@media only screen and (min-width: 300px) {
+	.grid-item {
+		width: 50%;
+	}
+}
+
+@media only screen and (min-width: 430px) {
+	.grid-item {
+		width: 33%;
+	}
+}
+
+@media only screen and (min-width: 560px) {
+	.grid-item {
+		width: 25%;
+	}
+}
+
+@media only screen and (min-width: 770px) {
+	.grid-item {
+		width: 20%;
+	}
+}
+
+.status-info {
+	margin: 0 0.33em 0.25em;
+}
+
+/* Dark theme colors */
+body.dark {
+	background-color: #131313;
+	color: #b2c4dd;
+	scrollbar-color: #3b3b3b #1c1c1c;
+	scrollbar-base-color: #1c1c1c;
+	scrollbar-face-color: #3b3b3b;
+	scrollbar-3dlight-color: #252525;
+	scrollbar-highlight-color: #252525;
+	scrollbar-track-color: #1c1c1c;
+	scrollbar-arrow-color: #929292;
+	scrollbar-shadow-color: #3b3b3b;
+}
+
+.dark a {
+	color: #6699ff;
+}
+
+.dark a:hover,
+.dark .grid-item:hover {
+	color: #80bfff;
+}
+
+.dark .menu-container {
+	background-color: #131313;
+}
+
+.dark .button {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.dark .button:hover {
+	background-color: #252525;
+}
+
+.dark .button.active {
+	background-color: #313131;
+	color: #d4dfec;
+	border-bottom-color: #d4dfec;
+}
+
+.dark #under-menu {
+	background-color: #202020;
+}
+
+.dark .grid-item {
+	color: #b2c4dd;
+}
+
+.dark .grid-item-text:hover {
+	background-color: #252525;
+}
+
+.dark .grid-item-text:active {
+	background-color: #313131;
+}
+
+.dark #statcontent {
+	border-top-color: #1C1C1C;
+}
+
+.dark .top-button-container {
+	border-bottom-color: #1C1C1C;
+}
+
+.dark .bug-button {
+	background-color: #492020;
+	color: #a4bad6;
+}

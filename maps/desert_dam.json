@@ -1,0 +1,55 @@
+{
+    "map_name": "Trijent Dam",
+    "map_path": "map_files/DesertDam",
+    "map_file": "Desert_Dam.dmm",
+    "webmap_url": "Trijent",
+    "survivor_types": [
+        "/datum/equipment_preset/survivor/doctor/trijent",
+        "/datum/equipment_preset/survivor/hybrisa/paramedic",
+        "/datum/equipment_preset/survivor/scientist/trijent",
+        "/datum/equipment_preset/survivor/roughneck",
+        "/datum/equipment_preset/survivor/chaplain/trijent",
+        "/datum/equipment_preset/survivor/interstellar_commerce_commission_liaison",
+        "/datum/equipment_preset/survivor/colonial_marshal/trijent",
+        "/datum/equipment_preset/survivor/engineer/trijent",
+        "/datum/equipment_preset/survivor/engineer/trijent/hydro",
+        "/datum/equipment_preset/survivor/trucker/trijent",
+        "/datum/equipment_preset/survivor/security/trijent",
+        "/datum/equipment_preset/survivor/corporate/trijent",
+        "/datum/equipment_preset/survivor/civilian",
+        "/datum/equipment_preset/survivor/civilian_unique",
+        "/datum/equipment_preset/survivor/hybrisa/fire_fighter"
+    ],
+    "CO_insert_survivor_types": [
+        "/datum/equipment_preset/survivor/clf/coordinator"
+    ],
+    "defcon_triggers": [
+        3300,
+        2100,
+        1450,
+        580,
+        0.0
+    ],
+    "map_item_type": "/obj/item/map/desert_dam",
+    "announce_text": "We've lost contact with Weyland-Yutani's extra-solar colony, \"Trijent Dam\", on the planet \"Raijin.\" The ###SHIPNAME### has been dispatched to assist.",
+    "liaison_briefing": "maps/map_briefings/cl_brief_trijent.html",
+    "monkey_types": [
+        "stok"
+    ],
+    "traits": [{ "Ground": true }],
+    "nightmare_path": "maps/Nightmare/maps/DesertDam/",
+    "xvx_hives": {
+        "xeno_hive_alpha": 0,
+        "xeno_hive_bravo": 0,
+        "xeno_hive_charlie": 0,
+        "xeno_hive_delta": 100
+    },
+    "camouflage": "desert",
+    "gamemodes": [
+        "Distress Signal",
+        "Hunter Games",
+        "Hive Wars",
+        "Faction Clash",
+        "Infection"
+    ]
+}
