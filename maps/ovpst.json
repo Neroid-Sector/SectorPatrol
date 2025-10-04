@@ -1,7 +1,0 @@
-{
-    "map_name": "The Outer Veil Primary Supply Terminal",
-    "map_path": "/map_files/SectorPatrol/OuterVeilPST",
-    "map_file": "ovpst.dmm",
-    "webmap_url": "OuterVeilPST",
-    "traits": [{"Marine Main Ship": true}]
-}
