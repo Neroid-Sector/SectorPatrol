@@ -219,7 +219,9 @@
 	var/castes = castes_available.Join(", ")
 	xeno_message(SPAN_XENOANNOUNCE("The Hive is now strong enough to support: [castes]"))
 	xeno_maptext("The Hive can now support: [castes]", "Hive Strengthening")
-	evo_screech()
+	//+- Xenosurge edit. Removes evo information.
+	//evo_screech()
+	//-+ Xenosurge
 
 /datum/hive_status/proc/evo_screech()
 	for(var/mob/current_mob as anything in GLOB.mob_list)

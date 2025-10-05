@@ -17,6 +17,8 @@
 	list("Engineer - alternative", 20, /obj/item/clothing/under/marine/engineer/, MARINE_CAN_BUY_UNIFORM, VENDOR_ITEM_MANDATORY),
 	list("Radio Officer", 20, /obj/item/clothing/under/marine/rto/, MARINE_CAN_BUY_UNIFORM, VENDOR_ITEM_MANDATORY),
 	list("Vehicle Operator", 20, /obj/item/clothing/under/marine/tanker/, MARINE_CAN_BUY_UNIFORM, VENDOR_ITEM_MANDATORY),
+	list("FOOD", -1, null, null),
+	list("MRE",200, /obj/item/storage/box/mre, VENDOR_ITEM_REGULAR),
 	)
 
 
@@ -340,6 +342,8 @@
 		list("M40 MFHS Metal Foam Grenade", 200, /obj/item/explosive/grenade/metal_foam, VENDOR_ITEM_REGULAR),
 		list("Plastic Explosives", 100, /obj/item/explosive/plastic, VENDOR_ITEM_REGULAR),
 		list("Breaching Charge", 100, /obj/item/explosive/plastic/breaching_charge, VENDOR_ITEM_REGULAR),
+		list("FOOD", -1, null, null),
+		list("MRE",200, /obj/item/storage/box/mre, VENDOR_ITEM_REGULAR),
 	)
 
 
@@ -402,6 +406,8 @@
 		list("M44 Speed Loader (.44)", 200, /obj/item/ammo_magazine/revolver, VENDOR_ITEM_REGULAR),
 		list("M4A3 Magazine (9mm)", 200, /obj/item/ammo_magazine/pistol, VENDOR_ITEM_REGULAR),
 		list("88 Mod 4 Magazine (9mm)", 200, /obj/item/ammo_magazine/pistol/mod88/normalpoint, VENDOR_ITEM_REGULAR),
+		list("FOOD", -1, null, null),
+		list("MRE",200, /obj/item/storage/box/mre, VENDOR_ITEM_REGULAR),
 	)
 
 /obj/structure/droppod/equipment/vendor/partial

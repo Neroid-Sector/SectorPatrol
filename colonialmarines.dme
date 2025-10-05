@@ -2419,6 +2419,7 @@
 #include "code\modules\projectiles\magazines\smgs.dm"
 #include "code\modules\projectiles\magazines\specialist.dm"
 #include "code\modules\pve\_pve_globals.dm"
+#include "code\modules\pve\pve_datums.dm"
 #include "code\modules\pve\pve_injectors.dm"
 #include "code\modules\pve\pve_procs.dm"
 #include "code\modules\pve\pve_vendors.dm"
