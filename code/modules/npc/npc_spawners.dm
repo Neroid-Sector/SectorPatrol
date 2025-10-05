@@ -93,7 +93,7 @@
 			if(npc_setup_value == null) return
 			GLOB.pve_npc_attack_cadence = npc_setup_value
 
-/proc/surge_loop()
+/client/proc/surge_loop()
 
 	while(GLOB.pve_active_wave == 1)
 		for (var/obj/structure/xenosurge_spawner/spawner in GLOB.pve_active_spawners)

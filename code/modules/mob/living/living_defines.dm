@@ -144,3 +144,6 @@
 
 	// for multiz looking up
 	var/atom/observed_atom
+//+- Xenosurge
+	var/bound_injector
+//-+ Xenosurge

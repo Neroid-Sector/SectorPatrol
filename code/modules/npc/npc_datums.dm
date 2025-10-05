@@ -36,6 +36,7 @@
 	var/return_distance = 20 // Ammount from anchor turf the NPC "protects", meaning they will disengage and return to their anchor when their target is this ammoutn away from it.
 	var/list/turf_block = list()
 
+	var/splatter_color = "#610279"
 	var/last_sound_played = 0
 
 /datum/combat_ai/New(mob/owner_mob)
@@ -513,7 +514,7 @@
 			var/starting_y = target.pixel_y
 			var/displacement_x = starting_x + pick(-3,3)
 			var/displacement_y = starting_y + pick(-3,3)
-			playsound(target,pick('sound/bullets/bullet_armor3.ogg','sound/bullets/bullet_armor4.ogg'))
+			playsound(target,pick('sound/bullets/bullet_armor3.ogg','sound/bullets/bullet_armor4.ogg'),50)
 			animate(target, time = 1, pixel_x = displacement_x, pixel_y = displacement_y)
 			animate(time = 1, pixel_x = starting_x, pixel_y = starting_y)
 
@@ -566,13 +567,13 @@
 			var/new_health = health - damage_number
 			if(new_health <= 0)
 				health = 0
-				owner.add_splatter_floor(get_turf(owner),0)
+				owner.add_splatter_floor(get_turf(owner),small_drip = FALSE,b_color = splatter_color)
 				playsound(owner,get_sfx("alien_growl"),50)
 				INVOKE_ASYNC(src,PROC_REF(die))
 				return
 			else
 				health -= damage_number
-				owner.add_splatter_floor(get_turf(owner))
+				owner.add_splatter_floor(get_turf(owner),b_color = splatter_color)
 				if((last_sound_played + 30) > world.time)
 					last_sound_played = world.time
 					playsound(owner,get_sfx("alien_hiss"),50)
@@ -1194,10 +1195,11 @@
 	INVOKE_ASYNC(src, PROC_REF(attack_animation),owner,attacked_turf,"n",10)
 	sleep(10)
 	if (istype(target_structure,/obj/structure/barricade/))
-		var/obj/structure/barricade/hit_cade
+		var/obj/structure/barricade/hit_cade = attacked_structure
 		hit_cade.take_damage(rand(owner.melee_damage_lower,owner.melee_damage_upper))
+		INVOKE_ASYNC(src, PROC_REF(damage_animation),attacked_structure,"dam_hit")
 		if(hit_cade.is_wired == 1)
-			process_damage(1)
+			INVOKE_ASYNC(src, PROC_REF(process_damage),1,"health")
 	else
 		attacked_structure.pve_hp -= 1
 		INVOKE_ASYNC(src, PROC_REF(damage_animation),attacked_structure,"dam_hit")
