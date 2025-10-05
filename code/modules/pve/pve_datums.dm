@@ -28,3 +28,6 @@
 		back_item = /obj/item/storage/backpack/marine
 	new_human.equip_to_slot_or_del(new back_item(new_human), WEAR_BACK)
 	new_human.equip_to_slot_or_del(new /obj/item/device/radio/headset/almayer/marine/cryo(new_human), WEAR_L_EAR)
+	var/obj/item/stim_injector/new_injector = new()
+	new_human.bind_stimpack(new_injector)
+	new_human.equip_to_slot_or_del(new_injector,WEAR_L_HAND)

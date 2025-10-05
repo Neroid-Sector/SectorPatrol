@@ -73,7 +73,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 	var/npc_setup_value
-	switch(tgui_input_list(usr, "Attack Max:[GLOB.pve_npc_attack_upper] Attack Min:[GLOB.pve_npc_attack_lower]\nMove Speed:[GLOB.pve_npc_movement_time] Attack Cadence:[GLOB.pve_npc_attack_cadence]" , "NPC", list("Attack Min","Attack Max","Move Speed","Cadence")))
+	switch(tgui_input_list(usr, "Attack Max:[GLOB.pve_npc_attack_upper] Attack Min:[GLOB.pve_npc_attack_lower]\nMove Speed:[GLOB.pve_npc_movement_time] Attack Cadence:[GLOB.pve_npc_attack_cadence]" , "NPC", list("Attack Min","Attack Max","Move Speed","Cadence","Target Distance","Anchor Range")))
 		if(null)
 			return
 		if("Attack Min")
@@ -92,6 +92,14 @@
 			npc_setup_value = tgui_input_number(usr, "Edit Attack Cadence.", "NPC",GLOB.pve_npc_attack_cadence,timeout = 0)
 			if(npc_setup_value == null) return
 			GLOB.pve_npc_attack_cadence = npc_setup_value
+		if("Target Distance")
+			npc_setup_value = tgui_input_number(usr, "Edit Distance of Target scanning (caution, higher the value, more demanding the scanning gets. Use carefully.).", "NPC",GLOB.pve_npc_attack_distance,timeout = 0)
+			if(npc_setup_value == null) return
+			GLOB.pve_npc_attack_distance = npc_setup_value
+		if("Anchor Range")
+			npc_setup_value = tgui_input_number(usr, "Edit Anchor distance of mobs. This is the range the mobs return to, should ideally be higher than targeting range.", "NPC",GLOB.pve_npc_return_distance,timeout = 0)
+			if(npc_setup_value == null) return
+			GLOB.pve_npc_return_distance = npc_setup_value
 
 /client/proc/surge_loop()
 

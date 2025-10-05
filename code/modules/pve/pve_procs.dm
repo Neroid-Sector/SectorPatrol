@@ -64,9 +64,9 @@
 		GLOB.ammo_restock_next = world.time + GLOB.ammo_restock_delay
 		var/obj/structure/droppod/equipment/vendor/droppod
 		if(GLOB.ammo_restock_full == 0)
-			droppod = new /obj/structure/droppod/equipment/vendor/partial(turf_to_spawn, /obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/partial/, src)
+			droppod = new /obj/structure/droppod/equipment/vendor/partial(turf_to_spawn, /obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/partial/, src)
 		else
-			droppod = new /obj/structure/droppod/equipment/vendor/(turf_to_spawn, /obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/, src)
+			droppod = new /obj/structure/droppod/equipment/vendor/(turf_to_spawn, /obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/, src)
 		droppod.drop_time = 5 SECONDS
 		droppod.launch(turf_to_spawn)
 		return
@@ -104,9 +104,9 @@
 			var/turf/restock_turf = mob.loc
 			var/obj/structure/droppod/equipment/vendor/droppod
 			if(GLOB.ammo_restock_full == 0)
-				droppod = new /obj/structure/droppod/equipment/vendor/partial(restock_turf, /obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/partial/, src)
+				droppod = new /obj/structure/droppod/equipment/vendor/partial(restock_turf, /obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/partial/, src)
 			else
-				droppod = new /obj/structure/droppod/equipment/vendor/(restock_turf, /obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/, src)
+				droppod = new /obj/structure/droppod/equipment/vendor/(restock_turf, /obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/, src)
 			droppod.drop_time = 5 SECONDS
 			droppod.launch(restock_turf)
 			return

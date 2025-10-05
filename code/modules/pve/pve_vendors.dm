@@ -1,10 +1,10 @@
-/obj/structure/machinery/cm_vending/sorted/pve/uniform/general
+/obj/structure/machinery/cm_vending/sorted/xenosurge/uniform/general
 	name = "\improper UAR General Uniform Rack"
 	desc = "A secure uniform storage sollution, linked to a general, shared storage."
 	req_access = list()
 	vend_flags = VEND_CLUTTER_PROTECTION | VEND_UNIFORM_AUTOEQUIP | VEND_LIMITED_INVENTORY
 
-/obj/structure/machinery/cm_vending/sorted/pve/uniform/general/get_listed_products(mob/user)
+/obj/structure/machinery/cm_vending/sorted/xenosurge/uniform/general/get_listed_products(mob/user)
 	return list(
 	list("STANDARD EQUIPMENT", 0, null, null, null),
 	list("Gloves", 20, /obj/item/clothing/gloves/marine, MARINE_CAN_BUY_GLOVES, VENDOR_ITEM_MANDATORY),
@@ -22,7 +22,7 @@
 	)
 
 
-/obj/structure/machinery/cm_vending/sorted/pve/uniform
+/obj/structure/machinery/cm_vending/sorted/xenosurge/uniform
 	name = "\improper UAR Armor Vendor"
 	desc = "An automated supply rack hooked up to a big storage of standard marine uniforms. Can be accessed by the Requisitions Officer and Cargo Techs."
 	icon_state = "clothing"
@@ -49,7 +49,7 @@
 		list("M3-L Pattern Light Armor", 20, /obj/item/clothing/suit/storage/marine/light, VENDOR_ITEM_REGULAR),
 	)
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/guns
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/guns
 	name = "\improper UAR Automated Weapons Rack"
 	desc = "An automated weapon rack hooked up to a big storage of standard-issue weapons."
 	icon_state = "req_guns"
@@ -58,10 +58,10 @@
 	hackable = TRUE
 	vend_flags = VEND_CLUTTER_PROTECTION | VEND_TO_HAND | VEND_LIMITED_INVENTORY
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/guns/ui_state(mob/user)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/guns/ui_state(mob/user)
 	return GLOB.not_incapacitated_and_adjacent_strict_state
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/guns/populate_product_list(scale)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/guns/populate_product_list(scale)
 	listed_products = list(
 		list("PRIMARY FIREARMS", -1, null, null),
 		list("M4RA Battle Rifle", 20, /obj/item/weapon/gun/rifle/m4ra, VENDOR_ITEM_REGULAR),
@@ -78,7 +78,7 @@
 		list("M5 Bayonet", 20, /obj/item/attachable/bayonet, VENDOR_ITEM_RECOMMENDED),
 	)
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/attachies
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/attachies
 	name = "\improper UAR Automated Weapon Attachments Rack"
 	desc = "An automated weapon rack hooked up to a big storage of standard-issue weapons."
 	icon_state = "req_attach"
@@ -87,10 +87,10 @@
 	hackable = TRUE
 	vend_flags = VEND_CLUTTER_PROTECTION | VEND_TO_HAND | VEND_LIMITED_INVENTORY
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/attachies/ui_state(mob/user)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/attachies/ui_state(mob/user)
 	return GLOB.not_incapacitated_and_adjacent_strict_state
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/attachies/populate_product_list(scale)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/attachies/populate_product_list(scale)
 	listed_products = list(
 		list("BARREL", -1, null, null),
 		list("Extended Barrel", 20, /obj/item/attachable/extended_barrel, VENDOR_ITEM_REGULAR),
@@ -132,7 +132,7 @@
 		list("XM88 padded stock", 20, /obj/item/attachable/stock/xm88, VENDOR_ITEM_REGULAR)
 	)
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/extra_munitions/
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/extra_munitions/
 	name = "\improper UAR Automated Explosive, Incendiary and Support Munitions Rack"
 	desc = "An automated weapon rack hooked up to a big storage of standard-issue weapons."
 	icon_state = "gear"
@@ -141,10 +141,10 @@
 	hackable = TRUE
 	vend_flags = VEND_CLUTTER_PROTECTION | VEND_TO_HAND | VEND_LIMITED_INVENTORY
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/extra_munitions/ui_state(mob/user)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/extra_munitions/ui_state(mob/user)
 	return GLOB.not_incapacitated_and_adjacent_strict_state
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/extra_munitions/populate_product_list(scale)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/extra_munitions/populate_product_list(scale)
 	listed_products = list(
 		list("LAUNCHERS/FLAMETHROWERS", -1, null, null),
 		list("M240 Incinerator Unit", 20, /obj/item/storage/box/guncase/flamer, VENDOR_ITEM_REGULAR),
@@ -168,7 +168,7 @@
 		list("Breaching Charge", 100, /obj/item/explosive/plastic/breaching_charge, VENDOR_ITEM_REGULAR),
 	)
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo/
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo/
 	name = "\improper UAR Automated Ammunition Rack"
 	desc = "An automated weapon rack hooked up to a big storage of standard-issue weapons."
 	icon_state = "req_ammo"
@@ -177,10 +177,10 @@
 	hackable = TRUE
 	vend_flags = VEND_CLUTTER_PROTECTION | VEND_TO_HAND | VEND_LIMITED_INVENTORY
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo/ui_state(mob/user)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo/ui_state(mob/user)
 	return GLOB.not_incapacitated_and_adjacent_strict_state
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo/populate_product_list(scale)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo/populate_product_list(scale)
 	listed_products = list(
 		list("PRIMARY AMMUNITION", -1, null, null),
 		list("Box Of Buckshot Shells", 200, /obj/item/ammo_magazine/shotgun/buckshot, VENDOR_ITEM_REGULAR),
@@ -205,7 +205,7 @@
 		list("88 Mod 4 Magazine (9mm)", 200, /obj/item/ammo_magazine/pistol/mod88/normalpoint, VENDOR_ITEM_REGULAR),
 	)
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/accesories/
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/accesories/
 	name = "\improper UAR Automated Accesories Rack"
 	desc = "An automated weapon rack hooked up to a big storage of standard-issue weapons."
 	icon_state = "intel_gear"
@@ -214,10 +214,10 @@
 	hackable = TRUE
 	vend_flags = VEND_CLUTTER_PROTECTION | VEND_TO_HAND | VEND_LIMITED_INVENTORY
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/accesories/ui_state(mob/user)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/accesories/ui_state(mob/user)
 	return GLOB.not_incapacitated_and_adjacent_strict_state
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/accesories/populate_product_list(scale)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/accesories/populate_product_list(scale)
 	listed_products = list(
 		list("WEBBINGS", -1, null, null),
 		list("Black Webbing Vest", 20, /obj/item/clothing/accessory/storage/black_vest, VENDOR_ITEM_REGULAR),
@@ -289,7 +289,7 @@
 		list("Fire Extinguisher (Portable)", 20, /obj/item/tool/extinguisher/mini, VENDOR_ITEM_REGULAR),
 		)
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/
 	name = "\improper UAR Automated Resuply Locker"
 	desc = "A supply rack fed directly from the Dropships own stores."
 	icon_state = "req_ammo"
@@ -300,10 +300,10 @@
 	var/list/refilled_stims = list()
 	needs_power = FALSE
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/ui_state(mob/user)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/ui_state(mob/user)
 	return GLOB.not_incapacitated_and_adjacent_strict_state
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/populate_product_list(scale)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/populate_product_list(scale)
 	listed_products = list(
 		list("PRIMARY AMMUNITION", -1, null, null),
 		list("Box Of Buckshot Shells", 200, /obj/item/ammo_magazine/shotgun/buckshot, VENDOR_ITEM_REGULAR),
@@ -347,7 +347,7 @@
 	)
 
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/attackby(obj/item/W, mob/user)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stim_injector/))
 		var/obj/item/stim_injector/injector_to_refill = W
 		var/mob/living/injector_user = user
@@ -366,10 +366,10 @@
 	. = ..()
 
 /obj/structure/droppod/equipment/vendor
-	var/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/dropped_vendor
+	var/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/dropped_vendor
 
 /obj/structure/droppod/equipment/vendor/spawn_equipment(equipment, mob/M)
-	var/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/S = ..()
+	var/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/S = ..()
 	dropped_vendor = S
 	return S
 
@@ -386,14 +386,14 @@
 	dropped_vendor.talkas("Munitions restock is now available.")
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/structure/droppod/equipment/vendor/, go_back))
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/partial
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/partial
 	name = "\improper UAR Automated Field Resupply Locker"
 	needs_power = FALSE
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/partial/ui_state(mob/user)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/partial/ui_state(mob/user)
 	return GLOB.not_incapacitated_and_adjacent_strict_state
 
-/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/partial/populate_product_list(scale)
+/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/partial/populate_product_list(scale)
 	listed_products = list(
 		list("PRIMARY AMMUNITION", -1, null, null),
 		list("Box Of Buckshot Shells", 200, /obj/item/ammo_magazine/shotgun/buckshot, VENDOR_ITEM_REGULAR),
@@ -414,6 +414,6 @@
 	name = "\improper UAR Automated Field Resupply Locker"
 
 /obj/structure/droppod/equipment/vendor/partial/spawn_equipment(equipment, mob/M)
-	var/obj/structure/machinery/cm_vending/sorted/cargo_guns/pve/ammo_refill/partial/S = ..()
+	var/obj/structure/machinery/cm_vending/sorted/cargo_guns/xenosurge/ammo_refill/partial/S = ..()
 	dropped_vendor = S
 	return S

@@ -61,5 +61,10 @@
 	user.visible_message("[user] injects [M] with the Super Stimulant!", "You inject [M] with the Super Stimulant!")
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with a SuperStim by [key_name(user)].")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has injected [key_name(M)] with a SuperStim.")
+	var/mob/living/carbon/target_human = M
+	for (var/obj/limb/limb_in_mob in target_human)
+		if(limb_in_mob.status & LIMB_BROKEN)
+			target_human.pain.apply_pain(-PAIN_BONE_BREAK)
+			limb_in_mob.status &= ~LIMB_BROKEN
 	update_icon()
 
