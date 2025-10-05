@@ -165,6 +165,7 @@ GLOBAL_LIST_INIT(admin_verbs_major_event, list(
 	/client/proc/remove_spawners,
 	/client/proc/remove_npcs,
 	/client/proc/restock_adjust,
+	/client/proc/call_tgui_play_directly,
 // -+ Xenosurge add ins
 ))
 

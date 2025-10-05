@@ -111,3 +111,34 @@
 			droppod.launch(restock_turf)
 			return
 
+/proc/show_blurb_song(mob/target,title = "Song Name",additional = "Song Artist") // Formatting is: First line is bolded, second line is regular.
+	var/message_to_display = "<b>[title]</b>\n\n[additional]"
+	if(!target) return
+	var/list/blurb_target = list(target)
+	show_blurb(blurb_target, 10 SECONDS, "[message_to_display]", screen_position = "LEFT+0:16,BOTTOM+1:16", text_alignment = "left", text_color = "#FFFFFF", blurb_key = "song[title]", ignore_key = TRUE, speed = 1)
+
+/client/proc/call_tgui_play_directly()
+	set category = "DM.Xenosurge"
+	set name = "Play Music From Direct Link"
+	set desc = "Plays a music file from a https:// link through tguis music player, bypassing the filtering done by the other admin command. This will play as an admin atmospheric and will be muted by clinets who have that setting turned on as expected. A blurb displaying song info can also be displayed as an extra option."
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/targets = GLOB.mob_list
+	var/list/music_extra_data = list()
+	var/web_sound_url = tgui_input_text(usr, "Enter link to sound file. Must use https://","LINK to play", timeout = 0)
+	music_extra_data["title"] = tgui_input_text(usr, "Enter song Title leaving this blank/null will use its url instead.","Title input", default = "", timeout = 0)
+	if(music_extra_data["title"] == null) music_extra_data["title"] = web_sound_url
+	music_extra_data["artist"] = tgui_input_text(usr, "Enter song Artist, leaving this blank/null will not display anything.","Title input", default = "", timeout = 0)
+	if(music_extra_data["artist"] == null) music_extra_data["title"] = ""
+	music_extra_data["link"] = "Song Link Hidden"
+	music_extra_data["duration"] = "None"
+	var/show_blurb_flag = tgui_alert(usr, "Show title blurb?", "Blurb", list("No","Yes"), timeout = 0)
+	for(var/mob/mob as anything in targets)
+		var/client/client = mob?.client
+		if((client?.prefs?.toggles_sound & SOUND_MIDI) && (client?.prefs?.toggles_sound & SOUND_ADMIN_ATMOSPHERIC))
+			client?.tgui_panel?.play_music(web_sound_url, music_extra_data)
+			if(show_blurb_flag == "Yes") show_blurb_song(client.mob,music_extra_data["title"],music_extra_data["artist"])
+		else
+			client?.tgui_panel?.stop_music()
