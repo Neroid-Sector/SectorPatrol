@@ -36,7 +36,7 @@
 
 /mob/living/npc/xeno_test
 
-	name = "Tester Xeno"
-	desc = "Ugly mfer that needs to be shot. Nuff said."
+	name = "Surge Attacker"
+	desc = "A rushing, charging surge resembling a Xenomorph. One of the more common Surge variants."
 	icon = 'icons/mob/xenos/castes/tier_1/drone.dmi'
 	icon_state = "Normal Drone Walking"
